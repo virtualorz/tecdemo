@@ -65,7 +65,7 @@ class UploadController extends Controller {
 
         $fileName = substr($file->getClientOriginalName(), 0, -(strlen($file->getClientOriginalExtension()) + 1));
         $fileExt = strtolower($file->getClientOriginalExtension());
-        $fileDir = $dtNow->format('Ym') . '/' . trim($category, '/');
+        $fileDir = $dtNow->format('Ym') . '/tmp/' . trim($category, '/');
         $fileScale = array();
         if (!is_null(Request::input('imgScale')) && trim(Request::input('imgScale')) != "") {
             $scales = explode(',', trim(Request::input('imgScale')));

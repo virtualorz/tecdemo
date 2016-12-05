@@ -130,7 +130,9 @@ return [
         App\Classes\DB\DBProcedureServiceProvider::class,
         App\Classes\ViewHelper\ViewHelperServiceProvider::class,
         App\Classes\FileUpload\FileUploadServiceProvider::class,
+        
         App\Classes\User\UserServiceProvider::class,
+        App\Classes\Storage\StorageServiceProvider::class,
         
         //
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
@@ -198,6 +200,7 @@ return [
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Storage'       => App\Facades\Storage::class,
         /*
          * Custom classes facades
          */
@@ -209,5 +212,7 @@ return [
         'FileUpload' => App\Facades\FileUpload::class,
         'User' => App\Facades\User::class,
         'Zipper' => Chumper\Zipper\Zipper::class,
+        /*cURL api*/
+        'cURL' => anlutro\cURL\Laravel\cURL::class,
     ],
 ];

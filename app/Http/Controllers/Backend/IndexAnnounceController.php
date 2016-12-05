@@ -86,14 +86,15 @@ class IndexAnnounceController extends Controller {
             return $this->view;
         }
 
+        $content = FileUpload::moveEditor(Request::input('content'));
         try {
-            DB::transaction(function(){
+            DB::transaction(function()use($content){
                 $id = DB::table('system_index_notice')
                         ->insertGetId(
                             array('created_at'=>date('Y-m-d H:i:s'),
                                     'updated_at'=>date('Y-m-d H:i:s'),
                                     'title'=>Request::input('title'),
-                                    'content'=>Request::input('content'),
+                                    'content'=>$content,
                                     'enable'=>Request::input('enable'),
                                     'create_admin_id'=>User::id(),
                                     'update_admin_id'=>User::id()
@@ -136,16 +137,16 @@ class IndexAnnounceController extends Controller {
             return $this->view;
         }
 
-
+        $content = FileUpload::moveEditor(Request::input('content'));
         try {
-            DB::transaction(function(){
+            DB::transaction(function()use($content){
                 $result_before = DB::table('system_index_notice')
                                     ->where('id',Request::input('id'))
                                     ->get();
                 DB::table('system_index_notice')
                     ->where('id',Request::input('id'))
                     ->update(['title'=>Request::input('title'),
-                                'content'=>Request::input('content'),
+                                'content'=>$content,
                                 'enable'=>Request::input('enable'),
                                 'update_admin_id'=>User::id()
                     ]);
@@ -159,6 +160,7 @@ class IndexAnnounceController extends Controller {
                     'data_after' => isset($result_after[0]) ? $result_after[0] : [],
                     'admin_id' => User::id()
                 ]);
+                FileUpload::deleteEditor($result_before[0]['content'],$result_after[0]['content']);
             });
 
         } catch (\PDOException $ex) {
@@ -202,6 +204,7 @@ class IndexAnnounceController extends Controller {
                     'data_before' => isset($result_before[0]) ? $result_before[0] : [],
                     'admin_id' => User::id()
                 ]);
+                FileUpload::deleteEditor($result_before[0]['content']);
             }
         } catch (\PDOException $ex) {
             DB::rollBack();

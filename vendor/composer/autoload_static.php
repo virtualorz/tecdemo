@@ -25,6 +25,10 @@ class ComposerStaticInit87126bc0409010432f224dfbd6d377f8
     );
 
     public static $prefixLengthsPsr4 = array (
+        'a' => 
+        array (
+            'anlutro\\cURL\\' => 13,
+        ),
         'X' => 
         array (
             'XdgBaseDir\\' => 11,
@@ -106,6 +110,10 @@ class ComposerStaticInit87126bc0409010432f224dfbd6d377f8
     );
 
     public static $prefixDirsPsr4 = array (
+        'anlutro\\cURL\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/anlutro/curl/src',
+        ),
         'XdgBaseDir\\' => 
         array (
             0 => __DIR__ . '/..' . '/dnoegel/php-xdg-base-dir/src',
@@ -365,6 +373,8 @@ class ComposerStaticInit87126bc0409010432f224dfbd6d377f8
         'App\\Classes\\Sitemap\\SitemapNodeFilter' => __DIR__ . '/../..' . '/app/Classes/Sitemap/SitemapNodeFilter.php',
         'App\\Classes\\Sitemap\\SitemapPermission' => __DIR__ . '/../..' . '/app/Classes/Sitemap/SitemapPermission.php',
         'App\\Classes\\Sitemap\\SitemapServiceProvider' => __DIR__ . '/../..' . '/app/Classes/Sitemap/SitemapServiceProvider.php',
+        'App\\Classes\\Storage\\Storage' => __DIR__ . '/../..' . '/app/Classes/Storage/Storage.php',
+        'App\\Classes\\Storage\\StorageServiceProvider' => __DIR__ . '/../..' . '/app/Classes/Storage/StorageServiceProvider.php',
         'App\\Classes\\User\\User' => __DIR__ . '/../..' . '/app/Classes/User/User.php',
         'App\\Classes\\User\\UserServiceProvider' => __DIR__ . '/../..' . '/app/Classes/User/UserServiceProvider.php',
         'App\\Classes\\ViewHelper\\ViewButton' => __DIR__ . '/../..' . '/app/Classes/ViewHelper/ViewButton.php',
@@ -379,20 +389,45 @@ class ComposerStaticInit87126bc0409010432f224dfbd6d377f8
         'App\\Facades\\DBProcedure' => __DIR__ . '/../..' . '/app/Facades/DBProcedure.php',
         'App\\Facades\\FileUpload' => __DIR__ . '/../..' . '/app/Facades/FileUpload.php',
         'App\\Facades\\Sitemap' => __DIR__ . '/../..' . '/app/Facades/Sitemap.php',
+        'App\\Facades\\Storage' => __DIR__ . '/../..' . '/app/Facades/Storage.php',
         'App\\Facades\\User' => __DIR__ . '/../..' . '/app/Facades/User.php',
         'App\\Facades\\ViewHelper' => __DIR__ . '/../..' . '/app/Facades/ViewHelper.php',
+        'App\\Http\\Controllers\\Backend\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/AdminController.php',
+        'App\\Http\\Controllers\\Backend\\AdminPermissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/AdminPermissionController.php',
         'App\\Http\\Controllers\\Backend\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/Controller.php',
+        'App\\Http\\Controllers\\Backend\\IndexAnnounceController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/IndexAnnounceController.php',
         'App\\Http\\Controllers\\Backend\\IndexController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/IndexController.php',
+        'App\\Http\\Controllers\\Backend\\IndexSchoolController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/IndexSchoolController.php',
+        'App\\Http\\Controllers\\Backend\\LearningController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/LearningController.php',
         'App\\Http\\Controllers\\Backend\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/LoginController.php',
+        'App\\Http\\Controllers\\Backend\\MemberController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/MemberController.php',
+        'App\\Http\\Controllers\\Backend\\PlanController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/PlanController.php',
+        'App\\Http\\Controllers\\Backend\\PlanTargetController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/PlanTargetController.php',
+        'App\\Http\\Controllers\\Backend\\PlanTimeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/PlanTimeController.php',
+        'App\\Http\\Controllers\\Backend\\SchoolExecuteController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/SchoolExecuteController.php',
+        'App\\Http\\Controllers\\Backend\\SchoolListController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/SchoolListController.php',
+        'App\\Http\\Controllers\\Backend\\SchoolNewsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/SchoolNewsController.php',
+        'App\\Http\\Controllers\\Backend\\SchoolPlanController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/SchoolPlanController.php',
+        'App\\Http\\Controllers\\Backend\\TutorController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/TutorController.php',
         'App\\Http\\Controllers\\Backend\\UploadController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/UploadController.php',
-        'App\\Http\\Controllers\\Backend\\WebContactusController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/WebContactusController.php',
+        'App\\Http\\Controllers\\Backend\\VideoController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/VideoController.php',
         'App\\Http\\Controllers\\Backend\\WebController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/WebController.php',
-        'App\\Http\\Controllers\\Backend\\WebTemplateController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/WebTemplateController.php',
-        'App\\Http\\Controllers\\Backend\\WebTypeMainController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/WebTypeMainController.php',
-        'App\\Http\\Controllers\\Backend\\WebTypeSubController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/WebTypeSubController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\Official\\ChangepwController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/ChangepwController.php',
         'App\\Http\\Controllers\\Official\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/Controller.php',
         'App\\Http\\Controllers\\Official\\IndexController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/IndexController.php',
+        'App\\Http\\Controllers\\Official\\LearningController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/LearningController.php',
+        'App\\Http\\Controllers\\Official\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/LoginController.php',
+        'App\\Http\\Controllers\\Official\\MemberController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/MemberController.php',
+        'App\\Http\\Controllers\\Official\\MemberExecuteController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/MemberExecuteController.php',
+        'App\\Http\\Controllers\\Official\\MemberNewsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/MemberNewsController.php',
+        'App\\Http\\Controllers\\Official\\MemberPlanController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/MemberPlanController.php',
+        'App\\Http\\Controllers\\Official\\NewsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/NewsController.php',
+        'App\\Http\\Controllers\\Official\\PlanController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/PlanController.php',
+        'App\\Http\\Controllers\\Official\\SchoolController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/SchoolController.php',
+        'App\\Http\\Controllers\\Official\\TutorController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/TutorController.php',
+        'App\\Http\\Controllers\\Official\\UploadController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/UploadController.php',
+        'App\\Http\\Controllers\\Official\\VideoController' => __DIR__ . '/../..' . '/app/Http/Controllers/Official/VideoController.php',
         'App\\Http\\Controllers\\RelationDDLController' => __DIR__ . '/../..' . '/app/Http/Controllers/RelationDDLController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -3762,6 +3797,11 @@ class ComposerStaticInit87126bc0409010432f224dfbd6d377f8
         'Tinify\\ServerException' => __DIR__ . '/..' . '/tinify/tinify/lib/Tinify/Exception.php',
         'Tinify\\Source' => __DIR__ . '/..' . '/tinify/tinify/lib/Tinify/Source.php',
         'XdgBaseDir\\Xdg' => __DIR__ . '/..' . '/dnoegel/php-xdg-base-dir/src/Xdg.php',
+        'anlutro\\cURL\\Laravel\\cURL' => __DIR__ . '/..' . '/anlutro/curl/src/Laravel/cURL.php',
+        'anlutro\\cURL\\Request' => __DIR__ . '/..' . '/anlutro/curl/src/Request.php',
+        'anlutro\\cURL\\Response' => __DIR__ . '/..' . '/anlutro/curl/src/Response.php',
+        'anlutro\\cURL\\cURL' => __DIR__ . '/..' . '/anlutro/curl/src/cURL.php',
+        'anlutro\\cURL\\cURLException' => __DIR__ . '/..' . '/anlutro/curl/src/cURLException.php',
         'phpDocumentor\\Reflection\\DocBlock' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/phpDocumentor/Reflection/DocBlock.php',
         'phpDocumentor\\Reflection\\DocBlock\\Context' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/phpDocumentor/Reflection/DocBlock/Context.php',
         'phpDocumentor\\Reflection\\DocBlock\\Description' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/phpDocumentor/Reflection/DocBlock/Description.php',

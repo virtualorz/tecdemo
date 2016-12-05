@@ -6,6 +6,7 @@ use Request;
 use Config;
 use File;
 use Image;
+use Storage;
 
 class FileUpload {
 
@@ -56,7 +57,14 @@ class FileUpload {
     }
 
     public function getRootUrl() {
-        return rtrim(url(Config::get('fileupload.root_url')), '/') . '/';
+        if(env('SOFTLAYER_UPLOAD',false) === true)
+        {
+            return env('SOFTLAYER_URL_CND') . env('SOFTLAYER_CONTAINER').'/';
+        }
+        else
+        {
+            return rtrim(url(Config::get('fileupload.root_url')), '/') . '/';
+        }
     }
 
     public function getRootDir() {
@@ -157,6 +165,408 @@ class FileUpload {
 
     public function download() {
         
+    }
+
+    public function moveFile($move_obj)
+    {
+        $move_obj = json_decode($move_obj,true);
+        if(env('SOFTLAYER_UPLOAD',false) === true)
+        {
+            foreach($move_obj as $k=>$v)
+            {
+                if(strpos($v['dir'], 'tmp/') !== false)
+                {
+                    $v['dir_real'] = str_replace('tmp/','',$v['dir']);
+                    $files = scandir(public_path().'/files/'.$v['dir'].'/');
+                    foreach($files as $file)
+                    {
+                        if($file != "." && $file != ".." && (strpos($file,$v['id'].".") !== false || strpos($file,$v['id']."_") !== false ))
+                        {
+                            $real_path = public_path().'/files/'.$v['dir'].'/'.$file;
+                            $new_path = $v['dir_real'].'/'.$file;
+                            if(file_exists($real_path))
+                            {
+                                Storage::upload($real_path,$new_path);
+                            }
+                        }
+                    }
+                    $move_obj[$k]['dir'] = $v['dir_real'];
+                }
+            }
+        }
+        else
+        {
+            foreach($move_obj as $k=>$v)
+            {
+                if(strpos($v['dir'], 'tmp/') !== false)
+                {
+                    $v['dir_real'] = str_replace('tmp/','',$v['dir']);
+                    $v['dir_real'] = str_replace('tmp/','',$v['dir']);
+                    $files = scandir(public_path().'/files/'.$v['dir'].'/');
+                    foreach($files as $file)
+                    {
+                        if($file != "." && $file != ".." && (strpos($file,$v['id'].".") !== false || strpos($file,$v['id']."_") !== false ))
+                        {
+                            $real_path = public_path().'/files/'.$v['dir'].'/'.$file;
+                            $new_path = public_path().'/files/'.$v['dir_real'].'/'.$file;
+                            if(file_exists($real_path))
+                            {
+                                rename($real_path,$new_path);
+                            }
+                        }
+                    }
+                    $move_obj[$k]['dir'] = $v['dir_real'];
+                }
+            }
+        }
+
+        return json_encode($move_obj);
+    }
+
+    public function moveEditor($move_obj) {
+        $move_obj = json_decode($move_obj,true);
+        if(env('SOFTLAYER_UPLOAD',false) === true)
+        {
+            foreach($move_obj as $k=>$v)
+            {
+                foreach($v['cell'] as $k1=>$v1)
+                {
+                    foreach($v1['item'] as $k2=>$v2)
+                    {
+                        if($v2['type'] == "pic")
+                        {
+                            if(strpos($v2['file']['dir'], 'tmp/') !== false)
+                            {
+                                $v2['file']['dir_real'] = str_replace('tmp/','',$v2['file']['dir']);
+                                $files = scandir(public_path().'/files/'.$v2['file']['dir'].'/');
+                                foreach($files as $file)
+                                {
+                                    if($file != "." && $file != ".." && (strpos($file,$v2['file']['id'].".") !== false || strpos($file,$v2['file']['id']."_") !== false ))
+                                    {
+                                        $real_path = public_path().'/files/'.$v2['file']['dir'].'/'.$file;
+                                        $new_path = $v2['file']['dir_real'].'/'.$file;
+                                        if(file_exists($real_path))
+                                        {
+                                            Storage::upload($real_path,$new_path);
+                                        }
+                                    }
+                                }
+                                $move_obj[$k]['cell'][$k1]['item'][$k2]['file']['dir'] = $v2['file']['dir_real'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            foreach($move_obj as $k=>$v)
+            {
+                foreach($v['cell'] as $k1=>$v1)
+                {
+                    foreach($v1['item'] as $k2=>$v2)
+                    {
+                        if($v2['type'] == "pic")
+                        {
+                            if(strpos($v2['file']['dir'], 'tmp/') !== false)
+                            {
+                                $v2['file']['dir_real'] = str_replace('tmp/','',$v2['file']['dir']);
+                                $files = scandir(public_path().'/files/'.$v2['file']['dir'].'/');
+                                foreach($files as $file)
+                                {
+                                    if($file != "." && $file != ".." && (strpos($file,$v2['file']['id'].".") !== false || strpos($file,$v2['file']['id']."_") !== false ))
+                                    {
+                                        $real_path = public_path().'/files/'.$v2['file']['dir'].'/'.$file;
+                                        $new_path = public_path().'/files/'.$v2['file']['dir_real'].'/'.$file;
+                                        if(file_exists($real_path))
+                                        {
+                                            rename($real_path,$new_path);
+                                        }
+                                    }
+                                }
+                                $move_obj[$k]['cell'][$k1]['item'][$k2]['file']['dir'] = $v2['file']['dir_real'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return json_encode($move_obj);
+    }
+
+    public function deleteFile($org_obj,$new_obj = null) {
+        $org_obj = json_decode($org_obj,true);
+        if($new_obj != null)
+        {//比對刪除舊檔
+            $new_obj = json_decode($new_obj,true);
+            if(env('SOFTLAYER_UPLOAD',false) === true)
+            {
+                foreach($org_obj as $k=>$v)
+                {
+                    $to_del = true;
+                    foreach($new_obj as $k1=>$v1)
+                    {
+                        if($v['id'] == $v1['id'])
+                        {
+                            $to_del  =false;
+                        }
+                    }
+
+                    if($to_del)
+                    {
+                        $files = Storage::get_file($v['dir']);
+                        foreach($files as $file)
+                        {
+                            if($file != "." && $file != ".." && (strpos($file,$v['id'].".") !== false || strpos($file,$v['id']."_") !== false ))
+                            {
+                                $real_path = $file;
+                                if(Storage::file_exists($real_path))
+                                {
+                                    Storage::delete($real_path);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach($org_obj as $k=>$v)
+                {
+                    $to_del = true;
+                    foreach($new_obj as $k1=>$v1)
+                    {
+                        if($v['id'] == $v1['id'])
+                        {
+                            $to_del  =false;
+                        }
+                    }
+
+                    if($to_del)
+                    {
+                        $files = scandir(public_path().'/files/'.$v['dir'].'/');
+                        foreach($files as $file)
+                        {
+                            if($file != "." && $file != ".." && (strpos($file,$v['id'].".") !== false || strpos($file,$v['id']."_") !== false ))
+                            {
+                                $real_path = public_path().'/files/'.$v['dir'].'/'.$file;
+                                $new_path = public_path().'/files/'.$v['dir_real'].'/'.$file;
+                                if(file_exists($real_path))
+                                {
+                                    unlink($real_path);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {//全數刪除
+            if(env('SOFTLAYER_UPLOAD',false) === true)
+            {
+                foreach($org_obj as $k=>$v)
+                {
+                    $files = Storage::get_file($v['dir']);
+                    foreach($files as $file)
+                    {
+                        if($file != "." && $file != ".." && (strpos($file,$v['id'].".") !== false || strpos($file,$v['id']."_") !== false ))
+                        {
+                            $real_path = $file;
+                            if(Storage::file_exists($real_path))
+                            {
+                                Storage::delete($real_path);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach($org_obj as $k=>$v)
+                {
+                    $files = scandir(public_path().'/files/'.$v['dir'].'/');
+                    foreach($files as $file)
+                    {
+                        if($file != "." && $file != ".." && (strpos($file,$v['id'].".") !== false || strpos($file,$v['id']."_") !== false ))
+                        {
+                            $real_path = public_path().'/files/'.$v['dir'].'/'.$file;
+                            $new_path = public_path().'/files/'.$v['dir_real'].'/'.$file;
+                            if(file_exists($real_path))
+                            {
+                                unlink($real_path);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return 0;
+    }
+
+    public function deleteEditor($org_obj,$new_obj = null) {
+        $org_obj = json_decode($org_obj,true);
+        if($new_obj != null)
+        {//比對刪除舊檔
+            $new_obj = json_decode($new_obj,true);
+            if(env('SOFTLAYER_UPLOAD',false) === true)
+            {
+                foreach($org_obj as $k=>$v)
+                {
+                    foreach($v['cell'] as $k1=>$v1)
+                    {
+                        foreach($v1['item'] as $k2=>$v2)
+                        {
+                            if($v2['type'] == "pic")
+                            {
+                                $to_del = true;
+                                foreach($new_obj as $k3=>$v3)
+                                {
+                                    foreach($v3['cell'] as $k4=>$v4)
+                                    {
+                                        foreach($v4['item'] as $k5=>$v5)
+                                        {
+                                            if($v5['type'] == "pic")
+                                            {
+                                                if($v2['file']['id'] == $v5['file']['id'])
+                                                {
+                                                    $to_del  =false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if($to_del)
+                                {
+                                    $files = Storage::get_file($v2['file']['dir']);
+                                    foreach($files as $file)
+                                    {
+                                        if($file != "." && $file != ".." && (strpos($file,$v2['file']['id'].".") !== false || strpos($file,$v2['file']['id']."_") !== false ))
+                                        {
+                                            $real_path = $file;
+                                            if(Storage::file_exists($real_path))
+                                            {
+                                                Storage::delete($real_path);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach($org_obj as $k=>$v)
+                {
+                    foreach($v['cell'] as $k1=>$v1)
+                    {
+                        foreach($v1['item'] as $k2=>$v2)
+                        {
+                            if($v2['type'] == "pic")
+                            {
+                                $to_del = true;
+                                foreach($new_obj as $k3=>$v3)
+                                {
+                                    foreach($v3['cell'] as $k4=>$v4)
+                                    {
+                                        foreach($v4['item'] as $k5=>$v5)
+                                        {
+                                            if($v5['type'] == "pic")
+                                            {
+                                                if($v2['file']['id'] == $v5['file']['id'])
+                                                {
+                                                    $to_del  =false;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                if($to_del)
+                                {
+                                    $files = scandir(public_path().'/files/'.$v2['file']['dir'].'/');
+                                    foreach($files as $file)
+                                    {
+                                        if($file != "." && $file != ".." && (strpos($file,$v2['file']['id'].".") !== false || strpos($file,$v2['file']['id']."_") !== false ))
+                                        {
+                                            $real_path = public_path().'/files/'.$v2['file']['dir'].'/'.$file;
+                                            if(file_exists($real_path))
+                                            {
+                                                unlink($real_path);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {//全數刪除
+            if(env('SOFTLAYER_UPLOAD',false) === true)
+            {
+                foreach($org_obj as $k=>$v)
+                {
+                    foreach($v['cell'] as $k1=>$v1)
+                    {
+                        foreach($v1['item'] as $k2=>$v2)
+                        {
+                            if($v2['type'] == "pic")
+                            {
+                                $files = Storage::get_file($v2['file']['dir']);
+                                foreach($files as $file)
+                                {
+                                    if($file != "." && $file != ".." && (strpos($file,$v2['file']['id'].".") !== false || strpos($file,$v2['file']['id']."_") !== false ))
+                                    {
+                                        $real_path = $file;
+                                        if(Storage::file_exists($real_path))
+                                        {
+                                            Storage::delete($real_path);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach($org_obj as $k=>$v)
+                {
+                    foreach($v['cell'] as $k1=>$v1)
+                    {
+                        foreach($v1['item'] as $k2=>$v2)
+                        {
+                            if($v2['type'] == "pic")
+                            {
+                                $files = scandir(public_path().'/files/'.$v2['file']['dir'].'/');
+                                foreach($files as $file)
+                                {
+                                    if($file != "." && $file != ".." && (strpos($file,$v2['file']['id'].".") !== false || strpos($file,$v2['file']['id']."_") !== false ))
+                                    {
+                                        $real_path = public_path().'/files/'.$v2['file']['dir'].'/'.$file;
+                                        if(file_exists($real_path))
+                                        {
+                                            unlink($real_path);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return 0;
     }
 
 }
