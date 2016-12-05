@@ -39,9 +39,9 @@
                                 </td>
                             </tr> 
                             <tr>
-                                <th>{{ trans('validation.attributes.is_notice') }}</th>
+                                <th>{{ trans('validation.attributes.enable') }}</th>
                                 <td>
-                                    {{ trans('enum.member-order_epaper.'.$dataResult['is_notice']) }}
+                                    {{ trans('enum.enable.'.$dataResult['enable']) }}
                                 </td>
                             </tr> 
                             <tr>

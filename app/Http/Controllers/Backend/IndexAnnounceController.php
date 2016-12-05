@@ -17,19 +17,13 @@ use Log;
 use FileUpload;
 use Mail;
 
-class NewsController extends Controller {
+class IndexAnnounceController extends Controller {
 
     public function index() {
-        $title = Request::input('title', '');
 
-        $listResult = DB::table('news');
-        if($title != "")
-        {
-            $listResult->where('title','like','%'.$title.'%');
-        }
+        $listResult = DB::table('system_index_notice');
 
-        $listResult = $listResult->select('id','title',DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as created_at'))
-                                    ->whereNull('school_id')
+        $listResult = $listResult->select('id','title',DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as created_at'),'enable')
                                     ->orderBy('id','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
@@ -46,10 +40,10 @@ class NewsController extends Controller {
 
     public function edit() {
         $id = Route::input('id', 0);
-        $dataResult = DB::table('news')
-                            ->select('news.id','news.created_at','news.title','news.content','news.is_notice','member_admin.name as created_admin_name')
-                            ->leftJoin('member_admin','news.create_admin_id','=','member_admin.id')
-                            ->where('news.id',$id)
+        $dataResult = DB::table('system_index_notice')
+                            ->select('system_index_notice.id','system_index_notice.created_at','system_index_notice.title','system_index_notice.content','system_index_notice.enable','member_admin.name as created_admin_name')
+                            ->leftJoin('member_admin','system_index_notice.create_admin_id','=','member_admin.id')
+                            ->where('system_index_notice.id',$id)
                             ->get();
 
         $this->view->with('dataResult', $dataResult[0]);
@@ -59,10 +53,10 @@ class NewsController extends Controller {
 
     public function detail() {
         $id = Route::input('id', 0);
-        $dataResult = DB::table('news')
-                            ->select('news.id','news.created_at','news.title','news.content','news.is_notice','member_admin.name as created_admin_name')
-                            ->leftJoin('member_admin','news.create_admin_id','=','member_admin.id')
-                            ->where('news.id',$id)
+        $dataResult = DB::table('system_index_notice')
+                            ->select('system_index_notice.id','system_index_notice.created_at','system_index_notice.title','system_index_notice.content','system_index_notice.enable','member_admin.name as created_admin_name')
+                            ->leftJoin('member_admin','system_index_notice.create_admin_id','=','member_admin.id')
+                            ->where('system_index_notice.id',$id)
                             ->get();
         if (count($dataResult[0]) > 0) {
             //$dataResult[0][0]['created_at'] = (new DateTime($dataResult[0][0]['created_at']))->format('Y/m/d');
@@ -80,7 +74,7 @@ class NewsController extends Controller {
         $validator = Validator::make(Request::all(), [
                     'title' => 'string|required|max:50',
                     'content' => 'string|required',
-                    'is_notice' => 'integer|required',
+                    'enable' => 'integer|required',
         ]);
         if ($validator->fails()) {
             $invalid[] = $validator->errors();
@@ -94,23 +88,22 @@ class NewsController extends Controller {
 
         try {
             DB::transaction(function(){
-                $id = DB::table('news')
+                $id = DB::table('system_index_notice')
                         ->insertGetId(
                             array('created_at'=>date('Y-m-d H:i:s'),
                                     'updated_at'=>date('Y-m-d H:i:s'),
-                                    'school_id'=>NULL,
-                                    'is_notice'=>Request::input('is_notice'),
                                     'title'=>Request::input('title'),
                                     'content'=>Request::input('content'),
+                                    'enable'=>Request::input('enable'),
                                     'create_admin_id'=>User::id(),
                                     'update_admin_id'=>User::id()
                             )
                         );
-                $result_after = DB::table('news')
+                $result_after = DB::table('system_index_notice')
                                 ->where('id',$id)
                                 ->get();
                 DBProcedure::writeLog([
-                    'table' => 'news',
+                    'table' => 'system_index_notice',
                     'operator' => DBOperator::OP_INSERT,
                     'data_after' => isset($result_after[0]) ? $result_after[0] : [],
                     'admin_id' => User::id()
@@ -133,7 +126,7 @@ class NewsController extends Controller {
         $validator = Validator::make(Request::all(), [
                     'title' => 'string|required|max:50',
                     'content' => 'string|required',
-                    'is_notice' => 'integer|required',
+                    'enable' => 'integer|required',
         ]);
         if ($validator->fails()) {
             $this->view['result'] = 'no';
@@ -146,21 +139,21 @@ class NewsController extends Controller {
 
         try {
             DB::transaction(function(){
-                $result_before = DB::table('news')
+                $result_before = DB::table('system_index_notice')
                                     ->where('id',Request::input('id'))
                                     ->get();
-                DB::table('news')
+                DB::table('system_index_notice')
                     ->where('id',Request::input('id'))
-                    ->update(['is_notice'=>Request::input('is_notice'),
-                                'title'=>Request::input('title'),
+                    ->update(['title'=>Request::input('title'),
                                 'content'=>Request::input('content'),
+                                'enable'=>Request::input('enable'),
                                 'update_admin_id'=>User::id()
                     ]);
-                $result_after = DB::table('news')
+                $result_after = DB::table('system_index_notice')
                                     ->where('id',Request::input('id'))
                                     ->get();
                 DBProcedure::writeLog([
-                    'table' => 'news',
+                    'table' => 'system_index_notice',
                     'operator' => DBOperator::OP_UPDATE,
                     'data_before' => isset($result_before[0]) ? $result_before[0] : [],
                     'data_after' => isset($result_after[0]) ? $result_after[0] : [],
@@ -197,14 +190,14 @@ class NewsController extends Controller {
             foreach ($ids as $k => $v) {
                 $id = $v;
 
-                $result_before = DB::table('news')
+                $result_before = DB::table('system_index_notice')
                                     ->where('id',$id)
                                     ->get();
-                DB::table('news')
+                DB::table('system_index_notice')
                     ->where('id',$id)
                     ->delete();
                 DBProcedure::writeLog([
-                    'table' => 'news',
+                    'table' => 'system_index_notice',
                     'operator' => DBOperator::OP_DELETE,
                     'data_before' => isset($result_before[0]) ? $result_before[0] : [],
                     'admin_id' => User::id()

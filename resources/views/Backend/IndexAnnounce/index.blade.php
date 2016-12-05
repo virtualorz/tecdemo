@@ -10,39 +10,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">                                 
-                <h3 class="panel-title">{{ trans('page.title.search') }}</h3>
-                <ul class="panel-controls">
-                    <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
-                </ul>                                
-            </div>
-            <div class="panel-body">
-                <form id="formq" method="get" action="{{ Sitemap::node()->getUrl() }}">
-                    <table class="table datatable_simple nohead">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{{ trans('validation.attributes.title') }}</td>
-                                <td>
-                                    <input type="text" name="title" id="title" class="form-control" placeholder="{{ trans('validation.attributes.title') }}" maxlength="10" value="{{ Request::input('title', '') }}"  />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>&nbsp;</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btnReset">{{ trans('page.btn.reset') }}</button>
-                                    <button type="submit" name="submit_search" value="1" class="btn btn-default btnSubmit">{{ trans('page.btn.search') }}</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </div>
+            
         </div>
 
         <div class="panel panel-default">
@@ -61,6 +29,7 @@
                             </th>
                             <th width="15%">{{ trans('validation.attributes.created_at') }}</th>
                             <th width="15%">{{ trans('validation.attributes.title') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.enable') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
@@ -72,6 +41,7 @@
                             </td>
                             <td>{{ $v['created_at'] }}</td>
                             <td>{{ $v['title'] }}</td>
+                            <td><span class="label label-{{Config::get('data.label.enable.'.$v['enable'])}}">{{ trans('enum.enable.'.$v['enable']) }}</span></td>
                             <td>
                                 {!! ViewHelper::button('edit', ['id' => $v['id']]) !!}
                                 {!! ViewHelper::button('detail', ['id' => $v['id']]) !!}

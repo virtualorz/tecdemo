@@ -39,10 +39,10 @@
                                 </td>
                             </tr> 
                             <tr>
-                                <th>{{ trans('validation.attributes.is_notice') }}</th>
+                                <th>{{ trans('validation.attributes.enable') }}</th>
                                 <td>
-                                    <label class="check"><input type="radio" name="is_notice" id="data_is_notice_1" class="iradio required" value="1" @if($dataResult['is_notice'] == 1) checked @endif /> {{ trans('enum.member-order_epaper.1') }}</label>
-                                    <label class="check"><input type="radio" name="is_notice" id="data_is_notice_0" class="iradio required" value="0" @if($dataResult['is_notice'] == 0) checked @endif /> {{ trans('enum.member-order_epaper.0') }}</label> 
+                                    <label class="check"><input type="radio" name="enable" id="data_enable_1" class="iradio required" value="1" @if($dataResult['enable'] == 1) checked @endif /> {{ trans('enum.enable.1') }}</label>
+                                    <label class="check"><input type="radio" name="enable" id="data_enable_0" class="iradio required" value="0" @if($dataResult['enable'] == 0) checked @endif /> {{ trans('enum.enable.0') }}</label> 
                                 </td>
                             </tr> 
                             <tr>

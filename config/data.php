@@ -80,5 +80,8 @@ return [
     'tempate_cate' => [
         1 => ['id'=>"W",'name'=>"網站"],
         2 => ['id'=>"G",'name'=>"平面"],
+    ],
+    'label' => [
+        'enable' => [0=>"danger",1=>"success"],
     ]
 ];

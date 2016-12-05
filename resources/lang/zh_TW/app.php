@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'name' => '特色遊學網站',
-    'backend_name' => '特色遊學網站 後台管理系統'
+    'name' => '臺大科技共同空間',
+    'backend_name' => '臺大科技共同空間 後台管理系統'
 ];
