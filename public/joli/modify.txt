@@ -1,0 +1,28 @@
+/* logo */
+.x-navigation > li.xn-logo > a:first-child{
+    padding: 0px;
+    height: inherit;
+}
+.x-navigation > li.xn-logo > a:first-child img{
+    max-width: none;
+}
+
+/* profile */
+.profile{
+    padding: 7px 10px;
+}
+.profile .profile-image img{
+    width: 50px;
+    max-height: 50px;
+}
+.profile .profile-controls a.profile-control-left{
+    top: 25px;
+}
+.profile .profile-controls a.profile-control-right{
+    top: 25px;
+}
+
+/* navigation */
+.breadcrumb{
+    margin: 0px 0px 10px;
+}

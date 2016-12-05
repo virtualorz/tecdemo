@@ -1,0 +1,24 @@
+.jqfubtseditor{ position: relative; overflow: hidden;}
+.jqfubtseditor .jqfubtseditor-btn{
+    display: block; width: 100%; height: 100%;
+    background-color: transparent;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.jqfubtseditor .jqfubtseditor-btn a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    cursor: pointer;
+    color: #ffffff;
+}
+.jqfubtseditor .jqfubtseditor-btn-input{
+    background-color: transparent; opacity:0; filter:alpha(opacity=0); font-size: 0px; 
+    display: block; width: 100%; height: 100%; padding: 0px; margin: 0px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    cursor: pointer;
+}

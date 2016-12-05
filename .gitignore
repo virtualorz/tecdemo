@@ -1,0 +1,10 @@
+/public/files
+/public/upload_files
+/public/web.config
+/nbproject
+/node_modules
+Homestead.yaml
+Homestead.json
+composer.lock
+.env
+schedule.bat
