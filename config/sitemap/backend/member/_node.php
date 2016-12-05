@@ -30,7 +30,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-list-alt',
+                    'icon_class' => 'fa fa-folder-open-o',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
@@ -241,14 +241,14 @@ return [
                         ],
                     ],
                 ],
-                'reservationlog' => [
+                'activitylog' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
                         'route' => [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'MemberProtofolioController@reservationlog',
+                                'uses' => 'MemberProtofolioController@activitylog',
                             ],
                         ],
                     ],
@@ -258,7 +258,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-list-alt',
+                    'icon_class' => 'fa fa-bug',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
@@ -454,7 +454,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-users',
+                    'icon_class' => 'fa fa-bug',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',

@@ -112,7 +112,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-list-ul',
+                    'icon_class' => 'fa fa-male',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
@@ -194,7 +194,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-list-ul',
+                    'icon_class' => 'fa fa-users',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
@@ -305,7 +305,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-bullhorn',
+                    'icon_class' => 'fa fa-plus-square-o',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
@@ -574,7 +574,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-youtube-play',
+                    'icon_class' => 'fa fa-rotate-right',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
@@ -612,13 +612,13 @@ return [
             '_prop' => [
                 'permission' => SitemapAccess::ACCESS_REQUIRED,
                 'menu' => true,
-                'icon_class' => 'fa fa-calendar',
+                'icon_class' => 'fa fa-camera',
             ],
             'site' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-table',
+                    'icon_class' => 'fa fa-credit-card',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
@@ -700,7 +700,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-hand-o-right',
+                    'icon_class' => 'glyphicon glyphicon-time',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
@@ -782,7 +782,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-hand-o-right',
+                    'icon_class' => 'fa fa-calendar',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
@@ -807,7 +807,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-hand-o-right',
+                    'icon_class' => 'fa fa-book',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
@@ -889,7 +889,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-hand-o-right',
+                    'icon_class' => 'fa fa-search-minus',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
@@ -969,7 +969,6 @@ return [
                 'vacation' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
-                        'menu' => true,
                         'icon_class' => 'fa fa-hand-o-right',
                         'route' => [
                             'method' => 'get',
@@ -994,7 +993,6 @@ return [
                 'rate' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
-                        'menu' => true,
                         'icon_class' => 'fa fa-hand-o-right',
                         'route' => [
                             'method' => 'get',
@@ -1028,166 +1026,166 @@ return [
                         ],
                     ],
                 ],
-                'reservation' => [
+            ],
+            'reservation' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'menu' => true,
+                    'icon_class' => 'fa fa-cogs',
+                    'route' => [
+                        'method' => 'get',
+                        'param' => '{optional?}',
+                        'attr' => [
+                            'uses' => 'InstrumentReservationController@index',
+                        ],
+                    ],
+                ],
+                'complete' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
-                        'menu' => true,
-                        'icon_class' => 'fa fa-hand-o-right',
                         'route' => [
                             'method' => 'get',
-                            'param' => '{optional?}',
+                            'param' => '{id}',
                             'attr' => [
-                                'uses' => 'InstrumentReservationController@index',
+                                'uses' => 'InstrumentReservationController@edit',
                             ],
                         ],
                     ],
-                    'complete' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::ACCESS_REQUIRED,
-                            'route' => [
-                                'method' => 'get',
-                                'param' => '{id}',
-                                'attr' => [
-                                    'uses' => 'InstrumentReservationController@edit',
-                                ],
-                            ],
-                        ],
-                        'submit' => [
-                            '_prop' => [
-                                'permission' => SitemapAccess::INHERIT,
-                                'route' => [
-                                    'method' => 'post',
-                                    'attr' => [
-                                        'uses' => 'InstrumentReservationController@ajax_complete',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                    'delete' => [
+                    'submit' => [
                         '_prop' => [
                             'permission' => SitemapAccess::INHERIT,
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'InstrumentReservationController@ajax_delete',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'notattend' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'post',
-                                'attr' => [
-                                    'uses' => 'InstrumentReservationController@ajax_notattend',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'removewait' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'post',
-                                'attr' => [
-                                    'uses' => 'InstrumentReservationController@ajax_removewait',
+                                    'uses' => 'InstrumentReservationController@ajax_complete',
                                 ],
                             ],
                         ],
                     ],
                 ],
-                'payment' => [
+                'delete' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                            'method' => 'post',
+                            'attr' => [
+                                'uses' => 'InstrumentReservationController@ajax_delete',
+                            ],
+                        ],
+                    ],
+                ],
+                'notattend' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                            'method' => 'post',
+                            'attr' => [
+                                'uses' => 'InstrumentReservationController@ajax_notattend',
+                            ],
+                        ],
+                    ],
+                ],
+                'removewait' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                            'method' => 'post',
+                            'attr' => [
+                                'uses' => 'InstrumentReservationController@ajax_removewait',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'payment' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'menu' => true,
+                    'icon_class' => 'fa fa-cny',
+                    'route' => [
+                        'method' => 'get',
+                        'param' => '{optional?}',
+                        'attr' => [
+                            'uses' => 'InstrumentPaymentController@index',
+                        ],
+                    ],
+                ],
+                'complete' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
-                        'menu' => true,
-                        'icon_class' => 'fa fa-hand-o-right',
                         'route' => [
                             'method' => 'get',
-                            'param' => '{optional?}',
+                            'param' => '{id}',
                             'attr' => [
-                                'uses' => 'InstrumentPaymentController@index',
+                                'uses' => 'InstrumentPaymentController@edit',
                             ],
                         ],
                     ],
-                    'complete' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::ACCESS_REQUIRED,
-                            'route' => [
-                                'method' => 'get',
-                                'param' => '{id}',
-                                'attr' => [
-                                    'uses' => 'InstrumentPaymentController@edit',
-                                ],
-                            ],
-                        ],
-                        'submit' => [
-                            '_prop' => [
-                                'permission' => SitemapAccess::INHERIT,
-                                'route' => [
-                                    'method' => 'post',
-                                    'attr' => [
-                                        'uses' => 'InstrumentPaymentController@ajax_complete',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                    'confirm' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::ACCESS_REQUIRED,
-                            'route' => [
-                                'method' => 'get',
-                                'param' => '{id}',
-                                'attr' => [
-                                    'uses' => 'InstrumentPaymentController@confirm',
-                                ],
-                            ],
-                        ],
-                        'submit' => [
-                            '_prop' => [
-                                'permission' => SitemapAccess::INHERIT,
-                                'route' => [
-                                    'method' => 'post',
-                                    'attr' => [
-                                        'uses' => 'InstrumentPaymentController@ajax_confirm',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                    'reminder' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::ACCESS_REQUIRED,
-                            'route' => [
-                                'method' => 'get',
-                                'param' => '{id}',
-                                'attr' => [
-                                    'uses' => 'InstrumentPaymentController@reminder',
-                                ],
-                            ],
-                        ],
-                        'submit' => [
-                            '_prop' => [
-                                'permission' => SitemapAccess::INHERIT,
-                                'route' => [
-                                    'method' => 'post',
-                                    'attr' => [
-                                        'uses' => 'InstrumentPaymentController@ajax_reminder',
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                    'output' => [
+                    'submit' => [
                         '_prop' => [
                             'permission' => SitemapAccess::INHERIT,
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'InstrumentReservationController@ajax_output',
+                                    'uses' => 'InstrumentPaymentController@ajax_complete',
                                 ],
+                            ],
+                        ],
+                    ],
+                ],
+                'confirm' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'InstrumentPaymentController@confirm',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentPaymentController@ajax_confirm',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'reminder' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'InstrumentPaymentController@reminder',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentPaymentController@ajax_reminder',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'output' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                            'method' => 'post',
+                            'attr' => [
+                                'uses' => 'InstrumentReservationController@ajax_output',
                             ],
                         ],
                     ],
