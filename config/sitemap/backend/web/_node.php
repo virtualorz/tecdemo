@@ -20,13 +20,13 @@ return [
             'menu' => true,
             'icon_class' => 'fa fa-th',
         ],
-        'indexmanage' => [
+        'system' => [
             '_prop' => [
                 'permission' => SitemapAccess::ACCESS_REQUIRED,
                 'menu' => true,
                 'icon_class' => 'fa fa-th',
             ],
-            'school' => [
+            'indexannounce' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
@@ -35,7 +35,7 @@ return [
                         'method' => 'get',
                         'param' => '{optional?}',
                         'attr' => [
-                            'uses' => 'IndexSchoolController@index',
+                            'uses' => 'IndexAnnounceController@index',
                         ],
                     ],
                 ],
@@ -45,7 +45,7 @@ return [
                         'route' => [
                             'method' => 'get',
                             'attr' => [
-                                'uses' => 'IndexSchoolController@add',
+                                'uses' => 'IndexAnnounceController@add',
                             ],
                         ],
                     ],
@@ -55,29 +55,7 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'IndexSchoolController@ajax_add',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'get_town' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'get',
-                                'attr' => [
-                                    'uses' => 'SchoolListController@ajax_get_town',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'get_school' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'get',
-                                'attr' => [
-                                    'uses' => 'IndexSchoolController@ajax_get_school',
+                                    'uses' => 'IndexAnnounceController@ajax_add',
                                 ],
                             ],
                         ],
@@ -90,7 +68,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'IndexSchoolController@edit',
+                                'uses' => 'IndexAnnounceController@edit',
                             ],
                         ],
                     ],
@@ -100,29 +78,7 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'IndexSchoolController@ajax_edit',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'get_town' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'get',
-                                'attr' => [
-                                    'uses' => 'SchoolListController@ajax_get_town',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'get_school' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'get',
-                                'attr' => [
-                                    'uses' => 'IndexSchoolController@ajax_get_school',
+                                    'uses' => 'IndexAnnounceController@ajax_edit',
                                 ],
                             ],
                         ],
@@ -135,7 +91,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'IndexSchoolController@detail',
+                                'uses' => 'IndexAnnounceController@detail',
                             ],
                         ],
                     ],
@@ -146,42 +102,206 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'IndexSchoolController@ajax_delete',
+                                'uses' => 'IndexAnnounceController@ajax_delete',
                             ],
                         ],
                     ],
                 ],
-                'load_order' => [
+            ],
+            'tcdata' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'menu' => true,
+                    'icon_class' => 'fa fa-list-ul',
+                    'route' => [
+                        'method' => 'get',
+                        'param' => '{optional?}',
+                        'attr' => [
+                            'uses' => 'TCDataController@index',
+                        ],
+                    ],
+                ],
+                'add' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
                         'route' => [
-                            'method' => 'post',
+                            'method' => 'get',
                             'attr' => [
-                                'uses' => 'IndexSchoolController@ajax_load_order',
+                                'uses' => 'TCDataController@add',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'TCDataController@ajax_add',
+                                ],
                             ],
                         ],
                     ],
                 ],
-                'set_order' => [
+                'edit' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'TCDataController@edit',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'TCDataController@ajax_edit',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'detail' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'TCDataController@detail',
+                            ],
+                        ],
+                    ],
+                ],
+                'delete' => [
                     '_prop' => [
                         'permission' => SitemapAccess::INHERIT,
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'IndexSchoolController@ajax_set_order',
+                                'uses' => 'TCDataController@ajax_delete',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'pilist' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'menu' => true,
+                    'icon_class' => 'fa fa-list-ul',
+                    'route' => [
+                        'method' => 'get',
+                        'param' => '{optional?}',
+                        'attr' => [
+                            'uses' => 'PIListController@index',
+                        ],
+                    ],
+                ],
+                'add' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'attr' => [
+                                'uses' => 'PIListController@add',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'PIListController@ajax_add',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'get_department' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'get',
+                                'attr' => [
+                                    'uses' => 'PIListController@ajax_get_department',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'edit' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'PIListController@edit',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'PIListController@ajax_edit',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'get_department' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'get',
+                                'attr' => [
+                                    'uses' => 'PIListController@ajax_get_department',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'detail' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'PIListController@detail',
+                            ],
+                        ],
+                    ],
+                ],
+                'delete' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                            'method' => 'post',
+                            'attr' => [
+                                'uses' => 'PIListController@ajax_delete',
                             ],
                         ],
                     ],
                 ],
             ],
         ],
-        'data' => [
+        'activity' => [
             '_prop' => [
                 'permission' => SitemapAccess::ACCESS_REQUIRED,
                 'menu' => true,
                 'icon_class' => 'fa fa-folder',
             ],
-            'news' => [
+            'activitytype' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
@@ -190,7 +310,7 @@ return [
                         'method' => 'get',
                         'param' => '{optional?}',
                         'attr' => [
-                            'uses' => 'NewsController@index',
+                            'uses' => 'ActivityTypeController@index',
                         ],
                     ],
                 ],
@@ -200,7 +320,7 @@ return [
                         'route' => [
                             'method' => 'get',
                             'attr' => [
-                                'uses' => 'NewsController@add',
+                                'uses' => 'ActivityTypeController@add',
                             ],
                         ],
                     ],
@@ -210,7 +330,7 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'NewsController@ajax_add',
+                                    'uses' => 'ActivityTypeController@ajax_add',
                                 ],
                             ],
                         ],
@@ -223,7 +343,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'NewsController@edit',
+                                'uses' => 'ActivityTypeController@edit',
                             ],
                         ],
                     ],
@@ -233,7 +353,7 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'NewsController@ajax_edit',
+                                    'uses' => 'ActivityTypeController@ajax_edit',
                                 ],
                             ],
                         ],
@@ -246,7 +366,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'NewsController@detail',
+                                'uses' => 'ActivityTypeController@detail',
                             ],
                         ],
                     ],
@@ -257,13 +377,13 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'NewsController@ajax_delete',
+                                'uses' => 'ActivityTypeController@ajax_delete',
                             ],
                         ],
                     ],
                 ],
             ],
-            'tutor' => [
+            'activitylist' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
@@ -272,7 +392,7 @@ return [
                         'method' => 'get',
                         'param' => '{optional?}',
                         'attr' => [
-                            'uses' => 'TutorController@index',
+                            'uses' => 'ActivityListController@index',
                         ],
                     ],
                 ],
@@ -282,7 +402,7 @@ return [
                         'route' => [
                             'method' => 'get',
                             'attr' => [
-                                'uses' => 'TutorController@add',
+                                'uses' => 'ActivityListController@add',
                             ],
                         ],
                     ],
@@ -292,29 +412,18 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'TutorController@ajax_add',
+                                    'uses' => 'ActivityListController@ajax_add',
                                 ],
                             ],
                         ],
                     ],
-                    'get_town' => [
+                    'get_instrument' => [
                         '_prop' => [
                             'permission' => SitemapAccess::INHERIT,
                             'route' => [
                                 'method' => 'get',
                                 'attr' => [
-                                    'uses' => 'SchoolListController@ajax_get_town',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'get_school' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'get',
-                                'attr' => [
-                                    'uses' => 'IndexSchoolController@ajax_get_school',
+                                    'uses' => 'ActivityListController@ajax_get_instrument',
                                 ],
                             ],
                         ],
@@ -327,7 +436,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'TutorController@edit',
+                                'uses' => 'ActivityListController@edit',
                             ],
                         ],
                     ],
@@ -337,29 +446,18 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'TutorController@ajax_edit',
+                                    'uses' => 'ActivityListController@ajax_edit',
                                 ],
                             ],
                         ],
                     ],
-                    'get_town' => [
+                    'get_instrument' => [
                         '_prop' => [
                             'permission' => SitemapAccess::INHERIT,
                             'route' => [
                                 'method' => 'get',
                                 'attr' => [
-                                    'uses' => 'SchoolListController@ajax_get_town',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'get_school' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'get',
-                                'attr' => [
-                                    'uses' => 'IndexSchoolController@ajax_get_school',
+                                    'uses' => 'ActivityListController@ajax_get_instrument',
                                 ],
                             ],
                         ],
@@ -372,7 +470,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'TutorController@detail',
+                                'uses' => 'ActivityListController@detail',
                             ],
                         ],
                     ],
@@ -383,35 +481,59 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'TutorController@ajax_delete',
+                                'uses' => 'ActivityListController@ajax_delete',
                             ],
                         ],
                     ],
                 ],
-                'get_town' => [
+                'reservation' => [
                     '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
                         'route' => [
                             'method' => 'get',
+                            'param' => '{id}',
                             'attr' => [
-                                'uses' => 'SchoolListController@ajax_get_town',
+                                'uses' => 'ActivityReservationController@index',
+                            ],
+                        ],
+                    ],
+                    'cancel' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'ActivityReservationController@ajax_cancel',
+                                ],
                             ],
                         ],
                     ],
                 ],
-                'get_school' => [
+                'attend' => [
                     '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
                         'route' => [
                             'method' => 'get',
+                            'param' => '{id}',
                             'attr' => [
-                                'uses' => 'IndexSchoolController@ajax_get_school',
+                                'uses' => 'ActivityAttendController@index',
+                            ],
+                        ],
+                    ],
+                    'cancel' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'ActivityAttendController@ajax_attend',
+                                ],
                             ],
                         ],
                     ],
                 ],
             ],
-            'learning' => [
+            'activitypass' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
@@ -420,17 +542,18 @@ return [
                         'method' => 'get',
                         'param' => '{optional?}',
                         'attr' => [
-                            'uses' => 'LearningController@index',
+                            'uses' => 'ActivityPassController@index',
                         ],
                     ],
                 ],
-                'add' => [
+                'list' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
                         'route' => [
                             'method' => 'get',
+                            'param' => '{id}',
                             'attr' => [
-                                'uses' => 'LearningController@add',
+                                'uses' => 'ActivityPassController@list',
                             ],
                         ],
                     ],
@@ -440,126 +563,14 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'LearningController@ajax_add',
+                                    'uses' => 'ActivityPassController@ajax_pass',
                                 ],
-                            ],
-                        ],
-                    ],
-                    'get_town' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'get',
-                                'attr' => [
-                                    'uses' => 'SchoolListController@ajax_get_town',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'get_school' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'get',
-                                'attr' => [
-                                    'uses' => 'IndexSchoolController@ajax_get_school',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                'edit' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::ACCESS_REQUIRED,
-                        'route' => [
-                            'method' => 'get',
-                            'param' => '{id}',
-                            'attr' => [
-                                'uses' => 'LearningController@edit',
-                            ],
-                        ],
-                    ],
-                    'submit' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'post',
-                                'attr' => [
-                                    'uses' => 'LearningController@ajax_edit',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'get_town' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'get',
-                                'attr' => [
-                                    'uses' => 'SchoolListController@ajax_get_town',
-                                ],
-                            ],
-                        ],
-                    ],
-                    'get_school' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'get',
-                                'attr' => [
-                                    'uses' => 'IndexSchoolController@ajax_get_school',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                'detail' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::ACCESS_REQUIRED,
-                        'route' => [
-                            'method' => 'get',
-                            'param' => '{id}',
-                            'attr' => [
-                                'uses' => 'LearningController@detail',
-                            ],
-                        ],
-                    ],
-                ],
-                'delete' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'post',
-                            'attr' => [
-                                'uses' => 'LearningController@ajax_delete',
-                            ],
-                        ],
-                    ],
-                ],
-                'get_town' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'get',
-                            'attr' => [
-                                'uses' => 'SchoolListController@ajax_get_town',
-                            ],
-                        ],
-                    ],
-                ],
-                'get_school' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'get',
-                            'attr' => [
-                                'uses' => 'IndexSchoolController@ajax_get_school',
                             ],
                         ],
                     ],
                 ],
             ],
-            'video' => [
+            'activityreg' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
@@ -568,17 +579,18 @@ return [
                         'method' => 'get',
                         'param' => '{optional?}',
                         'attr' => [
-                            'uses' => 'VideoController@index',
+                            'uses' => 'ActivityRegController@index',
                         ],
                     ],
                 ],
-                'add' => [
+                'detail' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
                         'route' => [
                             'method' => 'get',
+                            'param' => '{id}',
                             'attr' => [
-                                'uses' => 'VideoController@add',
+                                'uses' => 'ActivityRegController@detail',
                             ],
                         ],
                     ],
@@ -588,7 +600,50 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'VideoController@ajax_add',
+                                    'uses' => 'ActivityRegController@ajax_edit',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+        'instrument' => [
+            '_prop' => [
+                'permission' => SitemapAccess::ACCESS_REQUIRED,
+                'menu' => true,
+                'icon_class' => 'fa fa-calendar',
+            ],
+            'site' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'menu' => true,
+                    'icon_class' => 'fa fa-table',
+                    'route' => [
+                        'method' => 'get',
+                        'param' => '{optional?}',
+                        'attr' => [
+                            'uses' => 'InstrumentSiteController@index',
+                        ],
+                    ],
+                ],
+                'add' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'attr' => [
+                                'uses' => 'InstrumentSiteController@add',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentSiteController@ajax_add',
                                 ],
                             ],
                         ],
@@ -601,7 +656,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'VideoController@edit',
+                                'uses' => 'InstrumentSiteController@edit',
                             ],
                         ],
                     ],
@@ -611,7 +666,7 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'VideoController@ajax_edit',
+                                    'uses' => 'InstrumentSiteController@ajax_edit',
                                 ],
                             ],
                         ],
@@ -624,7 +679,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'VideoController@detail',
+                                'uses' => 'InstrumentSiteController@detail',
                             ],
                         ],
                     ],
@@ -635,28 +690,104 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'VideoController@ajax_delete',
+                                'uses' => 'InstrumentSiteController@ajax_delete',
                             ],
                         ],
                     ],
                 ],
             ],
-        ],
-        'plan' => [
-            '_prop' => [
-                'permission' => SitemapAccess::ACCESS_REQUIRED,
-                'menu' => true,
-                'icon_class' => 'fa fa-calendar',
-            ],
-            'plan' => [
+            'section' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-sitemap',
+                    'icon_class' => 'fa fa-hand-o-right',
                     'route' => [
                         'method' => 'get',
+                        'param' => '{optional?}',
                         'attr' => [
-                            'uses' => 'PlanController@index',
+                            'uses' => 'InstrumentSectionController@index',
+                        ],
+                    ],
+                ],
+                'add' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'attr' => [
+                                'uses' => 'InstrumentSectionController@add',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentSectionController@ajax_add',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'edit' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'InstrumentSectionController@edit',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentSectionController@ajax_edit',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'detail' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'InstrumentSectionController@detail',
+                            ],
+                        ],
+                    ],
+                ],
+                'delete' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                            'method' => 'post',
+                            'attr' => [
+                                'uses' => 'InstrumentSectionController@ajax_delete',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'vacation' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'menu' => true,
+                    'icon_class' => 'fa fa-hand-o-right',
+                    'route' => [
+                        'method' => 'get',
+                        'param' => '{optional?}',
+                        'attr' => [
+                            'uses' => 'InstrumentAllVacationController@index',
                         ],
                     ],
                 ],
@@ -666,117 +797,13 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'PlanController@ajax_add',
+                                'uses' => 'InstrumentAllVacationController@ajax_edit',
                             ],
                         ],
                     ],
                 ],
             ],
-            'plantime' => [
-                '_prop' => [
-                    'permission' => SitemapAccess::ACCESS_REQUIRED,
-                    'menu' => true,
-                    'icon_class' => 'fa fa-table',
-                    'route' => [
-                        'method' => 'get',
-                        'param' => '{optional?}',
-                        'attr' => [
-                            'uses' => 'PlanTimeController@index',
-                        ],
-                    ],
-                ],
-                'add' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::ACCESS_REQUIRED,
-                        'route' => [
-                            'method' => 'get',
-                            'attr' => [
-                                'uses' => 'PlanTimeController@add',
-                            ],
-                        ],
-                    ],
-                    'submit' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'post',
-                                'attr' => [
-                                    'uses' => 'PlanTimeController@ajax_add',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                'edit' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::ACCESS_REQUIRED,
-                        'route' => [
-                            'method' => 'get',
-                            'param' => '{id}',
-                            'attr' => [
-                                'uses' => 'PlanTimeController@edit',
-                            ],
-                        ],
-                    ],
-                    'submit' => [
-                        '_prop' => [
-                            'permission' => SitemapAccess::INHERIT,
-                            'route' => [
-                                'method' => 'post',
-                                'attr' => [
-                                    'uses' => 'PlanTimeController@ajax_edit',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                'detail' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::ACCESS_REQUIRED,
-                        'route' => [
-                            'method' => 'get',
-                            'param' => '{id}',
-                            'attr' => [
-                                'uses' => 'PlanTimeController@detail',
-                            ],
-                        ],
-                    ],
-                ],
-                'delete' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'post',
-                            'attr' => [
-                                'uses' => 'PlanTimeController@ajax_delete',
-                            ],
-                        ],
-                    ],
-                ],
-                'load_order' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::ACCESS_REQUIRED,
-                        'route' => [
-                            'method' => 'post',
-                            'attr' => [
-                                'uses' => 'PlanTimeController@ajax_load_order',
-                            ],
-                        ],
-                    ],
-                ],
-                'set_order' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'post',
-                            'attr' => [
-                                'uses' => 'PlanTimeController@ajax_set_order',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-            'plantarget' => [
+            'instrumenttype' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
@@ -785,7 +812,7 @@ return [
                         'method' => 'get',
                         'param' => '{optional?}',
                         'attr' => [
-                            'uses' => 'PlanTargetController@index',
+                            'uses' => 'InstrumentTypeController@index',
                         ],
                     ],
                 ],
@@ -795,7 +822,7 @@ return [
                         'route' => [
                             'method' => 'get',
                             'attr' => [
-                                'uses' => 'PlanTargetController@add',
+                                'uses' => 'InstrumentTypeController@add',
                             ],
                         ],
                     ],
@@ -805,7 +832,7 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'PlanTargetController@ajax_add',
+                                    'uses' => 'InstrumentTypeController@ajax_add',
                                 ],
                             ],
                         ],
@@ -818,7 +845,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'PlanTargetController@edit',
+                                'uses' => 'InstrumentTypeController@edit',
                             ],
                         ],
                     ],
@@ -828,7 +855,7 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'PlanTargetController@ajax_edit',
+                                    'uses' => 'InstrumentTypeController@ajax_edit',
                                 ],
                             ],
                         ],
@@ -841,7 +868,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'PlanTargetController@detail',
+                                'uses' => 'InstrumentTypeController@detail',
                             ],
                         ],
                     ],
@@ -852,51 +879,67 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'PlanTargetController@ajax_delete',
-                            ],
-                        ],
-                    ],
-                ],
-                'load_order' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::ACCESS_REQUIRED,
-                        'route' => [
-                            'method' => 'post',
-                            'attr' => [
-                                'uses' => 'PlanTargetController@ajax_load_order',
-                            ],
-                        ],
-                    ],
-                ],
-                'set_order' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'post',
-                            'attr' => [
-                                'uses' => 'PlanTargetController@ajax_set_order',
+                                'uses' => 'InstrumentTypeController@ajax_delete',
                             ],
                         ],
                     ],
                 ],
             ],
-        ],
-        'school' => [
-            '_prop' => [
-                'permission' => SitemapAccess::ACCESS_REQUIRED,
-                'menu' => true,
-                'icon_class' => 'fa fa-bar-chart-o',
-            ],
-            'schoolplan' => [
+            'instrument' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'fa fa-calendar',
+                    'icon_class' => 'fa fa-hand-o-right',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
                         'attr' => [
-                            'uses' => 'SchoolPlanController@index',
+                            'uses' => 'InstrumentController@index',
+                        ],
+                    ],
+                ],
+                'add' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'attr' => [
+                                'uses' => 'InstrumentController@add',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentController@ajax_add',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'edit' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'InstrumentController@edit',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentController@ajax_edit',
+                                ],
+                            ],
                         ],
                     ],
                 ],
@@ -907,7 +950,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'SchoolPlanController@detail',
+                                'uses' => 'InstrumentController@detail',
                             ],
                         ],
                     ],
@@ -918,147 +961,233 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'SchoolPlanController@ajax_delete',
+                                'uses' => 'InstrumentController@ajax_delete',
                             ],
                         ],
                     ],
                 ],
-                'get_town' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'get',
-                            'attr' => [
-                                'uses' => 'SchoolListController@ajax_get_town',
-                            ],
-                        ],
-                    ],
-                ],
-                'get_school' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'get',
-                            'attr' => [
-                                'uses' => 'IndexSchoolController@ajax_get_school',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-            'schoolnews' => [
-                '_prop' => [
-                    'permission' => SitemapAccess::ACCESS_REQUIRED,
-                    'menu' => true,
-                    'icon_class' => 'fa fa-bullhorn',
-                    'route' => [
-                        'method' => 'get',
-                        'param' => '{optional?}',
-                        'attr' => [
-                            'uses' => 'SchoolNewsController@index',
-                        ],
-                    ],
-                ],
-                'detail' => [
+                'vacation' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'menu' => true,
+                        'icon_class' => 'fa fa-hand-o-right',
                         'route' => [
                             'method' => 'get',
-                            'param' => '{id}',
+                            'param' => '{optional?}',
                             'attr' => [
-                                'uses' => 'NewsController@detail',
+                                'uses' => 'InstrumentVacationController@index',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentVacationController@ajax_edit',
+                                ],
                             ],
                         ],
                     ],
                 ],
-                'delete' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'post',
-                            'attr' => [
-                                'uses' => 'NewsController@ajax_delete',
-                            ],
-                        ],
-                    ],
-                ],
-                'get_town' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'get',
-                            'attr' => [
-                                'uses' => 'SchoolListController@ajax_get_town',
-                            ],
-                        ],
-                    ],
-                ],
-                'get_school' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'get',
-                            'attr' => [
-                                'uses' => 'IndexSchoolController@ajax_get_school',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-            'schoolexecute' => [
-                '_prop' => [
-                    'permission' => SitemapAccess::ACCESS_REQUIRED,
-                    'menu' => true,
-                    'icon_class' => 'fa fa-pencil-square-o',
-                    'route' => [
-                        'method' => 'get',
-                        'param' => '{optional?}',
-                        'attr' => [
-                            'uses' => 'SchoolExecuteController@index',
-                        ],
-                    ],
-                ],
-                'detail' => [
+                'rate' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'menu' => true,
+                        'icon_class' => 'fa fa-hand-o-right',
                         'route' => [
                             'method' => 'get',
-                            'param' => '{id}',
+                            'param' => '{optional?}',
                             'attr' => [
-                                'uses' => 'SchoolExecuteController@detail',
+                                'uses' => 'InstrumentRateController@index',
+                            ],
+                        ],
+                    ],
+                    'edit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::ACCESS_REQUIRED,
+                            'route' => [
+                                'method' => 'get',
+                                'param' => '{id}',
+                                'attr' => [
+                                    'uses' => 'InstrumentRateController@edit',
+                                ],
+                            ],
+                        ],
+                        'submit' => [
+                            '_prop' => [
+                                'permission' => SitemapAccess::INHERIT,
+                                'route' => [
+                                    'method' => 'post',
+                                    'attr' => [
+                                        'uses' => 'InstrumentRateController@ajax_edit',
+                                    ],
+                                ],
                             ],
                         ],
                     ],
                 ],
-                'delete' => [
+                'reservation' => [
                     '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'menu' => true,
+                        'icon_class' => 'fa fa-hand-o-right',
                         'route' => [
-                            'method' => 'post',
+                            'method' => 'get',
+                            'param' => '{optional?}',
                             'attr' => [
-                                'uses' => 'SchoolExecuteController@ajax_delete',
+                                'uses' => 'InstrumentReservationController@index',
+                            ],
+                        ],
+                    ],
+                    'complete' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::ACCESS_REQUIRED,
+                            'route' => [
+                                'method' => 'get',
+                                'param' => '{id}',
+                                'attr' => [
+                                    'uses' => 'InstrumentReservationController@edit',
+                                ],
+                            ],
+                        ],
+                        'submit' => [
+                            '_prop' => [
+                                'permission' => SitemapAccess::INHERIT,
+                                'route' => [
+                                    'method' => 'post',
+                                    'attr' => [
+                                        'uses' => 'InstrumentReservationController@ajax_complete',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'delete' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentReservationController@ajax_delete',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'notattend' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentReservationController@ajax_notattend',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'removewait' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentReservationController@ajax_removewait',
+                                ],
                             ],
                         ],
                     ],
                 ],
-                'get_town' => [
+                'payment' => [
                     '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'menu' => true,
+                        'icon_class' => 'fa fa-hand-o-right',
                         'route' => [
                             'method' => 'get',
+                            'param' => '{optional?}',
                             'attr' => [
-                                'uses' => 'SchoolListController@ajax_get_town',
+                                'uses' => 'InstrumentPaymentController@index',
                             ],
                         ],
                     ],
-                ],
-                'get_school' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'get',
-                            'attr' => [
-                                'uses' => 'IndexSchoolController@ajax_get_school',
+                    'complete' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::ACCESS_REQUIRED,
+                            'route' => [
+                                'method' => 'get',
+                                'param' => '{id}',
+                                'attr' => [
+                                    'uses' => 'InstrumentPaymentController@edit',
+                                ],
+                            ],
+                        ],
+                        'submit' => [
+                            '_prop' => [
+                                'permission' => SitemapAccess::INHERIT,
+                                'route' => [
+                                    'method' => 'post',
+                                    'attr' => [
+                                        'uses' => 'InstrumentPaymentController@ajax_complete',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'confirm' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::ACCESS_REQUIRED,
+                            'route' => [
+                                'method' => 'get',
+                                'param' => '{id}',
+                                'attr' => [
+                                    'uses' => 'InstrumentPaymentController@confirm',
+                                ],
+                            ],
+                        ],
+                        'submit' => [
+                            '_prop' => [
+                                'permission' => SitemapAccess::INHERIT,
+                                'route' => [
+                                    'method' => 'post',
+                                    'attr' => [
+                                        'uses' => 'InstrumentPaymentController@ajax_confirm',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'reminder' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::ACCESS_REQUIRED,
+                            'route' => [
+                                'method' => 'get',
+                                'param' => '{id}',
+                                'attr' => [
+                                    'uses' => 'InstrumentPaymentController@reminder',
+                                ],
+                            ],
+                        ],
+                        'submit' => [
+                            '_prop' => [
+                                'permission' => SitemapAccess::INHERIT,
+                                'route' => [
+                                    'method' => 'post',
+                                    'attr' => [
+                                        'uses' => 'InstrumentPaymentController@ajax_reminder',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'output' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentReservationController@ajax_output',
+                                ],
                             ],
                         ],
                     ],

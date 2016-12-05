@@ -20,13 +20,13 @@ return [
             'menu' => true,
             'icon_class' => 'fa fa-th',
         ],
-        'school' => [
+        'memberdata' => [
             '_prop' => [
                 'permission' => SitemapAccess::ACCESS_REQUIRED,
                 'menu' => true,
                 'icon_class' => 'fa fa-list-ul',
             ],
-            'list' => [
+            'protofolio' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
@@ -35,7 +35,7 @@ return [
                         'method' => 'get',
                         'param' => '{optional?}',
                         'attr' => [
-                            'uses' => 'SchoolListController@index',
+                            'uses' => 'MemberProtofolioController@index',
                         ],
                     ],
                 ],
@@ -45,7 +45,7 @@ return [
                         'route' => [
                             'method' => 'get',
                             'attr' => [
-                                'uses' => 'SchoolListController@add',
+                                'uses' => 'MemberProtofolioController@add',
                             ],
                         ],
                     ],
@@ -55,18 +55,29 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'SchoolListController@ajax_add',
+                                    'uses' => 'MemberProtofolioController@ajax_add',
                                 ],
                             ],
                         ],
                     ],
-                    'get_town' => [
+                    'get_department' => [
                         '_prop' => [
                             'permission' => SitemapAccess::INHERIT,
                             'route' => [
                                 'method' => 'get',
                                 'attr' => [
-                                    'uses' => 'SchoolListController@ajax_get_town',
+                                    'uses' => 'MemberProtofolioController@ajax_get_department',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'get_pi' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'get',
+                                'attr' => [
+                                    'uses' => 'MemberProtofolioController@ajax_get_pi',
                                 ],
                             ],
                         ],
@@ -79,7 +90,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'SchoolListController@edit',
+                                'uses' => 'MemberProtofolioController@edit',
                             ],
                         ],
                     ],
@@ -89,18 +100,29 @@ return [
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
-                                    'uses' => 'SchoolListController@ajax_edit',
+                                    'uses' => 'MemberProtofolioController@ajax_edit',
                                 ],
                             ],
                         ],
                     ],
-                    'get_town' => [
+                    'get_department' => [
                         '_prop' => [
                             'permission' => SitemapAccess::INHERIT,
                             'route' => [
                                 'method' => 'get',
                                 'attr' => [
-                                    'uses' => 'SchoolListController@ajax_get_town',
+                                    'uses' => 'MemberProtofolioController@ajax_get_department',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'get_pi' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'get',
+                                'attr' => [
+                                    'uses' => 'MemberProtofolioController@ajax_get_pi',
                                 ],
                             ],
                         ],
@@ -113,7 +135,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'SchoolListController@detail',
+                                'uses' => 'MemberProtofolioController@detail',
                             ],
                         ],
                     ],
@@ -124,29 +146,134 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'SchoolListController@ajax_delete',
+                                'uses' => 'MemberProtofolioController@ajax_delete',
                             ],
                         ],
                     ],
                 ],
-                'get_town' => [
+                'get_department' => [
                     '_prop' => [
                         'permission' => SitemapAccess::INHERIT,
                         'route' => [
                             'method' => 'get',
                             'attr' => [
-                                'uses' => 'SchoolListController@ajax_get_town',
+                                'uses' => 'MemberProtofolioController@ajax_get_department',
                             ],
                         ],
                     ],
                 ],
-                'get_school' => [
+                'get_pi' => [
                     '_prop' => [
                         'permission' => SitemapAccess::INHERIT,
                         'route' => [
                             'method' => 'get',
                             'attr' => [
-                                'uses' => 'IndexSchoolController@ajax_get_school',
+                                'uses' => 'MemberProtofolioController@ajax_get_pi',
+                            ],
+                        ],
+                    ],
+                ],
+                'active' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'MemberProtofolioController@active',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'MemberProtofolioController@ajax_active',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'get_department' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'get',
+                                'attr' => [
+                                    'uses' => 'MemberProtofolioController@ajax_get_department',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'get_pi' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'get',
+                                'attr' => [
+                                    'uses' => 'MemberprotofolioController@ajax_get_pi',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'notice' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'MemberProtofolioController@notice',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'MemberProtofolioController@ajax_notice',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'reservationlog' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'MemberProtofolioController@reservationlog',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'error' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'menu' => true,
+                    'icon_class' => 'fa fa-list-alt',
+                    'route' => [
+                        'method' => 'get',
+                        'param' => '{optional?}',
+                        'attr' => [
+                            'uses' => 'MemberErrorController@index',
+                        ],
+                    ],
+                ],
+                'notice' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                            'method' => 'post',
+                            'attr' => [
+                                'uses' => 'MemberErrorController@ajax_notice',
                             ],
                         ],
                     ],
@@ -318,6 +445,32 @@ return [
                             'method' => 'post',
                             'attr' => [
                                 'uses' => 'AdminController@ajax_delete',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'adminlog' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'menu' => true,
+                    'icon_class' => 'fa fa-users',
+                    'route' => [
+                        'method' => 'get',
+                        'param' => '{optional?}',
+                        'attr' => [
+                            'uses' => 'AdminLogController@index',
+                        ],
+                    ],
+                ],
+                'detail' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'AdminLogController@detail',
                             ],
                         ],
                     ],
