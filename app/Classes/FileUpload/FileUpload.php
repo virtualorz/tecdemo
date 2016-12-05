@@ -67,6 +67,12 @@ class FileUpload {
         }
     }
 
+    public function getRootUrlABS() {
+
+        return Config::get('url.official') . 'files/';
+        
+    }
+
     public function getRootDir() {
         return rtrim(public_path(Config::get('fileupload.root_dir')), '/') . '/';
     }

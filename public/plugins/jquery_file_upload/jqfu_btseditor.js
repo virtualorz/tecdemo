@@ -21,6 +21,7 @@ function JqfuBtseditor(id, options) {
             url_uploader: urlUploader,
             url_uploader_delete: urlUploaderDelete,
             url_upload: urlUpload,
+            url_uploadABS: urlUploadABS,
             file_ext: _this.defaultSetting.ext,
             file_size: '10M',
             file_limit: 0,
@@ -107,7 +108,7 @@ function JqfuBtseditor(id, options) {
 
                 if (data.result.result == 'ok') {
                     $item.find('.upload-progress').remove();
-                    var src = _this.config.url_upload + data.result.file.dir + '/' + data.result.file.id + '.' + data.result.file.ext;
+                    var src = _this.config.url_uploadABS + data.result.file.dir + '/' + data.result.file.id + '.' + data.result.file.ext;
                     var $img = $('<img />').attr('src', src);
                     $item.find('.btseditor-item-pic img').remove();
                     $item.find('.btseditor-item-pic').prepend($img).data('file', data.result.file);

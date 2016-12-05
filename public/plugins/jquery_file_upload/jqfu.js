@@ -21,6 +21,7 @@ function Jqfu(id, options) {
             url_uploader: urlUploader,
             url_uploader_delete: urlUploaderDelete,
             url_upload: urlUpload,
+            url_uploadABS: urlUploadABS,
             file_ext: _this.defaultSetting.ext,
             file_size: '10M',
             file_limit: 0,
@@ -145,10 +146,10 @@ function Jqfu(id, options) {
                     data.context.data('file', data.result.file);
 
                     if ($.inArray(data.result.file.ext, ['jpg', 'jpeg', 'png', 'gif']) !== -1) {
-                        var $img = $('<img />').attr('src', _this.config.url_upload + data.result.file.dir + '/' + data.result.file.id + '_thumb.' + data.result.file.ext);
+                        var $img = $('<img />').attr('src', _this.config.url_uploadABS + data.result.file.dir + '/' + data.result.file.id + '_thumb.' + data.result.file.ext);
                         data.context.find('.jqfu-file-col1').append($img);
                     }
-                    var $link = $('<a></a>').attr('href', _this.config.url_upload + data.result.file.dir + '/' + data.result.file.id + '.' + data.result.file.ext).attr('target', '_blank');
+                    var $link = $('<a></a>').attr('href', _this.config.url_uploadABS + data.result.file.dir + '/' + data.result.file.id + '.' + data.result.file.ext).attr('target', '_blank');
                     $link.text(data.result.file.name);
                     data.context.find('.jqfu-file-name').empty().append($link);
 
