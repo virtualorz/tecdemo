@@ -26,9 +26,9 @@
                                 <td>{{ date('Y/m/d') }}</td>
                             </tr>
                             <tr>
-                                <th><span class="red">*</span>{{ trans('validation.attributes.title') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.name') }}</th>
                                 <td>
-                                    <input type="text" name="title" id="data-title" class="form-control required">
+                                    <input type="text" name="name" id="data-name" class="form-control required">
                                 </td>
                             </tr>
                             <tr>
@@ -93,7 +93,7 @@
         $('.btseditor').each(function () {
             new BtsEditor($(this).attr('id'), {
                 jqfu_file_size: "10 MB",
-                jqfu_category: 'indexannounce',
+                jqfu_category: 'tcdata',
                 menu: ["pic", "text", "video"]
             })
         });

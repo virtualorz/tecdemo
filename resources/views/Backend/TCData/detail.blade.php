@@ -1,5 +1,4 @@
 @extends('backend.layouts.master')
-@expr(ViewHelper::plugin()->load('btseditor'))
 
 @section('head')
 {!! ViewHelper::plugin()->renderCss() !!}
@@ -13,7 +12,6 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 @if(count($dataResult) > 0)
-                <form id="form1" method="post" action="{{ Sitemap::node()->getChildren('submit')->getUrl() }}">
                     <table class="table datatable_simple nohead">
                         <thead>
                             <tr>
@@ -27,22 +25,23 @@
                                 <td>{{ $dataResult['created_at'] }}</td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.title') }}</th>
+                                <th>{{ trans('validation.attributes.name') }}</th>
                                 <td>
-                                    <input type="text" name="title" id="data-title" class="form-control required" value="{{ $dataResult['title'] }}">
+                                    {{ $dataResult['name'] }}
                                 </td>
                             </tr>   
                             <tr>
                                 <th>{{ trans('validation.attributes.content') }}</th>
                                 <td>
-                                    <div name="content" id="content" class="btseditor" data-name="content" data-value="{{ $dataResult['content'] }}"></div>
+                                    @if(isset($dataResult['content']))
+                                    @include('backend.elements.btseditor', ['btseditorContent' => $dataResult['content']])
+                                    @endif
                                 </td>
                             </tr> 
                             <tr>
                                 <th>{{ trans('validation.attributes.enable') }}</th>
                                 <td>
-                                    <label class="check"><input type="radio" name="enable" id="data_enable_1" class="iradio required" value="1" @if($dataResult['enable'] == 1) checked @endif /> {{ trans('enum.enable.1') }}</label>
-                                    <label class="check"><input type="radio" name="enable" id="data_enable_0" class="iradio required" value="0" @if($dataResult['enable'] == 0) checked @endif /> {{ trans('enum.enable.0') }}</label> 
+                                    {{ trans('enum.enable.'.$dataResult['enable']) }}
                                 </td>
                             </tr> 
                             <tr>
@@ -52,14 +51,11 @@
                             <tr>
                                 <th>&nbsp;</th>
                                 <td> 
-                                    <input type="hidden" name="id" value="{{ $dataResult['id'] }}" />
-                                    {!! ViewHelper::button('submit') !!}
-                                    {!! ViewHelper::button('cancel') !!}
+                                    {!! ViewHelper::button('back') !!}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </form>
                 @else
                 <div align="center">{{ trans('message.info.norecord') }}</div>
                 @endif
@@ -80,28 +76,8 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        initValidation();
-        initBtsEditor();
+        
     });
     
-    function initValidation() {
-        $('#form1').validate({
-            submitHandler: function (form) {
-                if (ajaxRequest.submit(form, {
-                }) === false) {
-                    return false;
-                }
-            }
-        });
-    }
-    function initBtsEditor() {
-        $('.btseditor').each(function () {
-            new BtsEditor($(this).attr('id'), {
-                jqfu_file_size: "10 MB",
-                jqfu_category: 'indexannounce',
-                menu: ["pic", "text", "video"]
-            })
-        });
-    }
 </script>
 @endsection

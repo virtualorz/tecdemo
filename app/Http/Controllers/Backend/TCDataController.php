@@ -17,13 +17,13 @@ use Log;
 use FileUpload;
 use Mail;
 
-class IndexAnnounceController extends Controller {
+class TCDataController extends Controller {
 
     public function index() {
 
-        $listResult = DB::table('system_index_notice');
+        $listResult = DB::table('system_tc_data');
 
-        $listResult = $listResult->select('id','title',DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as created_at'),'enable')
+        $listResult = $listResult->select('id','name',DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as created_at'),'enable')
                                     ->orderBy('id','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
@@ -40,10 +40,10 @@ class IndexAnnounceController extends Controller {
 
     public function edit() {
         $id = Route::input('id', 0);
-        $dataResult = DB::table('system_index_notice')
-                            ->select('system_index_notice.id','system_index_notice.created_at','system_index_notice.title','system_index_notice.content','system_index_notice.enable','member_admin.name as created_admin_name')
-                            ->leftJoin('member_admin','system_index_notice.create_admin_id','=','member_admin.id')
-                            ->where('system_index_notice.id',$id)
+        $dataResult = DB::table('system_tc_data')
+                            ->select('system_tc_data.id','system_tc_data.created_at','system_tc_data.name','system_tc_data.content','system_tc_data.enable','member_admin.name as created_admin_name')
+                            ->leftJoin('member_admin','system_tc_data.create_admin_id','=','member_admin.id')
+                            ->where('system_tc_data.id',$id)
                             ->get();
 
         $this->view->with('dataResult', $dataResult[0]);
@@ -53,10 +53,10 @@ class IndexAnnounceController extends Controller {
 
     public function detail() {
         $id = Route::input('id', 0);
-        $dataResult = DB::table('system_index_notice')
-                            ->select('system_index_notice.id','system_index_notice.created_at','system_index_notice.title','system_index_notice.content','system_index_notice.enable','member_admin.name as created_admin_name')
-                            ->leftJoin('member_admin','system_index_notice.create_admin_id','=','member_admin.id')
-                            ->where('system_index_notice.id',$id)
+        $dataResult = DB::table('system_tc_data')
+                            ->select('system_tc_data.id','system_tc_data.created_at','system_tc_data.name','system_tc_data.content','system_tc_data.enable','member_admin.name as created_admin_name')
+                            ->leftJoin('member_admin','system_tc_data.create_admin_id','=','member_admin.id')
+                            ->where('system_tc_data.id',$id)
                             ->get();
         if (count($dataResult[0]) > 0) {
             //$dataResult[0][0]['created_at'] = (new DateTime($dataResult[0][0]['created_at']))->format('Y/m/d');
@@ -72,7 +72,7 @@ class IndexAnnounceController extends Controller {
     public function ajax_add() {
         $invalid = [];
         $validator = Validator::make(Request::all(), [
-                    'title' => 'string|required|max:32',
+                    'name' => 'string|required|max:32',
                     'content' => 'string|required',
                     'enable' => 'integer|required',
         ]);
@@ -89,22 +89,22 @@ class IndexAnnounceController extends Controller {
         $content = FileUpload::moveEditor(Request::input('content'));
         try {
             DB::transaction(function()use($content){
-                $id = DB::table('system_index_notice')
+                $id = DB::table('system_tc_data')
                         ->insertGetId(
                             array('created_at'=>date('Y-m-d H:i:s'),
                                     'updated_at'=>date('Y-m-d H:i:s'),
-                                    'title'=>Request::input('title'),
+                                    'name'=>Request::input('name'),
                                     'content'=>$content,
                                     'enable'=>Request::input('enable'),
                                     'create_admin_id'=>User::id(),
                                     'update_admin_id'=>User::id()
                             )
                         );
-                $result_after = DB::table('system_index_notice')
+                $result_after = DB::table('system_tc_data')
                                 ->where('id',$id)
                                 ->get();
                 DBProcedure::writeLog([
-                    'table' => 'system_index_notice',
+                    'table' => 'system_tc_data',
                     'operator' => DBOperator::OP_INSERT,
                     'data_after' => isset($result_after[0]) ? $result_after[0] : [],
                     'admin_id' => User::id()
@@ -125,7 +125,7 @@ class IndexAnnounceController extends Controller {
 
     public function ajax_edit() {
         $validator = Validator::make(Request::all(), [
-                    'title' => 'string|required|max:32',
+                    'name' => 'string|required|max:32',
                     'content' => 'string|required',
                     'enable' => 'integer|required',
         ]);
@@ -140,21 +140,21 @@ class IndexAnnounceController extends Controller {
         $content = FileUpload::moveEditor(Request::input('content'));
         try {
             DB::transaction(function()use($content){
-                $result_before = DB::table('system_index_notice')
+                $result_before = DB::table('system_tc_data')
                                     ->where('id',Request::input('id'))
                                     ->get();
-                DB::table('system_index_notice')
+                DB::table('system_tc_data')
                     ->where('id',Request::input('id'))
-                    ->update(['title'=>Request::input('title'),
+                    ->update(['name'=>Request::input('name'),
                                 'content'=>$content,
                                 'enable'=>Request::input('enable'),
                                 'update_admin_id'=>User::id()
                     ]);
-                $result_after = DB::table('system_index_notice')
+                $result_after = DB::table('system_tc_data')
                                     ->where('id',Request::input('id'))
                                     ->get();
                 DBProcedure::writeLog([
-                    'table' => 'system_index_notice',
+                    'table' => 'system_tc_data',
                     'operator' => DBOperator::OP_UPDATE,
                     'data_before' => isset($result_before[0]) ? $result_before[0] : [],
                     'data_after' => isset($result_after[0]) ? $result_after[0] : [],
@@ -192,14 +192,14 @@ class IndexAnnounceController extends Controller {
             foreach ($ids as $k => $v) {
                 $id = $v;
 
-                $result_before = DB::table('system_index_notice')
+                $result_before = DB::table('system_tc_data')
                                     ->where('id',$id)
                                     ->get();
-                DB::table('system_index_notice')
+                DB::table('system_tc_data')
                     ->where('id',$id)
                     ->delete();
                 DBProcedure::writeLog([
-                    'table' => 'system_index_notice',
+                    'table' => 'system_tc_data',
                     'operator' => DBOperator::OP_DELETE,
                     'data_before' => isset($result_before[0]) ? $result_before[0] : [],
                     'admin_id' => User::id()
