@@ -31,20 +31,6 @@
                                 </td>
                             </tr>   
                             <tr>
-                                <th>{{ trans('validation.attributes.content') }}</th>
-                                <td>
-                                    @if(isset($dataResult['content']))
-                                    @include('backend.elements.btseditor', ['btseditorContent' => $dataResult['content']])
-                                    @endif
-                                </td>
-                            </tr> 
-                            <tr>
-                                <th>{{ trans('validation.attributes.enable') }}</th>
-                                <td>
-                                    {{ trans('enum.enable.'.$dataResult['enable']) }}
-                                </td>
-                            </tr> 
-                            <tr>
                                 <th>{{ trans('validation.attributes.create_admin_id') }}</th>
                                 <td>{{ $dataResult['created_admin_name'] }}</td>
                             </tr>

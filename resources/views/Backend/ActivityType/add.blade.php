@@ -11,7 +11,7 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-body">
-                @if(count($dataResult) > 0)
+                <form id="form1" method="post" action="{{ Sitemap::node()->getChildren('submit')->getUrl() }}">
                     <table class="table datatable_simple nohead">
                         <thead>
                             <tr>
@@ -22,43 +22,28 @@
                         <tbody>
                             <tr>
                                 <th width="15%">{{ trans('validation.attributes.created_at') }}</th>
-                                <td>{{ $dataResult['created_at'] }}</td>
+                                <td>{{ date('Y/m/d') }}</td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.name') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.name') }}</th>
                                 <td>
-                                    {{ $dataResult['name'] }}
+                                    <input type="text" name="name" id="data-name" class="form-control required">
                                 </td>
-                            </tr>   
-                            <tr>
-                                <th>{{ trans('validation.attributes.content') }}</th>
-                                <td>
-                                    @if(isset($dataResult['content']))
-                                    @include('backend.elements.btseditor', ['btseditorContent' => $dataResult['content']])
-                                    @endif
-                                </td>
-                            </tr> 
-                            <tr>
-                                <th>{{ trans('validation.attributes.enable') }}</th>
-                                <td>
-                                    {{ trans('enum.enable.'.$dataResult['enable']) }}
-                                </td>
-                            </tr> 
+                            </tr>
                             <tr>
                                 <th>{{ trans('validation.attributes.create_admin_id') }}</th>
-                                <td>{{ $dataResult['created_admin_name'] }}</td>
+                                <td>{{ User::get('name', '') }}</td>
                             </tr>
                             <tr>
                                 <th>&nbsp;</th>
                                 <td> 
-                                    {!! ViewHelper::button('back') !!}
+                                    {!! ViewHelper::button('submit') !!}
+                                    {!! ViewHelper::button('cancel') !!}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                @else
-                <div align="center">{{ trans('message.info.norecord') }}</div>
-                @endif
+                </form>
             </div>
         </div>
     </div>
@@ -75,8 +60,17 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        
+        initValidation();
     });
-    
+    function initValidation() {
+        $('#form1').validate({
+            submitHandler: function (form) {
+                if (ajaxRequest.submit(form, {
+                }) === false) {
+                    return false;
+                }
+            }
+        });
+    }
 </script>
 @endsection
