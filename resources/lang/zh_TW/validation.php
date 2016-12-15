@@ -451,6 +451,7 @@ return [
         'name-school' => '校名',
         'name-stage' => '階段名稱',
         'name-target' => '指標名稱',
+        'name-contact' => '承辦人員姓名',
         #
         #order
         'order' => '排序',
@@ -469,6 +470,10 @@ return [
         #photo
         'photo' => '照片',
         #
+        #phone
+        'phone' => '聯絡電話',
+        'phone-contact' => '承辦人員電話', 
+        #
         #reply
         'reply-content' => '回覆內容',
         'reply-dt' => '回覆日期',
@@ -483,6 +488,10 @@ return [
         'sale_count' => '銷售數量',
         'school' => '學校',
         'school_others' => '其他學校',
+        #
+        #system
+        'system-department' => '部門',
+        'system-organize' => '單位',
         #
         #tel
         'tel' => '電話',

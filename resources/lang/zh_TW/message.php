@@ -33,6 +33,7 @@ return [
         'forget_no_member' => '查無此會員',
         'unknow' => '發生未知錯誤',
         'youtube_url_error' => 'Youtube連結錯誤!',
+        'PI_exist' => 'PI資料重複請重新輸入',
     ],
     'question' => [
         'logout' => '是否要登出?',
