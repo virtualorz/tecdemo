@@ -38,50 +38,20 @@ return [
         3=>'南',
         4=>'東',
     ],
-    'admin_export-type' => [
-        1 => '課程報名列表',
-        2 => '課程統計資料',
-        3 => '會員列表',
-        4 => '索取紙本課程表',
-        5 => '過期課程列表',
+    'level' => [
+        1=>'1',
+        2=>'2',
+        3=>'3',
+        4=>'4'
     ],
-    'course_class-class_way' => [
-        1 => "課室授課",
-        2 => "遠距教學(TP教室上課)",
-        3 => "Virtual",
+    'pass_type' => [
+        1=>'直接通過',
+        2=>'手動審核',
     ],
-    'course_class-class_time' => [
-        1 => "白天班",
-        2 => "假日班",
-        3 => "夜間班",
-        9 => "夜間24班",
-        10 => "夜間135班",
-        4 => "包班",
-        5 => "周六班",
-        6 => "周日班",
-        7 => "周五周六班",
-        8 => "遠端學習班(英文授課)"
+    'permission' => [
+        1=>'上班時間',
+        2=>'平日夜間',
+        3=>'假日',
+        4=>'長假期',
     ],
-    'contact_ask_course_price-know_from' => [
-        1 => "google搜尋",
-        2 => "Facebook",
-        3 => "其他搜尋引擎",
-        4 => "eDM",
-        5 => "同事介紹",
-        6 => "朋友介紹",
-        7 => "TP型錄",
-        8 => "其他(請說明來源)"
-    ],
-    'aboutus_partner-aboutus_partner_cate_id' => [
-        1 => "Technology Partners",
-        2 => "Test Centers",
-        3 => "Accreditation Centers",
-    ],
-    'tempate_cate' => [
-        1 => ['id'=>"W",'name'=>"網站"],
-        2 => ['id'=>"G",'name'=>"平面"],
-    ],
-    'label' => [
-        'enable' => [0=>"danger",1=>"success"],
-    ]
 ];

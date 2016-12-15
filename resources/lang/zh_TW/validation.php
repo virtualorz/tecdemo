@@ -149,6 +149,12 @@ return [
         #
         #aboutus_training
         'aboutus_training-content' => '編輯器內容',
+        #activity
+        'activity_date' => '活動日期',
+        'activity_name' => '活動名稱',
+        'activity_id' => '活動編號',
+        'activity_type' => '活動類型',
+        'activity_content' => '活動說明',
         #
         #admin
         'admin-account' => '帳號',
@@ -346,6 +352,9 @@ return [
         'edm-content' => '編輯器內容',
         'edm-url' => '網址',
         #
+        #end_dt
+        'end_dt' => '結束日期',
+        #
         #execute
         'execute_time' => '執行日期',
         'execute_member' => '參與對象',
@@ -392,6 +401,10 @@ return [
         #image
         'image-main' => '主圖',
         #
+        #instrument
+        'instrument' => '儀器',
+        'instrument_name' => '儀器名稱',
+        #
         #item
         'item' => '項目',
         'item-add' => '已加入項目',
@@ -404,6 +417,9 @@ return [
         'is_reply' => '是否回覆',
         'is_notice' => '使否為公告',
         'item_count' => '數量',
+        #
+        #level
+        'level' => '等級',
         #
         #location
         'location' => '地區',
@@ -453,8 +469,16 @@ return [
         'name-target' => '指標名稱',
         'name-contact' => '承辦人員姓名',
         #
+        #open
+        'open_instrument' => '通過後可開通的設備',
+        'open_instrument_add' => '已加入的設備',
+        #
         #order
         'order' => '排序',
+        #
+        #pass
+        'pass_type' => '通過方式',
+        'pass_condition' => '通過條件',
         #
         #pay_status
         'pay_status' => '付款狀態',
@@ -467,12 +491,18 @@ return [
         'plan-class' => '課程規劃',
         'plan-file' => '附件',
         #
+        #plateform
+        'plateform_name' => '平台名稱',
+        #
         #photo
         'photo' => '照片',
         #
         #phone
         'phone' => '聯絡電話',
         'phone-contact' => '承辦人員電話', 
+        #reservation
+        'reservation_count' => '預約人數',
+        'related_instrument' => '相關儀器',
         #
         #reply
         'reply-content' => '回覆內容',
@@ -484,10 +514,18 @@ return [
         'related_group' => '相關合作場域 / 團體',
         'related_web' => '相關網站',
         #
+        #related_plateform
+        'related_plateform' => '相關平台',
+        'related_plateform_add' => '已加入相關平台',
+        #
         #sale
         'sale_count' => '銷售數量',
         'school' => '學校',
         'school_others' => '其他學校',
+        'score' => '學分數',
+        #
+        #start_dt
+        'start_dt' => '開始日期',
         #
         #system
         'system-department' => '部門',
@@ -529,6 +567,8 @@ return [
         #ts_user_tabs
         'ts_user_tabs-name' => '名稱',
         'ts_user_tabs-content' => '編輯器內容',
+        #time
+        'time' => '時數',
         #
         #video
         'video_date' => '影片日期',

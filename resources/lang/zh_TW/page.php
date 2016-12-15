@@ -56,6 +56,7 @@ return [
         'related_course' => '前往相關課程',
         'course_qa' => '課後問券調查',
         'notice' => '通知',
+        'add_list' => '加入列表',
     ],
     'title' => [
         'search' => '搜尋',
