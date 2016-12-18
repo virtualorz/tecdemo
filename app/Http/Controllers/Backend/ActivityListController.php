@@ -311,7 +311,7 @@ class ActivityListController extends Controller {
 
         $id = Request::input('id');
         $listResult = DB::table('instrument_data');
-        $listResult = $listResult->select('id','name')
+        $listResult = $listResult->select('id','instrument_platform_id','name')
                                     ->whereIn('instrument_platform_id',$id)
                                     ->get();
         

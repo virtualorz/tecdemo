@@ -202,6 +202,13 @@
 
         $(document).on("click",".del_plateform",function(){
             $(this).parent().parent().remove();
+            var remove_platefprm_id = $(this).attr('data-id');
+            $(".instrument").each(function(){
+                if($(this).attr('data-plateform') == remove_platefprm_id)
+                {
+                    $(this).parent().parent().remove();
+                }
+            });
             //更新平台儀器資料
             var relative_plateform = [];
             $(".relative_plateform").each(function() {
@@ -237,7 +244,7 @@
         $("#add_plateform").click(function(){
             if(typeof $("#related_plateform_add .plateform_"+$("#data-instrument_type").val()).html() == "undefined" && $("#data-instrument_type").val()!= "")
             {
-                var html="<tr class='plateform_"+$("#data-instrument_type").val()+"'><td>"+$("#data-instrument_type :selected").text()+"<input type='hidden' class='relative_plateform' name='relative_plateform[]' value='"+$("#data-instrument_type").val()+"'></td><td><input type='button' class='btn btn-default del_plateform' value='刪除'></td>";
+                var html="<tr class='plateform_"+$("#data-instrument_type").val()+"'><td>"+$("#data-instrument_type :selected").text()+"<input type='hidden' class='relative_plateform' name='relative_plateform[]' value='"+$("#data-instrument_type").val()+"'></td><td><input type='button' class='btn btn-default del_plateform' value='刪除' data-id='"+$("#data-instrument_type").val()+"'></td>";
                 $("#related_plateform_add").find(".dataTables_empty").parent().remove();
                 $("#related_plateform_add").append(html);
                 $("#data-instrument_type").val("");
@@ -260,7 +267,7 @@
                         $html = "<option value=''>{{trans('page.text.select_item')}}</option>";
                         for(var key in response)
                         {
-                            $html += "<option value='"+response[key]['id']+"'>"+response[key]['name']+"</option>";
+                            $html += "<option value='"+response[key]['id']+"' data-plateform='"+response[key]['instrument_platform_id']+"' >"+response[key]['name']+"</option>";
                         }
                         $("#data-instrument").html($html);
                         
@@ -273,7 +280,7 @@
         $("#add_instrument").click(function(){
             if(typeof $("#instrument_add .instrument_"+$("#data-instrument").val()+"_"+$("#data-permission").val()).html() == "undefined" && $("#data-instrument").val()!= "" && $("#data-permission").val()!= "")
             {
-                var html="<tr class='instrument_"+$("#data-instrument").val()+"_"+$("#data-permission").val()+"'><td>"+$("#data-instrument :selected").text()+"<input type='hidden' class='instrument' name='instrument[]' value='"+$("#data-instrument").val()+"'></td><td>"+$("#data-permission :selected").text()+"<input type='hidden' class='instrument_permission' name='instrument_permission[]' value='"+$("#data-permission").val()+"'></td><td><input type='button' class='btn btn-default del_instrument' value='刪除'></td>";
+                var html="<tr class='instrument_"+$("#data-instrument").val()+"_"+$("#data-permission").val()+"'><td>"+$("#data-instrument :selected").text()+"<input type='hidden' class='instrument' name='instrument[]' value='"+$("#data-instrument").val()+"' data-plateform='"+$("#data-instrument :selected").attr('data-plateform')+"'></td><td>"+$("#data-permission :selected").text()+"<input type='hidden' class='instrument_permission' name='instrument_permission[]' value='"+$("#data-permission").val()+"'></td><td><input type='button' class='btn btn-default del_instrument' value='刪除'></td>";
                 $("#instrument_add").find(".dataTables_empty").parent().remove();
                 $("#instrument_add").append(html);
                 $("#data-instrument").val("");
