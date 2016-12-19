@@ -46,7 +46,7 @@ class ActivityListController extends Controller {
                                             DB::raw('DATE_FORMAT(activity_data.created_at, "%Y-%m-%d") as created_at'),
                                             'activity_data.activity_name',
                                             'activity_data.time',
-                                            DB::raw('count(activity_reservation_data.id) as reservation_count'))
+                                            DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
                                     ->leftJoin('activity_reservation_data','activity_reservation_data.activity_id','=','activity_data.id')
                                     ->leftJoin('activity_instrument','activity_instrument.activity_id','=','activity_data.id')
                                     ->orderBy('id','desc')

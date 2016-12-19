@@ -136,11 +136,23 @@ trait ViewButton {
     }
 
     private function _btn_attend($param) {
-        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
-                . 'data-url="' . e(Sitemap::node()->getChildren('attend')->getUrl(['id' => $param['id']])) . '"'
-                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('attend')->getPath()) . '">' . e(trans('page.btn.attend')) . '</button>';
+        $html = '<button type="button" class="btn btn-default btnAttend" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('attend')->getUrl()) . '" '
+                . 'data-id="' . $param['id'] . '">' . e(trans('page.btn.attend')) . '</button>';
         
         if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('attend')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
+    private function _btn_attend_cancel($param) {
+        $html = '<button type="button" class="btn btn-default btnAttend" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('attend_cancel')->getUrl()) . '" '
+                . 'data-id="' . $param['id'] . '">' . e(trans('page.btn.attend_cancel')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('attend_cancel')->getPermissionNode()->getPath())){
             return $html;
         } else{
             return '';

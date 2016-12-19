@@ -36,6 +36,7 @@ return [
         'download' => '下載',
         'reservation' => '預約資料',
         'attend' => '報到',
+        'attend_cancel' => '取消報到',
         //
         //
         'course_class_status_1' => '正常開課',

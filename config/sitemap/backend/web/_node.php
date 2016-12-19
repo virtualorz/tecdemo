@@ -520,13 +520,24 @@ return [
                             ],
                         ],
                     ],
-                    'cancel' => [
+                    'attend' => [
                         '_prop' => [
                             'permission' => SitemapAccess::INHERIT,
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
                                     'uses' => 'ActivityAttendController@ajax_attend',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'attend_cancel' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'ActivityAttendController@ajax_attend_cancel',
                                 ],
                             ],
                         ],

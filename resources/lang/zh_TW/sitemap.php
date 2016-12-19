@@ -34,7 +34,7 @@ return [
                         'edit' => ['_name' => '編輯',],
                         'detail' => ['_name' => '內容',],
                         'reservation' => ['_name' => '預約資料',],
-                        'attend' => ['_name' => '報導',],
+                        'attend' => ['_name' => '報到',],
                     ],
                     'activitypass' => ['_name' => '活動通過審核',
                         'list' => ['_name' => '學生名單',],
