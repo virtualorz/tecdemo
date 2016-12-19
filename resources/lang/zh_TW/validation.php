@@ -192,6 +192,10 @@ return [
         'apply_item-is_pay' => '繳費狀況',
         'apply_item-course' => '購買課程',
         'apply_item-count' => '報名人數',
+        #
+        #attend
+        'attend_count' => '報到人數',
+        #
         #check
         'check_out' => '付款方式',
         #
@@ -530,6 +534,7 @@ return [
         'school' => '學校',
         'school_others' => '其他學校',
         'score' => '學分數',
+        'score_pass' => '成績',
         #
         #start_dt
         'start_dt' => '開始日期',

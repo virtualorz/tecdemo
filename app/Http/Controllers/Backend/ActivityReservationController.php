@@ -47,6 +47,7 @@ class ActivityReservationController extends Controller {
                                             'member_data.email')
                                     ->leftJoin('member_data','activity_reservation_data.member_id','=','member_data.id')
                                     ->where('reservation_status',1)
+                                    ->where('activity_id',$id)
                                     ->orderBy('id','desc')
                                     ->get();
         $this->view->with('listResult', $listResult);

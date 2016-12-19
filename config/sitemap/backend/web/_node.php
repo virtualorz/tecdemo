@@ -564,17 +564,28 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'ActivityPassController@list',
+                                'uses' => 'ActivityPassController@student_list',
                             ],
                         ],
                     ],
-                    'submit' => [
+                    'pass' => [
                         '_prop' => [
                             'permission' => SitemapAccess::INHERIT,
                             'route' => [
                                 'method' => 'post',
                                 'attr' => [
                                     'uses' => 'ActivityPassController@ajax_pass',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'pass_cancel' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'ActivityPassController@ajax_pass_cancel',
                                 ],
                             ],
                         ],

@@ -78,6 +78,8 @@
                             <th width="15%">{{ trans('validation.attributes.reservation_at') }}</th>
                             <th width="15%">{{ trans('validation.attributes.name') }}</th>
                             <th width="15%">{{ trans('validation.attributes.email') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.enable') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.score_pass') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
@@ -90,11 +92,15 @@
                             <td>{{ $v['created_at'] }}</td>
                             <td>{{ $v['name'] }}</td>
                             <td>{{ $v['email'] }}</td>
+                            <td>{{ trans('enum.attend_status.'.$v['attend_status']) }}</td>
                             <td>
-                                @if($v['attend_status'] == 0)
-                                {!! ViewHelper::button('attendv2', ['id' => $v['activity_id'].'_'.$v['member_id']]) !!}
+                                <input type='text' id="score_{{$v['activity_id'].'_'.$v['member_id']}}" value="{{ $v['score'] }}" @if($v['pass_status'] == 1) readOnly @endif>
+                            </td>
+                            <td>
+                                @if($v['pass_status'] == 0)
+                                {!! ViewHelper::button('pass', ['id' => $v['activity_id'].'_'.$v['member_id']]) !!}
                                 @else
-                                {!! ViewHelper::button('attend_cancel', ['id' => $v['activity_id'].'_'.$v['member_id']]) !!}
+                                {!! ViewHelper::button('pass_cancel', ['id' => $v['activity_id'].'_'.$v['member_id']]) !!}
                                 @endif
                             </td>
                         </tr>
@@ -114,12 +120,12 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $(".btnAttend").click(function(){
+        $(".btnPass").click(function(){
             var ajaxProp = {
                 url: $(this).attr('data-url'),
                 type: "post",
                 dataType: "json",
-                data: {'id':$(this).attr('data-id'),'_token':csrf_token},
+                data: {'id':$(this).attr('data-id'),'score':$('#score_'+$(this).attr('data-id')).val(),'_token':csrf_token},
                 error: function (jqXHR, textStatus, errorThrown) {
                         
                 },

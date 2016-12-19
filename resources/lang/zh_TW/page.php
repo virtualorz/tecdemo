@@ -37,6 +37,9 @@ return [
         'reservation' => '預約資料',
         'attend' => '報到',
         'attend_cancel' => '取消報到',
+        'student_list' => '學生名單',
+        'pass' => '通過',
+        'pass_cancel' => '取消通過',
         //
         //
         'course_class_status_1' => '正常開課',

@@ -17,9 +17,36 @@ use Log;
 use FileUpload;
 use Mail;
 
-class ActivityAttendController extends Controller {
+class ActivityPassController extends Controller {
 
     public function index() {
+
+        $listResult = DB::table('activity_data');
+        $listResult = $listResult->select('activity_data.id',
+                                            'activity_data.start_dt',
+                                            'activity_data.end_dt',
+                                            DB::raw('DATE_FORMAT(activity_data.created_at, "%Y-%m-%d") as created_at'),
+                                            'activity_data.activity_name',
+                                            'activity_data.level',
+                                            'activity_data.time',
+                                            DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
+                                    ->leftJoin('activity_reservation_data',function($join){
+                                        $join->on('activity_reservation_data.activity_id','=','activity_data.id')
+                                        ->where('activity_reservation_data.attend_status','=',1);
+                                    })
+                                    ->leftJoin('activity_instrument','activity_instrument.activity_id','=','activity_data.id')
+                                    ->where('activity_data.pass_type',2)
+                                    ->orderBy('id','desc')
+                                    ->paginate(Config::get('pagination.items'));
+        $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
+        
+        
+        $this->view->with('listResult', $listResult);
+        $this->view->with('pagination', $pagination);
+        return $this->view;
+    }
+
+    public function student_list() {
 
         $id = Route::input('id', 0);
         $name = Request::input('name', '');
@@ -42,8 +69,10 @@ class ActivityAttendController extends Controller {
 
         $listResult = $listResult->select('activity_reservation_data.activity_id',
                                             'activity_reservation_data.member_id',
-                                            'activity_reservation_data.attend_status',
                                             DB::raw('DATE_FORMAT(activity_reservation_data.created_at, "%Y-%m-%d") as created_at'),
+                                            'activity_reservation_data.attend_status',
+                                            'activity_reservation_data.pass_status',
+                                            'activity_reservation_data.score',
                                             'member_data.name',
                                             'member_data.email')
                                     ->leftJoin('member_data','activity_reservation_data.member_id','=','member_data.id')
@@ -58,7 +87,7 @@ class ActivityAttendController extends Controller {
 
     ##
 
-    public function ajax_attend() {
+    public function ajax_pass() {
         $validator = Validator::make(Request::all(), [
                     'id' => 'string|required'
         ]);
@@ -70,13 +99,15 @@ class ActivityAttendController extends Controller {
             return $this->view;
         }
         $ids = Request::input('id', "0_0");
+        $score = Request::input('score', "0");
         try {
             $id = explode('_',$ids);
 
                 DB::table('activity_reservation_data')
                     ->where('activity_id',$id[0])
                     ->where('member_id',$id[1])
-                    ->update(['attend_status'=>1
+                    ->update(['pass_status'=>1,
+                                'score' =>$score
                     ]);
         } catch (\PDOException $ex) {
             DB::rollBack();
@@ -99,7 +130,7 @@ class ActivityAttendController extends Controller {
         return $this->view;
     }
 
-    public function ajax_attend_cancel() {
+    public function ajax_pass_cancel() {
         $validator = Validator::make(Request::all(), [
                     'id' => 'string|required'
         ]);
@@ -111,13 +142,14 @@ class ActivityAttendController extends Controller {
             return $this->view;
         }
         $ids = Request::input('id', "0_0");
+        $score = Request::input('score', "0");
         try {
             $id = explode('_',$ids);
 
                 DB::table('activity_reservation_data')
                     ->where('activity_id',$id[0])
                     ->where('member_id',$id[1])
-                    ->update(['attend_status'=>0
+                    ->update(['pass_status'=>0
                     ]);
         } catch (\PDOException $ex) {
             DB::rollBack();
