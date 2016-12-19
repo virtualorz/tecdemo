@@ -10,6 +10,7 @@ return [
         'delay_course_class' => '延課成功!',
         'start_course_class' => '通知成功!',
         'submit' => '送出成功!',
+        'cancel' => '取消成功',
     ],
     'error' => [
         'validation' => '驗證錯誤',
@@ -47,6 +48,7 @@ return [
         'apply_item_pay' => '確定已繳費?',
         'delay_course_class' => '確定延課?',
         'start_course_class' => '確定通知?',
+        'cancel' => '是否要取消?',
     ],
     'info' => [
         'login_enable' => '帳號未啟用',

@@ -97,6 +97,8 @@
                             <td>{{ $v['time'] }}</td>
                             <td>{{ $v['reservation_count'] }}</td>
                             <td>
+                                {!! ViewHelper::button('reservation', ['id' => $v['id']]) !!}
+                                {!! ViewHelper::button('attend', ['id' => $v['id']]) !!}
                                 {!! ViewHelper::button('edit', ['id' => $v['id']]) !!}
                                 {!! ViewHelper::button('detail', ['id' => $v['id']]) !!}
                             </td>

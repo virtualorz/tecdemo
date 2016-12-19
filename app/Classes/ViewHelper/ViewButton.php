@@ -123,6 +123,30 @@ trait ViewButton {
         }
     }
 
+    private function _btn_reservation($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('reservation')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('reservation')->getPath()) . '">' . e(trans('page.btn.reservation')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('reservation')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
+    private function _btn_attend($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('attend')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('attend')->getPath()) . '">' . e(trans('page.btn.attend')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('attend')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
     private function _btn_submit($param) {
         $html = '<button type="submit" class="btn btn-default btnSubmit">' . e(trans('page.btn.submit')) . '</button>';
         
@@ -133,6 +157,18 @@ trait ViewButton {
         $html = '<button type="button" class="btn btn-default btnCancel btnLink">' . e(trans('page.btn.cancel')) . '</button>';
         
         return $html;
+    }
+
+    private function _btn_cancelv2($param) {
+        $html = '<button type="button" class="btn btn-default btnDelete btnCheckShow" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('cancel')->getUrl()) . '" '
+                . 'data-mbTitle="' . e(trans('message.question.cancel')) . '">' . e(trans('page.btn.cancel')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('cancel')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
     }
     
     private function _btn_back($param) {

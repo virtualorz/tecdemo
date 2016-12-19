@@ -34,6 +34,8 @@ return [
         'agree' => '同意',
         'notagree' => '不同意',
         'download' => '下載',
+        'reservation' => '預約資料',
+        'attend' => '報到',
         //
         //
         'course_class_status_1' => '正常開課',

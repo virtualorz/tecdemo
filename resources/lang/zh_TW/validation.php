@@ -195,6 +195,9 @@ return [
         #check
         'check_out' => '付款方式',
         #
+        #card_id_number
+        'card_id_number' => '證號',
+        #
         #company
         'company' => '公司',
         #
@@ -376,6 +379,9 @@ return [
         'home_course_year-name' => '名稱',
         'home_course_year-file' => '檔案',
         #
+        #id_type
+        'id_type' => '身份別',
+        #
         #info_event
         'info_event-event_date' => '活動日期',
         'info_event-info' => '活動資訊',
@@ -503,6 +509,7 @@ return [
         #reservation
         'reservation_count' => '預約人數',
         'related_instrument' => '相關儀器',
+        'reservation_at' => '預約日期',
         #
         #reply
         'reply-content' => '回覆內容',
