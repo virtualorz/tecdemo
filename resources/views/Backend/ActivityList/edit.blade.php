@@ -12,6 +12,7 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-body">
+                @if(count($dataResult) > 0)
                 <form id="form1" method="post" action="{{ Sitemap::node()->getChildren('submit')->getUrl() }}">
                     <table class="table datatable_simple nohead">
                         <thead>
@@ -23,30 +24,30 @@
                         <tbody>
                             <tr>
                                 <th width="15%">{{ trans('validation.attributes.created_at') }}</th>
-                                <td>{{ date('Y/m/d') }}</td>
+                                <td>{{ $dataResult['created_at'] }}</td>
                             </tr>
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.activity_id') }}</th>
                                 <td>
-                                    <input type="text" name="activity_id" id="data-activity_id" class="form-control required">
+                                    <input type="text" name="activity_id" id="data-activity_id" class="form-control required" value="{{ $dataResult['activity_id'] }}">
                                 </td>
                             </tr>
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.start_dt') }}</th>
                                 <td>
-                                    <input type="text" name="start_dt" id="data-start_dt" class="form-control datepicker required">
+                                    <input type="text" name="start_dt" id="data-start_dt" class="form-control datepicker required" value="{{ $dataResult['start_dt'] }}">
                                 </td>
                             </tr>
                             <tr>
                                 <th>{{ trans('validation.attributes.end_dt') }}</th>
                                 <td>
-                                    <input type="text" name="end_dt" id="data-end_dt" class="form-control datepicker">
+                                    <input type="text" name="end_dt" id="data-end_dt" class="form-control datepicker" value="{{ $dataResult['end_dt'] }}">
                                 </td>
                             </tr>
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.activity_name') }}</th>
                                 <td>
-                                    <input type="text" name="activity_name" id="data-activity_name" class="form-control required">
+                                    <input type="text" name="activity_name" id="data-activity_name" class="form-control required" value="{{ $dataResult['activity_name'] }}">
                                 </td>
                             </tr>
                             <tr>
@@ -55,7 +56,7 @@
                                     <select name="activity_type_id" id="data-activity_type_id" class="form-control required">
                                         <option value="">{{trans('page.text.select_item')}}</option>
                                         @foreach($activity_typeResult as $k=>$v)
-                                        <option value="{{$v['id']}}">{{$v['name']}}</option>
+                                        <option value="{{$v['id']}}" @if($v['id'] == $dataResult['activity_type_id']) selected @endif>{{$v['name']}}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -83,6 +84,12 @@
                                             </tr>
                                         </thead>
                                         <tbody id="related_plateform_add">
+                                            @foreach($relative_plateformResult as $k=>$v)
+                                            <tr class='plateform_{{$v["id"]}}'>
+                                                <td>{{$v["name"]}}<input type='hidden' class='relative_plateform' name='relative_plateform[]' value='{{$v["id"]}}'></td>
+                                                <td><input type='button' class='btn btn-default del_plateform' value='刪除' data-id='{{$v["id"]}}'></td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
 
@@ -94,7 +101,7 @@
                                     <select name="level" id="data-level" class="form-control required">
                                         <option value="">{{trans('page.text.select_item')}}</option>
                                         @foreach($level as $k=>$v)
-                                        <option value="{{$k}}">{{$v}}</option>
+                                        <option value="{{$k}}" @if($k == $dataResult['level']) selected @endif>{{$v}}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -102,13 +109,13 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.time') }}</th>
                                 <td>
-                                    <input type="number" name="time" id="data-time" class="form-control required">
+                                    <input type="number" name="time" id="data-time" class="form-control required" value="{{ $dataResult['time'] }}">
                                 </td>
                             </tr>
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.score') }}</th>
                                 <td>
-                                    <input type="number" name="score" id="data-score" class="form-control required">
+                                    <input type="number" name="score" id="data-score" class="form-control required" value="{{ $dataResult['score'] }}">
                                 </td>
                             </tr>
                             <tr>
@@ -117,7 +124,7 @@
                                     <select name="pass_type" id="data-pass_type" class="form-control required">
                                         <option value="">{{trans('page.text.select_item')}}</option>
                                         @foreach($pass_type as $k=>$v)
-                                        <option value="{{$k}}">{{$v}}</option>
+                                        <option value="{{$k}}" @if($k == $dataResult['pass_type']) selected @endif>{{$v}}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -125,7 +132,7 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.pass_condition') }}</th>
                                 <td>
-                                    <input type="text" name="pass_condition" id="data-pass_condition" class="form-control required">
+                                    <input type="text" name="pass_condition" id="data-pass_condition" class="form-control required" value="{{ $dataResult['pass_condition'] }}">
                                 </td>
                             </tr>
                             <tr>
@@ -134,6 +141,9 @@
                                     {{ trans('validation.attributes.instrument') }}
                                     <select name="instrument" id="data-instrument" class="form-control">
                                         <option value="">{{trans('page.text.select_item')}}</option>
+                                        @foreach($instrumentResult as $k=>$v)
+                                        <option value='{{$v["id"]}}' data-plateform='{{$v["instrument_platform_id"]}}' >{{$v["name"]}}</option>
+                                        @endforeach
                                     </select>
                                     {{ trans('validation.attributes.permission') }}
                                     <select name="permission" id="data-permission" class="form-control">
@@ -157,6 +167,13 @@
                                             </tr>
                                         </thead>
                                         <tbody id="instrument_add">
+                                            @foreach($activity_instrumentResult as $k=>$v)
+                                            <tr class='instrument_{{$v["instrument_id"]}}_{{$v["permission_id"]}}'>
+                                                <td>{{$v["instrument_name"]}}<input type='hidden' class='instrument' name='instrument[]' value='{{$v["instrument_id"]}}' data-plateform='{{$v["instrument_platform_id"]}}'></td>
+                                                <td>{{$permission[$v["permission_id"]]}}<input type='hidden' class='instrument_permission' name='instrument_permission[]' value='{{$v["permission_id"]}}'></td>
+                                                <td><input type='button' class='btn btn-default del_instrument' value='刪除'></td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </td>
@@ -164,16 +181,17 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.activity_content') }}</th>
                                 <td>
-                                    <div name="content" id="content" class="btseditor" data-name="content"></div>
+                                    <div name="content" id="content" class="btseditor" data-name="content" data-value="{{ $dataResult['content'] }}"></div>
                                 </td>
-                            </tr>
+                            </tr> 
                             <tr>
                                 <th>{{ trans('validation.attributes.create_admin_id') }}</th>
-                                <td>{{ User::get('name', '') }}</td>
+                                <td>{{ $dataResult['created_admin_name'] }}</td>
                             </tr>
                             <tr>
                                 <th>&nbsp;</th>
                                 <td> 
+                                    <input type="hidden" name="id" value="{{ $dataResult['id'] }}" />
                                     {!! ViewHelper::button('submit') !!}
                                     {!! ViewHelper::button('cancel') !!}
                                 </td>
@@ -181,6 +199,9 @@
                         </tbody>
                     </table>
                 </form>
+                @else
+                <div align="center">{{ trans('message.info.norecord') }}</div>
+                @endif
             </div>
         </div>
     </div>
@@ -194,6 +215,7 @@
 
 
 @section('script')
+<script src="{{ asset('assets/official/js/jquery.blockUI.min.js') }}"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -244,7 +266,7 @@
         $("#add_plateform").click(function(){
             if(typeof $("#related_plateform_add .plateform_"+$("#data-instrument_type").val()).html() == "undefined" && $("#data-instrument_type").val()!= "")
             {
-                var html="<tr class='plateform_"+$("#data-instrument_type").val()+"'><td>"+$("#data-instrument_type :selected").text()+"<input type='hidden' class='relative_plateform' name='relative_plateform[]' value='"+$("#data-instrument_type").val()+"'></td><td><input type='button' class='btn btn-default del_plateform' value='刪除' data-id='"+$("#data-instrument_type").val()+"'></td></tr>";
+                var html="<tr class='plateform_"+$("#data-instrument_type").val()+"'><td>"+$("#data-instrument_type :selected").text()+"<input type='hidden' class='relative_plateform' name='relative_plateform[]' value='"+$("#data-instrument_type").val()+"'></td><td><input type='button' class='btn btn-default del_plateform' value='刪除' data-id='"+$("#data-instrument_type").val()+"'></td>";
                 $("#related_plateform_add").find(".dataTables_empty").parent().remove();
                 $("#related_plateform_add").append(html);
                 $("#data-instrument_type").val("");
@@ -287,7 +309,9 @@
                 $("#data-permission").val("");
             }
         });
+
     });
+    
     function initValidation() {
         $('#form1').validate({
             submitHandler: function (form) {
@@ -298,6 +322,7 @@
             }
         });
     }
+
     function initBtsEditor() {
         $('.btseditor').each(function () {
             new BtsEditor($(this).attr('id'), {

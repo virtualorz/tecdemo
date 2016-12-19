@@ -7,6 +7,7 @@ return [
         'files',
         'indexannounce',
         'tcdata',
+        'activity',
     ],
     'ext' => 'jpg|jpeg|png|gif|doc|docx|xls|xlsx|pdf|zip|rar|7z',
     'size' => 10 * (1024 * 1024),// byte

@@ -29,13 +29,13 @@
                             <tr>
                                 <td>{{ trans('validation.attributes.activity_date') }}</td>
                                 <td>
-                                    <input type="text" name="date" id="data-date" class="form-control datepicker">
+                                    <input type="text" name="date" id="data-date" class="form-control datepicker" value="{{ Request::input('date', '') }}">
                                 </td>
                             </tr>
                             <tr>
                                 <td>{{ trans('validation.attributes.activity_name') }}</td>
                                 <td>
-                                    <input type="text" name="name" id="data-name" class="form-control">
+                                    <input type="text" name="name" id="data-name" class="form-control" value="{{ Request::input('name', '') }}">
                                 </td>
                             </tr>
                             <tr>
@@ -85,13 +85,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if(count($listResult) > 0 && $listResult[0]['start_dt'] != '')
                         @foreach($listResult as $k => $v)
                         <tr>
                             <td data-headname="{{ trans('page.btn.select') }}">
                                 <label class="check"><input type="checkbox" class="icheckbox ckbItem" value="{{ $v['id'] }}" /></label>
                             </td>
                             <td>{{ $v['created_at'] }}</td>
-                            <td>{{ $v['start_dt'] }}{{ $v['end_dt'] }}</td>
+                            <td>{{ $v['start_dt'] }} - {{ $v['end_dt'] }}</td>
                             <td>{{ $v['activity_name'] }}</td>
                             <td>{{ $v['time'] }}</td>
                             <td>{{ $v['reservation_count'] }}</td>
@@ -101,6 +102,7 @@
                             </td>
                         </tr>
                         @endforeach
+                        @endif
                     </tbody>
                 </table>
                 
