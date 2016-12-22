@@ -189,12 +189,20 @@ class ActivityListController extends Controller {
             return $this->view;
         }
 
+        //製作uid以及salt
+        $date = date('Y-m-d H:i:s');
+        $salt = substr(md5($date),5,5);
+        $uid = md5($salt.$date);
+
         $content = FileUpload::moveEditor(Request::input('content'));
+        $para = array($content,$uid,$salt);
         try {
-            DB::transaction(function()use($content){
+            DB::transaction(function()use($para){
                 $id = DB::table('activity_data')
                         ->insertGetId(
-                            array('created_at'=>date('Y-m-d H:i:s'),
+                            array('uid'=>$para[1],
+                                    'salt'=>$para[2],
+                                    'created_at'=>date('Y-m-d H:i:s'),
                                     'updated_at'=>date('Y-m-d H:i:s'),
                                     'activity_id'=>Request::input('activity_id'),
                                     'start_dt'=>Request::input('start_dt'),
@@ -207,7 +215,7 @@ class ActivityListController extends Controller {
                                     'score'=>Request::input('score'),
                                     'pass_type'=>Request::input('pass_type'),
                                     'pass_condition'=>Request::input('pass_condition'),
-                                    'content'=>$content,
+                                    'content'=>$para[0],
                                     'create_admin_id'=>User::id(),
                                     'update_admin_id'=>User::id()
                             )
