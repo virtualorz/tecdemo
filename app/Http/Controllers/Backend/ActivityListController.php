@@ -49,6 +49,7 @@ class ActivityListController extends Controller {
                                             DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
                                     ->leftJoin('activity_reservation_data','activity_reservation_data.activity_id','=','activity_data.id')
                                     ->leftJoin('activity_instrument','activity_instrument.activity_id','=','activity_data.id')
+                                    ->groupBy('activity_data.id')
                                     ->orderBy('id','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
@@ -189,19 +190,14 @@ class ActivityListController extends Controller {
             return $this->view;
         }
 
-        //製作uid以及salt
-        $date = date('Y-m-d H:i:s');
-        $salt = substr(md5($date),5,5);
-        $uid = md5($salt.$date);
-
         $content = FileUpload::moveEditor(Request::input('content'));
-        $para = array($content,$uid,$salt);
+
         try {
-            DB::transaction(function()use($para){
+            DB::transaction(function()use($content){
                 $id = DB::table('activity_data')
                         ->insertGetId(
-                            array('uid'=>$para[1],
-                                    'salt'=>$para[2],
+                            array('uid'=>'-',
+                                    'salt'=>'-',
                                     'created_at'=>date('Y-m-d H:i:s'),
                                     'updated_at'=>date('Y-m-d H:i:s'),
                                     'activity_id'=>Request::input('activity_id'),
@@ -215,11 +211,21 @@ class ActivityListController extends Controller {
                                     'score'=>Request::input('score'),
                                     'pass_type'=>Request::input('pass_type'),
                                     'pass_condition'=>Request::input('pass_condition'),
-                                    'content'=>$para[0],
+                                    'content'=>$content,
                                     'create_admin_id'=>User::id(),
                                     'update_admin_id'=>User::id()
                             )
                         );
+                //製作uid以及salt
+                $date = date('Y-m-d H:i:s').$id;
+                $salt = substr(md5($date),5,5);
+                $uid = md5($salt.$date);
+                
+                DB::table('activity_data')
+                    ->where('id',$id)
+                    ->update(['uid'=>$uid,
+                                'salt'=>$salt
+                    ]);
                 $result_after = DB::table('activity_data')
                                 ->where('id',$id)
                                 ->get();

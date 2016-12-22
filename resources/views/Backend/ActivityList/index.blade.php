@@ -92,7 +92,11 @@
                                 <label class="check"><input type="checkbox" class="icheckbox ckbItem" value="{{ $v['id'] }}" /></label>
                             </td>
                             <td>{{ $v['created_at'] }}</td>
-                            <td>{{ $v['start_dt'] }} - {{ $v['end_dt'] }}</td>
+                            @if($v['end_dt'] == null)
+                                <td>{{ $v['start_dt'] }} {{trans('message.info.start')}}</td>
+                            @else
+                                <td>{{ $v['start_dt'] }} - {{ $v['end_dt'] }}</td>
+                            @endif
                             <td>{{ $v['activity_name'] }}</td>
                             <td>{{ $v['time'] }}</td>
                             <td>{{ $v['reservation_count'] }}</td>

@@ -58,5 +58,6 @@ return [
         'delay_course_class_member_duplicate' => '延課後發現下列會員重複報名',
         'start_course_class_started' => '此課程已通知',
         'nodata' => '無資料',
+        'start' => '起',
     ],
 ];
