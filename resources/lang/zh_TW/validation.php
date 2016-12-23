@@ -539,6 +539,9 @@ return [
         'score' => '學分數',
         'score_pass' => '成績',
         #
+        #site
+        'site_name' => '場地名稱',
+        #
         #start_dt
         'start_dt' => '開始日期',
         #
