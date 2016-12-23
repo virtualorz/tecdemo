@@ -364,6 +364,7 @@ return [
         #
         #end_dt
         'end_dt' => '結束日期',
+        'end_time' => '結束時間',
         #
         #execute
         'execute_time' => '執行日期',
@@ -539,11 +540,16 @@ return [
         'score' => '學分數',
         'score_pass' => '成績',
         #
+        #section
+        'section' => '使用時段',
+        'section_type' => '時段類別',
+        #
         #site
         'site_name' => '場地名稱',
         #
         #start_dt
         'start_dt' => '開始日期',
+        'start_time' => '開始時間',
         #
         #system
         'system-department' => '部門',
