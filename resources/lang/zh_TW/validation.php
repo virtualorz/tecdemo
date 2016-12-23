@@ -514,6 +514,14 @@ return [
         #phone
         'phone' => '聯絡電話',
         'phone-contact' => '承辦人員電話', 
+        #
+        #rate
+        'rate' => '單價',
+        'rate1' => '校外產業單價',
+        'rate2' => '校外學術單價',
+        'rate3' => '台大校內單價',
+        'rate4' => '生科院內單價',
+        #
         #reservation
         'reservation_count' => '預約人數',
         'related_instrument' => '相關儀器',

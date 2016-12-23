@@ -800,6 +800,88 @@ return [
                     ],
                 ],
             ],
+            'supplies' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'menu' => true,
+                    'icon_class' => 'fa fa-eraser',
+                    'route' => [
+                        'method' => 'get',
+                        'param' => '{optional?}',
+                        'attr' => [
+                            'uses' => 'InstrumentSuppliesController@index',
+                        ],
+                    ],
+                ],
+                'add' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'attr' => [
+                                'uses' => 'InstrumentSuppliesController@add',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentSuppliesController@ajax_add',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'edit' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'InstrumentSuppliesController@edit',
+                            ],
+                        ],
+                    ],
+                    'submit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'InstrumentSuppliesController@ajax_edit',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'detail' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'InstrumentSuppliesController@detail',
+                            ],
+                        ],
+                    ],
+                ],
+                'delete' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                            'method' => 'post',
+                            'attr' => [
+                                'uses' => 'InstrumentSuppliesController@ajax_delete',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
             'vacation' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
