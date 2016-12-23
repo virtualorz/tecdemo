@@ -40,6 +40,7 @@ return [
         'student_list' => '學生名單',
         'pass' => '通過',
         'pass_cancel' => '取消通過',
+        'unpass' => '駁回',
         //
         //
         'course_class_status_1' => '正常開課',
@@ -76,6 +77,10 @@ return [
         'delay_member_detail' => '學員繳費明細資料',
         'select_course_class' => '選擇開班日期',
         'add_apply_member' => '選擇會員',
+        'unprocess_list' => '未處理清單',
+        'history_list' => '歷史紀錄',
+        'activity_content' => '活動內容',
+        'reg_log' => '補申請紀錄',
     ],
     'text' => [        
         'function' => '功能',

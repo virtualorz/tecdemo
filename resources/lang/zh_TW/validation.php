@@ -181,6 +181,9 @@ return [
         'apply-comment' => '意見',
         'apply-agree' => '我同意以下條款',
         'apply-total_fee' => '總金額',
+        'apply_date' => '申請日期',
+        'apply_name' => '申請人',
+        'apply_reason' => '申請理由',
         #
         #apply_item
         'apply_item-create_admin_id' => '報名人員',
