@@ -418,6 +418,7 @@ return [
         #instrument
         'instrument' => '儀器',
         'instrument_name' => '儀器名稱',
+        'instrument_count' => '儀器數量',
         #
         #item
         'item' => '項目',
