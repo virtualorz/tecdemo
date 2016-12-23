@@ -430,6 +430,7 @@ return [
         #is
         'is_reply' => '是否回覆',
         'is_notice' => '使否為公告',
+        'is_pass' => '是否通過',
         'item_count' => '數量',
         #
         #level

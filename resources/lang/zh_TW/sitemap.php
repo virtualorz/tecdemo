@@ -62,7 +62,7 @@ return [
                     'vacation' => ['_name' => '排休設定',
                         
                     ],
-                    'instrumenttype' => ['_name' => '儀器類型設定',
+                    'instrumenttype' => ['_name' => '儀器所屬平台設定',
                         'add' => ['_name' => '新增',],
                         'edit' => ['_name' => '編輯',],
                         'detail' => ['_name' => '內容',],

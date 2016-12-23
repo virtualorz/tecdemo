@@ -23,7 +23,8 @@ class ActivityTypeController extends Controller {
 
         $listResult = DB::table('activity_type');
 
-        $listResult = $listResult->select('id','name',DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as created_at'))
+        $listResult = $listResult->select('activity_type.id','activity_type.name',DB::raw('DATE_FORMAT(activity_type.created_at, "%Y-%m-%d") as created_at'),'member_admin.name as created_admin_name')
+                                    ->leftJoin('member_admin','activity_type.create_admin_id','=','member_admin.id')
                                     ->orderBy('id','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);

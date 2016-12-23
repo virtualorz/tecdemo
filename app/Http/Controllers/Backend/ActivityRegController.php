@@ -41,6 +41,7 @@ class ActivityRegController extends Controller {
                                             'activity_data.start_dt',
                                             'activity_data.end_dt',
                                             'activity_data.activity_name',
+                                            'activity_reg.is_pass',
                                             'member_data.name',
                                             'member_data.email',
                                             'activity_reg.reason')
@@ -99,9 +100,21 @@ class ActivityRegController extends Controller {
 
         try {
             DB::transaction(function(){
+                $is_pass = Request::input('is_pass');
                 $result_before = DB::table('activity_reg')
                                     ->where('id',Request::input('id'))
                                     ->get();
+                
+                if($is_pass == 1)
+                {
+                    DB::table('activity_reservation_data')
+                        ->where('activity_id',$result_before[0]['activity_id'])
+                        ->where('member_id',$result_before[0]['member_id'])
+                        ->update(['attend_status'=>1,
+                                    'activity_reg_id'=>Request::input('id')
+                        ]);
+                }
+                
                 DB::table('activity_reg')
                     ->where('id',Request::input('id'))
                     ->update(['is_pass'=>Request::input('is_pass'),

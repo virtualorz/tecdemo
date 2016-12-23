@@ -83,6 +83,7 @@
                             <th width="15%">{{ trans('validation.attributes.apply_name') }}</th>
                             <th width="15%">{{ trans('validation.attributes.email') }}</th>
                             <th width="15%">{{ trans('validation.attributes.apply_reason') }}</th>
+                            <th width="25%">{{ trans('validation.attributes.is_pass') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
@@ -102,6 +103,7 @@
                             <td>{{ $v['name'] }}</td>
                             <td>{{ $v['email'] }}</td>
                             <td>{{ $v['reason'] }}</td>
+                            <td>{{ trans('enum.is_pass.'.$v['is_pass']) }}</td>
                             <td>
                                 {!! ViewHelper::button('detail', ['id' => $v['id']]) !!}
                             </td>

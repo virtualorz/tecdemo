@@ -26,6 +26,7 @@
                             </th>
                             <th width="15%">{{ trans('validation.attributes.created_at') }}</th>
                             <th width="15%">{{ trans('validation.attributes.name') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.create_admin_id') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
@@ -37,6 +38,7 @@
                             </td>
                             <td>{{ $v['created_at'] }}</td>
                             <td>{{ $v['name'] }}</td>
+                            <td>{{ $v['created_admin_name'] }}</td>
                             <td>
                                 {!! ViewHelper::button('edit', ['id' => $v['id']]) !!}
                                 {!! ViewHelper::button('detail', ['id' => $v['id']]) !!}
