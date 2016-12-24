@@ -27,9 +27,9 @@ class InstrumentTypeController extends Controller {
                                             'instrument_type.name',
                                             DB::raw('DATE_FORMAT(instrument_type.created_at, "%Y-%m-%d") as created_at'),
                                             'member_admin.name as created_admin_name',
-                                            DB::raw('count(instrument_data.instrument_platform_id) as instrument_count'))
+                                            DB::raw('count(instrument_data.instrument_type_id) as instrument_count'))
                                     ->leftJoin('member_admin','instrument_type.create_admin_id','=','member_admin.id')
-                                    ->leftJoin('instrument_data','instrument_data.instrument_platform_id','=','instrument_type.id')
+                                    ->leftJoin('instrument_data','instrument_data.instrument_type_id','=','instrument_type.id')
                                     ->groupBy('instrument_type.id')
                                     ->orderBy('id','desc')
                                     ->paginate(Config::get('pagination.items'));

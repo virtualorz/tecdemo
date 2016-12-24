@@ -249,4 +249,27 @@ trait ViewButton {
         return $html;
     }
 
+    private function _btn_rate($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('rate')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('rate')->getPath()) . '">' . e(trans('page.btn.rate')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('rate')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+    private function _btn_vacation($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('vacation')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('vacation')->getPath()) . '">' . e(trans('page.btn.vacation')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('vacation')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
 }

@@ -41,6 +41,8 @@ return [
         'pass' => '通過',
         'pass_cancel' => '取消通過',
         'unpass' => '駁回',
+        'rate' => '費率表',
+        'vacation' => '排休',
         //
         //
         'course_class_status_1' => '正常開課',
@@ -103,5 +105,6 @@ return [
         'class_delay_to' => '已延課至',
         'apply_item-pay_way-text' => ' 元整',
         'hello' => '您好',
+        'days' => '天',
     ]
 ];

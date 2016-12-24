@@ -157,6 +157,8 @@ return [
         'activity_content' => '活動說明',
         #
         #admin
+        'admin' =>'管理員',
+        'admin_add' => '已加入管理員',
         'admin-account' => '帳號',
         'admin-password' => '密碼',
         'admin-password_confirmation' => '確認密碼',
@@ -419,6 +421,9 @@ return [
         'instrument' => '儀器',
         'instrument_name' => '儀器名稱',
         'instrument_count' => '儀器數量',
+        'instrument_type' => '儀器所屬平台',
+        'instrument_id' => '儀器編號',
+        'instrument_function' => '設施功能簡述',
         #
         #item
         'item' => '項目',
@@ -488,6 +493,7 @@ return [
         #open
         'open_instrument' => '通過後可開通的設備',
         'open_instrument_add' => '已加入的設備',
+        'open_section' => '可使用時段',
         #
         #order
         'order' => '排序',
@@ -528,6 +534,10 @@ return [
         'reservation_count' => '預約人數',
         'related_instrument' => '相關儀器',
         'reservation_at' => '預約日期',
+        'reservation_limit' => '每人預約次數上限',
+        'reservation_notice' => '使用前一日提醒使者',
+        'reservation_cancel_limit' => '自行取消截止日',
+        'reservation_cancel_notice' => '自行取消後通知管理員',
         #
         #reply
         'reply-content' => '回覆內容',
