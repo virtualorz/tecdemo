@@ -1100,7 +1100,7 @@ return [
                         'icon_class' => 'fa fa-hand-o-right',
                         'route' => [
                             'method' => 'get',
-                            'param' => '{optional?}',
+                            'param' => '{id}',
                             'attr' => [
                                 'uses' => 'InstrumentRateController@index',
                             ],
@@ -1125,6 +1125,18 @@ return [
                                     'attr' => [
                                         'uses' => 'InstrumentRateController@ajax_edit',
                                     ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'detail' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::ACCESS_REQUIRED,
+                            'route' => [
+                                'method' => 'get',
+                                'param' => '{id}',
+                                'attr' => [
+                                    'uses' => 'InstrumentRateController@detail',
                                 ],
                             ],
                         ],

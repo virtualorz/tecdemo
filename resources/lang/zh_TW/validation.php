@@ -529,6 +529,8 @@ return [
         'rate2' => '校外學術單價',
         'rate3' => '台大校內單價',
         'rate4' => '生科院內單價',
+        'rate_type' => '計價方式',
+        'rate_multi' => '計價倍率',
         #
         #reservation
         'reservation_count' => '預約人數',
@@ -627,6 +629,8 @@ return [
         'total' => '總金額',
         'text' => '文字描述', 
         'title' => '標題',
+        #update
+        'update_at' => '異動日期',
         #
         #通用
         'id' => '系統編號',

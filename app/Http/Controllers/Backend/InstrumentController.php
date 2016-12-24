@@ -398,6 +398,14 @@ class InstrumentController extends Controller {
                         ->orderBy('instrument_admin_id','desc')
                         ->limit(1)
                         ->get();
+                    if(!isset($instrument_admin_id[0]['instrument_admin_id']))
+                    {
+                        $instrument_admin_id = 0;
+                    }
+                    else
+                    {
+                        $instrument_admin_id = $instrument_admin_id[0]['instrument_admin_id'];
+                    }
                     $instrument_admin_id = intval($instrument_admin_id)+1;
                     DB::table('instrument_admin')
                         ->insert(array(
@@ -417,6 +425,14 @@ class InstrumentController extends Controller {
                         ->orderBy('instrument_section_set_id','desc')
                         ->limit(1)
                         ->get();
+                    if(!isset($instrument_section_set_id[0]['instrument_section_set_id']))
+                    {
+                        $instrument_section_set_id = 0;
+                    }
+                    else
+                    {
+                        $instrument_section_set_id = $instrument_section_set_id[0]['instrument_section_set_id'];
+                    }
                     $instrument_section_set_id = intval($instrument_section_set_id)+1;
                     DB::table('instrument_section_set')
                         ->insert(array(
@@ -537,6 +553,14 @@ class InstrumentController extends Controller {
                         ->orderBy('instrument_admin_id','desc')
                         ->limit(1)
                         ->get();
+                    if(!isset($instrument_admin_id[0]['instrument_admin_id']))
+                    {
+                        $instrument_admin_id = 0;
+                    }
+                    else
+                    {
+                        $instrument_admin_id = $instrument_admin_id[0]['instrument_admin_id'];
+                    }
                     $instrument_admin_id = intval($instrument_admin_id)+1;
                     DB::table('instrument_admin')
                         ->insert(array(
@@ -559,6 +583,14 @@ class InstrumentController extends Controller {
                         ->orderBy('instrument_section_set_id','desc')
                         ->limit(1)
                         ->get();
+                    if(!isset($instrument_section_set_id[0]['instrument_section_set_id']))
+                    {
+                        $instrument_section_set_id = 0;
+                    }
+                    else
+                    {
+                        $instrument_section_set_id = $instrument_section_set_id[0]['instrument_section_set_id'];
+                    }
                     $instrument_section_set_id = intval($instrument_section_set_id)+1;
                     DB::table('instrument_section_set')
                         ->insert(array(

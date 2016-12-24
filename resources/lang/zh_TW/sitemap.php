@@ -72,7 +72,10 @@ return [
                         'edit' => ['_name' => '編輯',],
                         'detail' => ['_name' => '內容',],
                         'vacation' => ['_name' => '排休',],
-                        'rate' => ['_name' => '費率表',],
+                        'rate' => ['_name' => '費率表',
+                            'edit' => ['_name' => '編輯'],
+                            'detail' => ['_name' => '內容']
+                        ],
                     ],
                     'reservation' => ['_name' => '預約資料管理',
                         'complete' => ['_name' => '完成',],
