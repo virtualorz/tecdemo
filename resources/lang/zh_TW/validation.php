@@ -498,6 +498,9 @@ return [
         #order
         'order' => '排序',
         #
+        #page
+        'page_id' => '單號',
+        #
         #pass
         'pass_type' => '通過方式',
         'pass_condition' => '通過條件',
@@ -506,6 +509,9 @@ return [
         'pay_status' => '付款狀態',
         'package' => '組',
         'permission' => '權限',
+        #
+        #pi
+        'pi' => '指導教授',
         #
         #plain
         'plan-topic' => '計畫主題',
@@ -540,6 +546,8 @@ return [
         'reservation_notice' => '使用前一日提醒使者',
         'reservation_cancel_limit' => '自行取消截止日',
         'reservation_cancel_notice' => '自行取消後通知管理員',
+        'reservation_section' => '預約時段',
+        'reservation_status' => '預約狀態',
         #
         #reply
         'reply-content' => '回覆內容',
@@ -631,6 +639,7 @@ return [
         'title' => '標題',
         #update
         'update_at' => '異動日期',
+        'user' => '使用者',
         #
         #通用
         'id' => '系統編號',

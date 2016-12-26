@@ -35,6 +35,7 @@ return [
         'unknow' => '發生未知錯誤',
         'youtube_url_error' => 'Youtube連結錯誤!',
         'PI_exist' => 'PI資料重複請重新輸入',
+        'rate_error' => '未找到儀器費率，請重新設定',
     ],
     'question' => [
         'logout' => '是否要登出?',

@@ -1163,7 +1163,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'InstrumentReservationController@edit',
+                                'uses' => 'InstrumentReservationController@complete',
                             ],
                         ],
                     ],
@@ -1186,6 +1186,17 @@ return [
                             'method' => 'post',
                             'attr' => [
                                 'uses' => 'InstrumentReservationController@ajax_delete',
+                            ],
+                        ],
+                    ],
+                ],
+                'dcomplete' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                            'method' => 'post',
+                            'attr' => [
+                                'uses' => 'InstrumentReservationController@ajax_dcomplete',
                             ],
                         ],
                     ],

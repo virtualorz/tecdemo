@@ -43,6 +43,10 @@ return [
         'unpass' => '駁回',
         'rate' => '費率表',
         'vacation' => '排休',
+        'dcomplete' => '直接完成使用',
+        'notattend' => '未出席',
+        'removewait' => '移除候補',
+        'complete' => '調整紀錄並完成使用',
         //
         //
         'course_class_status_1' => '正常開課',

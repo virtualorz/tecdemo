@@ -272,4 +272,53 @@ trait ViewButton {
         }
     }
 
+    private function _btn_complete($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('complete')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('complete')->getPath()) . '">' . e(trans('page.btn.complete')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('complete')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
+    private function _btn_dcomplete($param) {
+        $html = '<button type="button" class="btn btn-default" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('dcomplete')->getUrl()) . '" '
+                . 'data-mbTitle="' . e(trans('message.question.dcomplete')) . '">' . e(trans('page.btn.dcomplete')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('dcomplete')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
+    private function _btn_notattend($param) {
+        $html = '<button type="button" class="btn btn-default" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('notattend')->getUrl()) . '" '
+                . 'data-mbTitle="' . e(trans('message.question.notattend')) . '">' . e(trans('page.btn.notattend')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('notattend')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
+    private function _btn_removewait($param) {
+        $html = '<button type="button" class="btn btn-default" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('removewait')->getUrl()) . '" '
+                . 'data-mbTitle="' . e(trans('message.question.removewait')) . '">' . e(trans('page.btn.removewait')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('removewait')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
+
 }
