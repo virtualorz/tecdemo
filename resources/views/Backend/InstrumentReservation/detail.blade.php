@@ -12,7 +12,6 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 @if(count($dataResult) > 0)
-                <form id="form1" method="post" action="{{ Sitemap::node()->getChildren('submit')->getUrl() }}">
                     <table class="table datatable_simple nohead">
                         <thead>
                             <tr>
@@ -22,8 +21,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th width="15%">{{ trans('validation.attributes.reservation_at') }}</th>
-                                <td>{{ $dataResult['reservation_dt'] }}</td>
+                                <th width="15%">{{ trans('validation.attributes.update_at') }}</th>
+                                <td>{{ $dataResult['created_at'] }}</td>
                             </tr>
                             <tr>
                                 <th>{{ trans('validation.attributes.page_id') }}</th>
@@ -64,36 +63,33 @@
                             <tr>
                                 <th>{{ trans('validation.attributes.start_time') }}</th>
                                 <td>
-                                    <input type="datetime-local" name="use_dt_start" id="data-use_dt_start" class="form-control required" value="{{ $dataResult['start_time'] }}">
+                                    {{ $dataResult['use_dt_start'] }}
                                 </td>
                             </tr> 
                             <tr>
                                 <th>{{ trans('validation.attributes.end_time') }}</th>
                                 <td>
-                                    <input type="datetime-local" name="use_dt_end" id="data-use_dt_end" class="form-control required" value="{{ $dataResult['end_time'] }}">
+                                    {{ $dataResult['use_dt_end'] }}
                                 </td>
                             </tr>
                             <tr>
                                 <th>{{ trans('validation.attributes.remark') }}</th>
                                 <td>
-                                    <textarea name="remark" id="data-remark" class="form-control"></textarea>
+                                    {{ $dataResult['remark'] }}
                                 </td>
-                            </tr> 
+                            </tr>  
                             <tr>
                                 <th>{{ trans('validation.attributes.update_admin_id') }}</th>
-                                <td>{{ User::get('name', '') }}</td>
+                                <td>{{ $dataResult['created_admin_name'] }}</td>
                             </tr>
                             <tr>
                                 <th>&nbsp;</th>
                                 <td> 
-                                    <input type="hidden" name="id" value="{{ $dataResult['instrument_reservation_data_id'] }}_{{ $dataResult['create_date'] }}" />
-                                    {!! ViewHelper::button('submit') !!}
-                                    {!! ViewHelper::button('cancel') !!}
+                                    {!! ViewHelper::button('back') !!}
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </form>
                 @else
                 <div align="center">{{ trans('message.info.norecord') }}</div>
                 @endif
@@ -110,22 +106,11 @@
 
 
 @section('script')
-<script src="{{ asset('assets/official/js/jquery.blockUI.min.js') }}"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
-        initValidation();
+        
     });
     
-    function initValidation() {
-        $('#form1').validate({
-            submitHandler: function (form) {
-                if (ajaxRequest.submit(form, {
-                }) === false) {
-                    return false;
-                }
-            }
-        });
-    }
 </script>
 @endsection

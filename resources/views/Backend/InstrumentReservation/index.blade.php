@@ -98,14 +98,17 @@
                             <td>{{ $v['name'] }}</td>
                             <td>{{ $v['member_name'] }}</td>
                             <td>
+                                @if($v['attend_status'] == null && $v['reservation_status'] !== null)
                                 {!! ViewHelper::button('complete', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date']]) !!}
-                                {!! ViewHelper::button('dcomplete') !!}
+                                {!! ViewHelper::button('dcomplete', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date'],'use_dt_start'=>$v['reservation_dt'].' '.$v['start_time'],'use_dt_end'=>$v['reservation_dt'].' '.$v['end_time']]) !!}
+                                @endif
                                 @if($v['reservation_status'] == 1)
-                                {!! ViewHelper::button('notattend') !!}
+                                {!! ViewHelper::button('notattend', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date']]) !!}
                                 @endif
-                                @if($v['reservation_status'] == 0)
-                                {!! ViewHelper::button('removewait') !!}
+                                @if($v['reservation_status'] !== null && $v['reservation_status'] == 0)
+                                {!! ViewHelper::button('removewait', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date']]) !!}
                                 @endif
+                                {!! ViewHelper::button('detail', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date']]) !!}
                             </td>
                         </tr>
                         @endforeach
@@ -124,44 +127,50 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#data-city").change(function(){
+        $(".dcomplete").click(function(){
             var ajaxProp = {
-                url: "{{ Sitemap::node()->getChildren('get_town')->getUrl() }}",
-                type: "get",
+                url: "{{ Sitemap::node()->getChildren('dcomplete')->getUrl() }}",
+                type: "post",
                 dataType: "json",
-                data: {'id':$("#data-city").val(),'_token':csrf_token},
+                data: {'id':$(this).attr('data-id'),'use_dt_start':$(this).attr('data-start'),'use_dt_end':$(this).attr('data-end'),'_token':csrf_token},
                 error: function (jqXHR, textStatus, errorThrown) {
                     
                 },
                 success: function (response) {
-                    $html = "<option value=''>{{trans('page.text.select_item')}}</option>";
-                    for(var key in response)
-                    {
-                        $html += "<option value='"+key+"'>"+response[key][1]+"</option>";
-                    }
-                    $("#data-town").html($html);
+                    location.reload();
+                    
+                }
+            }
+            $.ajax(ajaxProp);
+        });
+        $(".notattend").click(function(){
+            var ajaxProp = {
+                url: "{{ Sitemap::node()->getChildren('notattend')->getUrl() }}",
+                type: "post",
+                dataType: "json",
+                data: {'id':$(this).attr('data-id'),'_token':csrf_token},
+                error: function (jqXHR, textStatus, errorThrown) {
+                    
+                },
+                success: function (response) {
+                    location.reload();
                     
                 }
             }
             $.ajax(ajaxProp);
         });
 
-        $("#data-town").change(function(){
+        $(".removewait").click(function(){
             var ajaxProp = {
-                url: "{{ Sitemap::node()->getChildren('get_school')->getUrl() }}",
-                type: "get",
+                url: "{{ Sitemap::node()->getChildren('removewait')->getUrl() }}",
+                type: "post",
                 dataType: "json",
-                data: {'city':$("#data-city").val(),'town':$("#data-town").val(),'_token':csrf_token},
+                data: {'id':$(this).attr('data-id'),'_token':csrf_token},
                 error: function (jqXHR, textStatus, errorThrown) {
                     
                 },
                 success: function (response) {
-                    $html = "<option value=''>{{trans('page.text.select_item')}}</option>";
-                    for(var key in response)
-                    {
-                        $html += "<option value='"+response[key]['id']+"'>"+response[key]['school_name']+"</option>";
-                    }
-                    $("#data-school_id").html($html);
+                    location.reload();
                     
                 }
             }

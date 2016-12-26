@@ -45,6 +45,7 @@ class InstrumentReservationController extends Controller {
                                             'instrument_section.start_time',
                                             'instrument_section.end_time',
                                             'instrument_reservation_data.reservation_status',
+                                            'instrument_reservation_data.attend_status',
                                             'instrument_data.instrument_id',
                                             'instrument_data.name',
                                             'member_data.name as member_name')
@@ -92,75 +93,26 @@ class InstrumentReservationController extends Controller {
     }
 
     public function detail() {
-        $id = Route::input('id', 0);
-        $dataResult = DB::table('instrument_data')
-                            ->select('instrument_data.*',
-                                        'instrument_type.name as type_name',
-                                        'instrument_site.name as site_name',
+        $id = explode('_',Route::input('id', '0_0'));
+        $dataResult = DB::table('instrument_reservation_data')
+                            ->select('instrument_reservation_data.*',
+                                        'instrument_section.start_time',
+                                        'instrument_section.end_time',
+                                        'instrument_data.instrument_id',
+                                        'instrument_data.name',
+                                        'member_data.name as member_name',
+                                        'system_pi_list.name as pi_name',
                                         'member_admin.name as created_admin_name')
-                            ->leftJoin('member_admin','instrument_data.create_admin_id','=','member_admin.id')
-                            ->leftJoin('instrument_type','instrument_data.instrument_type_id','=','instrument_type.id')
-                            ->leftJoin('instrument_site','instrument_data.instrument_site_id','=','instrument_site.id')
-                            ->where('instrument_data.id',$id)
+                            ->leftJoin('instrument_section','instrument_reservation_data.reservation_section_id','=','instrument_section.id')
+                            ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
+                            ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
+                            ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
+                            ->leftJoin('member_admin','instrument_reservation_data.update_admin_id','=','member_admin.id')
+                            ->where('instrument_reservation_data.instrument_reservation_data_id',$id[0])
+                            ->where('instrument_reservation_data.create_date',$id[1])
                             ->get();
-        //管理員名單
-        $adminResult = DB::table('instrument_admin')
-                            ->select('name','email')
-                            ->where('instrument_data_id',$id)
-                            ->orderBy('instrument_admin_id','desc')
-                            ->get();
-        //使用時段
-        $sectionSetResult = array();
-        $sectionSetResultTmp = DB::table('instrument_section_set')
-                            ->select('instrument_section_id')
-                            ->where('instrument_data_id',$id)
-                            ->orderBy('instrument_section_set_id','desc')
-                            ->get();
-        foreach($sectionSetResultTmp as $k=>$v)
-        {
-            array_push($sectionSetResult,$v['instrument_section_id']);
-        }
-
-        $sectionResultTmp = DB::table('instrument_section')
-                                    ->select('id','section_type','start_time','end_time')
-                                    ->where('enable',1)
-                                    ->orderBy('section_type','asc')
-                                    ->get();
-        $sectionResult = array();
-        foreach($sectionResultTmp as $k=>$v)
-        {
-            if($v['section_type'] == 1)
-            {
-                $tmp = array('1'=>$v,'2'=>'');
-                array_push($sectionResult,$tmp);
-            }
-        }
-        foreach($sectionResultTmp as $k=>$v)
-        {
-            if($v['section_type'] == 2)
-            {
-                $isset = false;
-                foreach($sectionResult as $k1=>$v1)
-                {
-                    if($v1['2']== '')
-                    {
-                        $isset = true;
-                        $sectionResult[$k1]['2'] = $v;
-                        break;
-                    }
-                }
-                if(!$isset)
-                {
-                    $tmp = array('1'=>'','2'=>$v);
-                    array_push($sectionResult,$tmp);
-                }
-            }
-        }
 
         $this->view->with('dataResult', $dataResult[0]);
-        $this->view->with('adminResult', $adminResult);
-        $this->view->with('sectionSetResult', $sectionSetResult);
-        $this->view->with('sectionResult', $sectionResult);
 
         return $this->view;
     }
@@ -251,6 +203,84 @@ class InstrumentReservationController extends Controller {
         return $this->view;
     }
 
+    public function ajax_notattend() {
+        $validator = Validator::make(Request::all(), [
+                    
+        ]);
+        if ($validator->fails()) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = $validator->errors();
+
+            return $this->view;
+        }
+        
+        try {
+            DB::transaction(function(){
+                $id = explode('_',Request::input('id'));
+                
+                DB::table('instrument_reservation_data')
+                    ->where('instrument_reservation_data_id',$id[0])
+                    ->where('create_date',$id[1])
+                    ->update(['updated_at'=>date('Y-m-d H:i:s'),
+                                'attend_status'=>0,
+                                'update_admin_id'=>User::id()
+                    ]);
+
+            });
+
+        } catch (\PDOException $ex) {
+            DB::rollBack();
+
+            \Log::error($ex->getMessage());
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.database');
+            return $this->view;
+        }
+
+        $this->view['msg'] = trans('message.success.edit');
+        return $this->view;
+    }
+
+    public function ajax_removewait() {
+        $validator = Validator::make(Request::all(), [
+                    
+        ]);
+        if ($validator->fails()) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = $validator->errors();
+
+            return $this->view;
+        }
+        
+        try {
+            DB::transaction(function(){
+                $id = explode('_',Request::input('id'));
+                
+                DB::table('instrument_reservation_data')
+                    ->where('instrument_reservation_data_id',$id[0])
+                    ->where('create_date',$id[1])
+                    ->update(['updated_at'=>date('Y-m-d H:i:s'),
+                                'reservation_status'=>null,
+                                'update_admin_id'=>User::id()
+                    ]);
+
+            });
+
+        } catch (\PDOException $ex) {
+            DB::rollBack();
+
+            \Log::error($ex->getMessage());
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.database');
+            return $this->view;
+        }
+
+        $this->view['msg'] = trans('message.success.edit');
+        return $this->view;
+    }
+
     public function ajax_delete() {
         $validator = Validator::make(Request::all(), [
                     'id' => 'array|required'
@@ -265,29 +295,23 @@ class InstrumentReservationController extends Controller {
         $ids = Request::input('id', []);
         try {
             foreach ($ids as $k => $v) {
-                $id = $v;
+                $id = $id = explode('_',$v);
 
-                $result_before = DB::table('instrument_data')
-                                    ->where('id',$id)
+
+                $result_before = DB::table('instrument_reservation_data')
+                                    ->where('instrument_reservation_data_id',$id[0])
+                                    ->where('create_date',$id[1])
                                     ->get();
-                DB::table('instrument_data')
-                    ->where('id',$id)
+                DB::table('instrument_reservation_data')
+                    ->where('instrument_reservation_data_id',$id[0])
+                    ->where('create_date',$id[1])
                     ->delete();
                 DBProcedure::writeLog([
-                    'table' => 'instrument_data',
+                    'table' => 'instrument_reservation_data',
                     'operator' => DBOperator::OP_DELETE,
                     'data_before' => isset($result_before[0]) ? $result_before[0] : [],
                     'admin_id' => User::id()
                 ]);
-                
-                //管理員名單刪除
-                DB::table('instrument_admin')
-                    ->where('instrument_data_id',$id)
-                    ->delete();
-                //使用時段刪除
-                DB::table('instrument_section_set')
-                    ->where('instrument_data_id',$id)
-                    ->delete();
             }
         } catch (\PDOException $ex) {
             DB::rollBack();
@@ -308,16 +332,5 @@ class InstrumentReservationController extends Controller {
         
         $this->view['msg'] = trans('message.success.delete');
         return $this->view;
-    }
-
-    public function ajax_get_instrument() {
-
-        $id = Request::input('id');
-        $listResult = DB::table('instrument_data');
-        $listResult = $listResult->select('id','instrument_platform_id','name')
-                                    ->whereIn('instrument_platform_id',$id)
-                                    ->get();
-        
-        return $listResult;
     }
 }

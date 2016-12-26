@@ -79,6 +79,7 @@ return [
                     ],
                     'reservation' => ['_name' => '預約資料管理',
                         'complete' => ['_name' => '完成',],
+                        'detail' => ['_name' => '內容',],
                     ],
                     'payment' => ['_name' => '繳費資料查詢',
                         'complete' => ['_name' => '繳費完成',],

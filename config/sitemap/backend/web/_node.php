@@ -1196,7 +1196,7 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'InstrumentReservationController@ajax_dcomplete',
+                                'uses' => 'InstrumentReservationController@ajax_complete',
                             ],
                         ],
                     ],
@@ -1219,6 +1219,18 @@ return [
                             'method' => 'post',
                             'attr' => [
                                 'uses' => 'InstrumentReservationController@ajax_removewait',
+                            ],
+                        ],
+                    ],
+                ],
+                'detail' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'InstrumentReservationController@detail',
                             ],
                         ],
                     ],
