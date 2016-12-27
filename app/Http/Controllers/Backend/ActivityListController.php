@@ -244,7 +244,15 @@ class ActivityListController extends Controller {
                             ->where('activity_id',$id)
                             ->orderBy('activity_instrument_id','desc')
                             ->first();
-                    $activity_instrument = intval($activity_instrument["activity_instrument_id"]) +1;
+                    if(!isset($activity_instrument[0]['activity_instrument_id']))
+                    {
+                        $activity_instrument = 0;
+                    }
+                    else
+                    {
+                        $activity_instrument = $activity_instrument[0]['activity_instrument_id'];
+                    }
+                    $activity_instrument = intval($activity_instrument) +1;
                     DB::table('activity_instrument')
                             ->insert(
                                 array('activity_id'=>$id,
@@ -338,7 +346,15 @@ class ActivityListController extends Controller {
                             ->where('activity_id',Request::input('id'))
                             ->orderBy('activity_instrument_id','desc')
                             ->first();
-                    $activity_instrument = intval($activity_instrument["activity_instrument_id"]) +1;
+                    if(!isset($activity_instrument[0]['activity_instrument_id']))
+                    {
+                        $activity_instrument = 0;
+                    }
+                    else
+                    {
+                        $activity_instrument = $activity_instrument[0]['activity_instrument_id'];
+                    }
+                    $activity_instrument = intval($activity_instrument) +1;
                     DB::table('activity_instrument')
                             ->insert(
                                 array('activity_id'=>Request::input('id'),

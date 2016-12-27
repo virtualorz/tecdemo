@@ -47,6 +47,9 @@ return [
         'notattend' => '未出席',
         'removewait' => '移除候補',
         'complete' => '調整紀錄並完成使用',
+        'complete_pay' => '繳費完成',
+        'confirm_pay' => '確認帳單',
+        'reminder_pay' => '催繳',
         //
         //
         'course_class_status_1' => '正常開課',

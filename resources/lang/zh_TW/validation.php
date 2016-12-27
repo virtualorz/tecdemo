@@ -348,6 +348,9 @@ return [
         'course_partner-name' => '名稱',
         'contact' => '聯絡方式',
         #
+        #department
+        'department' => '系所/部門',
+        #
         #design_type
         'design_type' => '設計類型',
         #
@@ -481,6 +484,9 @@ return [
         #max
         'max_stock' => '最大庫存量',
         #
+        #month
+        'month' => '月份',
+        #
         #name
         'name' => '名稱',
         'name-main_type' => '主類型名稱',
@@ -528,6 +534,9 @@ return [
         #phone
         'phone' => '聯絡電話',
         'phone-contact' => '承辦人員電話', 
+        #
+        #payment
+        'payment_status' => '繳費狀態',
         #
         #rate
         'rate' => '單價',

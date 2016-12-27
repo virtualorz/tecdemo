@@ -1249,14 +1249,14 @@ return [
                         ],
                     ],
                 ],
-                'complete' => [
+                'complete_pay' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
                         'route' => [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'InstrumentPaymentController@edit',
+                                'uses' => 'InstrumentPaymentController@complete',
                             ],
                         ],
                     ],
@@ -1272,7 +1272,7 @@ return [
                         ],
                     ],
                 ],
-                'confirm' => [
+                'confirm_pay' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
                         'route' => [
@@ -1295,7 +1295,7 @@ return [
                         ],
                     ],
                 ],
-                'reminder' => [
+                'reminder_pay' => [
                     '_prop' => [
                         'permission' => SitemapAccess::ACCESS_REQUIRED,
                         'route' => [

@@ -320,5 +320,41 @@ trait ViewButton {
         }
     }
 
+    private function _btn_confirm_pay($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('confirm_pay')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('confirm_pay')->getPath()) . '">' . e(trans('page.btn.confirm_pay')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('confirm_pay')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
+    private function _btn_complete_pay($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('complete_pay')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('complete_pay')->getPath()) . '">' . e(trans('page.btn.complete_pay')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('complete_pay')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
+    private function _btn_reminder_pay($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('reminder_pay')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('reminder_pay')->getPath()) . '">' . e(trans('page.btn.reminder_pay')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('reminder_pay')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
 
 }
