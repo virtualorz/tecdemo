@@ -85,6 +85,7 @@ return [
                         'complete_pay' => ['_name' => '繳費完成',],
                         'confirm_pay' => ['_name' => '確認帳單',],
                         'reminder_pay' => ['_name' => '催繳',],
+                        'detail' => ['_name' => '內容',],
                     ],
                 ],
             ]

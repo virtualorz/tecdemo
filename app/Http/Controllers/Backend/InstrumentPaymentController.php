@@ -29,6 +29,7 @@ class InstrumentPaymentController extends Controller {
             ->where('attend_status',1)
             ->whereNotNull('update_admin_id')
             ->whereNull('in_bill')
+            ->whereDate('use_dt_start','<', date('Y-m-d',mktime(0, 0, 0, date('m'), 1, date('Y'))))
             ->get();
         
         foreach($reservation_data as $k=>$v)
@@ -261,26 +262,52 @@ class InstrumentPaymentController extends Controller {
     }
 
     public function detail() {
-        $id = explode('_',Route::input('id', '0_0'));
-        $dataResult = DB::table('instrument_reservation_data')
-                            ->select('instrument_reservation_data.*',
-                                        'instrument_section.start_time',
-                                        'instrument_section.end_time',
-                                        'instrument_data.instrument_id',
-                                        'instrument_data.name',
-                                        'member_data.name as member_name',
-                                        'system_pi_list.name as pi_name',
-                                        'member_admin.name as created_admin_name')
-                            ->leftJoin('instrument_section','instrument_reservation_data.reservation_section_id','=','instrument_section.id')
-                            ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
-                            ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
-                            ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
-                            ->leftJoin('member_admin','instrument_reservation_data.update_admin_id','=','member_admin.id')
-                            ->where('instrument_reservation_data.instrument_reservation_data_id',$id[0])
-                            ->where('instrument_reservation_data.create_date',$id[1])
+        $id = explode('_',Route::input('id', '0_0_0'));
+        $dataResult = DB::table('payment_data')
+                            ->select('payment_data.*','member_data.name as created_admin_name')
+                            ->leftJoin('member_data','payment_data.create_admin_id','=','member_data.id')
+                            ->where('payment_data.pi_list_id',$id[0])
+                            ->where('payment_data.pay_year',$id[1])
+                            ->where('payment_data.pay_month',$id[2])
                             ->get();
+        $reservationlogResult = DB::table('payment_reservation_log')
+                            ->select('payment_reservation_log.payment_reservation_log_id',
+                                    'payment_reservation_log.pi_list_id',
+                                    'payment_reservation_log.pay_year',
+                                    'payment_reservation_log.pay_month',
+                                    'payment_reservation_log.discount_JSON',
+                                    'payment_reservation_log.supplies_JOSN',
+                                    'payment_reservation_log.supplies_total',
+                                    'instrument_reservation_data.*',
+                                    'instrument_data.name as instrument_name',
+                                    'member_data.name as member_name',
+                                    'member_data.type as member_type')
+                            ->leftJoin('instrument_reservation_data', function ($join) {
+                                $join->on('payment_reservation_log.instrument_reservation_data_id', '=', 'instrument_reservation_data.instrument_reservation_data_id');
+                                $join->on('payment_reservation_log.create_date', '=', 'instrument_reservation_data.create_date');
+                            })
+                            ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
+                            ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
+                            ->where('payment_reservation_log.pi_list_id',$id[0])
+                            ->where('payment_reservation_log.pay_year',$id[1])
+                            ->where('payment_reservation_log.pay_month',$id[2])
+                            ->orderBy('payment_reservation_log.payment_reservation_log_id','desc')
+                            ->get();
+        $suppliesResult = DB::table('instrument_supplies')
+                            ->select('instrument_supplies.*')
+                            ->where('enable','1')
+                            ->get();
+        
+        foreach($reservationlogResult as $k=>$v)
+        {
+            $reservationlogResult[$k]['discount_JSON'] = json_decode($v['discount_JSON'],true);
+            $reservationlogResult[$k]['supplies_JOSN'] = json_decode($v['supplies_JOSN'],true);
+        }
 
         $this->view->with('dataResult', $dataResult[0]);
+        $this->view->with('reservationlogResult', $reservationlogResult);
+        $this->view->with('suppliesResult', $suppliesResult);
+        $this->view->with('discount_type', Config::get('data.discount_type'));
 
         return $this->view;
     }

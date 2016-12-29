@@ -1324,7 +1324,7 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'InstrumentReservationController@ajax_output',
+                                'uses' => 'InstrumentPaymentController@ajax_output',
                             ],
                         ],
                     ],
@@ -1336,7 +1336,7 @@ return [
                             'method' => 'get',
                             'param' => '{id}',
                             'attr' => [
-                                'uses' => 'InstrumentReservationController@detail',
+                                'uses' => 'InstrumentPaymentController@detail',
                             ],
                         ],
                     ],
