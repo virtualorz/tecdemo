@@ -97,7 +97,7 @@
                             <th width="15%">{{ trans('validation.attributes.department') }}</th>
                             <th width="15%">{{ trans('validation.attributes.pi') }}</th>
                             <th width="15%">{{ trans('validation.attributes.total') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.payment_status') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.pay_status') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
@@ -112,10 +112,10 @@
                             <td>{{ $v['pi_name'] }}</td>
                             <td>{{ $v['total'] }}</td>
                             <td>
-                                @if($v['create_admin_id'] == null) 
+                                @if($v['create_admin_id'] === null) 
                                     {{ trans('enum.payment_status.0') }} 
                                 @else 
-                                    @if($v['print_member_id'] == null) 
+                                    @if($v['print_member_id'] === null) 
                                         {{ trans('enum.payment_status.1') }} 
                                     @else 
                                         {{ trans('enum.payment_status.2') }} 
@@ -123,9 +123,12 @@
                                 @endif 
                             </td>
                             <td>
+                                @if($v['create_admin_id'] === null)
                                 {!! ViewHelper::button('confirm_pay', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
+                                @endif
                                 {!! ViewHelper::button('complete_pay', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
                                 {!! ViewHelper::button('reminder_pay', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
+                                {!! ViewHelper::button('detail', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
                             </td>
                         </tr>
                         @endforeach

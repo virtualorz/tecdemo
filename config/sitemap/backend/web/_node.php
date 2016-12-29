@@ -1329,6 +1329,18 @@ return [
                         ],
                     ],
                 ],
+                'detail' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'InstrumentReservationController@detail',
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ],
     ],

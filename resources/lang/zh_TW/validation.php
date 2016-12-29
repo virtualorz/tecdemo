@@ -348,6 +348,9 @@ return [
         'course_partner-name' => '名稱',
         'contact' => '聯絡方式',
         #
+        #discount
+        'discount' => '折扣',
+        #
         #department
         'department' => '系所/部門',
         #
@@ -459,6 +462,7 @@ return [
         'message' => '留言',
         #
         #member
+        'member' => '會員',
         'member-email' => 'E-mail(登入帳號)',
         'member-password' => '密碼',
         'member-password_confirmation' => '確認密碼',
@@ -511,8 +515,7 @@ return [
         'pass_type' => '通過方式',
         'pass_condition' => '通過條件',
         #
-        #pay_status
-        'pay_status' => '付款狀態',
+        #pa
         'package' => '組',
         'permission' => '權限',
         #
@@ -536,7 +539,10 @@ return [
         'phone-contact' => '承辦人員電話', 
         #
         #payment
-        'payment_status' => '繳費狀態',
+        'pay_status' => '付款狀態',
+        'pay_content' => '繳費內容',
+        'pay_total' => '應繳金額',
+        'pay_code' => '繳費代碼',
         #
         #rate
         'rate' => '單價',
@@ -585,6 +591,10 @@ return [
         #
         #site
         'site_name' => '場地名稱',
+        #
+        #supplies
+        'supplies' => '耗材',
+        'supplies_add' => '已增加耗材',
         #
         #start_dt
         'start_dt' => '開始日期',

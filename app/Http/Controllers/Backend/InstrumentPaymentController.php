@@ -219,25 +219,43 @@ class InstrumentPaymentController extends Controller {
         return $this->view;
     }
 
-    public function complete() {
-        $id = explode('_',Route::input('id', '0_0'));
-        $dataResult = DB::table('instrument_reservation_data')
-                            ->select('instrument_reservation_data.*',
-                                        'instrument_section.start_time',
-                                        'instrument_section.end_time',
-                                        'instrument_data.instrument_id',
-                                        'instrument_data.name',
-                                        'member_data.name as member_name',
-                                        'system_pi_list.name as pi_name')
-                            ->leftJoin('instrument_section','instrument_reservation_data.reservation_section_id','=','instrument_section.id')
-                            ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
+    public function confirm() {
+        $id = explode('_',Route::input('id', '0_0_0'));
+        $dataResult = DB::table('payment_data')
+                            ->select('payment_data.*')
+                            ->where('pi_list_id',$id[0])
+                            ->where('pay_year',$id[1])
+                            ->where('pay_month',$id[2])
+                            ->get();
+        $reservationlogResult = DB::table('payment_reservation_log')
+                            ->select('payment_reservation_log.payment_reservation_log_id',
+                                    'payment_reservation_log.pi_list_id',
+                                    'payment_reservation_log.pay_year',
+                                    'payment_reservation_log.pay_month',
+                                    'instrument_reservation_data.*',
+                                    'instrument_data.name as instrument_name',
+                                    'member_data.name as member_name',
+                                    'member_data.type as member_type')
+                            ->leftJoin('instrument_reservation_data', function ($join) {
+                                $join->on('payment_reservation_log.instrument_reservation_data_id', '=', 'instrument_reservation_data.instrument_reservation_data_id');
+                                $join->on('payment_reservation_log.create_date', '=', 'instrument_reservation_data.create_date');
+                            })
                             ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
-                            ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
-                            ->where('instrument_reservation_data.instrument_reservation_data_id',$id[0])
-                            ->where('instrument_reservation_data.create_date',$id[1])
+                            ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
+                            ->where('payment_reservation_log.pi_list_id',$id[0])
+                            ->where('payment_reservation_log.pay_year',$id[1])
+                            ->where('payment_reservation_log.pay_month',$id[2])
+                            ->orderBy('payment_reservation_log.payment_reservation_log_id','desc')
+                            ->get();
+        $suppliesResult = DB::table('instrument_supplies')
+                            ->select('instrument_supplies.*')
+                            ->where('enable','1')
                             ->get();
 
         $this->view->with('dataResult', $dataResult[0]);
+        $this->view->with('reservationlogResult', $reservationlogResult);
+        $this->view->with('suppliesResult', $suppliesResult);
+        $this->view->with('discount_type', Config::get('data.discount_type'));
 
         return $this->view;
     }
@@ -269,10 +287,9 @@ class InstrumentPaymentController extends Controller {
 
     ##
 
-    public function ajax_complete() {
+    public function ajax_confirm() {
         $validator = Validator::make(Request::all(), [
-                    'use_dt_start' => 'string|required',
-                    'use_dt_end' => 'string|required',
+                    
         ]);
         if ($validator->fails()) {
             $this->view['result'] = 'no';
@@ -283,60 +300,169 @@ class InstrumentPaymentController extends Controller {
         }
 
         $id = explode('_',Request::input('id'));
-        //使用費計算
-        $dataResult = DB::table('instrument_reservation_data')
-            ->select('instrument_reservation_data.instrument_id','member_data.type')
-            ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
-            ->where('instrument_reservation_data.instrument_reservation_data_id',$id[0])
-            ->where('instrument_reservation_data.create_date',$id[1])
-            ->get();
-
-        $instrument_dataResult = DB::table('instrument_rate')
-            ->select('rate_type','member_1','member_2','member_3','member_4','rate')
-            ->where('instrument_data_id',$dataResult[0]['instrument_id'])
-            ->where('start_dt','>=',date('Y-m-d'))
-            ->orderBy('instrument_data_id','desc')
-            ->limit('1')
-            ->get();
-        if(!isset($instrument_dataResult[0]['rate_type']))
+        $reservationlogResult = DB::table('payment_reservation_log')
+                            ->select('payment_reservation_log.payment_reservation_log_id',
+                                    'payment_reservation_log.pi_list_id',
+                                    'payment_reservation_log.pay_year',
+                                    'payment_reservation_log.pay_month',
+                                    'instrument_reservation_data.*',
+                                    'instrument_data.name as instrument_name',
+                                    'member_data.name as member_name',
+                                    'member_data.type as member_type')
+                            ->leftJoin('instrument_reservation_data', function ($join) {
+                                $join->on('payment_reservation_log.instrument_reservation_data_id', '=', 'instrument_reservation_data.instrument_reservation_data_id');
+                                $join->on('payment_reservation_log.create_date', '=', 'instrument_reservation_data.create_date');
+                            })
+                            ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
+                            ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
+                            ->where('payment_reservation_log.pi_list_id',$id[0])
+                            ->where('payment_reservation_log.pay_year',$id[1])
+                            ->where('payment_reservation_log.pay_month',$id[2])
+                            ->orderBy('payment_reservation_log.payment_reservation_log_id','desc')
+                            ->get();
+        $payment_total = 0;
+        //原始費用總額計算
+        foreach($reservationlogResult as $k=>$v)
         {
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.validation');
-            $this->view['detail'] = array('message.error.rate_error');
-
-            return $this->view;
+            $payment_total += floatval($v['pay']);
         }
-        $pay = 0;
-        $use_hour = (strtotime(Request::input('use_dt_end')) - strtotime(Request::input('use_dt_start')))/3600;
-        if($instrument_dataResult[0]['rate_type'] == 1)
+        //折扣計算
+        $discount = Request::input('discount',array());
+        $discount_number = Request::input('discount_number',array());
+        foreach($discount as $k=>$v)
         {
-            $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']];
-        }
-        else if($instrument_dataResult[0]['rate_type'] == 2)
-        {
-            $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']]*$use_hour*2;
-        }
-        else if($instrument_dataResult[0]['rate_type'] == 3)
-        {
-            $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']]*$use_hour;
-        }
-
-        
-        try {
-            DB::transaction(function()use($pay){
+            $v = explode('_',$v);
+            $uid = explode('-',$v[0]);
+            $discount_total = 0;
+            $discount_JSON = array();
+            $payment_reservation_log_id = 0;
+            foreach($reservationlogResult as $k1=>$v1)
+            {
+                if($v1["payment_reservation_log_id"] == $uid[0] && $v1["pi_list_id"] == $uid[1] && $v1["pay_year"] == $uid[2] && $v1["pay_month"] == $uid[3])
+                {
+                    if($v[1] == "1")
+                    {
+                        $discount_total = floatval($v1['pay']) - (floatval($v1['pay']) * (floatval(100 - intval($discount_number[$k1]))/100));
+                    }
+                    else if($v[1] == "2")
+                    {
+                        $discount_total = floatval($discount_number[$k]);
+                    }
+                    $discount_JSON = json_encode(array('type'=>$v[1],'number'=>$discount_number[$k]));
+                    $payment_reservation_log_id = $v1['payment_reservation_log_id'];
+                }
+            }
+            $payment_total -= floatval($discount_total);
+            
+            //更新折扣紀錄
+            $param = array($payment_reservation_log_id,$id,$discount_JSON,$discount_total);
+            DB::transaction(function()use($param){
                 $id = explode('_',Request::input('id'));
                 
-                DB::table('instrument_reservation_data')
-                    ->where('instrument_reservation_data_id',$id[0])
-                    ->where('create_date',$id[1])
-                    ->update(['updated_at'=>date('Y-m-d H:i:s'),
-                                'use_dt_start'=>Request::input('use_dt_start'),
-                                'use_dt_end'=>Request::input('use_dt_end'),
-                                'attend_status'=>1,
-                                'pay'=>$pay,
-                                'remark'=>Request::input('remark'),
-                                'update_admin_id'=>User::id()
+                DB::table('payment_reservation_log')
+                    ->where('payment_reservation_log_id',$param[0])
+                    ->where('pi_list_id',$param[1][0])
+                    ->where('pay_year',$param[1][1])
+                    ->where('pay_month',$param[1][2])
+                    ->update(['discount_JSON'=>$param[2]
                     ]);
+            });
+        }
+        
+
+        //耗材計算
+        $pay_code = Request::input('pay_code',array());
+        $supplies = Request::input('supplies',array());
+        $count = Request::input('count',array());
+        $supplies_JOSN = array();
+        $supplies_total = array();
+        foreach($pay_code as $k=>$v)
+        {
+            $v = explode('_',$v);
+            $uid = explode('-',$v[0]);
+            $supplies_total_tmp = 0;
+            $supplies_JOSN_tmp = array();
+            foreach($reservationlogResult as $k1=>$v1)
+            {
+                if($v1["payment_reservation_log_id"] == $uid[0] && $v1["pi_list_id"] == $uid[1] && $v1["pay_year"] == $uid[2] && $v1["pay_month"] == $uid[3])
+                {
+                    $suppliesResult = DB::table('instrument_supplies')
+                            ->select('instrument_supplies.rate'.$v1['member_type'])
+                            ->where('id',$supplies[$k])
+                            ->get();
+                    if(isset($suppliesResult[0]['rate'.$v1['member_type']]))
+                    {
+                        $supplies_total_tmp = $suppliesResult[0]['rate'.$v1['member_type']] * $count[$k];
+                        $supplies_JOSN_tmp = array('id'=>$supplies[$k],'count'=>$count[$k],'total'=>$supplies_total_tmp);
+                    }
+                }
+            }
+            if(isset($supplies_JOSN[$v[0]]))
+            {
+                array_push($supplies_JOSN[$v[0]],$supplies_JOSN_tmp);
+            }
+            else{
+                $supplies_JOSN[$v[0]] = array($supplies_JOSN_tmp);
+            }
+            if(isset($supplies_total[$v[0]]))
+            {
+                $supplies_total[$v[0]] = floatval($supplies_total[$v[0]]) + floatval($supplies_total_tmp);
+            }
+            else{
+                $supplies_total[$v[0]] = $supplies_total_tmp;
+            }
+        } 
+
+        foreach($supplies_JOSN as $k=>$v)
+        {
+            $payment_total += floatval($supplies_total[$k]);
+            //更新耗材紀錄
+            $param = array($k,$v,$supplies_total);
+            DB::transaction(function()use($param){
+                $id = explode('-',$param[0]);
+                
+                DB::table('payment_reservation_log')
+                    ->where('payment_reservation_log_id',$id[0])
+                    ->where('pi_list_id',$id[1])
+                    ->where('pay_year',$id[2])
+                    ->where('pay_month',$id[3])
+                    ->update(['supplies_JOSN'=>json_encode($param[1]),
+                                'supplies_total'=>$param[2][$param[0]]
+                    ]);
+            });
+        }
+        
+        //儲存帳單紀錄
+        try {
+            DB::transaction(function()use($payment_total){
+                $id = explode('_',Request::input('id'));
+                $result_before = DB::table('payment_data')
+                                    ->where('pi_list_id',$id[0])
+                                    ->where('pay_year',$id[1])
+                                    ->where('pay_month',$id[2])
+                                    ->get();
+
+                DB::table('payment_data')
+                    ->where('pi_list_id',$id[0])
+                    ->where('pay_year',$id[1])
+                    ->where('pay_month',$id[2])
+                    ->update(['remark'=>Request::input('remark'),
+                                'total'=>$payment_total,
+                                'create_admin_id'=>User::id()
+                    ]);
+                
+                $result_after = DB::table('payment_data')
+                                    ->where('pi_list_id',$id[0])
+                                    ->where('pay_year',$id[1])
+                                    ->where('pay_month',$id[2])
+                                    ->get();
+                DBProcedure::writeLog([
+                    'table' => 'payment_data',
+                    'operator' => DBOperator::OP_UPDATE,
+                    'data_before' => isset($result_before[0]) ? $result_before[0] : [],
+                    'data_after' => isset($result_after[0]) ? $result_after[0] : [],
+                    'admin_id' => User::id()
+                ]);
 
             });
 
@@ -348,7 +474,7 @@ class InstrumentPaymentController extends Controller {
             $this->view['msg'] = trans('message.error.database');
             return $this->view;
         }
-
+        
         $this->view['msg'] = trans('message.success.edit');
         return $this->view;
     }

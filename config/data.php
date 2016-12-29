@@ -69,5 +69,9 @@ return [
             1 => 'success',
             0 => 'danger'
         ]
+    ],
+    'discount_type' => [
+        1=>'比例折扣',
+        2=>'金額折扣',
     ]
 ];

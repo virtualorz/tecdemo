@@ -82,9 +82,9 @@ return [
                         'detail' => ['_name' => '內容',],
                     ],
                     'payment' => ['_name' => '繳費資料查詢',
-                        'complete' => ['_name' => '繳費完成',],
-                        'confirm' => ['_name' => '確認帳單',],
-                        'reminder' => ['_name' => '催繳',],
+                        'complete_pay' => ['_name' => '繳費完成',],
+                        'confirm_pay' => ['_name' => '確認帳單',],
+                        'reminder_pay' => ['_name' => '催繳',],
                     ],
                 ],
             ]
