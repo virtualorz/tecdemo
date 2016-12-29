@@ -223,7 +223,10 @@ class InstrumentPaymentController extends Controller {
     public function confirm() {
         $id = explode('_',Route::input('id', '0_0_0'));
         $dataResult = DB::table('payment_data')
-                            ->select('payment_data.*')
+                            ->select('payment_data.*','system_department.name as department_name','system_organize.name as organize_name')
+                            ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
+                            ->leftJoin('system_department','system_pi_list.department_id','=','system_department.id')
+                            ->leftJoin('system_organize','system_department.organize_id','=','system_organize.id')
                             ->where('pi_list_id',$id[0])
                             ->where('pay_year',$id[1])
                             ->where('pay_month',$id[2])
@@ -264,8 +267,11 @@ class InstrumentPaymentController extends Controller {
     public function detail() {
         $id = explode('_',Route::input('id', '0_0_0'));
         $dataResult = DB::table('payment_data')
-                            ->select('payment_data.*','member_data.name as created_admin_name')
+                            ->select('payment_data.*','member_data.name as created_admin_name','system_department.name as department_name','system_organize.name as organize_name')
                             ->leftJoin('member_data','payment_data.create_admin_id','=','member_data.id')
+                            ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
+                            ->leftJoin('system_department','system_pi_list.department_id','=','system_department.id')
+                            ->leftJoin('system_organize','system_department.organize_id','=','system_organize.id')
                             ->where('payment_data.pi_list_id',$id[0])
                             ->where('payment_data.pay_year',$id[1])
                             ->where('payment_data.pay_month',$id[2])
@@ -308,6 +314,23 @@ class InstrumentPaymentController extends Controller {
         $this->view->with('reservationlogResult', $reservationlogResult);
         $this->view->with('suppliesResult', $suppliesResult);
         $this->view->with('discount_type', Config::get('data.discount_type'));
+
+        return $this->view;
+    }
+
+    public function complete() {
+        $id = explode('_',Route::input('id', '0_0_0'));
+        $dataResult = DB::table('payment_data')
+                            ->select('payment_data.*','system_department.name as department_name','system_organize.name as organize_name')
+                            ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
+                            ->leftJoin('system_department','system_pi_list.department_id','=','system_department.id')
+                            ->leftJoin('system_organize','system_department.organize_id','=','system_organize.id')
+                            ->where('pi_list_id',$id[0])
+                            ->where('pay_year',$id[1])
+                            ->where('pay_month',$id[2])
+                            ->get();
+
+        $this->view->with('dataResult', $dataResult[0]);
 
         return $this->view;
     }
@@ -506,9 +529,10 @@ class InstrumentPaymentController extends Controller {
         return $this->view;
     }
 
-    public function ajax_notattend() {
+    public function ajax_complete() {
         $validator = Validator::make(Request::all(), [
-                    
+                    'payment' => 'integer|required',
+                    'receive' => 'string|required|max:128'
         ]);
         if ($validator->fails()) {
             $this->view['result'] = 'no';
@@ -521,14 +545,34 @@ class InstrumentPaymentController extends Controller {
         try {
             DB::transaction(function(){
                 $id = explode('_',Request::input('id'));
-                
-                DB::table('instrument_reservation_data')
-                    ->where('instrument_reservation_data_id',$id[0])
-                    ->where('create_date',$id[1])
-                    ->update(['updated_at'=>date('Y-m-d H:i:s'),
-                                'attend_status'=>0,
-                                'update_admin_id'=>User::id()
-                    ]);
+                $payment_paylog = DB::table('payment_paylog')
+                        ->select('payment_paylog_id')
+                        ->where('pi_list_id',$id[0])
+                        ->where('pay_year',$id[1])
+                        ->where('pay_month',$id[2])
+                        ->orderBy('payment_paylog_id','desc')
+                        ->first();
+                if(!isset($payment_paylog[0]['payment_paylog']))
+                {
+                    $payment_paylog = 0;
+                }
+                else
+                {
+                    $payment_paylog = $payment_paylog[0]['payment_paylog'];
+                }
+                $payment_paylog = intval($payment_paylog) +1;
+
+                DB::table('payment_paylog')
+                    ->insert(array(
+                            'pi_list_id'=>$id[0],
+                            'pay_year'=>$id[1],
+                            'pay_month'=>$id[2],
+                            'created_at'=>date('Y-m-d H:i:s'),
+                            'payment_paylog_id'=>$payment_paylog,
+                            'payment'=>Request::input('payment'),
+                            'receive'=>Request::input('receive'),
+                            'create_admin_id'=>User::id()
+                        ));
 
             });
 
@@ -542,98 +586,6 @@ class InstrumentPaymentController extends Controller {
         }
 
         $this->view['msg'] = trans('message.success.edit');
-        return $this->view;
-    }
-
-    public function ajax_removewait() {
-        $validator = Validator::make(Request::all(), [
-                    
-        ]);
-        if ($validator->fails()) {
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.validation');
-            $this->view['detail'] = $validator->errors();
-
-            return $this->view;
-        }
-        
-        try {
-            DB::transaction(function(){
-                $id = explode('_',Request::input('id'));
-                
-                DB::table('instrument_reservation_data')
-                    ->where('instrument_reservation_data_id',$id[0])
-                    ->where('create_date',$id[1])
-                    ->update(['updated_at'=>date('Y-m-d H:i:s'),
-                                'reservation_status'=>null,
-                                'update_admin_id'=>User::id()
-                    ]);
-
-            });
-
-        } catch (\PDOException $ex) {
-            DB::rollBack();
-
-            \Log::error($ex->getMessage());
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.database');
-            return $this->view;
-        }
-
-        $this->view['msg'] = trans('message.success.edit');
-        return $this->view;
-    }
-
-    public function ajax_delete() {
-        $validator = Validator::make(Request::all(), [
-                    'id' => 'array|required'
-        ]);
-        if ($validator->fails()) {
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.validation');
-            $this->view['detail'] = $validator->errors();
-
-            return $this->view;
-        }
-        $ids = Request::input('id', []);
-        try {
-            foreach ($ids as $k => $v) {
-                $id = $id = explode('_',$v);
-
-
-                $result_before = DB::table('instrument_reservation_data')
-                                    ->where('instrument_reservation_data_id',$id[0])
-                                    ->where('create_date',$id[1])
-                                    ->get();
-                DB::table('instrument_reservation_data')
-                    ->where('instrument_reservation_data_id',$id[0])
-                    ->where('create_date',$id[1])
-                    ->delete();
-                DBProcedure::writeLog([
-                    'table' => 'instrument_reservation_data',
-                    'operator' => DBOperator::OP_DELETE,
-                    'data_before' => isset($result_before[0]) ? $result_before[0] : [],
-                    'admin_id' => User::id()
-                ]);
-            }
-        } catch (\PDOException $ex) {
-            DB::rollBack();
-
-            \Log::error($ex->getMessage());
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.database');
-            return $this->view;
-        } catch (\Exception $ex) {
-            DB::rollBack();
-
-            \Log::error($ex->getMessage());
-            $this->view['result'] = 'no';
-            $this->view['msg'] = $ex->getMessage();
-            return $this->view;
-        }
-
-        
-        $this->view['msg'] = trans('message.success.delete');
         return $this->view;
     }
 }

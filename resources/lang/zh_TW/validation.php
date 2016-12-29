@@ -518,6 +518,8 @@ return [
         #pa
         'package' => '組',
         'permission' => '權限',
+        'payment' => '應繳金額',
+        'payment' => '應繳金額',
         #
         #pi
         'pi' => '指導教授',
@@ -552,6 +554,8 @@ return [
         'rate4' => '生科院內單價',
         'rate_type' => '計價方式',
         'rate_multi' => '計價倍率',
+        #
+        'receive' => '收據代碼',
         #
         #reservation
         'reservation_count' => '預約人數',

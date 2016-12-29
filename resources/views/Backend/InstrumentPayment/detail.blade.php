@@ -107,7 +107,7 @@
                             <tr>
                                 <th>{{ trans('validation.attributes.department') }}</th>
                                 <td>
-                                    
+                                    {{ $dataResult['organize_name'] }}/{{ $dataResult['department_name'] }}
                                 </td>
                             </tr>
                             <tr>
@@ -142,84 +142,9 @@
 <script type="text/javascript">
     
     $(document).ready(function () {
-        initValidation();
-        $(document).on("click",".del_sipplies",function(){
-            $(this).parent().parent().remove();
-            cal_total();
-        });
-        $("#add_supplies").click(function(){
-            if($("#data-pay_code").val() != "" && $("#data-supplies").val() != "" && $("#data-count").val() != "")
-            {
-                $("#supplies_add").find(".dataTables_empty").parent().remove();
-                var html="<tr><td>"+$("#data-pay_code :selected").text()+"<input type='hidden' class='pay_code' name='pay_code[]' value='"+$("#data-pay_code").val()+"'></td>";
-                html +="<td>"+$("#data-supplies :selected").text()+"<input type='hidden' class='supplies' name='supplies[]' value='"+$("#data-supplies").val()+"'></td>";
-                html +="<td>"+$("#data-count").val()+"<input type='hidden' class='count' name='count[]' value='"+$("#data-count").val()+"'></td>";
-                html +="<td class='supplies_pay'>"+$("#data-supplies :selected").attr('data-rate'+$("#data-pay_code :selected").attr('data-type'))*$("#data-count").val().toString()+"</td>";
-                html +="<td><input type='button' class='btn btn-default del_sipplies' value='刪除'></td></tr>";
-
-                $("#supplies_add").append(html);
-                $("#data-pay_code").val("");
-                $("#data-supplies").val("");
-                $("#data-count").val("");
-                $("#pay_supplies").html("");
-                cal_total();
-            }
-        });
-
-        $(".supplies_change").change(function(){
-            if($("#data-pay_code").val() != "" && $("#data-supplies").val() != "" && $("#data-count").val() != "")
-            {
-                $("#pay_supplies").html($("#data-supplies :selected").attr('data-rate'+$("#data-pay_code :selected").attr('data-type'))*$("#data-count").val().toString());
-            }
-        });
-
-        $(".discount").change(function(){
-            if($("#data-discount_number_"+$(this).attr('data-id')).val() != "" && $(this).val() != "")
-            {
-                cal_total();
-            }
-        });
-
-        $(".discount_number").change(function(){
-            if($("#data-discount_"+$(this).attr('data-id')).val() != "" && $(this).val() != "")
-            {
-                cal_total();
-            }
-        });
+        
 
     });
-    
-    function initValidation() {
-        $('#form1').validate({
-            submitHandler: function (form) {
-                if (ajaxRequest.submit(form, {
-                }) === false) {
-                    return false;
-                }
-            }
-        });
-    }
-
-    function cal_total(){
-        var total = 0;
-        $(".discount").each(function(){
-            $tmp = $(this).val().split("_");
-            if($tmp[1] == "1")
-            {
-                total += parseFloat($("#pay_"+$(this).attr('data-id')).html()) * (parseFloat((100 - parseInt($("#data-discount_number_"+$(this).attr('data-id')).val())))/100);
-            }
-            else if($tmp[1] == "2")
-            {
-                total += parseInt($("#pay_"+$(this).attr('data-id')).html()) - parseInt($("#data-discount_number_"+$(this).attr('data-id')).val());
-            }
-        });
-
-        $(".supplies_pay").each(function(){
-            total += parseFloat($(this).html());
-        });
-
-        $("#pay_total").html(total);
-    }
 
 </script>
 @endsection

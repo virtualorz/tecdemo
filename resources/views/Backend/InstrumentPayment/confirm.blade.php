@@ -143,7 +143,7 @@
                             <tr>
                                 <th>{{ trans('validation.attributes.department') }}</th>
                                 <td>
-                                    
+                                    {{ $dataResult['organize_name'] }}/{{ $dataResult['department_name'] }}
                                 </td>
                             </tr>
                             <tr>
