@@ -518,8 +518,7 @@ return [
         #pa
         'package' => '組',
         'permission' => '權限',
-        'payment' => '應繳金額',
-        'payment' => '應繳金額',
+        'payment' => '實繳金額',
         #
         #pi
         'pi' => '指導教授',

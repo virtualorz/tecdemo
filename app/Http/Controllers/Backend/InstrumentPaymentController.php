@@ -541,6 +541,21 @@ class InstrumentPaymentController extends Controller {
 
             return $this->view;
         }
+
+        $id = explode('_',Request::input('id'));
+        $paymentResult = DB::table('payment_data')
+                            ->where('pi_list_id',$id[0])
+                            ->where('pay_year',$id[1])
+                            ->where('pay_month',$id[2])
+                            ->get();
+        if(intval($paymentResult[0]['total']) !== intval(Request::input('payment')))
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array(trans('message.error.pay_error'));
+
+            return $this->view;
+        }
         
         try {
             DB::transaction(function(){
@@ -552,13 +567,13 @@ class InstrumentPaymentController extends Controller {
                         ->where('pay_month',$id[2])
                         ->orderBy('payment_paylog_id','desc')
                         ->first();
-                if(!isset($payment_paylog[0]['payment_paylog']))
+                if(!isset($payment_paylog['payment_paylog_id']))
                 {
                     $payment_paylog = 0;
                 }
                 else
                 {
-                    $payment_paylog = $payment_paylog[0]['payment_paylog'];
+                    $payment_paylog = $payment_paylog['payment_paylog_id'];
                 }
                 $payment_paylog = intval($payment_paylog) +1;
 
