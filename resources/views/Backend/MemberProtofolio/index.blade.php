@@ -39,23 +39,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>{{ trans('validation.attributes.department') }}</td>
-                                <td>
-                                    <select name="department" id="data-department" class="form-control required">
-                                        <option value="">{{trans('page.text.select_item')}}</option>
-                                        @foreach($departmentResult as $k=>$v)
-                                        <option value="{{$v['id']}}" @if($v['id'] == Request::input('department', '')) selected @endif>{{$v['name']}}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{{ trans('validation.attributes.page_id') }}</td>
-                                <td>
-                                    <input type="text" name="page_id" id="data-page_id" class="form-control" value="{{ Request::input('page_id', '') }}">
-                                </td>
-                            </tr>
-                             <tr>
                                 <td>{{ trans('validation.attributes.id_type') }}</td>
                                 <td>
                                     <select name="member_type" id="data-member_type" class="form-control required">
@@ -63,6 +46,43 @@
                                         @foreach($member_typeResult as $k=>$v)
                                         <option value="{{$k}}" @if($k == Request::input('member_type', '')) selected @endif>{{$v}}</option>
                                         @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ trans('validation.attributes.system-organize') }}</td>
+                                <td>
+                                    <select name="organize" id="data-organize" class="form-control required">
+                                        <option value="">{{trans('page.text.select_item')}}</option>
+                                        @foreach($organizeResult as $k=>$v)
+                                        <option value="{{$v['id']}}" @if($v['id'] == Request::input('organize', '')) selected @endif>{{$v['name']}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ trans('validation.attributes.system-department') }}</td>
+                                <td>
+                                    <select name="department" id="data-department" class="form-control required">
+                                        <option value="">{{trans('page.text.select_item')}}</option>
+                                        @if(isset($departmentResult))
+                                        @foreach($departmentResult as $k=>$v)
+                                        <option value="{{$v['id']}}" @if($v['id'] == Request::input('department', '')) selected @endif>{{$v['name']}}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{ trans('validation.attributes.pi') }}</td>
+                                <td>
+                                    <select name="pi" id="data-pi" class="form-control required">
+                                        <option value="">{{trans('page.text.select_item')}}</option>
+                                        @if(isset($piResult))
+                                        @foreach($piResult as $k=>$v)
+                                        <option value="{{$v['id']}}" @if($v['id'] == Request::input('pi', '')) selected @endif>{{$v['name']}}</option>
+                                        @endforeach
+                                        @endif
                                     </select>
                                 </td>
                             </tr>
@@ -93,11 +113,11 @@
                             <th width="5%" nowrap style="color:#fff;">
                                 <label class="check"><input type="checkbox" class="icheckbox ckbItemAll" /> {{ trans('page.btn.select_all') }}</label>
                             </th>
-                            <th width="15%">{{ trans('validation.attributes.month') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.department') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.pi') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.total') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.pay_status') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.created_at') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.name') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.card_id_number') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.id_type') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.enable') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
@@ -105,34 +125,19 @@
                         @foreach($listResult as $k => $v)
                         <tr>
                             <td data-headname="{{ trans('page.btn.select') }}">
-                                <label class="check"><input type="checkbox" class="icheckbox ckbItem" value="{{ $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month'] }}" /></label>
+                                <label class="check"><input type="checkbox" class="icheckbox ckbItem" value="{{ $v['id'] }}" /></label>
                             </td>
-                            <td>{{ $v['pay_year'] }}/{{ $v['pay_month'] }}</td>
-                            <td>{{ $v['department_name'] }}</td>
-                            <td>{{ $v['pi_name'] }}</td>
-                            <td>{{ $v['total'] }}</td>
+                            <td>{{ $v['created_at'] }}</td>
+                            <td>{{ $v['name'] }}</td>
+                            <td>{{ $v['card_id_number'] }}</td>
+                            <td>{{ trans('enum.member_type.'.$v['type']) }}</td>
+                            <td>{{ trans('enum.member-enable.'.$v['enable']) }}</td>
                             <td>
-                                @if($v['create_admin_id'] === null) 
-                                    {{ trans('enum.payment_status.0') }} 
-                                @else 
-                                    @if($v['print_member_id'] === null) 
-                                        {{ trans('enum.payment_status.1') }} 
-                                    @else 
-                                        {{ trans('enum.payment_status.2') }} 
-                                    @endif 
-                                @endif 
-                            </td>
-                            <td>
-                                @if($v['create_admin_id'] === null)
-                                {!! ViewHelper::button('confirm_pay', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
-                                @endif
-                                @if($v['print_member_id'] !== null)
-                                {!! ViewHelper::button('complete_pay', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
-                                @endif
-                                @if($v['create_admin_id'] === null)
-                                {!! ViewHelper::button('reminder_pay', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
-                                @endif
-                                {!! ViewHelper::button('detail', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
+                                {!! ViewHelper::button('active', ['id' => $v['id']]) !!}
+                                {!! ViewHelper::button('notice', ['id' => $v['id']]) !!}
+                                {!! ViewHelper::button('activitylog', ['id' => $v['id']]) !!}
+                                {!! ViewHelper::button('edit', ['id' => $v['id']]) !!}
+                                {!! ViewHelper::button('detail', ['id' => $v['id']]) !!}
                             </td>
                         </tr>
                         @endforeach
@@ -151,12 +156,12 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $("#data-city").change(function(){
+        $("#data-organize").change(function(){
             var ajaxProp = {
-                url: "{{ Sitemap::node()->getChildren('get_town')->getUrl() }}",
+                url: "{{ Sitemap::node()->getChildren('get_department')->getUrl() }}",
                 type: "get",
                 dataType: "json",
-                data: {'id':$("#data-city").val(),'_token':csrf_token},
+                data: {'id':$("#data-organize").val(),'_token':csrf_token},
                 error: function (jqXHR, textStatus, errorThrown) {
                     
                 },
@@ -164,21 +169,21 @@
                     $html = "<option value=''>{{trans('page.text.select_item')}}</option>";
                     for(var key in response)
                     {
-                        $html += "<option value='"+key+"'>"+response[key][1]+"</option>";
+                        $html += "<option value='"+response[key]['id']+"'>"+response[key]['name']+"</option>";
                     }
-                    $("#data-town").html($html);
+                    $("#data-department").html($html);
                     
                 }
             }
             $.ajax(ajaxProp);
         });
 
-        $("#data-town").change(function(){
+        $("#data-department").change(function(){
             var ajaxProp = {
-                url: "{{ Sitemap::node()->getChildren('get_school')->getUrl() }}",
+                url: "{{ Sitemap::node()->getChildren('get_pi')->getUrl() }}",
                 type: "get",
                 dataType: "json",
-                data: {'city':$("#data-city").val(),'town':$("#data-town").val(),'_token':csrf_token},
+                data: {'id':$("#data-department").val(),'_token':csrf_token},
                 error: function (jqXHR, textStatus, errorThrown) {
                     
                 },
@@ -186,9 +191,9 @@
                     $html = "<option value=''>{{trans('page.text.select_item')}}</option>";
                     for(var key in response)
                     {
-                        $html += "<option value='"+response[key]['id']+"'>"+response[key]['school_name']+"</option>";
+                        $html += "<option value='"+response[key]['id']+"'>"+response[key]['name']+"</option>";
                     }
-                    $("#data-school_id").html($html);
+                    $("#data-pi").html($html);
                     
                 }
             }

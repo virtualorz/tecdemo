@@ -28,11 +28,11 @@ class InstrumentReservationController extends Controller {
         $listResult = DB::table('instrument_reservation_data');
         if($name != "")
         {
-            $listResult->where('instrument_data.name','like','%'.$name.'%');
+            $listResult->where('member_data.name','like','%'.$name.'%');
         }
         if($card_id_number != "")
         {
-            $listResult->where('instrument_data.card_id_number','=',$card_id_number);
+            $listResult->where('member_data.card_id_number','=',$card_id_number);
         }
         if($instrument != "")
         {

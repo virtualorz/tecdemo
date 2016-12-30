@@ -27,7 +27,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{ trans('validation.attributes.instrument_name') }}</td>
+                                <td>{{ trans('validation.attributes.name') }}</td>
                                 <td>
                                     <input type="text" name="name" id="data-name" class="form-control" value="{{ Request::input('name', '') }}">
                                 </td>

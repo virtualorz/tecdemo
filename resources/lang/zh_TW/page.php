@@ -50,6 +50,9 @@ return [
         'complete_pay' => '繳費完成',
         'confirm_pay' => '確認帳單',
         'reminder_pay' => '催繳',
+        'active' => '啟用帳號',
+        'notice_message' => '通知訊息',
+        'activitylog' => '活動紀錄',
         //
         //
         'course_class_status_1' => '正常開課',

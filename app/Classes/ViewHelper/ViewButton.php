@@ -356,5 +356,42 @@ trait ViewButton {
         }
     }
 
+    private function _btn_active($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('active')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('active')->getPath()) . '">' . e(trans('page.btn.active')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('active')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
+    private function _btn_notice($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('notice')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('notice')->getPath()) . '">' . e(trans('page.btn.notice_message')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('notice')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
+    private function _btn_activitylog($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('activitylog')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('activitylog')->getPath()) . '">' . e(trans('page.btn.activitylog')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('activitylog')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
+
 
 }
