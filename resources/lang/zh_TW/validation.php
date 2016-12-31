@@ -366,6 +366,8 @@ return [
         'dt-start' => '開始日期',
         'dt-end' => '結束日期',
         #
+        #error_status
+        'error_status' => '異常狀況',
         #
         #email
         'email' => 'email',
