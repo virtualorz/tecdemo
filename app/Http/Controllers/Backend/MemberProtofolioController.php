@@ -151,74 +151,32 @@ class MemberProtofolioController extends Controller {
 
     public function detail() {
         $id = Route::input('id', 0);
-        $dataResult = DB::table('instrument_data')
-                            ->select('instrument_data.*',
-                                        'instrument_type.name as type_name',
-                                        'instrument_site.name as site_name',
+        $dataResult = DB::table('member_data')
+                            ->select('member_data.*',
+                                        'system_organize.name as organize_name',
+                                        'system_department.name as department_name',
+                                        'system_pi_list.name as pi_name',
                                         'member_admin.name as created_admin_name')
-                            ->leftJoin('member_admin','instrument_data.create_admin_id','=','member_admin.id')
-                            ->leftJoin('instrument_type','instrument_data.instrument_type_id','=','instrument_type.id')
-                            ->leftJoin('instrument_site','instrument_data.instrument_site_id','=','instrument_site.id')
-                            ->where('instrument_data.id',$id)
+                            ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                            ->leftJoin('system_department','member_data.department_id','=','system_department.id')
+                            ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
+                            ->leftJoin('member_admin','member_data.create_admin_id','=','member_admin.id')
+                            ->where('member_data.id',$id)
                             ->get();
-        //管理員名單
-        $adminResult = DB::table('instrument_admin')
-                            ->select('name','email')
-                            ->where('instrument_data_id',$id)
-                            ->orderBy('instrument_admin_id','desc')
-                            ->get();
-        //使用時段
-        $sectionSetResult = array();
-        $sectionSetResultTmp = DB::table('instrument_section_set')
-                            ->select('instrument_section_id')
-                            ->where('instrument_data_id',$id)
-                            ->orderBy('instrument_section_set_id','desc')
-                            ->get();
-        foreach($sectionSetResultTmp as $k=>$v)
-        {
-            array_push($sectionSetResult,$v['instrument_section_id']);
-        }
-
-        $sectionResultTmp = DB::table('instrument_section')
-                                    ->select('id','section_type','start_time','end_time')
-                                    ->where('enable',1)
-                                    ->orderBy('section_type','asc')
+        $permissionResult = array();
+        $permissionResultTmp = DB::table('member_permission')
+                                    ->where('member_data_id',$id)
+                                    ->select('permission')
                                     ->get();
-        $sectionResult = array();
-        foreach($sectionResultTmp as $k=>$v)
+        foreach($permissionResultTmp as $k=>$v)
         {
-            if($v['section_type'] == 1)
-            {
-                $tmp = array('1'=>$v,'2'=>'');
-                array_push($sectionResult,$tmp);
-            }
-        }
-        foreach($sectionResultTmp as $k=>$v)
-        {
-            if($v['section_type'] == 2)
-            {
-                $isset = false;
-                foreach($sectionResult as $k1=>$v1)
-                {
-                    if($v1['2']== '')
-                    {
-                        $isset = true;
-                        $sectionResult[$k1]['2'] = $v;
-                        break;
-                    }
-                }
-                if(!$isset)
-                {
-                    $tmp = array('1'=>'','2'=>$v);
-                    array_push($sectionResult,$tmp);
-                }
-            }
+            array_push($permissionResult,$v['permission']);
         }
 
         $this->view->with('dataResult', $dataResult[0]);
-        $this->view->with('adminResult', $adminResult);
-        $this->view->with('sectionSetResult', $sectionSetResult);
-        $this->view->with('sectionResult', $sectionResult);
+        $this->view->with('permissionResult', $permissionResult);
+        $this->view->with('permission', Config::get('data.permission'));
+        $this->view->with('member_typeResult', Config::get('data.id_type'));
 
         return $this->view;
     }
@@ -257,6 +215,28 @@ class MemberProtofolioController extends Controller {
         $this->view->with('piResult', $piResult);
         $this->view->with('permission', Config::get('data.permission'));
         $this->view->with('member_typeResult', Config::get('data.id_type'));
+
+        return $this->view;
+    }
+
+    public function activitylog() {
+        $id = Route::input('id', 0);
+        $listResult = DB::table('activity_reservation_data')
+                            ->select('activity_data.id',
+                                        'activity_data.start_dt',
+                                        'activity_data.end_dt',
+                                        'activity_data.activity_name',
+                                        'activity_data.level',
+                                        'activity_data.time',
+                                        'activity_reservation_data.attend_status',
+                                        'activity_reservation_data.pass_status')
+                            ->leftJoin('activity_data','activity_reservation_data.activity_id','=','activity_data.id')
+                            ->where('activity_reservation_data.member_id',$id)
+                            ->get();
+        
+        
+        
+        $this->view->with('listResult', $listResult);
 
         return $this->view;
     }

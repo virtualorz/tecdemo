@@ -200,6 +200,7 @@ return [
         #
         #attend
         'attend_count' => '報到人數',
+        'attend_status' => '出席狀況',
         #
         #author
         'author' => '作者',
@@ -529,6 +530,7 @@ return [
         #pass
         'pass_type' => '通過方式',
         'pass_condition' => '通過條件',
+        'pass_status' => '通過狀況',
         #
         #pa
         'package' => '組',
