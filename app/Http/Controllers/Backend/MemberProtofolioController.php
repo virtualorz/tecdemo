@@ -88,54 +88,15 @@ class MemberProtofolioController extends Controller {
     }
 
     public function add() {
-        $typeResult = DB::table('instrument_type')
+        $organizeResult = DB::table('system_organize')
                                     ->select('id','name')
                                     ->orderBy('id','desc')
                                     ->get();
-        $siteResult = DB::table('instrument_site')
-                                    ->select('id','name')
-                                    ->where('enable',1)
-                                    ->orderBy('id','desc')
-                                    ->get();
-        $sectionResultTmp = DB::table('instrument_section')
-                                    ->select('id','section_type','start_time','end_time')
-                                    ->where('enable',1)
-                                    ->orderBy('section_type','asc')
-                                    ->get();
-        $sectionResult = array();
-        foreach($sectionResultTmp as $k=>$v)
-        {
-            if($v['section_type'] == 1)
-            {
-                $tmp = array('1'=>$v,'2'=>'');
-                array_push($sectionResult,$tmp);
-            }
-        }
-        foreach($sectionResultTmp as $k=>$v)
-        {
-            if($v['section_type'] == 2)
-            {
-                $isset = false;
-                foreach($sectionResult as $k1=>$v1)
-                {
-                    if($v1['2']== '')
-                    {
-                        $isset = true;
-                        $sectionResult[$k1]['2'] = $v;
-                        break;
-                    }
-                }
-                if(!$isset)
-                {
-                    $tmp = array('1'=>'','2'=>$v);
-                    array_push($sectionResult,$tmp);
-                }
-            }
-        }
 
-        $this->view->with('typeResult', $typeResult);
-        $this->view->with('siteResult', $siteResult);
-        $this->view->with('sectionResult', $sectionResult);
+        $this->view->with('organizeResult', $organizeResult);
+        $this->view->with('permission', Config::get('data.permission'));
+        $this->view->with('journal', Config::get('data.journal'));
+        $this->view->with('member_typeResult', Config::get('data.id_type'));
         return $this->view;
     }
 
@@ -293,23 +254,63 @@ class MemberProtofolioController extends Controller {
         return $this->view;
     }
 
+    public function active() {
+        $id = Route::input('id', 0);
+        $dataResult = DB::table('member_data')
+                            ->select('member_data.*',
+                                        'system_organize.name as organize_name',
+                                        'system_department.name as department_name',
+                                        'system_pi_list.name as pi_name')
+                            ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                            ->leftJoin('system_department','member_data.department_id','=','system_department.id')
+                            ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
+                            ->where('member_data.id',$id)
+                            ->get();
+        
+        $organizeResult = DB::table('system_organize')
+                                    ->select('id','name')
+                                    ->orderBy('id','desc')
+                                    ->get();
+        $departmentResult = DB::table('system_department')
+                                    ->where('organize_id',$dataResult[0]['organize_id'])
+                                    ->select('id','name')
+                                    ->orderBy('id','desc')
+                                    ->get();
+        $piResult = DB::table('system_pi_list')
+                                    ->where('department_id',$dataResult[0]['department_id'])
+                                    ->select('id','name')
+                                    ->orderBy('id','desc')
+                                    ->get();
+        
+        $this->view->with('dataResult', $dataResult[0]);
+        $this->view->with('organizeResult', $organizeResult);
+        $this->view->with('departmentResult', $departmentResult);
+        $this->view->with('piResult', $piResult);
+        $this->view->with('permission', Config::get('data.permission'));
+        $this->view->with('member_typeResult', Config::get('data.id_type'));
+
+        return $this->view;
+    }
+
     ##
 
     public function ajax_add() {
         $invalid = [];
         $validator = Validator::make(Request::all(), [
-                    'instrument_type_id' => 'integer|required',
-                    'instrument_site_id' => 'integer|required',
-                    'instrument_id' => 'string|required|max:12',
-                    'name' => 'string|required|max:64',
-                    'function' => 'string|required',
-                    'admin_name' => 'array|required',
-                    'admin_email' => 'array|required',
-                    'open_section' => 'array|required',
-                    'reservation_limit' => 'integer|required',
-                    'notice' => 'integer|required',
-                    'cancel_limit' => 'integer|required',
-                    'cancel_notice' => 'integer|required',
+                    'name' => 'string|required|max:10',
+                    'card_id_number' => 'string|required|max:20',
+                    'id_number' => 'string|required|max:12',
+                    'organize_id' => 'integer|required',
+                    'department_id' => 'integer|required',
+                    'email' => 'string|required|max:200',
+                    'phone' => 'string|required|max:24',
+                    'pi_list_id' => 'integer|required',
+                    'lab_phone' => 'string|required|max:24',
+                    'type' => 'integer|required',
+                    'start_dt' => 'date|required',
+                    'limit_month' => 'integer|required',
+                    'permission' => 'array|required',
+                    'enable' => 'integer|required',
         ]);
         if ($validator->fails()) {
             $invalid[] = $validator->errors();
@@ -321,131 +322,64 @@ class MemberProtofolioController extends Controller {
             return $this->view;
         }
 
-        //處理可預約時段
-        $open_section_string = "";
-        $open_section_1 = 0;
-        $open_section_2 = 0;
-        $open_section = Request::input('open_section');
-        foreach($open_section as $k=>$v)
-        {
-            if(explode("_",$v)[1] == "1")
-            {
-                $open_section_1 = 1;
-            }
-            if(explode("_",$v)[1] == "2")
-            {
-                $open_section_2 = 1;
-            }
-        }
-        if($open_section_1 == 1 && $open_section_2 == 0)
-        {
-            $open_section_string = "1_";
-        }
-        else if($open_section_1 == 0 && $open_section_2 == 1)
-        {
-            $open_section_string = "_2";
-        }
-        else if($open_section_1 == 1 && $open_section_2 == 1)
-        {
-            $open_section_string = "1_2";
-        }
-
         try {
-            DB::transaction(function()use($open_section_string){
-                $id = DB::table('instrument_data')
+            DB::transaction(function(){
+                $id = DB::table('member_data')
                         ->insertGetId(
-                            array('uid'=>'-',
-                                    'salt'=>'-',
-                                    'created_at'=>date('Y-m-d H:i:s'),
-                                    'updated_at'=>date('Y-m-d H:i:s'),
-                                    'instrument_type_id'=>Request::input('instrument_type_id'),
-                                    'instrument_site_id'=>Request::input('instrument_site_id'),
-                                    'instrument_id'=>Request::input('instrument_id'),
+                            array('created_at'=>date('Y-m-d H:i:s'),
                                     'name'=>Request::input('name'),
-                                    'open_section'=>$open_section_string,
-                                    'function'=>Request::input('function'),
-                                    'reservation_limit'=>Request::input('reservation_limit'),
-                                    'notice'=>Request::input('notice'),
-                                    'cancel_limit'=>Request::input('cancel_limit'),
-                                    'cancel_notice'=>Request::input('cancel_notice'),
-                                    'create_admin_id'=>User::id(),
-                                    'update_admin_id'=>User::id()
+                                    'card_id_number'=>Request::input('card_id_number'),
+                                    'id_number'=>Request::input('id_number'),
+                                    'organize_id'=>Request::input('organize_id'),
+                                    'department_id'=>Request::input('department_id'),
+                                    'title'=>Request::input('title'),
+                                    'email'=>Request::input('email'),
+                                    'phone'=>Request::input('phone'),
+                                    'pi_list_id'=>Request::input('pi_list_id'),
+                                    'lab_phone'=>Request::input('lab_phone'),
+                                    'type'=>Request::input('type'),
+                                    'start_dt'=>Request::input('start_dt'),
+                                    'limit_month'=>Request::input('limit_month'),
+                                    'enable'=>Request::input('enable'),
+                                    'create_admin_id'=>User::id()
                             )
                         );
-                //製作uid以及salt
-                $date = date('Y-m-d H:i:s').$id;
-                $salt = substr(md5($date),5,5);
-                $uid = md5($salt.$date);
-                
-                DB::table('instrument_data')
-                    ->where('id',$id)
-                    ->update(['uid'=>$uid,
-                                'salt'=>$salt
-                    ]);
-                $result_after = DB::table('instrument_data')
+                $result_after = DB::table('member_data')
                                 ->where('id',$id)
                                 ->get();
                 DBProcedure::writeLog([
-                    'table' => 'instrument_data',
+                    'table' => 'member_data',
                     'operator' => DBOperator::OP_INSERT,
                     'data_after' => isset($result_after[0]) ? $result_after[0] : [],
                     'admin_id' => User::id()
                 ]);
-                //管理員名單
-                $admin_name = Request::input('admin_name');
-                $admin_email = Request::input('admin_email');
-                foreach($admin_name as $k=>$v)
+                //權限資料
+                $permission = Request::input('permission');
+                foreach($permission as $k=>$v)
                 {
-                    $instrument_admin_id = DB::table('instrument_admin')
-                        ->select('instrument_admin_id')
-                        ->where('instrument_data_id',$id)
-                        ->orderBy('instrument_admin_id','desc')
-                        ->limit(1)
-                        ->get();
-                    if(!isset($instrument_admin_id[0]['instrument_admin_id']))
-                    {
-                        $instrument_admin_id = 0;
-                    }
-                    else
-                    {
-                        $instrument_admin_id = $instrument_admin_id[0]['instrument_admin_id'];
-                    }
-                    $instrument_admin_id = intval($instrument_admin_id)+1;
-                    DB::table('instrument_admin')
+                    DB::table('member_permission')
                         ->insert(array(
-                            'instrument_admin_id'=>$instrument_admin_id,
-                            'instrument_data_id'=>$id,
-                            'name'=>$v,
-                            'email'=>$admin_email[$k]
+                            'member_data_id'=>$id,
+                            'permission'=>$v
                         ));
                 }
-                //使用時段
-                $open_section = Request::input('open_section');
-                foreach($open_section as $k=>$v)
+                //jounral資料
+                $journal_type = Request::input('journal_type');
+                if($journal_type != "")
                 {
-                    $instrument_section_set_id = DB::table('instrument_section_set')
-                        ->select('instrument_section_set_id')
-                        ->where('instrument_data_id',$id)
-                        ->orderBy('instrument_section_set_id','desc')
-                        ->limit(1)
-                        ->get();
-                    if(!isset($instrument_section_set_id[0]['instrument_section_set_id']))
-                    {
-                        $instrument_section_set_id = 0;
-                    }
-                    else
-                    {
-                        $instrument_section_set_id = $instrument_section_set_id[0]['instrument_section_set_id'];
-                    }
-                    $instrument_section_set_id = intval($instrument_section_set_id)+1;
-                    DB::table('instrument_section_set')
+                    DB::table('member_journal')
                         ->insert(array(
-                            'instrument_section_set_id'=>$instrument_section_set_id,
-                            'instrument_data_id'=>$id,
-                            'instrument_section_id'=>explode('_',$v)[0]
+                            'member_data_id'=>$id,
+                            'member_journal_id'=>'1',
+                            'created_at'=>date('Y-m-d H:i:s'),
+                            'type'=>Request::input('journal_type'),
+                            'release_dt'=>Request::input('release_dt'),
+                            'topic'=>Request::input('topic'),
+                            'journal'=>Request::input('journal'),
+                            'author'=>Request::input('author'),
+                            'url'=>Request::input('url')
                         ));
                 }
-
             });
 
         } catch (DBProcedureException $e) {
@@ -601,6 +535,81 @@ class MemberProtofolioController extends Controller {
                             'instrument_section_set_id'=>$instrument_section_set_id,
                             'instrument_data_id'=>Request::input('id'),
                             'instrument_section_id'=>explode('_',$v)[0]
+                        ));
+                }
+
+            });
+
+        } catch (\PDOException $ex) {
+            DB::rollBack();
+
+            \Log::error($ex->getMessage());
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.database');
+            return $this->view;
+        }
+
+        $this->view['msg'] = trans('message.success.edit');
+        return $this->view;
+    }
+
+    public function ajax_active() {
+        $validator = Validator::make(Request::all(), [
+                    'organize_id' => 'integer|required',
+                    'department_id' => 'integer|required',
+                    'pi_list_id' => 'integer|required',
+                    'type' => 'integer|required',
+                    'start_dt' => 'date|required',
+                    'limit_month' => 'integer|required',
+                    'permission' => 'array|required',
+                    'enable' => 'integer|required',
+        ]);
+        if ($validator->fails()) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = $validator->errors();
+
+            return $this->view;
+        }
+        
+        try {
+            DB::transaction(function(){
+                $result_before = DB::table('member_data')
+                                    ->where('id',Request::input('id'))
+                                    ->get();
+                DB::table('member_data')
+                    ->where('id',Request::input('id'))
+                    ->update(['organize_id'=>Request::input('organize_id'),
+                                'department_id'=>Request::input('department_id'),
+                                'pi_list_id'=>Request::input('pi_list_id'),
+                                'type'=>Request::input('type'),
+                                'start_dt'=>Request::input('start_dt'),
+                                'limit_month'=>Request::input('limit_month'),
+                                'enable'=>Request::input('enable'),
+                                'create_admin_id'=>User::id()
+                    ]);
+                $result_after = DB::table('member_data')
+                                    ->where('id',Request::input('id'))
+                                    ->get();
+                DBProcedure::writeLog([
+                    'table' => 'member_data',
+                    'operator' => DBOperator::OP_UPDATE,
+                    'data_before' => isset($result_before[0]) ? $result_before[0] : [],
+                    'data_after' => isset($result_after[0]) ? $result_after[0] : [],
+                    'admin_id' => User::id()
+                ]);
+
+                //權限資料
+                DB::table('member_permission')
+                    ->where('member_data_id',Request::input('id'))
+                    ->delete();
+                $permission = Request::input('permission');
+                foreach($permission as $k=>$v)
+                {
+                    DB::table('member_permission')
+                        ->insert(array(
+                            'member_data_id'=>Request::input('id'),
+                            'permission'=>$v
                         ));
                 }
 

@@ -133,7 +133,9 @@
                             <td>{{ trans('enum.member_type.'.$v['type']) }}</td>
                             <td>{{ trans('enum.member-enable.'.$v['enable']) }}</td>
                             <td>
+                                @if($v['enable'] == 0)
                                 {!! ViewHelper::button('active', ['id' => $v['id']]) !!}
+                                @endif
                                 {!! ViewHelper::button('notice', ['id' => $v['id']]) !!}
                                 {!! ViewHelper::button('activitylog', ['id' => $v['id']]) !!}
                                 {!! ViewHelper::button('edit', ['id' => $v['id']]) !!}

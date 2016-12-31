@@ -93,6 +93,10 @@ return [
         'history_list' => '歷史紀錄',
         'activity_content' => '活動內容',
         'reg_log' => '補申請紀錄',
+        'basic_data' => '基本資料',
+        'journal_data' => '期刊資料',
+        'register_data' => '申請人填寫資料',
+        'active_data' => '審核人填寫資料',
     ],
     'text' => [        
         'function' => '功能',

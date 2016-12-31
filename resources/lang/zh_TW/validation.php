@@ -201,6 +201,9 @@ return [
         #attend
         'attend_count' => '報到人數',
         #
+        #author
+        'author' => '作者',
+        #
         #check
         'check_out' => '付款方式',
         #
@@ -353,6 +356,7 @@ return [
         #
         #department
         'department' => '系所/部門',
+        'department_title' => '職稱',
         #
         #design_type
         'design_type' => '設計類型',
@@ -397,6 +401,7 @@ return [
         #
         #id_type
         'id_type' => '身份別',
+        'id_number' => '身分證號',
         #
         #info_event
         'info_event-event_date' => '活動日期',
@@ -444,6 +449,16 @@ return [
         'is_notice' => '使否為公告',
         'is_pass' => '是否通過',
         'item_count' => '數量',
+        #
+        #journal
+        'journal_type' => '學術產出',
+        'journal_topic' => '期刊名稱',
+        #
+        #lab
+        'lab_phone' => '實驗室電話',
+        #
+        #limit
+        'limit_month' => '使用期限(月)',
         #
         #level
         'level' => '等級',
@@ -554,7 +569,11 @@ return [
         'rate_type' => '計價方式',
         'rate_multi' => '計價倍率',
         #
+        #receive
         'receive' => '收據代碼',
+        #
+        #release
+        'release_dt' => '發表日期',
         #
         #reservation
         'reservation_count' => '預約人數',
@@ -604,8 +623,11 @@ return [
         'start_time' => '開始時間',
         #
         #system
-        'system-department' => '部門',
-        'system-organize' => '單位',
+        'system-department' => '系所/部門',
+        'system-organize' => '學校/單位',
+        #
+        #topic
+        'topic' => '發表題目',
         #
         #tel
         'tel' => '電話',
@@ -662,6 +684,7 @@ return [
         #update
         'update_at' => '異動日期',
         'user' => '使用者',
+        'url' => '超連結',
         #
         #通用
         'id' => '系統編號',
