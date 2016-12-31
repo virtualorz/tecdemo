@@ -585,27 +585,18 @@ class MemberProtofolioController extends Controller {
             foreach ($ids as $k => $v) {
                 $id = $v;
 
-                $result_before = DB::table('instrument_data')
+                $result_before = DB::table('member_data')
                                     ->where('id',$id)
                                     ->get();
-                DB::table('instrument_data')
+                DB::table('member_data')
                     ->where('id',$id)
                     ->delete();
                 DBProcedure::writeLog([
-                    'table' => 'instrument_data',
+                    'table' => 'member_data',
                     'operator' => DBOperator::OP_DELETE,
                     'data_before' => isset($result_before[0]) ? $result_before[0] : [],
                     'admin_id' => User::id()
                 ]);
-                
-                //管理員名單刪除
-                DB::table('instrument_admin')
-                    ->where('instrument_data_id',$id)
-                    ->delete();
-                //使用時段刪除
-                DB::table('instrument_section_set')
-                    ->where('instrument_data_id',$id)
-                    ->delete();
             }
         } catch (\PDOException $ex) {
             DB::rollBack();
