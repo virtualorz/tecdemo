@@ -516,6 +516,9 @@ return [
         'name-target' => '指標名稱',
         'name-contact' => '承辦人員姓名',
         #
+        #notice_dt
+        'notice_dt' => '通知日期',
+        #
         #open
         'open_instrument' => '通過後可開通的設備',
         'open_instrument_add' => '已加入的設備',

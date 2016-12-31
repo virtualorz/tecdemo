@@ -241,6 +241,18 @@ class MemberProtofolioController extends Controller {
         return $this->view;
     }
 
+    public function notice() {
+        $id = Route::input('id', 0);
+        $dataResult = DB::table('member_data')
+                            ->select('member_data.id','member_data.name','member_data.email')
+                            ->where('member_data.id',$id)
+                            ->get();
+        
+        $this->view->with('dataResult', $dataResult[0]);
+
+        return $this->view;
+    }
+
     ##
 
     public function ajax_add() {
@@ -500,6 +512,60 @@ class MemberProtofolioController extends Controller {
         }
 
         $this->view['msg'] = trans('message.success.edit');
+        return $this->view;
+    }
+
+    public function ajax_notice() {
+        $validator = Validator::make(Request::all(), [
+                    'content' => 'string|required'
+        ]);
+        if ($validator->fails()) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = $validator->errors();
+
+            return $this->view;
+        }
+        
+        try {
+            DB::transaction(function(){
+                $member_notice_log_id = DB::table('member_notice_log')
+                            ->select('member_notice_log_id')
+                            ->where('member_data_id',Request::input('id'))
+                            ->orderBy('member_notice_log_id','desc')
+                            ->first();
+                if(!isset($member_notice_log_id['member_notice_log_id']))
+                {
+                    $member_notice_log_id = 0;
+                }
+                else
+                {
+                    $member_notice_log_id = $member_notice_log_id['member_notice_log_id'];
+                }
+                $member_notice_log_id = intval($member_notice_log_id) +1;
+
+                $id = DB::table('member_notice_log')
+                        ->insertGetId(
+                            array('member_data_id'=>Request::input('id'),
+                                    'member_notice_log_id'=>$member_notice_log_id,
+                                    'created_at'=>date('Y-m-d H:i:s'),
+                                    'email'=>Request::input('email'),
+                                    'content'=>Request::input('content'),
+                                    'is_read'=>'0',
+                                    'create_admin_id'=>User::id()
+                            )
+                        );
+            });
+
+        } catch (DBProcedureException $e) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.database');
+            $this->view['detail'][] = $e->getMessage();
+
+            return $this->view;
+        }
+
+        $this->view['msg'] = trans('message.success.add');
         return $this->view;
     }
 
