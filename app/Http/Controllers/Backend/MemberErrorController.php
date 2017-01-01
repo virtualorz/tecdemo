@@ -72,6 +72,8 @@ class MemberErrorController extends Controller {
                                             'member_data.enable')
                                     ->leftJoin('member_data','syslog.member_id','=','member_data.id')
                                     ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
+                                    ->whereNotNull('syslog.member_id')
+                                    ->where('syslog.operator','0')
                                     ->orderBy('member_data.id','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);

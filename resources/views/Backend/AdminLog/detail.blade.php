@@ -31,28 +31,40 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.email') }}</th>
+                                <th>{{ trans('validation.attributes.account') }}</th>
                                 <td>
                                     {{$dataResult['email']}}
                                 </td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.permission') }}</th>
+                                <th>{{ trans('validation.attributes.operator') }}</th>
                                 <td>
-                                    @foreach($listResult as $k=>$v)
-                                    @if($dataResult['permission_id'] == $v['id']) {{$v['name']}} @endif
-                                    @endforeach
+                                    {{ trans('enum.system_operator.'.$dataResult['operator']) }}
                                 </td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.enable') }}</th>
+                                <th>{{ trans('validation.attributes.table') }}</th>
                                 <td>
-                                    {{trans('enum.enable.'.$dataResult['enable'])}}
+                                    {{$dataResult['table']}}
                                 </td>
                             </tr> 
                             <tr>
-                                <th>{{ trans('validation.attributes.create_admin_id') }}</th>
-                                <td>{{ $dataResult['created_admin_name'] }}</td>
+                                <th>{{ trans('validation.attributes.page') }}</th>
+                                <td>
+                                    {{ trans('sitemap.'.str_replace(array('.add','.edit','.detail','.submit'),'',$dataResult['page']).'._name') }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ trans('validation.attributes.value_before') }}</th>
+                                <td>
+                                    {{ $dataResult['before_JSON'] }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ trans('validation.attributes.value_after') }}</th>
+                                <td>
+                                    {{ $dataResult['after_JSON'] }}
+                                </td>
                             </tr>
                             <tr>
                                 <th>&nbsp;</th>

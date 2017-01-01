@@ -115,7 +115,7 @@ return [
                         'edit' => ['_name' => '編輯',],
                         'detail' => ['_name' => '內容',],
                     ],
-                    'adminlog' => ['_name' => '管理員異常紀錄',
+                    'adminlog' => ['_name' => '管理員操作紀錄',
                         'detail' => ['_name' => '內容',],
                     ],
                 ],

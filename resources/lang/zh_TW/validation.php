@@ -149,6 +149,10 @@ return [
         #
         #aboutus_training
         'aboutus_training-content' => '編輯器內容',
+        #
+        #account
+        'account' => '帳號',
+        #
         #activity
         'activity_date' => '活動日期',
         'activity_name' => '活動名稱',
@@ -352,6 +356,9 @@ return [
         'course_partner-name' => '名稱',
         'contact' => '聯絡方式',
         #
+        #date
+        'date' => '日期', 
+        #
         #discount
         'discount' => '折扣',
         #
@@ -521,6 +528,9 @@ return [
         #notice_dt
         'notice_dt' => '通知日期',
         #
+        #operator
+        'operator' => '操作',
+        #
         #open
         'open_instrument' => '通過後可開通的設備',
         'open_instrument_add' => '已加入的設備',
@@ -530,6 +540,7 @@ return [
         'order' => '排序',
         #
         #page
+        'page' => '功能頁面',
         'page_id' => '單號',
         #
         #pass
@@ -633,6 +644,9 @@ return [
         'system-department' => '系所/部門',
         'system-organize' => '學校/單位',
         #
+        #table
+        'table' => '對應資料表單',
+        #
         #topic
         'topic' => '發表題目',
         #
@@ -692,6 +706,9 @@ return [
         'update_at' => '異動日期',
         'user' => '使用者',
         'url' => '超連結',
+        #value
+        'value_before' => '原始值',
+        'value_after' => '異動值',
         #
         #通用
         'id' => '系統編號',
