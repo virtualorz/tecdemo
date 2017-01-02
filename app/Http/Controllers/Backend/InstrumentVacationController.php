@@ -17,10 +17,11 @@ use Log;
 use FileUpload;
 use Mail;
 
-class InstrumentAllVacationController extends Controller {
+class InstrumentVacationController extends Controller {
 
     public function index() {
 
+        $id = Route::input('id', 0);
         $year = Request::input('year', date('Y'));
         $month = Request::input('month', date('m'));
         
@@ -30,7 +31,7 @@ class InstrumentAllVacationController extends Controller {
         $listResultTmp = $listResultTmp->select('vacation_dt',
                                             'vacation_type',
                                             'remark')
-                                    ->where('instrument_id','0')
+                                    ->where('instrument_id',$id)
                                     ->orderBy('vacation_dt','asc')
                                     ->get();
         foreach($listResultTmp as $k=>$v)
@@ -45,6 +46,7 @@ class InstrumentAllVacationController extends Controller {
         $this->view->with('last_day', $last_day);
         $this->view->with('year', $year);
         $this->view->with('month', $month);
+        $this->view->with('id', $id);
         $this->view->with('vacation_type', Config::get('data.vacation_type'));
 
         return $this->view;
@@ -76,22 +78,37 @@ class InstrumentAllVacationController extends Controller {
                 DB::table('instrument_vacation')
                     ->whereYear('vacation_dt','=', $year)
                     ->whereMonth('vacation_dt','=', $month)
-                    ->where('instrument_id','=','0')
+                    ->where('instrument_id','=',Request::input('id'))
                     ->delete();
                 
                 foreach($vacation_type as $k=>$v)
                 {
                     $value = explode('_',$v);
-                    if($value[1] != '')
+                    $week = date('w',strtotime($value[0]));
+                    if(($week == 6 || $week == 0) && $value[1] != '1'  && $value[1] != '')
                     {
                         DB::table('instrument_vacation')
-                            ->insert(['vacation_dt'=>$value[0],
-                                        'instrument_id'=>0,
-                                        'created_at'=>date('Y-m-d H:i:s'),
-                                        'vacation_type'=>$value[1],
-                                        'remark'=>$remark[$k],
-                                        'create_admin_id'=>User::id()
-                            ]);
+                                ->insert(['vacation_dt'=>$value[0],
+                                            'instrument_id'=>Request::input('id'),
+                                            'created_at'=>date('Y-m-d H:i:s'),
+                                            'vacation_type'=>$value[1],
+                                            'remark'=>$remark[$k],
+                                            'create_admin_id'=>User::id()
+                        ]);
+                    }
+                    else if($week != 6 && $week != 0)
+                    {
+                        if($value[1] != '')
+                        {
+                            DB::table('instrument_vacation')
+                                ->insert(['vacation_dt'=>$value[0],
+                                            'instrument_id'=>Request::input('id'),
+                                            'created_at'=>date('Y-m-d H:i:s'),
+                                            'vacation_type'=>$value[1],
+                                            'remark'=>$remark[$k],
+                                            'create_admin_id'=>User::id()
+                                ]);
+                        }
                     }
                 }
                 DBProcedure::writeLog([
@@ -101,7 +118,6 @@ class InstrumentAllVacationController extends Controller {
                     'data_after' => isset($result_after[0]) ? $result_after[0] : [],
                     'admin_id' => User::id()
                 ]);
-
             });
 
         } catch (\PDOException $ex) {

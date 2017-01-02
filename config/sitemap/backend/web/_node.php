@@ -1076,7 +1076,7 @@ return [
                         'icon_class' => 'fa fa-hand-o-right',
                         'route' => [
                             'method' => 'get',
-                            'param' => '{optional?}',
+                            'param' => '{id}',
                             'attr' => [
                                 'uses' => 'InstrumentVacationController@index',
                             ],

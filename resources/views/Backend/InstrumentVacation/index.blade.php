@@ -113,6 +113,7 @@
                         <tr>
                             <th>&nbsp;</th>
                             <td> 
+                                <input type="hidden" name="id" value="{{ $id }}" />
                                 <input type="hidden" name="year" value="{{ $year }}" />
                                 <input type="hidden" name="month" value="{{ $month }}" />
                                 {!! ViewHelper::button('submit') !!}
