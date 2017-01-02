@@ -26,8 +26,8 @@ class AdminLogController extends Controller {
         $listResult = DB::table('syslog');
         if($date != "")
         {
-            $listResult->where('syslog.ceated_at','<',date('Y-m-d',strtotime('+1 d',$date)));
-            $listResult->where('syslog.ceated_at','>',date('Y-m-d',strtotime('-1 d',$date)));
+            $listResult->where('syslog.created_at','<',date('Y-m-d',strtotime('+1 day',strtotime($date))));
+            $listResult->where('syslog.created_at','>',date('Y-m-d',strtotime('-1 day',strtotime($date))));
         }
         if($account != "")
         {

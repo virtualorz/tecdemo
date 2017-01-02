@@ -727,5 +727,12 @@ return [
         'upload_image' => '請上傳圖片',
         'keyword' => '關鍵字',
         'keyword_2' => '關鍵字(Keywords)',
+        'week_one' => '一',
+        'week_two' => '二',
+        'week_three' => '三',
+        'week_four' => '四',
+        'week_five' => '五',
+        'week_six' => '六',
+        'week_seven' => '日',
     ],
 ];
