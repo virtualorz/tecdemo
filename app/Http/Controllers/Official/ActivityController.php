@@ -29,7 +29,8 @@ class ActivityController extends Controller {
         {
             $searchResult = DB::table('activity_data')
                             ->where('activity_data.activity_name','like','%'.$keyword.'%')
-                            ->select('activity_data.id',
+                            ->select('activity_data.uid',
+                                            'activity_data.salt',
                                             DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y.%m.%d") as start_dt'),
                                             DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y.%m.%d") as end_dt'),
                                             'activity_data.activity_id',
@@ -41,7 +42,7 @@ class ActivityController extends Controller {
                             ->leftJoin('activity_reservation_data','activity_reservation_data.activity_id','=','activity_data.id')
                             ->leftJoin('activity_type','activity_data.activity_type_id','=','activity_type.id')
                             ->groupBy('activity_data.id')
-                            ->orderBy('id','desc')
+                            ->orderBy('end_dt','desc')
                             ->get();
         }
         else
@@ -52,7 +53,8 @@ class ActivityController extends Controller {
                                 $query->whereDate('start_dt','<',date('Y-m-d'))
                                     ->whereDate('end_dt', '>', date('Y-m-d'));
                             })
-                            ->select('activity_data.id',
+                            ->select('activity_data.uid',
+                                                'activity_data.salt',
                                                 DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y.%m.%d") as start_dt'),
                                                 DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y.%m.%d") as end_dt'),
                                                 'activity_data.activity_id',
@@ -64,11 +66,12 @@ class ActivityController extends Controller {
                             ->leftJoin('activity_reservation_data','activity_reservation_data.activity_id','=','activity_data.id')
                             ->leftJoin('activity_type','activity_data.activity_type_id','=','activity_type.id')
                             ->groupBy('activity_data.id')
-                            ->orderBy('id','desc')
+                            ->orderBy('end_dt','desc')
                             ->get();
             $liest_unaResult = DB::table('activity_data')
                             ->whereDate('end_dt','<',date('Y-m-d'))
-                            ->select('activity_data.id',
+                            ->select('activity_data.uid',
+                                                'activity_data.salt',
                                                 DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y.%m.%d") as start_dt'),
                                                 DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y.%m.%d") as end_dt'),
                                                 'activity_data.activity_id',
@@ -80,7 +83,7 @@ class ActivityController extends Controller {
                             ->leftJoin('activity_reservation_data','activity_reservation_data.activity_id','=','activity_data.id')
                             ->leftJoin('activity_type','activity_data.activity_type_id','=','activity_type.id')
                             ->groupBy('activity_data.id')
-                            ->orderBy('id','desc')
+                            ->orderBy('end_dt','desc')
                             ->paginate(Config::get('pagination.items'));
             $pagination = $this->getPagination(json_decode($liest_unaResult->toJson(),true)['total']);
         }
