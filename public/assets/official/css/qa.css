@@ -128,9 +128,14 @@
 #faq .panel-group {border:none}
 #faq .panel-group .panel-heading + .panel-collapse > .panel-body, 
 #faq .panel-group .panel-heading + .panel-collapse > .list-group {
-    border: 7px solid #f2f0e2;
+    border: 7px solid #1e6fa3;
 }
 #faq .panel{margin-bottom:20px}
-#faq .panel-title a{ background-color:#f2f0e2; color:#60422d; line-height: 32px;}
+#faq .panel-title h5{color:#fff}
+#faq .panel-title a{
+    background-color: #1e6fa3;
+    color: #ffffff;
+    line-height: 32px;
+}
 #faq .panel-body {padding:15px}
 

@@ -15,7 +15,7 @@ use Log;
 class IndexController extends Controller {
 
     public function index() {
-        $schoolResut = DB::table('index_school')
+        /*$schoolResut = DB::table('index_school')
                             ->select('index_school.school_id','index_school.photo','school.school_name','school.photo as school_photo','school.city')
                             ->leftJoin('school','index_school.school_id','=','school.id')
                             ->where('index_school.enable',1)
@@ -54,7 +54,7 @@ class IndexController extends Controller {
         $this->view->with('schoolResut', $schoolResut);
         $this->view->with('newsResut', $newsResut);
         $this->view->with('videoResut', $videoResut);
-        $this->view->with('twCity',Config::get('data.twCity'));
+        $this->view->with('twCity',Config::get('data.twCity'));*/
         return $this->view;
     }
 

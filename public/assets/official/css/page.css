@@ -13,10 +13,10 @@ body {
 }
 
 .text-primary {
-    color: #055d25;
+    color: #1e6fa3;
 }
 p {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.75;
 }
 p.large {
@@ -31,15 +31,17 @@ a.active {
     outline: 0;
 }
 
-a { color: #666;}
+a {color: #1e6fa3;}
 
 a:hover,
 a:focus,
 a:active,
 a.active {
-    color: #91c686;
+    color: #0098f9;
 }
-
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    color: #1e6fa3;
+}
 .img-centered {
     margin: 0 auto;
 }
@@ -57,13 +59,13 @@ a.active {
 }
 
 .bg-darkest-green {
-    background-color: #055d25;
+    background-color: #1e6fa3;
 }
 
 .btn-primary {
-    border-color: #055d25;
+    border-color: #1e6fa3;
     color: #fff;
-    background-color: #055d25;
+    background-color: #1e6fa3;
 }
 
 .btn-primary:hover,
@@ -71,9 +73,9 @@ a.active {
 .btn-primary:active,
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
-    border-color: #91c686;
+    border-color: #0098f9;
     color: #fff;
-    background-color: #91c686;
+    background-color: #0098f9;
 }
 
 .btn-primary:active,
@@ -97,24 +99,20 @@ fieldset[disabled] .btn-primary:active,
 .btn-primary.disabled.active,
 .btn-primary[disabled].active,
 fieldset[disabled] .btn-primary.active {
-    border-color: #055d25;
-    background-color: #055d25;
+    border-color: #1e6fa3;
+    background-color: #1e6fa3;
 }
 
 .btn-primary .badge {
-    color: #055d25;
+    color: #1e6fa3;
     background-color: #fff;
 }
 
 .btn-xl {
-    padding: 20px 40px;
-    border-color: #055d25;
-    border-radius: 3px;
-    text-transform: uppercase;
-    font-size: 18px;
-    font-weight: 700;
-    color: #fff;
-    background-color: #055d25;
+    padding: 10px 40px;
+	width: 100%;
+    font-size: 16px;
+	line-height: 1.5;
 }
 
 .btn-xl:hover,
@@ -122,9 +120,6 @@ fieldset[disabled] .btn-primary.active {
 .btn-xl:active,
 .btn-xl.active,
 .open .dropdown-toggle.btn-xl {
-    border-color: #f6bf01;
-    color: #fff;
-    background-color: #fec503;
 }
 
 .btn-xl:active,
@@ -148,18 +143,19 @@ fieldset[disabled] .btn-xl:active,
 .btn-xl.disabled.active,
 .btn-xl[disabled].active,
 fieldset[disabled] .btn-xl.active {
-    border-color: #055d25;
-    background-color: #055d25;
+    border-color: #1e6fa3;
+    background-color: #1e6fa3;
 }
 
 .btn-xl .badge {
-    color: #055d25;
+    color: #1e6fa3;
     background-color: #fff;
 }
 
 .navbar-default {
     border-color: transparent;
-    background-color: #91c686;
+    background-color: #fff;
+	border-bottom: 1px #d8d8d8 solid;
 }
 
 .navbar-default .navbar-brand{
@@ -173,7 +169,7 @@ fieldset[disabled] .btn-xl.active {
 	.navbar-default .navbar-brand{width: 175px;}
 }
 @media (max-width:767px){ 
-	.navbar-default .navbar-brand{ width:220px; margin-top:5px}
+	.navbar-default .navbar-brand{ width:220px;background: url(../img/logo_s.png) no-repeat;}
 }
 
 @media (min-width: 992px){
@@ -197,22 +193,22 @@ fieldset[disabled] .btn-xl.active {
 }
 
 .navbar-default .navbar-toggle .icon-bar {
-    background-color: #fff;
+    background-color: #1e6fa3;
 }
 
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-    background-color: #055d25;
+    background-color: transparent;
 }
 
 .navbar-default .nav li a {
     letter-spacing: 1px;
-    color: #fff;
+    color: #1e6fa3;
 	font-size:16px;
 	padding: 10px 13px;
 }
 @media(min-width:992px) {
-	.navbar-default .nav li a {font-size:18px}
+	.navbar-default .nav li a {font-size:16px}
 }
 
 @media (max-width: 767px){
@@ -221,14 +217,13 @@ fieldset[disabled] .btn-xl.active {
 .navbar-default .nav li a:hover,
 .navbar-default .nav li a:focus {
     outline: 0;
-   	color: #fff;
-    background-color: #055d25;
+   	color: #0098f9;
 }
 
 .navbar-default .navbar-nav>.active>a {
     border-radius: 0;
     color: #fff;
-    background-color: #055d25;
+    background-color: #1e6fa3;
 }
 
 .navbar-default .navbar-nav>.active>a:hover,
@@ -238,7 +233,7 @@ fieldset[disabled] .btn-xl.active {
 }
 
 .navbar-nav>li>.dropdown-menu {
-	background-color:#91c686;
+	background-color: #1e6fa3;
 	border:none;
 	box-shadow:none;
     border-top-left-radius: 0;
@@ -251,7 +246,7 @@ fieldset[disabled] .btn-xl.active {
     border-top-right-radius: 0;}
 }
 @media (max-width: 767px){
-	.navbar-nav .open .dropdown-menu { background-color:#055d25; border-radius: 0;}
+	.navbar-nav .open .dropdown-menu { background-color:#1e6fa3; border-radius: 0;}
 	.navbar-nav .open .dropdown-menu .dropdown-header, 
 	.navbar-nav .open .dropdown-menu>li>a {
     padding: 5px 15px;
@@ -276,7 +271,8 @@ fieldset[disabled] .btn-xl.active {
     .navbar-default {
         padding: 20px 0;
         border: 0;
-        background-color: #91c686;
+        background-color: #fff;    
+		border-bottom: 1px solid #b8dfd7;
         -webkit-transition: padding .3s;
         -moz-transition: padding .3s;
         transition: padding .3s;
@@ -295,7 +291,7 @@ fieldset[disabled] .btn-xl.active {
 
     .navbar-default.navbar-shrink {
         padding: 10px 0;
-        background-color: #91c686;
+        background-color: #fff;
     }
 
     .navbar-default.navbar-shrink .navbar-brand {
@@ -313,33 +309,83 @@ fieldset[disabled] .btn-xl.active {
 }
 header {
 	margin-top:56px;
-	
     text-align: center;
     color: #fff;
-    background-attachment: scroll;
-    background-image: url(../img/header-bg.png);
-	background-color:#e5ede2;
-    background-position: center center;
-    background-repeat: none;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
+
 }
 @media(min-width:768px) {
 	header { margin-top:90px}
 }
+
+
+.intro-header {
+    padding-top: 50px; /* If you're making other pages, make sure there is 50px of padding to make sure the navbar doesn't overlap content! */
+    padding-bottom: 50px;
+    text-align: center;
+    color: #f8f8f8;
+    background: url(../img/bg_banner.jpg) no-repeat center center;
+    background-size: cover;
+}
+
+.intro-message {
+    position: relative;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+.intro-message > h1 {
+	color: #1e6fa3;
+    margin: 0;
+    font-size: 2em;
+}
+
+.intro-divider {
+    width: 400px;
+    border-top: 1px solid #f8f8f8;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.intro-message > h3 {color: #1e6fa3; font-size: 16px
+}
+ ul.intro-social-buttons > li {
+		margin-top: 10px;
+	 margin-bottom: 20px;
+}
+@media(max-width:767px) {
+    .intro-message {
+		padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .intro-message > h1 {
+        font-size: 1.5em;
+    }
+
+	ul.intro-social-buttons > li {
+        padding: 0;
+    }
+
+    ul.intro-social-buttons > li:last-child {
+        margin-bottom: 0;
+    }
+
+    .intro-divider {
+        width: 100%;
+    }
+}
+
+
 section {
     padding: 35px 0;
 }
 
-section h2.section-heading {
+section h3.section-heading {
     margin-top: 0;
     margin-bottom: 30px;
-    font-size: 40px;
+	color: #1e6fa3
 }
 @media(max-width:767px) {
-	section h2.section-heading { text-align: center}
+	section h3.section-heading { text-align: center}
 }
 section h3.section-subheading {
     margin-bottom: 60px;
@@ -362,7 +408,7 @@ section h3.section-subheading {
 }
 
 /*--可編輯區--*/
-.contentmt{margin-top:55px;}
+.contentmt{margin-top:50px; background-image:url(../img/bg.jpg); background-repeat: no-repeat;}
 @media(min-width:768px) {
 	.contentmt{ margin-top:90px}
 }
@@ -373,40 +419,12 @@ section h3.section-subheading {
     padding-bottom: 15px;
     border-bottom: 1px dashed #ddd;
 }
-/*--首頁參與學校--*/
-#inxschool{ background:url(../img/bg_inxschool.jpg) no-repeat top center; background-size:cover}
 
-a.whereschool1,a.whereschool2,a.whereschool3,a.whereschool4,a.whereschool5{
-    position: relative;
-	background-position:center;
-	background-repeat:no-repeat; width:100%; height:300px; 
-	display:block;
-	background-size: contain;
+/*--首頁 banner搜尋--*/
+.intro-message-search{ width: 80%; max-width: 400px; margin: auto }
+@media(max-width:767px) {
+	.intro-message-search{ margin-top: 15px}
 }
-a.whereschool1:hover,a.whereschool2:hover,a.whereschool3:hover,a.whereschool4:hover,a.whereschool5:hover{
-	margin-top:-5px
-}
-@media(max-width:768px) {
-	a.whereschool1,a.whereschool2,a.whereschool3,a.whereschool4{ height:170px}
-}
-
-
-a.whereschool1{ background-image: url(../img/swhere601.png)} 
-a.whereschool1:hover{background-image: url(../img/swhere601h.png)} 
-
-a.whereschool2{background-image: url(../img/swhere602.png)} 
-a.whereschool2:hover{background-image: url(../img/swhere602h.png)} 
-
-a.whereschool3{background-image: url(../img/swhere603.png)} 
-a.whereschool3:hover{background-image: url(../img/swhere603h.png)} 
-
-a.whereschool4{background-image: url(../img/swhere604.png)} 
-a.whereschool4:hover{background-image: url(../img/swhere604h.png)} 
-
-a.whereschool5{background-image: url(../img/swhere605.png)} 
-a.whereschool5:hover{background-image: url(../img/swhere605h.png)} 
-
-
 
 /*--首頁 聯絡資料--*/
 .inxcontact a{ color:#fff; padding-left:47px; line-height:33px; font-size:13px}
@@ -423,162 +441,6 @@ a.whereschool5:hover{background-image: url(../img/swhere605h.png)}
 .inxcontact2{ background-image: url(../img/inxcontact2.png)} 
 .inxcontact3{ background-image: url(../img/inxcontact3.png)} 
 
-
-/*--學校列表--*/
-.listitem{position:relative; margin-bottom:40px}
-@media(max-width:767px) {.listitem{margin-bottom:15px}}
-a.listitem_img img:hover{ opacity:.9}
-
-a.listitem_caption
-{
-	position:absolute; z-index:2; display:inline-block; 
-	width:100%; 
-	max-width: 772px;
-	background-image:url(../img/bg_schoolcaption2.png);
-	background-repeat:no-repeat;
-	background-size:cover;
-	background-position:left;
-	bottom:0;
-	padding: 25px 0 10px;
-	color:#fff
-}
-a.listitem_caption:hover{ 
-	padding:45px 0 20px;	
-	background-position: right;
-}
-
-@media(max-width:767px) {
-	a.listitem_caption{
-		padding: 40px 0 15px;
-    	background-size: cover;
-    	background-position: top right;
-	}
-	a.listitem_caption:hover{ 
-	padding:40px 0 15px;
-	background-position: right;
-	}
-}
-#school_list h3{
-	height: 43px;
-    line-height: 50px;
-    font-size: 20px;
-}
-
-
-
-#container5 {
-	clear:left;
-	float:left;
-	width:100%;
-	overflow:hidden;
-}
-#container4 {
-	clear:left;
-	float:left;
-	width:100%;
-	position:relative;
-	right:20%;
-}
-#container3 {
-	clear:left;
-	float:left;
-	width:100%;
-	position:relative;
-	right:20%;
-}
-#container2 {
-	clear:left;
-	float:left;
-	width:100%;
-	position:relative;
-	right:20%;
-}
-
-#container1 {
-	float:left;
-	width:100%;
-	position:relative;
-	right:20%;
-}
-#col1 {
-	float:left;
-	width:16%;
-	position:relative;
-	left:82%;
-	overflow:hidden;
-}
-#col2 {
-	float:left;
-	width:16%;
-	position:relative;
-	left:86%;
-	overflow:hidden;
-}
-#col3 {
-	float:left;
-	width:16%;
-	position:relative;
-	left:90%;
-	overflow:hidden;
-}
-#col4 {
-	float:left;
-	width:16%;
-	position:relative;
-	left:94%;
-	overflow:hidden;
-}
-#col5 {
-	float:left;
-	width:16%;
-	position:relative;
-	left:98%;
-	overflow:hidden;
-}
-#container5 a.whereschool1,
-#container5 a.whereschool2,
-#container5 a.whereschool3,
-#container5 a.whereschool4,
-#container5 a.whereschool5{ height:170px; background-size: cover;}
-
-@media (max-width: 767px){
-	#container5 a.whereschool1,
-	#container5 a.whereschool2,
-	#container5 a.whereschool3,
-	#container5 a.whereschool4,
-	#container5 a.whereschool5{ height:80px; background-size: contain; margin-top:0}
-	
-	#container5 a.whereschool1{ background-image: url(../img/sw1.png)} 
-	#container5 a.whereschool1:hover{background-image: url(../img/sw1h.png)} 
-	
-	#container5 a.whereschool2{background-image: url(../img/sw2.png)} 
-	#container5 a.whereschool2:hover{background-image: url(../img/sw2h.png)} 
-	
-	#container5 a.whereschool3{background-image: url(../img/sw3.png)} 
-	#container5 a.whereschool3:hover{background-image: url(../img/sw3h.png)} 
-	
-	#container5 a.whereschool4{background-image: url(../img/sw4.png)} 
-	#container5 a.whereschool4:hover{background-image: url(../img/sw4h.png)} 
-	
-	#container5 a.whereschool5{background-image: url(../img/swall.png)} 
-	#container5 a.whereschool5:hover{background-image: url(../img/swallh.png)} 
-	
-}
-
-/*首頁banner*/
-@media (min-width: 901px) and (max-width:1199px){
-	.s8 img{ display:none}
-	.s8,.s9{ padding-bottom: 7%!important;}
-}
-
-@media (max-width:1199px){
-	.s9 img{display:none}
-}
-@media (max-width:900px){
-    .s6,.s7,.s8,.s9{ padding-bottom: 9%!important;}
-    .s6 img,.s7 img,.s8 img,.s9 img{ display:none}
-}
-
 /*--學校專頁 banner--*/
 #school-heading .intro-header{ background-image:url(../img/7534.jpg); background-position:top center}
 .intro-header .page-heading, .intro-header .post-heading, .intro-header .site-heading {
@@ -591,141 +453,145 @@ a.listitem_caption:hover{
 	}
 }
 
-.intro-header:before{	
-	content: " ";
-	width: 100%;
-	padding:79px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background: -moz-radial-gradient(center, ellipse cover, rgba(0,0,0,.4) 0%, rgba(0,0,0,0.6) 70%, rgba(0,0,0,0.9) 100%);
-    background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,.4) 0%,rgba(0,0,0,0.6) 70%,rgba(0,0,0,0.9) 100%);
-    background: radial-gradient(ellipse at center, rgba(0,0,0,.4) 0%,rgba(0,0,0,.6) 70%,rgba(0,0,0,.9) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#000000',GradientType=1 );
-}
+
+/*--內頁大標--*/
+.bigtitle{ padding:45px 0 20px}
+@media (max-width: 767px){.bigtitle{ padding:30px 0;font-size: 24px;}}
+
+
+.searchbox{margin-bottom: 30px}
 @media (min-width: 768px){
-	.intro-header:before{	
-		padding: 184px;
+	.searchbox{padding: 45px 0 20px; margin-bottom: 0}
+}
+/*--內頁表格盒子--*/
+@media (min-width: 768px){
+	.tablebox{
+		background-color: #fff;
+		border: 1px solid #b8dfd7;
+		border-radius: 10px;
+		padding: 5% 3% 1%;
+		margin-bottom: 30px
 	}
+}
+
+.messagebox{
+		background-color: #fff;
+		border: 1px solid #b8dfd7;
+		border-radius: 10px;
+		padding: 5% 3% 1%;
+		margin-bottom: 30px
 }
 
 @media (max-width: 767px){
-	#school-heading img{
-		width:50px; height:auto}
-	#school-heading h1{
-		font-size:20px
+	.table-responsive {
+		background-color: #fff;
+		border: 1px solid #1e6fa3;
+		margin-bottom: 35px
 	}
+	
+	.table-responsive>.table {background-color: #fff;}
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+	padding: 11px 8px;
 }
 
-
-/*--學校專頁 側選單--*/
-a.contentbtn {
-	width: 100%;
-    max-width: 100%;
-    background-color: #f2f0e2;
-    padding: 75px 15px 15px;
-    display: inline-block;
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-position-y: 15px;
-    text-align: center;
-    font-size: 18px;
-    color: #6c5c4c;
-    margin-bottom: 10px;
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: #eef3f6;
 }
-a.contentbtn:hover { background-color: #e5ede2;}
-
+/*--會員專區 側選單--*/
+@media (min-width: 768px){
+	a.contentbtn {
+		width: 100%;
+		max-width: 100%;
+		padding: 13px 0px 15px 50px;
+		display: inline-block;
+		font-size: 16px;
+		color: #1e6fa3;
+		margin-bottom: 15px;
+	}
+	a.contentbtn:hover { background-color: rgba(218, 232, 241, 0.72);}
+}
 @media (max-width: 767px){
 	a.contentbtn {
-		width: 23%;
-		padding: 15px;
-		margin: 1%;
-		float: left;
+		padding: 75px 15px 15px;
+		float: left;    
+		text-align: center;
+		background-color: #fff;
+		border-radius: 4px;
+		border: 1px solid #1e6fa3;
+		background-position: center 15px;
+		margin: 2%;
+		width: 46%;
 	}
 }
+a.contentbtn{background-repeat: no-repeat}
 
-	.slmenu01{ background-image:url(../img/slmenu_icon03.png)}
-	.slmenu02{ background-image:url(../img/slmenu_icon01.png)}
-	.slmenu03{ background-image:url(../img/slmenu_icon02.png)}
-	.slmenu04{ background-image:url(../img/slmenu_icon04.png)}
-	.slmenu05{ background-image:url(../img/slmenu_icon05.png)}
-	.slmenu06{ background-image:url(../img/slmenu_icon06.png)}
-	.slmenu07{ background-image:url(../img/abmenu01.png)}
-	.slmenu08{ background-image:url(../img/abmenu02.png)}
-	.slmenu09{ background-image:url(../img/abmenu03.png)}
+/*--側選單 手機 背景圖--*/
+.slmenu01{background-image: url(../img/icon_user_s.png)}
+.slmenu02{background-image: url(../img/icon_mye_s.png)}
+.slmenu03{background-image: url(../img/icon_eportfolio_s.png)}
+.slmenu04{background-image: url(../img/icon_mail_s.png)}
+.slmenu05{background-image: url(../img/icon_act_s.png)}
+.slmenu06{background-image: url(../img/icon_tool_s.png)}
+.slmenu07{background-image: url(../img/icon_money_s.png)}
 
-#visitdetail-content h2{ font-size:24px;}
-#visitdetail-content h3{ font-size:18px; margin-bottom:7px}
-@media (max-width: 767px){#visitdetail-content h3{ font-size:16px}}
-@media (min-width: 768px){
-	.school-visitpic{
-		display: table;
-		width: 100%;
-		margin:0 -15px;
-		}
-	.school-visitpic [class^=col-]{
-		width:50%;
-		display: table-cell;
-		float: none;
+@media (max-width: 767px){
+.slmenu01{background-image: url(../img/icon_user.png)}
+.slmenu02{background-image: url(../img/icon_mye.png)}
+.slmenu03{background-image: url(../img/icon_eportfolio.png)}
+.slmenu04{background-image: url(../img/icon_mail.png)}
+.slmenu05{background-image: url(../img/icon_act.png)}
+.slmenu06{background-image: url(../img/icon_tool.png)}
+.slmenu07{background-image: url(../img/icon_money.png)}
+}
+
+
+/*--通知圈圈--*/
+.badge {
+    background-color: #eb6b0e;
+    padding: 4px 6px;
+}
+
+
+/*--12345分頁--*/
+@media (max-width: 767px){
+	.pagination {
+		margin: -30px 0 20px;
 	}
 }
-.school-visitpic p{ padding-bottom:15px}
+.pagination>li:first-child>a, .pagination>li:first-child>span {
+    margin-left: 0;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.pagination>li:last-child>a, .pagination>li:last-child>span {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.pagination>li>a, .pagination>li>span {
+    padding: 5px 13px;
+	border: 0px;
+}
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+    background-color: rgba(218, 232, 241, 0.72);
+}
 
 
+
+/*--分隔線--*/
 .line-schoolpage{ 
-	width:100%; height:10px; margin:15px 0 25px;
+	width: 100%;
+    border-bottom: 1px dashed #b8dfd7;
+    margin: 20px 0;
+    display: block;
+}
+.line-schoolpage2{ 
+	width:100%; height:10px; margin:15px 0;
 	background-image:url(../img/header-bg.png); display:block
 }
 @media (max-width: 767px){.line-schoolpage{ margin:15px 0}}
 
-/*--學校專頁 側選單(手機)--*/
-#mobile-menu{background-color: #f2f0e2; height:55px; position:fixed; z-index:3; bottom:0; width:100%}
-#mobile-menu a.schoolbtn {
-	width: calc(100% / 4);
-    height: 100%;
-    display: inline-block;
-	float: left;
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-position-y: center;
-	background-size: 50%;
-}
-#mobile-menu a.schoolbtn:hover { background-color:#91c686} 
 
-
-/*--學校專頁 計畫介紹--*/
-@media (max-width: 767px){
-	.bigtitle{text-align:center; margin-top: 15px;}
-}
-.planbox{ 
-	padding:25px 15px; 
-	background-color:#f2f0e2; 
-	display: inline-block;
-    width: 100%;
-}
-.nextplan{ font-size:24px; color:#044e33}
-
-/*--學校專頁 最新消息--*/
-.school_news{ margin:0 15px}
-@media (min-width: 992px){
-	.othernews {
-		padding: 0 50px 0 0;
-	}
-}
-@media (max-width: 991px){
-	.othernews {
-		margin-top: 30px;
-	}
-}
-
-@media (min-width: 768px){
-	.whoedit{float:right}
-}
-
-
-/*--計畫介紹--*/
-.aboutitle{ padding:45px 0}
-@media (max-width: 767px){.aboutitle{ padding:30px 0}}
 
 /*--計畫介紹 計畫指標--*/
 .faqrow{ border-bottom: 1px solid #ddd; margin-bottom:10px}
@@ -739,29 +605,37 @@ a.contentbtn:hover { background-color: #e5ede2;}
 	#login{ margin:0 15px; min-height:auto}
 }
 
+.frombox { 
+	background-color: #ffffff;
+    border: 1px solid #b8dfd7;
+    padding: 30px 25px 15px;
+    border-radius: 15px;
+}
+
 .form-control {
 	height:40px;
-	border: 1px solid #91c686;
+	border: 1px solid #1e6fa3;
     border-radius: 0;
 	color: #777;
 }
-.form-horizontal .control-label { font-size:16px; font-weight:500}
+
+.form-horizontal .control-label { font-size:13px; font-weight:500; text-align: center}
 @media (max-width: 767px){
-	#login .form-horizontal .control-label { margin-bottom:10px}
+	#login .form-horizontal .control-label { margin-bottom:3px}
 }
 #login .form-group {
     margin-bottom: 20px;
 }
 
 
-/*--編輯 計畫介紹--*/
+/*--輸入--*/
 .partner{
     width: 240px;
     margin-right: 5px;
     float: left;
 }
 .urlinput{
-	width: calc( 100% - 62px);
+	width: calc( 100% - 62px)!important;
     margin-right: 5px;
     float: left;
 }
@@ -783,112 +657,34 @@ a.contentbtn:hover { background-color: #e5ede2;}
 		}
 }
 
-/*--編輯 最新消息--*/
 input[type=date], input[type=time], input[type=datetime-local], input[type=month] {
     height: 40px;
-    border: 1px solid #91c686;
+    border: 1px solid #1e6fa3;;
     border-radius: 0;
     color: #777;
     width: 100%;
 }
 
 
-
-
-/*--首頁 相關影片 (相簿)--*/
-.modal-body {
-    padding: 0px;
+/*--預約儀器--*/
+#instrument_reservation td{ text-align: center}
+@media (min-width: 992px){
+	#instrument_reservation td{ height: 80px; line-height: 80px}
 }
 
-#portfolio .portfolio-item {
-    right: 0;
-    margin: 0 0 15px;
+#instrument_reservation btn { padding: 10px}
+
+.instrument_date{ border: 1px solid #ddd; border-bottom: 0}
+@media (max-width: 767px){
+	.instrument_date{ border: 1px solid #1e6fa3; border-bottom: 0}
 }
 
-#portfolio .portfolio-item .portfolio-link {
-    display: block;
-    position: relative;
-    margin: 0 auto;
-    max-width: 400px;
+.instrument_date .fa{font-size: 25px;}
+
+@media (max-width: 767px){
+	.instrument_date h4{font-size: 14px;}
 }
 
-#portfolio .portfolio-item .portfolio-link .portfolio-hover {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    border: 4px solid #005d25;    
-	-webkit-transition: all ease .5s;
-    -moz-transition: all ease .5s;
-    transition: all ease .5s;
-	
-	z-index: 5;
-}
-
-#portfolio .portfolio-item .portfolio-link .portfolio-hover:hover {
-    opacity: 1;
-}
-
-#portfolio .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    height: 20px;
-    margin-top: -12px;
-    text-align: center;
-    font-size: 20px;
-    color: #fff;
-}
-
-#portfolio .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content i {
-    margin-top: -12px;
-}
-
-#portfolio .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content h3,
-#portfolio .portfolio-item .portfolio-link .portfolio-hover .portfolio-hover-content h4 {
-    margin: 0;
-}
-
-#portfolio .portfolio-item .portfolio-caption {
-    margin: 0 auto;
-    padding: 25px;
-    max-width: 400px;
-    background-color: #fff;
-}
-
-/*相關影片 列表*/
-#portfolio.videolist .portfolio-caption {
-    background-color: #f5f5f5;
-    margin-bottom: 15px;
-}
-
-#portfolio .portfolio-item .portfolio-caption h4 {
-    margin: 0;
-    text-transform: none;
-	line-height:1.5em
-}
-
-@media(min-width:768px) {
-	#portfolio .portfolio-item .portfolio-caption h4 {
-		height: 60px;
-	}
-}
-
-#portfolio .portfolio-item .portfolio-caption p {
-    margin: 15px 0 0;
-    border-top: 1px dashed #ddd;
-    font-size: 14px;
-    padding-top: 15px;
-}
-
-#portfolio * {
-    z-index: 2;
-}
-
-@media(min-width:767px) {
-    #portfolio .portfolio-item {
-    }
-}
 
 .timeline {
     position: relative;
@@ -956,7 +752,7 @@ input[type=date], input[type=time], input[type=datetime-local], input[type=month
     border-radius: 100%;
     text-align: center;
     color: #fff;
-    background-color: #055d25;
+    background-color: #1e6fa3;
 }
 
 .timeline>li .timeline-image h4 {
@@ -1143,7 +939,7 @@ section#contact .form-group textarea.form-control {
 }
 
 section#contact .form-control:focus {
-    border-color: #055d25;
+    border-color: #1e6fa3;
     box-shadow: none;
 }
 
@@ -1182,7 +978,8 @@ section#contact .text-danger {
 footer {
     padding: 25px 0;
     text-align: center;
-	background-color:#e5ede2;
+	color: #fff;
+	background-color:#1e6fa3;
 }
 
 footer span.copyright {
@@ -1218,7 +1015,7 @@ ul.social-buttons li a {
 ul.social-buttons li a:hover,
 ul.social-buttons li a:focus,
 ul.social-buttons li a:active {
-    background-color: #055d25;
+    background-color: #1e6fa3;
 }
 
 .btn:focus,
@@ -1325,5 +1122,5 @@ img::-moz-selection {
 }
 
 body {
-    webkit-tap-highlight-color: #055d25;
+    webkit-tap-highlight-color: #1e6fa3;
 }

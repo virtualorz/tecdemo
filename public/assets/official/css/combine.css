@@ -1,7 +1,7 @@
 /* CSS Document */
 body {
 	color:#6a6a6a;
-    font-size: 14px;
+    font-size: 13px;
 	font-family:Meiryo, Microsoft YaHei, Microsoft JhengHei, Helvetica, Geneva, 思源黑體, 微軟正黑體, Arial, sans-serif;
     letter-spacing: 0.09em;
     line-height: 1.8em;
@@ -42,7 +42,7 @@ a{
 .bg_green{background-color:#55c6aa}
 .bg_brown{background-color:#6a5f4c}
 .bg-dark{background-color:#282828;color:#fafafa;}
-.bg-light{background-color:#EFEFEF; color:#333;}
+.bg-light{background-color:#EFEFEF; color:#C7C7C7;}
 
 .shadowbox{
 	background-color:#ffffff;
@@ -62,7 +62,7 @@ a{
 
 .color_brown{ color:#60422d;}
 .color_yellow{color:#ff7a21;}
-.color_blue{color: #34356d;}
+.color_blue{color: #1e6fa3;}
 .color_green{color: #006943}
 
 /* table min-width */
@@ -74,6 +74,15 @@ a{
 	.ttt100{min-width:100px}
 	.ttt80{min-width:80px}
 	.ttt50{min-width:50px}
+
+	.ttw200{width:200px}
+	.ttw160{width:160px}
+	.ttw120{width:120px}
+	.ttw110{width:110px}
+	.ttw105{width:105px}
+	.ttw100{width:100px}
+	.ttw80{width:80px}
+	.ttw50{width:50px}
 
 
 /* 不見 大於多少不見 */
@@ -109,9 +118,34 @@ a{
 @media (min-width: 768px) and (max-width: 991px) {
 .max768991none{ display:none!important}
 }
-
+/* 置右 */
 .floatright{float:right;}
+@media (max-width: 767px) {
+.max767right{ float:right!important}
+}
+@media (max-width: 991px) {
+.max991right{ float:right!important}
+}
+@media (max-width: 1023px) {
+.max1023right{ float:right!important}
+}
+@media (max-width: 1199px) {
+.max1199right{ float:right!important}
+}
+/* 置左 */
 .floatleft{float:left;}
+@media (max-width: 767px) {
+.max767left{ float:left!important}
+}
+@media (max-width: 991px) {
+.max991left{ float:left!important}
+}
+@media (max-width: 1023px) {
+.max1023left{ float:left!important}
+}
+@media (max-width: 1199px) {
+.max1199left{ float:left!important}
+}
 
 .clearfix:before,.clearfix:after{content:"\0020";display:block;height:0;overflow:hidden}
 .clearfix:after{clear:both}

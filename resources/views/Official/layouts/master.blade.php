@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- InstanceBeginEditable name="doctitle" -->
-    <title>特色遊學計畫</title>
+    <title>TechComm 科技共同空間</title>
     <!-- InstanceEndEditable -->
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('assets/official/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -31,7 +31,7 @@
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css">
-    
+
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         div.growlUI {
@@ -50,9 +50,9 @@
             var urlUploaderDelete = {!! json_encode(Sitemap::getUrl("official.upload.delete")) !!};
             var urlUpload = {!! json_encode(FileUpload::getRootUrl()) !!};
         </script>
-        @yield('head')
     </head>
     <body id="page-top" class="index">
+        @yield('head')
         @include('official.elements.header')
 
         @yield('content')
@@ -61,27 +61,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                	<img class="marginauto" src="{{ asset('assets/official/img/footerlogo.png') }}" width="160" height="95" alt=""/><br>
-                  	<p class="max767none">主辦單位 : 教育部國民及學前教育署 承辦單位 : 國立臺灣師範大學
-                  	<br>
-			Design by <a href="http://btsdesign.com.tw/" target="_blank">BTS Design</a>
-                  	</p>
-                  	
-                  	<div class="col-sm-6 col-xs-12 min768none">
-                    	<p>主辦單位 : 教育部國民及學前教育署</p>
-                        </div>
-                    
-                    <div class="col-sm-6 col-xs-12 min768none">
-                    	<p>承辦單位 : 國立臺灣師範大學</p>
-                    </div>
-                    
-                    <div class="col-xs-12 min768none">
-                    	<p>
-                    	Design by <a href="http://btsdesign.com.tw/" target="_blank">BTS Design</a>
-                    	</p>
-                    </div>
-                    
-                    <p>Copyright &copy; 特色遊學計畫 2016</p>
+                	<img class="marginauto" src="{{ asset('assets/official/img/footerlogo.png') }}" width="170" height="55" alt=""/><br>
+                    <p>國立臺灣大學 生命科學院</p>
+                    <p>Copyright© 2017  All rights reserved.</p>
                 </div>
                 
           </div>

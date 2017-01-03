@@ -11,200 +11,191 @@
 <div class="contentmt">    
     <!-- InstanceBeginEditable name="schoolcontent" -->
     <!-- Header -->
-    <header class="max767none">
-        <div class="container-fluid">
-            <ul id="hexGrid">
-            	<!-- s1 -->
-                @foreach($schoolResut as $k=>$v)
-	            <li class="hex @if($k>=5) s{{$k+1}} @endif">
-	                <a class="hexIn" href="{{ asset('school/plan/id-'.$v['school_id']) }}">
-	                    <img src="{{ $v['photo'] }}" alt="" />
-	                    <p>{{ $twCity[$v['city']] }}</p>
-                        <h1>{{ $v['school_name'] }}</h1>
-	                </a>
-	            </li>
-                @endforeach
-	        </ul>
+    <div class="intro-header">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>國立台灣大學生命科學院<br>
+                        TechComm 科技共同空間</h1>
+                        <h3 class="mt--m mb--s max767none">TechComm 是台大生命科學院的科技共同空間，提供生物科學相關科技服務，開放師生使用。</h3>
+                        <input type="text" class="form-control intro-message-search">
+                        <ul class="list-inline intro-social-buttons">
+                            <li>
+                                <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-lg btn-primary"><span class="network-name">找活動</span></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn btn-default btn-lg btn-primary"><span class="network-name">找儀器</span></a>
+                            </li>
+                      </ul>
+                  </div>
+                </div>
+            </div>
+
         </div>
-    </header>
+        <!-- /.container -->
+
+    </div>
 
 	<!-- Header -->
-    <header class="min768none">
-	  <div id="carousel1" class="carousel slide" data-ride="carousel">
-		  <ol class="carousel-indicators">
-            @foreach($schoolResut as $k=>$v)
-            <li data-target="#carousel1" data-slide-to="{{$k}}" @if($k == 0) class="active" @endif></li>
-            @endforeach
-	    </ol>
-		  	<div class="carousel-inner" role="listbox">
-            @foreach($schoolResut as $k=>$v)
-		    <a href="{{ asset('school/plan/id-'.$v['school_id']) }}" @if($k == 0) class="item active" @else class="item" @endif><img src="{{ $v['photo'] }}" alt="First slide image" class="center-block">
-		      <div class="carousel-caption">
-		        <h3>{{ $v['school_name'] }}</h3>
-		        <p>{{ $twCity[$v['city']] }}</p>
-	          </div>
-	        </a>
-            @endforeach
-	    	</div>
-		  <a class="left carousel-control" href="#carousel1" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="right carousel-control" href="#carousel1" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>
-        </div>
-    </header>
 
-    <!-- Services Section -->
+    <!-- 系統公告 -->
     <section id="inx_news">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="section-heading">
-                    	<img src="{{ asset('assets/official/img/title_news.png') }}" width="225" height="40" alt=""/>
-                        <a href="{{ asset('news') }}" class="btn btn-default btn-sm floatright max767none">MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                    </h2>
+                    <h3 class="section-heading">
+                    	系統公告
+                    </h3>
                 </div>
             </div>
             
-            @foreach($newsResut as $k=>$v)
+            
             <div class="row inxnewslist">
                 <div class="col-md-2 col-sm-2">
-                    <p>{{$v['created_at']}}</p>
+                    <p>2016.3.31</p>
                 </div>
                 <div class="col-md-8 col-sm-10">
-                	<a href="{{ asset('news/content/id-'.$v['id']) }}">{{$v['title']}}</a>               
-                </div>
-            </div>
-            @endforeach
-            
-            <div class="row text-center">
-                <div class="col-md-12">
-            		<a href="{{ asset('news') }}" class="btn btn-default btn-sm min768none mt--l">MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-				</div>
-            </div>
-            
-        </div>
-    </section>
-
-    <!-- Video Section -->
-    <section id="portfolio" class="bg-light-green">
-        <div class="container">
-        	<div class="row">
-                <div class="col-lg-12">
-                    <h2 class="section-heading">
-                    	<img src="{{ asset('assets/official/img/title_video.png') }}" width="225" height="40" alt=""/>
-                        <a href="{{ asset('video') }}" class="btn btn-default btn-sm floatright max767none">MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                    </h2>
+                	<a href="news.html">要在 TC Booking 預約，需先領有TC Passport</a>。
                 </div>
             </div>
             
-            <div class="row">
-                @foreach($videoResut as $k=>$v)
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal{{$k}}" class="portfolio-link" data-toggle="modal">
-                        <div class="portfolio-hover"></div>
-                        <div class="embed-responsive embed-responsive-16by9">
-                    		<iframe class="embed-responsive-item" src="{{ $v['url'] }}" frameborder="0" allowfullscreen=""></iframe>
-                        </div>
-                    	<div class="portfolio-caption">
-                        	<h4>{{ $v['title'] }}</h4>
-                        	<p>{{ $v['date'] }}</p>
-                    	</div>
-                    </a>
+            <div class="row inxnewslist">
+                <div class="col-md-2 col-sm-2">
+                    <p>2016.3.1</p>
                 </div>
-                @endforeach
-            
-            <div class="row text-center">
-                <div class="col-md-12">
-            		<a href="{{ asset('video') }}" class="btn btn-default btn-sm min768none mt--s">MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-				</div>
-            </div>
-            
-            
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="inxschool">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">
-                    	<img src="{{ asset('assets/official/img/title_school.png') }}" width="225" height="40" alt=""/>
-                    </h2>
+                <div class="col-md-8 col-sm-10">
+                	<a href="news.html">使用資格需經認證，護照上記錄所有認證項目 (取得認證 4.4)。</a>               
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-3 col-xs-6">
-                  <a href="{{ asset('school') }}?location=1" class="whereschool1"></a>
+            
+            <div class="row inxnewslist">
+                <div class="col-md-2 col-sm-2">
+                    <p>2016.2.28</p>
                 </div>
-                
-                <div class="col-sm-3 col-xs-6">
-                  <a href="{{ asset('school') }}?location=2" class="whereschool2"></a>
+                <div class="col-md-8 col-sm-10">
+					<a href="news.html">每項儀器預約次數每人限定三次，用畢後方能再行預約 (2009.05.18 正式實施)。</a>              
                 </div>
-                
-                <div class="col-sm-3 col-xs-6">
-                  <a href="{{ asset('school') }}?location=3" class="whereschool3"></a>
+            </div>
+            
+            <div class="row inxnewslist">
+                <div class="col-md-2 col-sm-2">
+                    <p>2015.11.13</p>
                 </div>
-                
-                <div class="col-sm-3 col-xs-6">
-                  <a href="{{ asset('school') }}?location=4" class="whereschool4"></a>
+				<div class="col-md-8 col-sm-10"><a href="news.html">颱風三樓淹水，今日三樓儀器停用</a>
                 </div>
-                
             </div>
         </div>
     </section>
     
-    <!-- Portfolio Modal 1 -->
-    @foreach($videoResut as $k=>$v)
-    <div class="portfolio-modal modal fade" id="portfolioModal{{$k}}" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
+    
+    <!-- 最新活動 -->
+    <section id="inx_news2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="section-heading">
+                    	最新活動
+                    </h3>
                 </div>
             </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <!-- Project Details Go Here -->
-                            <h2>{{ $v['title'] }}</h2>
-                            <p class="item-intro text-muted">{{ $v['date'] }}</p>
-
-							<div class="embed-responsive embed-responsive-16by9">
-                    			<iframe class="embed-responsive-item" src="{{ $v['url'] }}" frameborder="0" allowfullscreen=""></iframe>
-                        	</div>
-                            
-                        </div>
-                    </div>
+            
+            
+            <div class="row inxnewslist">
+                <div class="col-md-2 col-sm-2">
+                    <p>2016.12.31</p>
+                </div>
+                <div class="col-md-8 col-sm-10">
+                	<a href="#">染色質免疫沉澱 (ChIP) 自動化樣本製備工作坊</a>               
                 </div>
             </div>
+            
+            <div class="row inxnewslist">
+                <div class="col-md-2 col-sm-2">
+                    <p>2016.12.27</p>
+                </div>
+                <div class="col-md-8 col-sm-10">
+                	<a href="#">TC 年度說明會 (會後開放 TC 空間參觀)</a>
+                </div>
+            </div>
+            
+            <div class="row inxnewslist">
+                <div class="col-md-2 col-sm-2">
+                    <p>2016.12.25</p>
+                </div>
+                <div class="col-md-8 col-sm-10">
+                	<a href="#">流式細胞分析儀工作坊 (下午上機)</a>
+                </div>
+            </div>
+            
+            <div class="row inxnewslist">
+                <div class="col-md-2 col-sm-2">
+                    <p>2016.11.19</p>
+                </div>
+                <div class="col-md-8 col-sm-10">
+                	<a href="#">Optical Mapping and Genome de novo Assembly</a>               
+                </div>
+            </div>
+            
+            <div class="row inxnewslist">
+                <div class="col-md-2 col-sm-2">
+                    <p>2016.11.17</p>
+                </div>
+                <div class="col-md-8 col-sm-10">
+                	<a href="#">化學系蛋白質體質譜核心與生科院 TechComm 蛋白質體平台聯合說明會</a>               
+                </div>
+            </div>
+            
+            <div class="row text-center">
+                <div class="col-md-12">
+            		<a href="activity.html" class="btn btn-default btn-sm mt--b">MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+				</div>
+            </div>
+            
         </div>
-    </div>
-    @endforeach
-
+    </section>
+    
+    
+    
+    <!-- 聯絡負責人
+    <section id="inx_contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4 class="color_blue mb--b">
+                    	如有任何預約問題，請 E-Mail 通知各平台技術人員：
+                    </h4>
+                </div>
+            </div>
+            
+            
+            <div class="row inxnewslist">
+                <div class="col-md-2 col-xs-6">
+                	<a href="#">TC1 高毓鄖</a>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                	<a href="#">TC2 周慧柔</a>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                	<a href="#">TC3 董于瑄</a>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                	<a href="#">TC4 江榮春</a>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                	<a href="#">TC5 莊以君</a>
+                </div>
+                <div class="col-md-2 col-xs-6">
+                	<a href="#">TCX 湯凱鈞</a>
+                </div>
+            </div>
+          
+            
+        </div>
+    </section> -->
     <!-- InstanceEndEditable -->
     </div>
-    
-    
-    <!-- Clients Aside -->
-    <aside class="inxcontact bg-darkest-green">
-        <div class="container">
-            <div class="row">
-            	<div class="spacer3015"></div>
-                <div class="col-md-4 col-sm-4">
-                    <a class="inxcontact1">02-7734-6574 吳助理</a>
-                </div>
-                
-                <div class="col-md-4 col-sm-4">
-                    <a class="inxcontact2" href="#">ptscstc2015@gmail.com</a>
-                </div>
-                
-                <div class="col-md-4 col-sm-4">
-                    <a href="https://www.facebook.com/%E7%89%B9%E8%89%B2%E9%81%8A%E5%AD%B8%E3%84%90%E3%84%A7%E3%84%A4%CB%8B-%E7%8E%A9%E5%B0%B1%E5%B0%8D%E4%BA%86-1593895404185767/?fref=ts" target="_blank" class="inxcontact3">特色遊學ㄐ一ㄤˋ玩就對了</a>
-                </div>
-                <div class="spacer3015"></div>
-            </div>
-        </div>
-    </aside>
 @endsection
 
 
