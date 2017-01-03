@@ -20,13 +20,13 @@
                         <h1>國立台灣大學生命科學院<br>
                         TechComm 科技共同空間</h1>
                         <h3 class="mt--m mb--s max767none">TechComm 是台大生命科學院的科技共同空間，提供生物科學相關科技服務，開放師生使用。</h3>
-                        <input type="text" class="form-control intro-message-search">
+                        <input type="text" class="form-control intro-message-search" id="search_text">
                         <ul class="list-inline intro-social-buttons">
                             <li>
-                                <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-lg btn-primary"><span class="network-name">找活動</span></a>
+                                <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-lg btn-primary" id="find_activity"><span class="network-name">找活動</span></a>
                             </li>
                             <li>
-                                <a href="#" class="btn btn-default btn-lg btn-primary"><span class="network-name">找儀器</span></a>
+                                <a href="#" class="btn btn-default btn-lg btn-primary" id="find_instrument"><span class="network-name">找儀器</span></a>
                             </li>
                       </ul>
                   </div>
@@ -87,14 +87,14 @@
                     @endif
                 </div>
                 <div class="col-md-8 col-sm-10">
-                	<a href="{{ asset('activity/id-'.$v['uid'].'-'.$v['salt']) }}">{{ $v['activity_name']}}</a>               
+                	<a href="{{ asset('activity/reservation/id-'.$v['uid'].'-'.$v['salt']) }}">{{ $v['activity_name']}}</a>               
                 </div>
             </div>
             @endforeach
             
             <div class="row text-center">
                 <div class="col-md-12">
-            		<a href="activity.html" class="btn btn-default btn-sm mt--b">MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            		<a href="{{ asset('activity') }}" class="btn btn-default btn-sm mt--b">MORE <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 				</div>
             </div>
             
@@ -107,7 +107,14 @@
 @section('script')
 <script type="text/javascript">
     $(document).ready(function () {
-       
+       $("#find_activity").click(function(e){
+           e.preventDefault();
+           location.href= "{{ asset('activity') }}?name="+$("#search_text").val();
+       });
+       $("#find_instrument").click(function(e){
+           e.preventDefault();
+           location.href= "{{ asset('instrument') }}?name="+$("#search_text").val();
+       });
 
     });
     

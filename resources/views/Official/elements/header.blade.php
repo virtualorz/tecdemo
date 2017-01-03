@@ -19,28 +19,34 @@
                 <ul class="nav navbar-nav navbar-right">
                    
                     <li>
-                        <a href="activity.html">參與活動</a>
+                        <a href="{{ asset('activity') }}">參與活動</a>
                     </li>
                     
                     <li>
-                        <a href="instrument.html">預約儀器</a>
+                        <a href="{{ asset('instrument') }}">預約儀器</a>
                     </li>
                     
                     <li>
-                        <a href="contact_us.html">聯絡我們</a>
+                        <a href="{{ asset('contact') }}">聯絡我們</a>
                     </li>
-                    
+                    @if(User::Id() == null)
                     <li>
-                        <a href="login.html">
+                        <a href="{{ asset('login') }}">登入</a>
+                    </li>
+                    @else
+                    <li>
+                        <a href="{{ asset('member') }}">
                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                         你好，Peter
+                         你好，{{User::get('name')}}
                          <span class="badge">1</span>
                         </a>
                     </li>
                     
                     <li>
-                        <a href="#">登出</a>
+                        <a href="{{ asset('login/logout') }}">登出</a>
                     </li>
+                    @endif
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
