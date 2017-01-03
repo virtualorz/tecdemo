@@ -51,41 +51,17 @@
                 </div>
             </div>
             
-            
+            @foreach($newsResut as $k=>$v)
             <div class="row inxnewslist">
                 <div class="col-md-2 col-sm-2">
-                    <p>2016.3.31</p>
+                    <p>{{ $v['created_at']}}</p>
                 </div>
                 <div class="col-md-8 col-sm-10">
-                	<a href="news.html">要在 TC Booking 預約，需先領有TC Passport</a>。
+                	<a href="{{ asset('news/id-'.$v['id']) }}">{{ $v['title']}}</a>
                 </div>
             </div>
+            @endforeach
             
-            <div class="row inxnewslist">
-                <div class="col-md-2 col-sm-2">
-                    <p>2016.3.1</p>
-                </div>
-                <div class="col-md-8 col-sm-10">
-                	<a href="news.html">使用資格需經認證，護照上記錄所有認證項目 (取得認證 4.4)。</a>               
-                </div>
-            </div>
-            
-            <div class="row inxnewslist">
-                <div class="col-md-2 col-sm-2">
-                    <p>2016.2.28</p>
-                </div>
-                <div class="col-md-8 col-sm-10">
-					<a href="news.html">每項儀器預約次數每人限定三次，用畢後方能再行預約 (2009.05.18 正式實施)。</a>              
-                </div>
-            </div>
-            
-            <div class="row inxnewslist">
-                <div class="col-md-2 col-sm-2">
-                    <p>2015.11.13</p>
-                </div>
-				<div class="col-md-8 col-sm-10"><a href="news.html">颱風三樓淹水，今日三樓儀器停用</a>
-                </div>
-            </div>
         </div>
     </section>
     
@@ -101,51 +77,20 @@
                 </div>
             </div>
             
-            
+            @foreach($activityResut as $k=>$v)
             <div class="row inxnewslist">
                 <div class="col-md-2 col-sm-2">
-                    <p>2016.12.31</p>
+                    @if($v['end_dt'] == null)
+                    <p>{{ $v['start_dt']}} 起</p>
+                    @else
+                    <p>{{ $v['start_dt']}} - {{ $v['end_dt']}}</p>
+                    @endif
                 </div>
                 <div class="col-md-8 col-sm-10">
-                	<a href="#">染色質免疫沉澱 (ChIP) 自動化樣本製備工作坊</a>               
+                	<a href="{{ asset('activity/id-'.$v['uid'].'-'.$v['salt']) }}">{{ $v['activity_name']}}</a>               
                 </div>
             </div>
-            
-            <div class="row inxnewslist">
-                <div class="col-md-2 col-sm-2">
-                    <p>2016.12.27</p>
-                </div>
-                <div class="col-md-8 col-sm-10">
-                	<a href="#">TC 年度說明會 (會後開放 TC 空間參觀)</a>
-                </div>
-            </div>
-            
-            <div class="row inxnewslist">
-                <div class="col-md-2 col-sm-2">
-                    <p>2016.12.25</p>
-                </div>
-                <div class="col-md-8 col-sm-10">
-                	<a href="#">流式細胞分析儀工作坊 (下午上機)</a>
-                </div>
-            </div>
-            
-            <div class="row inxnewslist">
-                <div class="col-md-2 col-sm-2">
-                    <p>2016.11.19</p>
-                </div>
-                <div class="col-md-8 col-sm-10">
-                	<a href="#">Optical Mapping and Genome de novo Assembly</a>               
-                </div>
-            </div>
-            
-            <div class="row inxnewslist">
-                <div class="col-md-2 col-sm-2">
-                    <p>2016.11.17</p>
-                </div>
-                <div class="col-md-8 col-sm-10">
-                	<a href="#">化學系蛋白質體質譜核心與生科院 TechComm 蛋白質體平台聯合說明會</a>               
-                </div>
-            </div>
+            @endforeach
             
             <div class="row text-center">
                 <div class="col-md-12">
@@ -155,46 +100,6 @@
             
         </div>
     </section>
-    
-    
-    
-    <!-- 聯絡負責人
-    <section id="inx_contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h4 class="color_blue mb--b">
-                    	如有任何預約問題，請 E-Mail 通知各平台技術人員：
-                    </h4>
-                </div>
-            </div>
-            
-            
-            <div class="row inxnewslist">
-                <div class="col-md-2 col-xs-6">
-                	<a href="#">TC1 高毓鄖</a>
-                </div>
-                <div class="col-md-2 col-xs-6">
-                	<a href="#">TC2 周慧柔</a>
-                </div>
-                <div class="col-md-2 col-xs-6">
-                	<a href="#">TC3 董于瑄</a>
-                </div>
-                <div class="col-md-2 col-xs-6">
-                	<a href="#">TC4 江榮春</a>
-                </div>
-                <div class="col-md-2 col-xs-6">
-                	<a href="#">TC5 莊以君</a>
-                </div>
-                <div class="col-md-2 col-xs-6">
-                	<a href="#">TCX 湯凱鈞</a>
-                </div>
-            </div>
-          
-            
-        </div>
-    </section> -->
-    <!-- InstanceEndEditable -->
     </div>
 @endsection
 

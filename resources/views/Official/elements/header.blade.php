@@ -10,7 +10,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 
-                <a class="navbar-brand" href="index.html"></a>
+                <a class="navbar-brand" href="{{ asset('/') }}"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->

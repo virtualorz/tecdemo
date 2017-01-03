@@ -28,202 +28,6 @@ return [
             ],
         ],
     ],
-    'school' => [
-        '_prop' => [
-            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-            'route' => [
-                'method' => 'get',
-                'attr' => [
-                    'uses' => 'SchoolController@index',
-                ],
-            ],
-        ],
-        'plan' => [
-            '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-                'route' => [
-                    'method' => 'get',
-                    'param' => '{id}',
-                    'attr' => [
-                        'uses' => 'SchoolController@plan',
-                    ],
-                ],
-            ],
-        ],
-        'news' => [
-            '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-                'route' => [
-                    'method' => 'get',
-                    'param' => '{id}',
-                    'attr' => [
-                        'uses' => 'SchoolController@news',
-                    ],
-                ],
-            ],
-            'content' => [
-                '_prop' => [
-                    'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-                    'route' => [
-                        'method' => 'get',
-                        'param' => '{id}',
-                        'attr' => [
-                            'uses' => 'SchoolController@news_content',
-                        ],
-                    ],
-                ],
-            ],
-        ],
-        'execute' => [
-            '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-                'route' => [
-                    'method' => 'get',
-                    'param' => '{id}',
-                    'attr' => [
-                        'uses' => 'SchoolController@execute',
-                    ],
-                ],
-            ],
-            'content' => [
-                '_prop' => [
-                    'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-                    'route' => [
-                        'method' => 'get',
-                        'param' => '{id}',
-                        'attr' => [
-                            'uses' => 'SchoolController@execute_content',
-                        ],
-                    ],
-                ],
-            ],
-        ],
-        'tutor' => [
-            '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-                'route' => [
-                    'method' => 'get',
-                    'param' => '{id}',
-                    'attr' => [
-                        'uses' => 'SchoolController@tutor',
-                    ],
-                ],
-            ],
-            'content' => [
-                '_prop' => [
-                    'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-                    'route' => [
-                        'method' => 'get',
-                        'param' => '{id}',
-                        'attr' => [
-                            'uses' => 'SchoolController@tutor_content',
-                        ],
-                    ],
-                ],
-            ],
-        ],
-    ],
-    'news' => [
-        '_prop' => [
-            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-            'route' => [
-                'method' => 'get',
-                'attr' => [
-                    'uses' => 'NewsController@index',
-                ],
-            ],
-        ],
-        'content' => [
-            '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-                'route' => [
-                    'method' => 'get',
-                    'param' => '{id}',
-                    'attr' => [
-                        'uses' => 'NewsController@content',
-                    ],
-                ],
-             ],
-        ],
-    ],
-    'plan' => [
-        '_prop' => [
-            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-            'route' => [
-                'method' => 'get',
-                'attr' => [
-                    'uses' => 'PlanController@index',
-                ],
-            ],
-        ],
-        'time' => [
-            '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-                'route' => [
-                    'method' => 'get',
-                    'attr' => [
-                        'uses' => 'PlanController@time',
-                    ],
-                ],
-             ],
-        ],
-        'target' => [
-            '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-                'route' => [
-                    'method' => 'get',
-                    'attr' => [
-                        'uses' => 'PlanController@target',
-                    ],
-                ],
-             ],
-        ],
-    ],
-    'tutor' => [
-        '_prop' => [
-            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-            'route' => [
-                'method' => 'get',
-                'attr' => [
-                    'uses' => 'TutorController@index',
-                ],
-            ],
-        ],
-    ],
-    'learning' => [
-        '_prop' => [
-            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-            'route' => [
-                'method' => 'get',
-                'attr' => [
-                    'uses' => 'LearningController@index',
-                ],
-            ],
-        ],
-        'content' => [
-            '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-                'route' => [
-                    'method' => 'get',
-                    'param' => '{id}',
-                    'attr' => [
-                        'uses' => 'LearningController@content',
-                    ],
-                ],
-             ],
-        ],
-    ],
-    'video' => [
-        '_prop' => [
-            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
-            'route' => [
-                'method' => 'get',
-                'attr' => [
-                    'uses' => 'VideoController@index',
-                ],
-            ],
-        ],
-    ],
     'login' => [
         '_prop' => [
             'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
@@ -257,6 +61,185 @@ return [
             ],
         ],
     ],
+    'register' => [
+        '_prop' => [
+            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+            'route' => [
+                'method' => 'get',
+                'attr' => [
+                    'uses' => 'RegisterController@index',
+                ],
+            ],
+        ],
+        'submit' => [
+            '_prop' => [
+                'permission' => SitemapAccess::INHERIT,
+                    'route' => [
+                    'method' => 'post',
+                    'attr' => [
+                        'uses' => 'RegisterController@ajax_register',
+                    ],
+                ],
+            ],
+        ],
+        'finish' => [
+            '_prop' => [
+                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'route' => [
+                    'method' => 'get',
+                    'attr' => [
+                        'uses' => 'RegisterController@finish',
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'forget_pw' => [
+        '_prop' => [
+            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+            'route' => [
+                'method' => 'get',
+                'attr' => [
+                    'uses' => 'ForgetpwController@index',
+                ],
+            ],
+        ],
+        'submit' => [
+            '_prop' => [
+                'permission' => SitemapAccess::INHERIT,
+                    'route' => [
+                    'method' => 'post',
+                    'attr' => [
+                        'uses' => 'ForgetpwController@ajax_send',
+                    ],
+                ],
+            ],
+        ],
+        'finish' => [
+            '_prop' => [
+                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'route' => [
+                    'method' => 'get',
+                    'attr' => [
+                        'uses' => 'ForgetpwController@finish',
+                    ],
+                ],
+            ],
+            'submit' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                        'method' => 'post',
+                        'attr' => [
+                            'uses' => 'ForgetpwController@ajax_send',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'reset_pw' => [
+        '_prop' => [
+            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+            'route' => [
+                'method' => 'get',
+                'attr' => [
+                    'uses' => 'ResetpwController@index',
+                ],
+            ],
+        ],
+        'submit' => [
+            '_prop' => [
+                'permission' => SitemapAccess::INHERIT,
+                    'route' => [
+                    'method' => 'post',
+                    'attr' => [
+                        'uses' => 'ResetpwController@ajax_set',
+                    ],
+                ],
+            ],
+        ],
+        'finish' => [
+            '_prop' => [
+                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'route' => [
+                    'method' => 'get',
+                    'attr' => [
+                        'uses' => 'ResetpwController@finish',
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'activity' => [
+        '_prop' => [
+            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+            'route' => [
+                'method' => 'get',
+                'attr' => [
+                    'uses' => 'ActivityController@index',
+                ],
+            ],
+        ],
+        'reservation' => [
+            '_prop' => [
+                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'route' => [
+                    'method' => 'get',
+                    'param' => '{id}',
+                    'attr' => [
+                        'uses' => 'ActivityController@reservation',
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'news' => [
+        '_prop' => [
+            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+            'route' => [
+                'method' => 'get',
+                'param' => '{id}',
+                'attr' => [
+                    'uses' => 'NewsController@index',
+                ],
+            ],
+        ],
+    ],
+    'instrument' => [
+        '_prop' => [
+            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+            'route' => [
+                'method' => 'get',
+                'attr' => [
+                    'uses' => 'InstrumentController@index',
+                ],
+            ],
+        ],
+        'reservation' => [
+            '_prop' => [
+                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'route' => [
+                    'method' => 'get',
+                    'param' => '{id}',
+                    'attr' => [
+                        'uses' => 'InstrumentController@reservation',
+                    ],
+                ],
+             ],
+        ],
+    ],
+    'contact_us' => [
+        '_prop' => [
+            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+            'route' => [
+                'method' => 'get',
+                'attr' => [
+                    'uses' => 'ContactController@index',
+                ],
+            ],
+        ],
+    ],
     'member' => [
         '_prop' => [
             'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
@@ -267,13 +250,13 @@ return [
                 ],
             ],
         ],
-        'plan' => [
+        'basic' => [
             '_prop' => [
                 'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'attr' => [
-                        'uses' => 'MemberPlanController@index',
+                        'uses' => 'MemberController@basic',
                     ],
                 ],
             ],
@@ -283,19 +266,19 @@ return [
                         'route' => [
                         'method' => 'post',
                         'attr' => [
-                            'uses' => 'MemberPlanController@ajax_edit',
+                            'uses' => 'MemberController@ajax_edit',
                         ],
                     ],
                 ],
             ],
         ],
-        'news' => [
+        'journal' => [
             '_prop' => [
                 'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'attr' => [
-                        'uses' => 'MemberNewsController@index',
+                        'uses' => 'MemberJournalController@index',
                     ],
                 ],
             ],
@@ -305,7 +288,7 @@ return [
                     'route' => [
                         'method' => 'get',
                         'attr' => [
-                            'uses' => 'MemberNewsController@add',
+                            'uses' => 'MemberJournalController@add',
                         ],
                     ],
                  ],
@@ -315,7 +298,7 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'MemberNewsController@ajax_add',
+                                'uses' => 'MemberJournalController@ajax_add',
                             ],
                         ],
                     ],
@@ -328,7 +311,7 @@ return [
                         'method' => 'get',
                         'param' => '{id}',
                         'attr' => [
-                            'uses' => 'MemberNewsController@edit',
+                            'uses' => 'MemberJournalController@edit',
                         ],
                     ],
                 ],
@@ -338,7 +321,7 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'MemberNewsController@ajax_edit',
+                                'uses' => 'MemberJournalController@ajax_edit',
                             ],
                         ],
                     ],
@@ -350,29 +333,63 @@ return [
                     'route' => [
                         'method' => 'post',
                         'attr' => [
-                            'uses' => 'MemberNewsController@ajax_delete',
+                            'uses' => 'MemberJournalController@ajax_delete',
                         ],
                     ],
                 ],
             ],
         ],
-        'execute' => [
+        'e_portfolio' => [
             '_prop' => [
                 'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'attr' => [
-                        'uses' => 'MemberExecuteController@index',
+                        'uses' => 'MemberEportfolioController@index',
                     ],
                 ],
             ],
-            'add' => [
+        ],
+        'message' => [
+            '_prop' => [
+                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'route' => [
+                    'method' => 'get',
+                    'attr' => [
+                        'uses' => 'MemberMessageController@index',
+                    ],
+                ],
+            ],
+            'detail' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'route' => [
+                        'method' => 'get',
+                        'param' => '{id}',
+                        'attr' => [
+                            'uses' => 'MemberMessageController@detail',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+        'activity' => [
+            '_prop' => [
+                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'route' => [
+                    'method' => 'get',
+                    'attr' => [
+                        'uses' => 'MemberActivityController@index',
+                    ],
+                ],
+            ],
+            'reg' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'route' => [
                         'method' => 'get',
                         'attr' => [
-                            'uses' => 'MemberExecuteController@add',
+                            'uses' => 'MemberActivityController@reg',
                         ],
                     ],
                  ],
@@ -382,67 +399,66 @@ return [
                         'route' => [
                             'method' => 'post',
                             'attr' => [
-                                'uses' => 'MemberExecuteController@ajax_add',
+                                'uses' => 'MemberActivityController@ajax_reg',
                             ],
                         ],
                     ],
                 ],
             ],
-            'edit' => [
-                '_prop' => [
-                    'permission' => SitemapAccess::ACCESS_REQUIRED,
-                    'route' => [
-                        'method' => 'get',
-                        'param' => '{id}',
-                        'attr' => [
-                            'uses' => 'MemberExecuteController@edit',
-                        ],
-                    ],
-                ],
-                'submit' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'post',
-                            'attr' => [
-                                'uses' => 'MemberExecuteController@ajax_edit',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-            'delete' => [
+            'cancel' => [
                 '_prop' => [
                     'permission' => SitemapAccess::INHERIT,
                     'route' => [
                         'method' => 'post',
                         'attr' => [
-                            'uses' => 'MemberExecuteController@ajax_delete',
+                            'uses' => 'MemberActivityController@ajax_cancel',
                         ],
                     ],
                 ],
             ],
         ],
-        'changepw' => [
+        'instrument' => [
             '_prop' => [
                 'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'attr' => [
-                        'uses' => 'ChangepwController@index',
+                        'uses' => 'MemberInstrumentController@index',
                     ],
                 ],
             ],
-            'submit' => [
+            'cancel' => [
                 '_prop' => [
                     'permission' => SitemapAccess::INHERIT,
                     'route' => [
                         'method' => 'post',
                         'attr' => [
-                            'uses' => 'ChangepwController@ajax_edit',
+                            'uses' => 'MemberInstrumentController@ajax_cancel',
                         ],
                     ],
                 ],
+            ],
+        ],
+        'bill' => [
+            '_prop' => [
+                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'route' => [
+                    'method' => 'get',
+                    'attr' => [
+                        'uses' => 'MemberBillController@index',
+                    ],
+                ],
+            ],
+            'detail' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'route' => [
+                        'method' => 'get',
+                        'attr' => [
+                            'uses' => 'MemberBillController@detail',
+                        ],
+                    ],
+                 ],
             ],
         ],
     ],
