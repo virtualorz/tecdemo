@@ -30,18 +30,18 @@ class LoginController extends Controller {
             $account = Request::input('account');
             $password = User::hashPassword(Request::input('password'));
 
-            $dataResult = DB::table('school')
-                            ->select('id','account','school_name')
-                            ->where('account',$account)
+            $dataResult = DB::table('member_data')
+                            ->select('id','email','name','title')
+                            ->where('email',$account)
                             ->where('password',$password)
                             ->first();
             if(count($dataResult) !=0)
             {
                 $dataUser = [
                     'id' => $dataResult['id'],
-                    'account' => $dataResult['account'],
-                    'name' => $dataResult['school_name'],
-                    'title' => '--',
+                    'account' => $dataResult['email'],
+                    'name' => $dataResult['name'],
+                    'title' => $dataResult['title'],
                     'permission' => Sitemap::getPermissionAll('official', SitemapAccess::SUPER_REQUIRED),
                 ];
 

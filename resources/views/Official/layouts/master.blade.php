@@ -54,8 +54,10 @@
     <body id="page-top" class="index">
         @yield('head')
         @include('official.elements.header')
-
+        <div class="contentmt">
         @yield('content')
+        <div class="clearfix"></div>
+        </div>
     
     <footer>
         <div class="container">
@@ -103,3 +105,24 @@
     @yield('script')
 </body>
 </html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setbodyheight();
+
+       $(window).resize(function(){
+            setbodyheight();
+        });
+
+    });
+
+    function setbodyheight()
+    {
+        if(($("body").height() + parseInt($(".navbar").css('height'))) - $(".clearfix").height() < $(document).height())
+        {
+            $(".clearfix").height("0");
+            $(".clearfix").height($(document).height() -  $("body").height() - parseInt($(".navbar").css('height')));
+        }
+    }
+    
+</script>

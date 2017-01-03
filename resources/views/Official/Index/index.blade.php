@@ -8,8 +8,7 @@
 
 
 @section('content')
-<div class="contentmt">    
-    <!-- InstanceBeginEditable name="schoolcontent" -->
+<!-- InstanceBeginEditable name="schoolcontent" -->
     <!-- Header -->
     <div class="intro-header">
         <div class="container">
@@ -100,7 +99,6 @@
             
         </div>
     </section>
-    </div>
 @endsection
 
 

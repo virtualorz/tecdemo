@@ -8,59 +8,62 @@
 
 
 @section('content')
-<div class="contentmt">    
-    <!-- InstanceBeginEditable name="schoolcontent" -->
-    <section id="login">
-    <div class="container">
+<section id="login">
+    <div class="container padding0">
         <div class="row">
             <div class="col-md-12 text-center">
-            	<img src="{{ asset('assets/official/img/title_login.png') }}" width="225" height="40" alt=""/>
+				<h2>會員登入</h2>
             </div>
             <div class="spacer6030"></div>
             
             <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-xs-12">
-            <form id="form1" class="form-horizontal" method="post" action="{{ Sitemap::node()->getChildren('submit')->getUrl() }}">
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">帳號</label>
-                <div class="col-sm-10">
-                  <input type="email" class="form-control" id="data-account" placeholder="帳號">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">密碼</label>
-                <div class="col-sm-10">
-                  <input type="password" class="form-control" id="data-password" placeholder="Password">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-12 text-center">
-                  <a href="#" class="btn btn-default btn-lg" id="login_but">登入</a>
-                </div>
-              </div>
-            </form>
+            	<div class="frombox">
+					<form class="form-horizontal">
+					  <div class="form-group">
+						<label class="col-sm-3 control-label">帳號</label>
+						<div class="col-sm-8">
+						  <input type="email" class="form-control" id="data-account" placeholder="Email">
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label class="col-sm-3 control-label">密碼</label>
+						<div class="col-sm-8">
+						  <input type="password" class="form-control" id="data-password" placeholder="Password">
+						</div>
 
+					  </div>
+					  <div class="form-group">
+						<div class="col-sm-12 text-center">
+						  <a href="#" class="btn btn-sm btn-primary" id="login_but">登入</a>
+						</div>
+					  </div>
+					</form>
+				</div>
+           		
+           		
+						<div class="col-sm-12 text-center mt--b">
+						
+						<a href="forget_pw.html" class="btn btn-default btn-sm"><i class="fa fa-key"></i> 忘記密碼</a>
+						
+						<a href="register.html" class="btn btn-default btn-sm"><i class="fa fa-user-plus"></i> 註冊帳號</a>
+						
+						
+						</div>
+           
             </div>
             
             
             <div class="spacer6030"></div>
-            <div class="clearfix"></div>
         </div> 
          
     </div>
     </section>
-    <!-- InstanceEndEditable -->
-    </div>
 @endsection
 
 
 @section('script')
 <script type="text/javascript">
     $(document).ready(function () {
-        setbodyheight();
-
-       $(window).resize(function(){
-            setbodyheight();
-        });
 
         $("#login_but").click(function(e){
             e.preventDefault();
@@ -125,15 +128,6 @@
         });
 
     });
-
-    function setbodyheight()
-    {
-        if($(".contentmt").height() < $(document).height())
-        {
-            $(".clearfix").height("0");
-            $(".clearfix").height($(document).height() -  $(".navbar-fixed-top").height() - $(".contentmt").height() - $("footer").height() - 40);
-        }
-    }
     
 </script>
 @endsection
