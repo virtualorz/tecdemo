@@ -30,11 +30,11 @@
 					</div>        	
            	  	
                 @if(count($searchResult) !=0)
-           	  	<div class="tablebox">
+           	  	<div class="tablebox" id="search_table">
 					<h4>搜尋結果：</h4>
             		
 					<p class="mb--b">關鍵字 : {{ Request::input('keyword', '') }}
-          				<a href="#" class="btn btn-default btn-xs max767right">
+          				<a href="#" class="btn btn-default btn-xs max767right" id="cancel_btn">
 							取消
 						</a>
           			</p>
@@ -71,7 +71,7 @@
 											<td class="text-center">{{ $v['time'] }}hr</td>
                                             @if($v['end_dt'] == null or strtotime($v['end_dt']) > strtotime($v['end_dt']))
                                             <td><span class="label label-success">已報名: {{ $v['reservation_count'] }}人</span></td>
-                                            @else if(strtotime($v['end_dt']) < strtotime($v['end_dt']))
+                                            @else
                                             <td><span class="label label-default">已結束</span></td>
                                             @endif
 										</tr>
@@ -187,6 +187,17 @@
         $("#btn_search").click(function(e){
             e.preventDefault();
             $("#formq").submit();
+        });
+
+        $("#cancel_btn").click(function(e){
+            e.preventDefault();
+            //$("#search_table").hide("slow");
+            $("#search_table").animate({
+                opacity: 0,
+            }, 1000, function() {
+                // Animation complete.
+                location.href= "{{ asset('activity') }}";
+            });
         });
     });
     
