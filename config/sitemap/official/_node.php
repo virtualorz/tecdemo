@@ -93,6 +93,28 @@ return [
                 ],
             ],
         ],
+        'get_department' => [
+            '_prop' => [
+                'permission' => SitemapAccess::INHERIT,
+                'route' => [
+                    'method' => 'get',
+                    'attr' => [
+                        'uses' => 'RegisterController@ajax_get_department',
+                    ],
+                ],
+            ],
+        ],
+        'get_pi' => [
+            '_prop' => [
+                'permission' => SitemapAccess::INHERIT,
+                'route' => [
+                    'method' => 'get',
+                    'attr' => [
+                        'uses' => 'RegisterController@ajax_get_pi',
+                    ],
+                ],
+            ],
+        ],
     ],
     'forget_pw' => [
         '_prop' => [

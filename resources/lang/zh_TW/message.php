@@ -11,6 +11,7 @@ return [
         'start_course_class' => '通知成功!',
         'submit' => '送出成功!',
         'cancel' => '取消成功',
+        'register' => '註冊成功',
     ],
     'error' => [
         'validation' => '驗證錯誤',
@@ -61,5 +62,7 @@ return [
         'start_course_class_started' => '此課程已通知',
         'nodata' => '無資料',
         'start' => '起',
+        'unable' => '帳號未啟用，請聯絡系統管理員',
+        'outlimit' => '帳號已超過使用期限，或未達啟用日期，請聯絡系統管理員',
     ],
 ];

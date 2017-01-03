@@ -31,12 +31,38 @@ class LoginController extends Controller {
             $password = User::hashPassword(Request::input('password'));
 
             $dataResult = DB::table('member_data')
-                            ->select('id','email','name','title')
+                            ->select('id','email','name','title','start_dt','limit_month','enable')
                             ->where('email',$account)
                             ->where('password',$password)
                             ->first();
             if(count($dataResult) !=0)
             {
+                if($dataResult['enable'] == 0)
+                {
+                    $this->view['result'] = 'no';
+                    $this->view['msg'] = trans('message.error.login');
+                    $this->view['detail'][] = trans('message.info.unable');
+
+                    return $this->view;
+                }
+                if(strtotime($dataResult['start_dt']) > strtotime(date('Y-m-d')))
+                {
+                    $this->view['result'] = 'no';
+                    $this->view['msg'] = trans('message.error.login');
+                    $this->view['detail'][] = trans('message.info.outlimit');
+
+                    return $this->view;
+                }
+                if(strtotime("+".$dataResult['limit_month']." month",strtotime($dataResult['start_dt'])) < strtotime(date('Y-m-d')))
+                {
+                    $this->view['result'] = 'no';
+                    $this->view['msg'] = trans('message.error.login');
+                    $this->view['detail'][] = trans('message.info.outlimit');
+
+                    return $this->view;
+                }
+
+
                 $dataUser = [
                     'id' => $dataResult['id'],
                     'account' => $dataResult['email'],

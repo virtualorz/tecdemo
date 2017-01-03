@@ -50,6 +50,24 @@
             var urlUploaderDelete = {!! json_encode(Sitemap::getUrl("official.upload.delete")) !!};
             var urlUpload = {!! json_encode(FileUpload::getRootUrl()) !!};
         </script>
+        <script type="text/javascript">
+            var urlHome = {!! json_encode(Sitemap::getUrl("official")) !!};
+                    var urlUploader = {!! json_encode(Sitemap::getUrl("official.upload")) !!};
+                    var urlUploaderDelete = {!! json_encode(Sitemap::getUrl("official.upload.delete")) !!};
+                    var urlUpload = {!! json_encode(FileUpload::getRootUrl()) !!};
+                    var urlUploadABS = {!! json_encode(FileUpload::getRootUrlABS()) !!};
+                    var urlLogin = {!! json_encode(Sitemap::getUrl("official.login")) !!};
+                    var urlBase = {!! json_encode($_urlBase) !!};
+                    var urlBasePath = {!! json_encode($_urlBasePath) !!};
+                    var urlLast = {!! json_encode($_urlLast) !!};
+                    var urlBack = {!! json_encode($_urlBack) !!};
+                    var urlCurr = {!! json_encode($_urlCurr) !!} + window.location.hash;
+                    var urlLoadingIcon = {!! json_encode(asset('joli/img/loaders/default.gif')) !!};
+                    var routeName = {!! json_encode($_routeName) !!};
+                    var csrf_token = {!! json_encode(csrf_token()) !!};
+                    var appLocale = {!! json_encode($_appLocale) !!};
+                    
+        </script> 
     </head>
     <body id="page-top" class="index">
         @yield('head')
@@ -84,6 +102,7 @@
 
 <!-- jQuery -->
     <script src="{{asset('assets/official/js/jquery.js')}}"></script>
+    <script src="{{asset('plugins/jquery/jquery_extend.js')}}"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{{asset('assets/official/js/bootstrap.min.js')}}"></script>
@@ -98,6 +117,7 @@
     <script src="{{asset('assets/official/js/qa.js')}}"></script>
 
     <script src="{{asset('assets/official/js/jquery.blockUI.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/assets/official/js/global.js')}}"></script>
     {!! ViewHelper::plugin()->renderJs() !!}
     <script type="text/javascript">
             var csrf_token = {!! json_encode(csrf_token()) !!};

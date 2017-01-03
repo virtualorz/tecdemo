@@ -734,5 +734,8 @@ return [
         'week_five' => '五',
         'week_six' => '六',
         'week_seven' => '日',
+        'password' => '密碼',
+        'passwordR' => '確認密碼',
+        'member_agree' =>'會員條款',
     ],
 ];
