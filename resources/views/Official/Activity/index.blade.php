@@ -69,7 +69,7 @@
 											<td>{{ $v['type_name'] }}</td>
 											<td class="text-center">{{ $v['score'] }}</td>
 											<td class="text-center">{{ $v['time'] }}hr</td>
-                                            @if($v['end_dt'] == null or strtotime($v['end_dt']) > strtotime($v['end_dt']))
+                                            @if($v['end_dt'] == null or strtotime($v['end_dt']) > strtotime(date('Y-m-d')))
                                             <td><span class="label label-success">已報名: {{ $v['reservation_count'] }}人</span></td>
                                             @else
                                             <td><span class="label label-default">已結束</span></td>

@@ -19,7 +19,7 @@
            	  		<div class="row mb--b">
            	  			<div class="col-xs-12">
 						<h4>{{ $dataResult['activity_name'] }}
-                        @if($dataResult['end_dt'] == null or strtotime($dataResult['end_dt']) > strtotime($v['end_dt'])) 
+                        @if($dataResult['end_dt'] == null or strtotime($dataResult['end_dt']) > strtotime(date('Y-m-d'))) 
                         <span class="label label-success">已報名: {{ $dataResult['reservation_count'] }}人</span>
                         @else
 						<span class="label label-default">已結束</span>
@@ -111,6 +111,7 @@
 					<div class="line-schoolpage"></div>
 					
 					<div class="row mb--b">
+                    @if($dataResult['end_dt'] == null || strtotime($dataResult['end_dt']) > strtotime(date('Y-m-d')))
                         <form class="form-horizontal" id="form1" method="post" action="{{ Sitemap::node()->getChildren('submit')->getUrl() }}">
                         @if($dataResult['is_reservation'] == 0)
 						<div class="col-xs-12 text-center">
@@ -128,12 +129,13 @@
 						</div>
                          @endif
                          </form>
+                    @endif
 					</div>
 					
 				</div>
           		
           		<div class="text-center">	
-          	  	<a href="activity.html" class="btn btn-sm btn-default">
+          	  	<a href="{{ asset('activity') }}" class="btn btn-sm btn-default">
           	  	<i class="fa fa-angle-left"></i> 
           	  	回上一頁
           	  	</a>
