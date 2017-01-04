@@ -64,7 +64,7 @@
                                             @endif
 											<td>{{ $v['activity_id'] }}</td> 
 											<td>
-											<a href="{{ asset('activity/detail/id-'.$v['uid'].'-'.$v['salt'])}}">{{ $v['activity_name'] }}</a>
+											<a href="{{ asset('activity/reservation/id-'.$v['uid'].'-'.$v['salt'])}}">{{ $v['activity_name'] }}</a>
 											</td>
 											<td>{{ $v['type_name'] }}</td>
 											<td class="text-center">{{ $v['score'] }}</td>
@@ -111,7 +111,7 @@
                                             @endif
 											<td>{{ $v['activity_id'] }}</td> 
 											<td>
-											<a href="{{ asset('activity/detail/id-'.$v['uid'].'-'.$v['salt'])}}">{{ $v['activity_name'] }}</a>
+											<a href="{{ asset('activity/reservation/id-'.$v['uid'].'-'.$v['salt'])}}">{{ $v['activity_name'] }}</a>
 											</td>
 											<td>{{ $v['type_name'] }}</td>
 											<td class="text-center">{{ $v['score'] }}</td>
@@ -155,7 +155,7 @@
                                             @endif
 											<td>{{ $v['activity_id'] }}</td> 
 											<td>
-											<a href="{{ asset('activity/detail/id-'.$v['uid'].'-'.$v['salt'])}}">{{ $v['activity_name'] }}</a>
+											<a href="{{ asset('activity/reservation/id-'.$v['uid'].'-'.$v['salt'])}}">{{ $v['activity_name'] }}</a>
 											</td>
 											<td>{{ $v['type_name'] }}</td>
 											<td class="text-center">{{ $v['score'] }}</td>

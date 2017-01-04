@@ -39,7 +39,9 @@ class ActivityController extends Controller {
                                             'activity_data.time',
                                             'activity_data.score',
                                             DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
-                            ->leftJoin('activity_reservation_data','activity_reservation_data.activity_id','=','activity_data.id')
+                            ->leftJoin('activity_reservation_data', function ($join) {
+                                $join->on('activity_reservation_data.activity_id', '=', 'activity_data.id')->where('activity_reservation_data.reservation_status', '=', 1);
+                            })
                             ->leftJoin('activity_type','activity_data.activity_type_id','=','activity_type.id')
                             ->groupBy('activity_data.id')
                             ->orderBy('end_dt','desc')
@@ -63,7 +65,9 @@ class ActivityController extends Controller {
                                                 'activity_data.time',
                                                 'activity_data.score',
                                                 DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
-                            ->leftJoin('activity_reservation_data','activity_reservation_data.activity_id','=','activity_data.id')
+                            ->leftJoin('activity_reservation_data', function ($join) {
+                                $join->on('activity_reservation_data.activity_id', '=', 'activity_data.id')->where('activity_reservation_data.reservation_status', '=', 1);
+                            })
                             ->leftJoin('activity_type','activity_data.activity_type_id','=','activity_type.id')
                             ->groupBy('activity_data.id')
                             ->orderBy('end_dt','desc')
@@ -80,7 +84,9 @@ class ActivityController extends Controller {
                                                 'activity_data.time',
                                                 'activity_data.score',
                                                 DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
-                            ->leftJoin('activity_reservation_data','activity_reservation_data.activity_id','=','activity_data.id')
+                            ->leftJoin('activity_reservation_data', function ($join) {
+                                $join->on('activity_reservation_data.activity_id', '=', 'activity_data.id')->where('activity_reservation_data.reservation_status', '=', 1);
+                            })
                             ->leftJoin('activity_type','activity_data.activity_type_id','=','activity_type.id')
                             ->groupBy('activity_data.id')
                             ->orderBy('end_dt','desc')
@@ -99,27 +105,100 @@ class ActivityController extends Controller {
         return $this->view;
     }
 
-    public function finish() {
+    public function reservation() {
+
+        $id = explode('-',Route::input('id', '0-0'));
+        $dataResult = DB::table('activity_data')
+                    ->where('uid',$id[0])
+                    ->where('salt',$id[1])
+                    ->select('activity_data.id',
+                                        'activity_data.uid',
+                                        'activity_data.salt',
+                                        DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y.%m.%d") as start_dt'),
+                                        DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y.%m.%d") as end_dt'),
+                                        'activity_data.activity_id',
+                                        'activity_type.name as type_name',
+                                        'activity_data.activity_name',
+                                        'activity_data.relative_plateform',
+                                        'activity_data.level',
+                                        'activity_data.time',
+                                        'activity_data.score',
+                                        'activity_data.content',
+                                        DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
+                    ->leftJoin('activity_reservation_data','activity_reservation_data.activity_id','=','activity_data.id')
+                    ->leftJoin('activity_type','activity_data.activity_type_id','=','activity_type.id')
+                    ->groupBy('activity_data.id')
+                    ->orderBy('end_dt','desc')
+                    ->get();
+        if (count($dataResult) > 0)
+        {
+            //內容
+            $dataResult[0]['content'] = json_decode($dataResult[0]['content'], true);
+            //相關平台
+            $tmp = json_decode($dataResult[0]['relative_plateform'],true);
+            $instrument_type = array();
+            foreach($tmp as $k1=>$v1)
+            {
+                $instrument_typeResult = DB::table('instrument_type')
+                    ->select('name')
+                    ->where('id',$v1)
+                    ->get();
+                if(isset($instrument_typeResult[0]['name']))
+                {
+                    array_push($instrument_type,$instrument_typeResult[0]['name']);
+                }
+            }
+            $dataResult[0]['instrument_type'] = $instrument_type;
+            //開通儀器
+            $instrumentResult = DB::table('activity_instrument')
+                    ->select('instrument_data.name')
+                    ->leftJoin('instrument_data','activity_instrument.instrument_id','=','instrument_data.id')
+                    ->where('activity_instrument.activity_id',$dataResult[0]['id'])
+                    ->get();
+            $instrument = array();
+            foreach($instrumentResult as $k1=>$v1)
+            {
+                array_push($instrument,$v1['name']);
+            }
+            $dataResult[0]['instrument'] = $instrument;
+            //使用者預約狀況
+            $dataResult[0]['is_reservation'] = 0;
+            $dataResult[0]['can_cancel'] = 0;
+            if(User::Id() != null)
+            {
+                $reservationResult = DB::table('activity_reservation_data')
+                        ->select('reservation_status','attend_status')
+                        ->where('activity_id',$dataResult[0]['id'])
+                        ->where('member_id',User::Id())
+                        ->orderBy('created_at','desc')
+                        ->get();
+                if(count($reservationResult) !=0)
+                {
+                    if($reservationResult[0]['reservation_status'] == 1 && $reservationResult[0]['attend_status'] == 0)
+                    {
+                        $dataResult[0]['is_reservation'] = 1;
+                        $dataResult[0]['can_cancel'] = 1;
+                    }
+                    else if($reservationResult[0]['reservation_status'] != 0)
+                    {
+                        $dataResult[0]['is_reservation'] = 1;
+                    }
+                }
+            }
+        }
+        
+        $this->view->with('dataResult', $dataResult[0]);
 
         return $this->view;
     }
 
     ##
 
-    public function ajax_register() {
+    public function ajax_reservation() {
         $invalid = [];
         $validator = Validator::make(Request::all(), [
-                    'name' => 'string|required|max:10',
-                    'card_id_number' => 'string|required|max:20',
-                    'id_number' => 'string|required|max:12',
-                    'organize' => 'integer|required',
-                    'department' => 'integer|required',
-                    'email' => 'string|required|max:200',
-                    'password' => 'string|required|max:200|same:passwordR',
-                    'phone' => 'string|required|max:24',
-                    'pi' => 'integer|required',
-                    'lab_phone' => 'string|required|max:24',
-                    'member_agree' => 'required',
+                    'reservation' => 'integer|required',
+                    'activity_id' => 'integer|required',
         ]);
         if ($validator->fails()) {
             $invalid[] = $validator->errors();
@@ -130,60 +209,64 @@ class ActivityController extends Controller {
             $this->view['detail'] = $invalid;
             return $this->view;
         }
-        //檢查重複
-        $count = DB::table('member_data')
-                ->select('email')
-                ->where('email',Request::input('email'))
-                ->count();
-        
-        if($count != 0)
+        //檢查登入狀況
+        if(User::Id() == null)
         {
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.validation');
-            $this->view['detail'] = array('帳號重複！');
+            $this->view['result'] = 'login';
+            $this->view['msg'] = trans('message.error.not_login');
+            $this->view['detail'] = array(trans('message.error.not_login_info'));
             return $this->view;
         }
+        if(Request::input('reservation') == 1)
+        {
+            try {
+                DB::transaction(function(){
+                    $id = DB::table('activity_reservation_data')
+                            ->insertGetId(
+                                array('activity_id'=>Request::input('activity_id'),
+                                        'member_id'=>User::Id(),
+                                        'created_at'=>date('Y-m-d H:i:s'),
+                                        'reservation_status'=>1,
+                                        'attend_status'=>0,
+                                        'pass_status'=>0
+                                )
+                            );
+                });
 
-        try {
-            DB::transaction(function(){
-                $id = DB::table('member_data')
-                        ->insertGetId(
-                            array('created_at'=>date('Y-m-d H:i:s'),
-                                    'name'=>Request::input('name'),
-                                    'card_id_number'=>Request::input('card_id_number'),
-                                    'id_number'=>Request::input('id_number'),
-                                    'organize_id'=>Request::input('organize'),
-                                    'department_id'=>Request::input('department'),
-                                    'title'=>Request::input('title'),
-                                    'email'=>Request::input('email'),
-                                    'password'=>User::hashPassword(Request::input('password')),
-                                    'phone'=>Request::input('phone'),
-                                    'pi_list_id'=>Request::input('pi'),
-                                    'lab_phone'=>Request::input('lab_phone'),
-                                    'enable'=>0
-                            )
-                        );
-                $result_after = DB::table('member_data')
-                                ->where('id',$id)
-                                ->get();
-                DBProcedure::writeLog([
-                    'table' => 'member_data',
-                    'operator' => DBOperator::OP_INSERT,
-                    'data_after' => isset($result_after[0]) ? $result_after[0] : [],
-                    'member_id' => $id
-                ]);
-                
-            });
+            } catch (DBProcedureException $e) {
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.database');
+                $this->view['detail'][] = $e->getMessage();
 
-        } catch (DBProcedureException $e) {
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.database');
-            $this->view['detail'][] = $e->getMessage();
-
-            return $this->view;
+                return $this->view;
+            }
+            $this->view['msg'] = trans('message.success.reservation');
         }
+        else
+        {
+            try {
+                DB::transaction(function(){
+                    DB::table('activity_reservation_data')
+                            ->where('activity_id',Request::input('activity_id'))
+                            ->where('member_id',User::Id())
+                            ->where('reservation_status',1)
+                            ->where('attend_status',0)
+                            ->update(
+                                array('reservation_status'=>0
+                                )
+                    );
+                });
 
-        $this->view['msg'] = trans('message.success.register');
+            } catch (DBProcedureException $e) {
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.database');
+                $this->view['detail'][] = $e->getMessage();
+
+                return $this->view;
+            }
+            $this->view['msg'] = trans('message.success.cancel');
+        }
+        
         return $this->view;
     }
 

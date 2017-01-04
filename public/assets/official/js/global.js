@@ -86,7 +86,30 @@ var ajaxRequest = {
         noLogin: function (response) {
             var detailText = ajaxRequest.getDetailText(response.detail);
 
-            return $.mbAlert().mbStyle('info').mbTitleText(response.msg).mbContentHtml(detailText).mbOpen();
+            var message = $('div.growlUI2');
+            $('div.growlUI2').find("h1").html(response.msg);
+            $('div.growlUI2').find("h2").html(detailText);
+            $.blockUI({ 
+                        message: message, 
+                        fadeIn: 700, 
+                        fadeOut: 700, 
+                        timeout: 2000, 
+                        showOverlay: false, 
+                        centerY: false, 
+                        css: { 
+                            width: '350px', 
+                            top: '100px', 
+                            left: '', 
+                            right: '10px', 
+                            border: 'none', 
+                            padding: '5px', 
+                            backgroundColor: '#000', 
+                            '-webkit-border-radius': '10px', 
+                            '-moz-border-radius': '10px', 
+                            opacity: .6, 
+                            color: '#fff' 
+                        } 
+                    }); 
         },
         noAccess: function (response) {
             var detailText = ajaxRequest.getDetailText(response.detail);

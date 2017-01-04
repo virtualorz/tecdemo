@@ -214,6 +214,17 @@ return [
                     ],
                 ],
             ],
+            'submit' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                        'method' => 'post',
+                        'attr' => [
+                            'uses' => 'ActivityController@ajax_reservation',
+                        ],
+                    ],
+                ],
+            ],
         ],
     ],
     'news' => [

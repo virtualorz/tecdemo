@@ -12,6 +12,7 @@ return [
         'submit' => '送出成功!',
         'cancel' => '取消成功',
         'register' => '註冊成功',
+        'reservation' => '預約成功',
     ],
     'error' => [
         'validation' => '驗證錯誤',
@@ -38,6 +39,7 @@ return [
         'PI_exist' => 'PI資料重複請重新輸入',
         'rate_error' => '未找到儀器費率，請重新設定',
         'pay_error' => '繳費交額錯誤',
+        'not_login_info' => '請登入後再繼續',
     ],
     'question' => [
         'logout' => '是否要登出?',
