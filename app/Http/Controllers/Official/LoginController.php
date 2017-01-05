@@ -62,6 +62,16 @@ class LoginController extends Controller {
                     return $this->view;
                 }
 
+                //取得儀器使用權限
+                $instrumentPermission = array();
+                $instrumentResult = DB::table('member_permission')
+                            ->select('permission')
+                            ->where('member_data_id',$dataResult['id'])
+                            ->get();
+                foreach($instrumentResult as $k=>$v)
+                {
+                    array_push($instrumentPermission,$v['permission']);
+                }
 
                 $dataUser = [
                     'id' => $dataResult['id'],
@@ -69,6 +79,7 @@ class LoginController extends Controller {
                     'name' => $dataResult['name'],
                     'title' => $dataResult['title'],
                     'permission' => Sitemap::getPermissionAll('official', SitemapAccess::SUPER_REQUIRED),
+                    'instrumentPermission' => $instrumentPermission,
                 ];
 
                 User::login($dataUser);

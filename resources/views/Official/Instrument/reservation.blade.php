@@ -67,22 +67,23 @@
                                             <td>{{ $v['start_time'] }}-{{ $v['end_time'] }}</td>
                                             @for($i=0;$i<7;$i++)
                                             <td>
-                                                @if(!isset($v['reservation_log']))
-											    <a href="#" class="btn btn-info">預約</a>
-                                                @else
-                                                    @foreach($v['reservation_log'] as $k1=>$v1)
-                                                    {{--*/ $check = 0 /*--}}
-                                                    @if(strtotime($v1['reservation_dt']) == strtotime('+'.$i.' days',strtotime($start_dt_org)))
-                                                        {{--*/ $check = 1 /*--}}
-                                                        @if($v1['attend_status'] == '1')
+                                                @if( in_array(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$vacationResult) )
+                                                尚未開放
+                                                @elseif(!isset($v['reservation_log']))
+											    <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}">預約</a>
+                                                @else 
+                                                    @if(array_key_exists(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$v['reservation_log']))
+                                                        @if($v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['attend_status'] == '1')
                                                         {{$v1['member_name']}} 使用中
-                                                        @elseif($v1['reservation_status'] == '1')
-                                                        <a href="#" class="btn btn-default">候補</a>
+                                                        @elseif($v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['reservation_status'] == '1' || $v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['reservation_status'] == '0')
+                                                            @if($v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['member_id'] == User::Id())
+                                                            <a href="#" class="btn btn-default reservation" data-id="0_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}">取消</a>
+                                                            @else
+                                                            <a href="#" class="btn btn-default reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}">候補</a>
+                                                            @endif
                                                         @endif
-                                                    @endif
-                                                    @endforeach
-                                                    @if($check == 0)
-                                                    <a href="#" class="btn btn-info">預約</a>
+                                                    @else
+                                                    <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}">預約</a>
                                                     @endif
                                                 @endif
 
@@ -130,20 +131,57 @@
             }
         });
 
-        $("#btn_search").click(function(e){
+        $(".reservation").click(function(e){console.log("{{ Sitemap::node()->getChildren('submit')->getUrl() }}");
             e.preventDefault();
-            $("#formq").submit();
-        });
-
-        $("#cancel_btn").click(function(e){
-            e.preventDefault();
-            //$("#search_table").hide("slow");
-            $("#search_table").animate({
-                opacity: 0,
-            }, 1000, function() {
-                // Animation complete.
-                location.href= "{{ asset('instrument') }}";
-            });
+            var ajaxProp = {
+                url: "{{ Sitemap::node()->getChildren('submit')->getUrl() }}",
+                type: "post",
+                dataType: "json",
+                data: {'id':$(this).attr('data-id'),'_token':csrf_token},
+                error: function (jqXHR, textStatus, errorThrown) {
+                    
+                },
+                success: function (response) {
+                    
+                    if(response.result == "ok")
+                    {
+                        var message = $('div.growlUI');
+                        $('div.growlUI').find("h1").html(response.msg);
+                    }
+                    else
+                    {
+                        var message = $('div.growlUI2');
+                        $('div.growlUI2').find("h1").html(response.msg);
+                    }
+                    
+                    $.blockUI({ 
+                                message: message, 
+                                fadeIn: 700, 
+                                fadeOut: 700, 
+                                timeout: 2000, 
+                                showOverlay: false, 
+                                centerY: false, 
+                                css: { 
+                                    width: '350px', 
+                                    top: '100px', 
+                                    left: '', 
+                                    right: '10px', 
+                                    border: 'none', 
+                                    padding: '5px', 
+                                    backgroundColor: '#000', 
+                                    '-webkit-border-radius': '10px', 
+                                    '-moz-border-radius': '10px', 
+                                    opacity: .6, 
+                                    color: '#fff' 
+                                } 
+                            }); 
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                    
+                }
+            }
+            $.ajax(ajaxProp);
         });
     });
     

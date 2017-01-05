@@ -8,7 +8,7 @@ return [
         'login_group' => 'member',
         'route' => [
             'group' => [
-                'middleware' => ['route_param_optional'],
+                'middleware' => ['permission','route_param_optional'],
                 'namespace' => 'Official',
             ],
             'method' => 'get',
@@ -251,7 +251,7 @@ return [
         ],
         'reservation' => [
             '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'permission' => SitemapAccess::LOGIN_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'param' => '{id}',
@@ -260,6 +260,17 @@ return [
                     ],
                 ],
              ],
+             'submit' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::INHERIT,
+                        'route' => [
+                        'method' => 'post',
+                        'attr' => [
+                            'uses' => 'InstrumentController@ajax_reservation',
+                        ],
+                    ],
+                ],
+            ],
         ],
     ],
     'contact_us' => [
