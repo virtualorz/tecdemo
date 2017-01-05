@@ -179,10 +179,24 @@ class InstrumentController extends Controller {
                         ->leftJoin('instrument_section','instrument_section_set.instrument_section_id','=','instrument_section.id')
                         ->where('instrument_section_set.instrument_data_id',$dataResult[0]['id'])
                         ->get();
+            //取得使用者通過的假日權限
+            $permissionResult = array();
+            $permissionResultTmp = DB::table('activity_reservation_data')
+                ->select('activity_instrument.permission_id')
+                ->leftJoin('activity_instrument','activity_reservation_data.activity_id','=','activity_instrument.activity_id')
+                ->where('activity_reservation_data.member_id',User::Id())
+                ->where('activity_instrument.instrument_id',$dataResult[0]['id'])
+                ->where('activity_reservation_data.pass_status','1')
+                ->get();
+            foreach($permissionResultTmp as $k=>$v)
+            {
+                array_push($permissionResult,$v['permission_id']);
+            }
+
             //非使用者有權限的時段則剔除
             foreach($sectionResultTmp as $k=>$v)
             {
-                if(in_array($v['section_type'],$instrumentPermission))
+                if(in_array($v['section_type'],$instrumentPermission) && in_array($v['section_type'],$permissionResult))
                 {
                     array_push($sectionResult,$v);
                 }
@@ -203,20 +217,6 @@ class InstrumentController extends Controller {
                         ->whereDate('instrument_reservation_data.reservation_dt','>=',$start_dt)
                         ->whereDate('instrument_reservation_data.reservation_dt','<=',$end_dt)
                         ->get();
-            
-            //取得使用者通過的假日權限
-            $permissionResult = array();
-            $permissionResultTmp = DB::table('activity_reservation_data')
-                ->select('activity_instrument.permission_id')
-                ->leftJoin('activity_instrument','activity_reservation_data.activity_id','=','activity_instrument.activity_id')
-                ->where('activity_reservation_data.member_id',User::Id())
-                ->where('activity_instrument.instrument_id',$dataResult[0]['id'])
-                ->where('activity_reservation_data.pass_status','1')
-                ->get();
-            foreach($permissionResultTmp as $k=>$v)
-            {
-                array_push($permissionResult,$v['permission_id']);
-            }
 
             //排休使用權限設定
             $vacationResult = array();
@@ -232,9 +232,19 @@ class InstrumentController extends Controller {
             
             foreach($vacationResultTmp as $k=>$v)
             {
-                if(!in_array($v['vacation_type'],$permissionResult))
+                if($v['vacation_type'] == "1" || $v['vacation_type'] == "2")
                 {
-                    array_push($vacationResult,$v['vacation_dt']);
+                    if(!in_array("3",$permissionResult))
+                    {
+                        array_push($vacationResult,$v['vacation_dt']);
+                    }
+                }
+                else if($v['vacation_type'] == "4")
+                {
+                    if(!in_array("4",$permissionResult))
+                    {
+                        array_push($vacationResult,$v['vacation_dt']);
+                    }
                 }
             }
 
@@ -279,7 +289,7 @@ class InstrumentController extends Controller {
         $this->view->with('end_dt_prev', $end_dt_prev);
         $this->view->with('id', Route::input('id', '0-0'));
         $this->view->with('search_date', $search_date);
-        $this->view->with('vacationResult', $vacationResult);log::error($sectionResult);
+        $this->view->with('vacationResult', $vacationResult);
 
         return $this->view;
     }
