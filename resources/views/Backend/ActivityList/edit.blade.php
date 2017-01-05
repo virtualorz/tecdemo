@@ -142,7 +142,7 @@
                                     <select name="instrument" id="data-instrument" class="form-control">
                                         <option value="">{{trans('page.text.select_item')}}</option>
                                         @foreach($instrumentResult as $k=>$v)
-                                        <option value='{{$v["id"]}}' data-plateform='{{$v["instrument_platform_id"]}}' >{{$v["name"]}}</option>
+                                        <option value='{{$v["id"]}}' data-plateform='{{$v["instrument_type_id"]}}' >{{$v["name"]}}</option>
                                         @endforeach
                                     </select>
                                     {{ trans('validation.attributes.permission') }}
@@ -169,7 +169,7 @@
                                         <tbody id="instrument_add">
                                             @foreach($activity_instrumentResult as $k=>$v)
                                             <tr class='instrument_{{$v["instrument_id"]}}_{{$v["permission_id"]}}'>
-                                                <td>{{$v["instrument_name"]}}<input type='hidden' class='instrument' name='instrument[]' value='{{$v["instrument_id"]}}' data-plateform='{{$v["instrument_platform_id"]}}'></td>
+                                                <td>{{$v["instrument_name"]}}<input type='hidden' class='instrument' name='instrument[]' value='{{$v["instrument_id"]}}' data-plateform='{{$v["instrument_type_id"]}}'></td>
                                                 <td>{{$permission[$v["permission_id"]]}}<input type='hidden' class='instrument_permission' name='instrument_permission[]' value='{{$v["permission_id"]}}'></td>
                                                 <td><input type='button' class='btn btn-default del_instrument' value='刪除'></td>
                                             </tr>
@@ -289,7 +289,7 @@
                         $html = "<option value=''>{{trans('page.text.select_item')}}</option>";
                         for(var key in response)
                         {
-                            $html += "<option value='"+response[key]['id']+"' data-plateform='"+response[key]['instrument_platform_id']+"' >"+response[key]['name']+"</option>";
+                            $html += "<option value='"+response[key]['id']+"' data-plateform='"+response[key]['instrument_type_id']+"' >"+response[key]['name']+"</option>";
                         }
                         $("#data-instrument").html($html);
                         

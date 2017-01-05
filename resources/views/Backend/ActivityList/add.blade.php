@@ -267,7 +267,7 @@
                         $html = "<option value=''>{{trans('page.text.select_item')}}</option>";
                         for(var key in response)
                         {
-                            $html += "<option value='"+response[key]['id']+"' data-plateform='"+response[key]['instrument_platform_id']+"' >"+response[key]['name']+"</option>";
+                            $html += "<option value='"+response[key]['id']+"' data-plateform='"+response[key]['instrument_type_id']+"' >"+response[key]['name']+"</option>";
                         }
                         $("#data-instrument").html($html);
                         

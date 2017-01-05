@@ -678,8 +678,8 @@ class InstrumentController extends Controller {
 
         $id = Request::input('id');
         $listResult = DB::table('instrument_data');
-        $listResult = $listResult->select('id','instrument_platform_id','name')
-                                    ->whereIn('instrument_platform_id',$id)
+        $listResult = $listResult->select('id','instrument_type_id','name')
+                                    ->whereIn('instrument_type_id',$id)
                                     ->get();
         
         return $listResult;

@@ -98,14 +98,14 @@ class ActivityListController extends Controller {
                                     ->wherein('id',$dataResult[0]['relative_plateform'])
                                     ->get();
         $activity_instrumentResult = DB::table('activity_instrument')
-                            ->select('activity_instrument.*','instrument_data.name as instrument_name','instrument_data.instrument_platform_id')
+                            ->select('activity_instrument.*','instrument_data.name as instrument_name','instrument_data.instrument_type_id')
                             ->leftJoin('instrument_data','activity_instrument.instrument_id','=','instrument_data.id')
                             ->where('activity_instrument.activity_id',$id)
                             ->get();
         $instrumentResult = DB::table('instrument_data')
-                                    ->select('id','name','instrument_platform_id')
+                                    ->select('id','name','instrument_type_id')
                                     ->orderBy('id','desc')
-                                    ->wherein('instrument_platform_id',$dataResult[0]['relative_plateform'])
+                                    ->wherein('instrument_type_id',$dataResult[0]['relative_plateform'])
                                     ->get();
 
         $instrument_typeResult = DB::table('instrument_type')
@@ -150,7 +150,7 @@ class ActivityListController extends Controller {
                                     ->wherein('id',$dataResult[0]['relative_plateform'])
                                     ->get();
         $activity_instrumentResult = DB::table('activity_instrument')
-                            ->select('activity_instrument.*','instrument_data.name as instrument_name','instrument_data.instrument_platform_id')
+                            ->select('activity_instrument.*','instrument_data.name as instrument_name','instrument_data.instrument_type_id')
                             ->leftJoin('instrument_data','activity_instrument.instrument_id','=','instrument_data.id')
                             ->where('activity_instrument.activity_id',$id)
                             ->get();
@@ -436,8 +436,8 @@ class ActivityListController extends Controller {
 
         $id = Request::input('id');
         $listResult = DB::table('instrument_data');
-        $listResult = $listResult->select('id','instrument_platform_id','name')
-                                    ->whereIn('instrument_platform_id',$id)
+        $listResult = $listResult->select('id','instrument_type_id','name')
+                                    ->whereIn('instrument_type_id',$id)
                                     ->get();
         
         return $listResult;
