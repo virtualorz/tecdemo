@@ -103,6 +103,7 @@
 
 
 @section('script')
+{!! ViewHelper::plugin()->renderJs() !!}
 <script type="text/javascript">
     $(document).ready(function () {
        $("#find_activity").click(function(e){

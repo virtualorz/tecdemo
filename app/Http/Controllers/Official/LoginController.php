@@ -31,7 +31,7 @@ class LoginController extends Controller {
             $password = User::hashPassword(Request::input('password'));
 
             $dataResult = DB::table('member_data')
-                            ->select('id','email','name','title','start_dt','limit_month','enable')
+                            ->select('id','email','name','title','start_dt','limit_month','enable','pi_list_id')
                             ->where('email',$account)
                             ->where('password',$password)
                             ->first();
@@ -78,6 +78,7 @@ class LoginController extends Controller {
                     'account' => $dataResult['email'],
                     'name' => $dataResult['name'],
                     'title' => $dataResult['title'],
+                    'pi_list_id' => $dataResult['pi_list_id'],
                     'permission' => Sitemap::getPermissionAll('official', SitemapAccess::SUPER_REQUIRED),
                     'instrumentPermission' => $instrumentPermission,
                 ];

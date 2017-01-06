@@ -7,80 +7,163 @@
 
 
 @section('content')
-<div class="contentmt">    
-    <!-- InstanceBeginEditable name="schoolcontent" -->
-   	@include('official.elements.school_header')
-    
-	<div class="spacer3015"></div>
-    
-
-    
-    <div class="container">
+<div class="container">
+    	
         <div class="row">
             @include('official.elements.member_menu')
+          	
+          	
+          	
             
-            <div id="visitdetail-content" class="col-md-10 col-sm-9 col-xs-12 edit-content">
-       	    	<div class="bigtitle">
-                	<img src="{{ asset('assets/official/img/title_schooldata.png') }}" width="225" height="40" alt=""/>
-                </div>
-                <form id="form1" class="form-horizontal" >
-                <span class="line-schoolpage"></span>
+            <div class="col-sm-9 col-xs-12 max767none">
+				<h2 class="bigtitle">會員專區</h2>
+              	<!--通知訊息-->
+                @if(count($noticeResult) != 0)
+           	  	<div class="tablebox">
+				<h4 class="mb--b">通知訊息</h4>
+             		<div class="table-responsive">
+              		<table class="table table-striped"> 
+               		<thead> 
+                    	<tr> 
+                   	  		<th class="ttw100">日期</th> 
+                   	  		<th>主題</th>
+							<th class="ttw80">狀態</th>
+                   	    	<th class="ttw80">發訊者</th> 
+                   	    </tr> 
+                    </thead> 
+                    
+                    <tbody> 
+                        @foreach($noticeResult as $k=>$v)
+                    	<tr> 
+                             <td>{{ $v['created_at'] }}</td> 
+							<td>
+                          	<a href="#">{{ $v['title'] }}</a>
+                           	</td>
+                            <td><span class="label label-default">{{ trans('enum.is_read.'.$v['is_read']) }}</span></td> 
+                            <td>{{ $v['create_admin_name'] }}</td>
+                        </tr> 
+                        @endforeach
+                    </tbody> 
+                </table>
+					</div>
+				</div>
+                @endif
+          
+          		<!--未繳費紀錄-->
+             @if(count($paymentResult) != 0)
+       	  	  <div class="tablebox">
+				<h4 class="mb--b">未繳費紀錄</h4>
+             		<div class="table-responsive">
+              		<table class="table table-striped"> 
+						<thead> 
+							<tr> 
+								<th class="ttw100">月份</th> 
+								<th>名稱</th>
+								<th class="ttw80">列印狀態</th>
+								<th class="ttw80">繳費狀態</th>
+								<th class="ttw50 text-center max767none">列印</th> 
+							</tr> 
+						</thead> 
 
-					<div class="form-group">
-                        <div class="col-sm-3">
-                        <h3 class="color_green">地區</h3>
-                        </div>
-                        <div class="col-sm-9">
-                          {{ $location[$dataResult[0]['location']] }}
-                        </div>
-                    </div>
+						<tbody> 
+                            @foreach($paymentResult as $k=>$v)
+							<tr> 
+                              <td>{{ $v['pay_year'] }}.{{ $v['pay_month'] }}</td> 
+								<td>
+								<a href="#">{{ $v['pi_name'] }}</a>
+								</td>
+								<td><span class="label label-default">已列印</span></td>
+								<td><span class="label label-default">已繳費</span></td>
+								<td class="text-center max767none">
+									<a href="#"><i class="fa fa-print"></i></a>
+								</td>
+							</tr>
+                            @endforeach 
+						</tbody> 
+					</table>
+				  	</div>
+				</div>
+                @endif
+          
+          		<!--預約活動-->
+            @if(count($activityResult) != 0)
+       	  	  <div class="tablebox">
+				<h4 class="mb--b">預約活動</h4>
+             		<div class="table-responsive">
+              		<table class="table table-striped"> 
+						<thead> 
+							<tr> 
+							<th class="ttw100">日期</th> 
+							<th>活動名稱</th>
+							<th class="ttt80">等級</th>
+							<th class="ttt80">時數</th> 
+							<th class="ttw50 text-center">取消</th> 
+							</tr> 
+						</thead> 
+
+						<tbody> 
+                            @foreach($activityResult as $k=>$v)
+							<tr> 
+                              <td>{{ $v['start_dt'] }}</td> 
+								<td>
+								<a href="#">{{ $v['activity_name'] }}</a>
+								</td>
+								<td>{{ $v['level'] }}</td>
+								<td>{{ $v['time'] }}hr</td> 
+								<td class="text-center">
+									<a href="#"> 
+									<i class="fa fa-times" aria-hidden="true"></i>
+									</a>
+								</td>
+							</tr> 
+                            @endforeach
+						</tbody> 
+					</table>
+				  	</div>
+				</div>
+                @endif
+           
+           		<!--預約儀器-->
+            @if(count($instrumentResult) != 0)
+       	  	<div class="tablebox">
+				<h4 class="mb--b">預約儀器</h4>
+             		<div class="table-responsive">
+              			<table class="table table-striped"> 
+							<thead> 
+								<tr> 
+								<th class="ttw100">日期</th> 
+								<th>儀器名稱</th>
+								<th class="ttt80">時段</th>
+								<th class="ttw50 text-center">取消</th> 
+								</tr> 
+							</thead> 
                     
-            	<span class="line-schoolpage"></span>
-                
-                	<div class="form-group">
-                        <div class="col-sm-3">
-                        <h3 class="color_green">縣市</h3>
-                        </div>
-                        <div class="col-sm-9">
-                          {{ $twCity[$dataResult[0]['city']] }} / {{ $twTown[$dataResult[0]['city']][$dataResult[0]['town']][1] }}
-                        </div>
-                    </div>
-                    
-                <span class="line-schoolpage"></span>
-                
-       	  	  		
-                	<div class="form-group">
-                        <div class="col-sm-3">
-                        <h3 class="color_green">帳號</h3>
-                        </div>
-                        <div class="col-sm-9">
-                        	{{ $dataResult[0]['account'] }}
-                        </div>
-                    </div>
-                    
-                <span class="line-schoolpage"></span>
-                    
-                    <div class="form-group">
-                        <div class="col-sm-3">
-                        	<h3 class="color_green">學校</h3>
-                        </div>
-                        <div class="col-sm-9">
-                        	{{ $dataResult[0]['school_name'] }}
-                        </div>
-                    </div>
-        
-                
-                <span class="line-schoolpage"></span>
-                </form>
-          </div>
-        </div>
+							<tbody> 
+                                @foreach($instrumentResult as $k=>$v)
+								<tr> 
+								  <td>{{ $v['reservation_dt'] }}</td> 
+									<td>
+									<a href="#">{{ $v['name'] }}</a>
+									</td>
+									<td>{{ $v['start_time'] }} - {{ $v['end_time'] }}</td>
+									<td class="text-center">
+								  	<a href="#"> 
+									<i class="fa fa-times" aria-hidden="true"></i>
+									</a>
+									</td>
+								</tr> 
+                                @endforeach
+							</tbody> 
+						</table>
+				  	</div>
+			</div>
+            @endif
+           
+            </div>
+    	</div>
     </div>
     
     <div class="spacer6030"></div>
-    
-	@include('official.elements.member_menu_mobile')
-	<!-- InstanceEndEditable -->
-    </div>
 @endsection
 
 @section('script')
