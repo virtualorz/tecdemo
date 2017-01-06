@@ -61,6 +61,7 @@ class MemberController extends Controller {
                                         'activity_data.time')
                             ->leftJoin('activity_data','activity_reservation_data.activity_id','=','activity_data.id')
                             ->where('activity_reservation_data.member_id','=',User::Id())
+                            ->where('activity_reservation_data.attend_status','=',0)
                             ->orderBy('activity_data.start_dt','desc')
                             ->take(5)
                             ->get();
