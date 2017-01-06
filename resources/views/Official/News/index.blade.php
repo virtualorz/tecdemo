@@ -8,71 +8,56 @@
 
 
 @section('content')
-<div class="contentmt">    
-    <!-- InstanceBeginEditable name="schoolcontent" -->
-    <section id="visit_list">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 text-center"><img src="{{ asset('assets/official/img/title_news.png') }}" width="225" height="40" alt=""/></div>
-            <div class="spacer6030"></div>
-        </div>    
-        <div class="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
-
-                @if(isset($listResult[0]['id']))
-                @foreach($listResult as $k=>$v)
-        		<div class="row inxnewslist">
-                    <div class="col-md-2 col-sm-2">
-                        <p>{{ $v['created_at'] }}</p>
-                    </div>
-                    <div class="col-md-8 col-sm-10">
-                        <a href="{{ asset('news/content/id-'.$v['id']) }}">{{ $v['title'] }}</a>               
-                    </div>
-                </div>
-                @endforeach
-                @endif
-                
-                
-            @if(isset($pagination) && $pagination['last'] > 1)
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <a href="{{ asset('news').'?page='.$pagination['prev'] }}" class="btn btn-default btn-lg max767none"><i class="fa fa-angle-left" aria-hidden="true"></i> 上一頁</a>
-                    <a href="{{ asset('news').'?page='.$pagination['next'] }}" class="btn btn-default btn-lg max767none">下一頁 <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                </div>
+<div class="container">
+    	
+        <div class="row">            
+            <div class="col-sm-10 col-sm-offset-1 col-xs-12">
+				<h2 class="bigtitle">訊息內容 </h2>
+              	<!--通知訊息-->
+              	
+           	  	<div class="messagebox">
+           	  		<div class="row mb-xs-20 mb--b">
+						<div class="col-sm-2 col-xs-3"><h5>日期</h5></div>
+                        <div class="col-sm-10 col-xs-9">{{ $dataResult['created_at'] }}</div>
+          	  		</div>
+					<div class="line-schoolpage"></div>
+          	  		<div class="row mb-xs-20 mb--b">
+						<div class="col-sm-2">
+						  <h5>標題</h5></div>
+						<div class="col-sm-10 mt-xs-10">{{ $dataResult['title'] }}</div>
+					</div>
+         	  		<div class="line-schoolpage"></div>
+         	  		<div class="row mb-xs-20 mb--b">
+						<div class="col-sm-2"><h5>內容</h5></div>
+						<div class="col-sm-10 mt-xs-10">
+                        @if(isset($dataResult['content']))
+                        @include('official.elements.btseditor', ['btseditorContent' => $dataResult['content']])
+                        @endif
+          	  			</div>
+					</div>
+					
+				</div>
+          		
+          		<div class="text-center">	
+          	  	<a href="{{ asset('/') }}" class="btn btn-sm btn-default">
+          	  	<i class="fa fa-angle-left"></i> 
+          	  	回上一頁
+          	  	</a>
+				</div>
+          
             </div>
-            @endif
-        </div>
+    	</div>
     </div>
-    </section>
     
-    <div class="clearfix"></div>
-
-    <!-- InstanceEndEditable -->
-    </div>
+    <div class="spacer6030"></div>
 @endsection
 
 
 @section('script')
 <script type="text/javascript">
     $(document).ready(function () {
-       
-       setbodyheight();
-
-       $(window).resize(function(){
-            setbodyheight();
-        });
 
     });
-
-    
-
-    function setbodyheight()
-    {
-        if($(".contentmt").height() < $(document).height())
-        {
-            $(".clearfix").height("0");
-            $(".clearfix").height($(document).height() -  $(".navbar-fixed-top").height() - $(".contentmt").height() - $("footer").height() - 40);
-        }
-    }
     
 </script>
 @endsection
