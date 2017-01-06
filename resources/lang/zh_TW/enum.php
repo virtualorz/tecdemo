@@ -144,7 +144,8 @@ return [
     'reservation_status' => [
         null => '已移除候補',
         0 => '候補',
-        1 => '已預約'
+        1 => '已預約',
+        2 => '已取消',
     ],
     'payment_status' => [
         0 => '未確認',
