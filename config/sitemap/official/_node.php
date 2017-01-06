@@ -421,6 +421,7 @@ return [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'route' => [
                         'method' => 'get',
+                        'param' => '{id}',
                         'attr' => [
                             'uses' => 'MemberActivityController@reg',
                         ],

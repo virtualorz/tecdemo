@@ -43,12 +43,14 @@
 								</td>
 								<td>{{ $v['time'] }}hr</td>
                                 <td class="text-center">
-								  	<a href="member_activity_reg.html"> 
+                                    @if($v['reason'] == null)
+								  	<a href="{{ asset('member/activity/reg/id-'.$v['uid'].'-'.$v['salt']) }}"> 
 									<i class="fa fa-pencil" aria-hidden="true"></i> 補登記
 									</a>
+                                    @endif
 								</td>
 								<td class="text-center">
-									<a href="#"> 
+									<a href="#" class="cancel" data-id="{{ $v['id'].'_'.$v['created_at'] }}"> 
 									<i class="fa fa-times" aria-hidden="true"></i>
 									</a>
 								</td>
@@ -56,6 +58,9 @@
                             @endforeach
 						</tbody> 
 					</table>
+                    <form id="form1" method="post" action="{{ Sitemap::node()->getChildren('cancel')->getUrl() }}">
+                        <input type='hidden' name='id' id='cancel_id'>
+                    </form>
 				  	</div>
 				</div>
                 @endif
@@ -72,144 +77,38 @@
 							<th>活動名稱</th>
 							<th class="ttt80">時數</th>
 							<th class="ttw80">狀態</th>
-							<th class="ttw80 text-center">功能</th> 
 							</tr> 
 						</thead> 
 
 						<tbody> 
+                            @foreach($historyResult as $k=>$v)
 							<tr> 
-							  	<td>2014.6.2</td>
-							  	<td>P12345645</td> 
+							  	<td>{{ $v['start_dt'] }}</td>
+							  	<td>{{ $v['activity_id'] }}</td> 
 								<td>
-								<a href="#">EndNote 書目管理軟體工作坊</a>
+								<a href="{{ asset('activity/activity/reservation/id-'.$v['uid'].'-'.$v['salt']) }}">{{ $v['activity_name'] }}</a>
 								</td>
-								<td>1.5hr</td>
-								<td><span class="label label-default">已結束</span></td>
-								<td class="text-center">&nbsp;</td>
-							</tr> 
+								<td>{{ $v['time'] }}hr</td>
+								<td>
+                                    @if($v['reservation_status'] == 0)
+                                    <span class="label label-warning">預約取消</span>
+                                    @elseif($v['reservation_status'] == 1 && $v['attend_status'] == 0)
+                                    <span class="label label-danger">未出席</span>
+                                    @elseif($v['reservation_status'] == 1 && $v['attend_status'] == 1 && $v['pass_status'] == 1)
+                                    <span class="label label-success">已通過</span>
+                                    @elseif($v['reservation_status'] == 1 && $v['attend_status'] == 1 && $v['pass_status'] == 0 && $v['pass_type'] == 2)
+                                    <span class="label label-info">審核中</span>
+                                    @endif
 
-							<tr> 
-							  <td>2014.5.29</td>
-							  <td>P45598632</td> 
-								<td><a href="#">蛋白質質譜比對軟體使用工作坊</a></td>
-								<td>3hr</td>
-								<td><span class="label label-success">已通過</span></td>
-								<td class="text-center">&nbsp;</td>
+                                </td>
 							</tr> 
-
-							<tr> 
-							  <td>2014.5.21</td>
-							  <td>P17213245</td> 
-								<td><a href="#">高解析度活細胞影像系統</a></td>
-								<td>3hr</td>
-								<td><span class="label label-warning">活動取消</span></td>
-								<td class="text-center">&nbsp;</td>
-							</tr> 
-							
-							<tr> 
-							  <td>2014.5.21</td>
-							  <td>P98754321</td> 
-								<td><a href="#">高解析度活細胞影像系統</a></td>
-								<td>3hr</td>
-								<td><span class="label label-info">審核中</span></td>
-								<td class="text-center">&nbsp;</td>
-							</tr> 
-							
-							<tr> 
-							  <td>2014.5.21</td>
-							  <td>A25647891</td> 
-								<td><a href="#">高解析度活細胞影像系統</a></td>
-								<td>3hr</td>
-								<td>
-								<span class="label label-danger">未登記</span>
-								</td>
-								<td class="text-center">
-								  	<a href="member_activity_reg.html"> 
-									<i class="fa fa-pencil" aria-hidden="true"></i> 補登記
-									</a>
-								</td>
-							</tr> 
-							
-							<tr> 
-							  	<td>2014.6.2</td>
-							  	<td>TC3161109</td> 
-								<td>
-								<a href="#">EndNote 書目管理軟體工作坊</a>
-								</td>
-								<td>1.5hr</td>
-								<td><span class="label label-default">已結束</span></td>
-								<td class="text-center">&nbsp;</td>
-							</tr> 
-
-					
-							<tr> 
-							  	<td>2014.6.2</td>
-							  	<td>P12345645</td> 
-								<td>
-								<a href="#">EndNote 書目管理軟體工作坊</a>
-								</td>
-								<td>1.5hr</td>
-								<td><span class="label label-default">已結束</span></td>
-								<td class="text-center">&nbsp;</td>
-							</tr> 
-							
-							<tr> 
-							  	<td>2014.6.2</td>
-							  	<td>P12345645</td> 
-								<td>
-								<a href="#">EndNote 書目管理軟體工作坊</a>
-								</td>
-								<td>1.5hr</td>
-								<td><span class="label label-default">已結束</span></td>
-								<td class="text-center">&nbsp;</td>
-							</tr> 
-					  	
-					  		<tr> 
-							  	<td>2014.6.2</td>
-							  	<td>P12345677</td> 
-								<td>
-								<a href="#">EndNote 書目管理軟體工作坊</a>
-								</td>
-								<td>1.5hr</td>
-								<td><span class="label label-default">已結束</span></td>
-								<td class="text-center">&nbsp;</td>
-							</tr> 
-						  	
-						  	<tr> 
-							  	<td>2014.6.2</td>
-							  	<td>P12345645</td> 
-								<td>
-								<a href="#">EndNote 書目管理軟體工作坊</a>
-								</td>
-								<td>1.5hr</td>
-								<td><span class="label label-default">已結束</span></td>
-								<td class="text-center">&nbsp;</td>
-							</tr> 
-
+                            @endforeach
 
 						</tbody> 
 					</table>
 				  	</div>
 				
-         		<nav aria-label="Page navigation" class="text-center">
-				  <ul class="pagination">
-					<li>
-					  <a href="#" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-					  </a>
-					</li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li>
-					  <a href="#" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					  </a>
-					</li>
-				  </ul>
-				</nav>
+         		@include('official.elements.pagination')
 
           		</div>
            		
@@ -230,9 +129,33 @@
 {!! ViewHelper::plugin()->renderJs() !!}
 <script type="text/javascript">
     $(document).ready(function () {
-        
+        initValidation();
+        urlBack = location.href;
+        $(".cancel").click(function(e){
+            e.preventDefault();
+            
+            $("#cancel_id").val($(this).attr('data-id'));
+            $("#form1").submit();
 
+            $(this).parent().parent().animate({
+                opacity: 0,
+            }, 1000, function() {
+                // Animation complete.
+
+            });
+        });
     });
+
+    function initValidation() {
+        $('#form1').validate({
+            submitHandler: function (form) {
+                if (ajaxRequest.submit(form, {
+                }) === false) {
+                    return false;
+                }
+            }
+        });
+    }
     
 </script>
 @endsection
