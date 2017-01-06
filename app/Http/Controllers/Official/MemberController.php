@@ -90,4 +90,115 @@ class MemberController extends Controller {
         
         return $this->view;
     }
+
+    public function basic() {
+        $id = User::Id();
+        $dataResult = DB::table('member_data')
+                            ->select('member_data.*',
+                                        DB::raw('DATE_FORMAT(member_data.start_dt, "%Y.%m.%d") as start_dt'),
+                                        'member_data.start_dt as start_dt_org',
+                                        'system_organize.name as organize_name',
+                                        'system_department.name as department_name',
+                                        'system_pi_list.name as pi_name',
+                                        'member_admin.name as created_admin_name')
+                            ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                            ->leftJoin('system_department','member_data.department_id','=','system_department.id')
+                            ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
+                            ->leftJoin('member_admin','member_data.create_admin_id','=','member_admin.id')
+                            ->where('member_data.id',$id)
+                            ->get();
+        $permissionResult = array();
+        $permissionResultTmp = DB::table('member_permission')
+                                    ->where('member_data_id',$id)
+                                    ->select('permission')
+                                    ->get();
+        foreach($permissionResultTmp as $k=>$v)
+        {
+            array_push($permissionResult,$v['permission']);
+        }
+
+        $this->view->with('dataResult', $dataResult[0]);
+        $this->view->with('permissionResult', $permissionResult);
+        $this->view->with('permission', Config::get('data.permission'));
+        $this->view->with('member_typeResult', Config::get('data.id_type'));
+        
+        return $this->view;
+    }
+
+    ##
+
+    public function ajax_edit() {
+        $validator = Validator::make(Request::all(), [
+                    'name' => 'string|required|max:10',
+                    'id_number' => 'string|required|max:12',
+                    'email' => 'string|required|max:200',
+                    'password' => 'string|required|max:200|same:passwordR',
+                    'phone' => 'string|required|max:24',
+                    'lab_phone' => 'string|required|max:24',
+        ]);
+        if ($validator->fails()) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = $validator->errors();
+
+            return $this->view;
+        }
+        
+        try {
+            DB::transaction(function(){
+                $id = User::id();
+
+                $result_before = DB::table('member_data')
+                                    ->where('id',$id)
+                                    ->get();
+                if($result_before[0]['password'] == Request::input('password'))
+                {
+                    DB::table('member_data')
+                        ->where('id',$id)
+                        ->update(['name'=>Request::input('name'),
+                                    'id_number'=>Request::input('id_number'),
+                                    'title'=>Request::input('title'),
+                                    'email'=>Request::input('email'),
+                                    'phone'=>Request::input('phone'),
+                                    'lab_phone'=>Request::input('lab_phone')
+                        ]);
+                }
+                else
+                {
+                    DB::table('member_data')
+                        ->where('id',$id)
+                        ->update(['name'=>Request::input('name'),
+                                    'id_number'=>Request::input('id_number'),
+                                    'title'=>Request::input('title'),
+                                    'email'=>Request::input('email'),
+                                    'password'=>User::hashPassword(Request::input('password')),
+                                    'phone'=>Request::input('phone'),
+                                    'lab_phone'=>Request::input('lab_phone')
+                        ]);
+                }
+                $result_after = DB::table('member_data')
+                                    ->where('id',$id)
+                                    ->get();
+                DBProcedure::writeLog([
+                    'table' => 'member_data',
+                    'operator' => DBOperator::OP_UPDATE,
+                    'data_before' => isset($result_before[0]) ? $result_before[0] : [],
+                    'data_after' => isset($result_after[0]) ? $result_after[0] : [],
+                    'member_id' => $id
+                ]);
+
+            });
+
+        } catch (\PDOException $ex) {
+            DB::rollBack();
+
+            \Log::error($ex->getMessage());
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.database');
+            return $this->view;
+        }
+
+        $this->view['msg'] = trans('message.success.edit');
+        return $this->view;
+    }
 }
