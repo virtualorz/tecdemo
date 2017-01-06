@@ -75,6 +75,18 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.password') }}</th>
+                                <td>
+                                    <input type="password" name="password" id="data-password" class="form-control required">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.passwordR') }}</th>
+                                <td>
+                                    <input type="password" name="passwordR" id="data-passwordR" class="form-control required">
+                                </td>
+                            </tr>
+                            <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.phone') }}</th>
                                 <td>
                                     <input type="text" name="phone" id="data-phone" class="form-control required">

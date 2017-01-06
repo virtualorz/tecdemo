@@ -264,6 +264,7 @@ class MemberProtofolioController extends Controller {
                     'organize_id' => 'integer|required',
                     'department_id' => 'integer|required',
                     'email' => 'string|required|max:200',
+                    'password' => 'string|required|max:200|same:passwordR',
                     'phone' => 'string|required|max:24',
                     'pi_list_id' => 'integer|required',
                     'lab_phone' => 'string|required|max:24',
@@ -295,6 +296,7 @@ class MemberProtofolioController extends Controller {
                                     'department_id'=>Request::input('department_id'),
                                     'title'=>Request::input('title'),
                                     'email'=>Request::input('email'),
+                                    'password'=>User::hashPassword(Request::input('password')),
                                     'phone'=>Request::input('phone'),
                                     'pi_list_id'=>Request::input('pi_list_id'),
                                     'lab_phone'=>Request::input('lab_phone'),
@@ -363,6 +365,7 @@ class MemberProtofolioController extends Controller {
                     'organize_id' => 'integer|required',
                     'department_id' => 'integer|required',
                     'email' => 'string|required|max:200',
+                    'password' => 'string|required|max:200|same:passwordR',
                     'phone' => 'string|required|max:24',
                     'pi_list_id' => 'integer|required',
                     'lab_phone' => 'string|required|max:24',
@@ -384,22 +387,45 @@ class MemberProtofolioController extends Controller {
                 $result_before = DB::table('member_data')
                                     ->where('id',Request::input('id'))
                                     ->get();
-                DB::table('member_data')
-                    ->where('id',Request::input('id'))
-                    ->update(['name'=>Request::input('name'),
-                                'card_id_number'=>Request::input('card_id_number'),
-                                'id_number'=>Request::input('id_number'),
-                                'organize_id'=>Request::input('organize_id'),
-                                'department_id'=>Request::input('department_id'),
-                                'title'=>Request::input('title'),
-                                'email'=>Request::input('email'),
-                                'phone'=>Request::input('phone'),
-                                'pi_list_id'=>Request::input('pi_list_id'),
-                                'lab_phone'=>Request::input('lab_phone'),
-                                'type'=>Request::input('type'),
-                                'start_dt'=>Request::input('start_dt'),
-                                'limit_month'=>Request::input('limit_month'),
-                    ]);
+                if($result_before[0]['password'] == Request::input('password'))
+                {
+                    DB::table('member_data')
+                        ->where('id',Request::input('id'))
+                        ->update(['name'=>Request::input('name'),
+                                    'card_id_number'=>Request::input('card_id_number'),
+                                    'id_number'=>Request::input('id_number'),
+                                    'organize_id'=>Request::input('organize_id'),
+                                    'department_id'=>Request::input('department_id'),
+                                    'title'=>Request::input('title'),
+                                    'email'=>Request::input('email'),
+                                    'phone'=>Request::input('phone'),
+                                    'pi_list_id'=>Request::input('pi_list_id'),
+                                    'lab_phone'=>Request::input('lab_phone'),
+                                    'type'=>Request::input('type'),
+                                    'start_dt'=>Request::input('start_dt'),
+                                    'limit_month'=>Request::input('limit_month'),
+                        ]);
+                }
+                else
+                {
+                    DB::table('member_data')
+                        ->where('id',Request::input('id'))
+                        ->update(['name'=>Request::input('name'),
+                                    'card_id_number'=>Request::input('card_id_number'),
+                                    'id_number'=>Request::input('id_number'),
+                                    'organize_id'=>Request::input('organize_id'),
+                                    'department_id'=>Request::input('department_id'),
+                                    'title'=>Request::input('title'),
+                                    'email'=>Request::input('email'),
+                                    'password'=>User::hashPassword(Request::input('password')),
+                                    'phone'=>Request::input('phone'),
+                                    'pi_list_id'=>Request::input('pi_list_id'),
+                                    'lab_phone'=>Request::input('lab_phone'),
+                                    'type'=>Request::input('type'),
+                                    'start_dt'=>Request::input('start_dt'),
+                                    'limit_month'=>Request::input('limit_month'),
+                        ]);
+                }
                 $result_after = DB::table('member_data')
                                     ->where('id',Request::input('id'))
                                     ->get();
