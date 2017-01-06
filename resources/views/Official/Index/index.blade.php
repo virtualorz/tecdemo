@@ -107,11 +107,11 @@
     $(document).ready(function () {
        $("#find_activity").click(function(e){
            e.preventDefault();
-           location.href= "{{ asset('activity') }}?name="+$("#search_text").val();
+           location.href= "{{ asset('activity') }}?keyword="+$("#search_text").val();
        });
        $("#find_instrument").click(function(e){
            e.preventDefault();
-           location.href= "{{ asset('instrument') }}?name="+$("#search_text").val();
+           location.href= "{{ asset('instrument') }}?keyword="+$("#search_text").val();
        });
 
     });
