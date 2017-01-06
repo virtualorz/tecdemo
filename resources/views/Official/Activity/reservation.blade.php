@@ -111,7 +111,7 @@
 					<div class="line-schoolpage"></div>
 					
 					<div class="row mb--b">
-					@if($dataResult['end_dt'] == null || (strtotime($dataResult['end_dt']) > strtotime(date('Y-m-d'))))
+					@if($dataResult['end_dt'] == null || (strtotime($dataResult['end_dt_org']) > strtotime(date('Y-m-d'))))
                         <form class="form-horizontal" id="form1" method="post" action="{{ Sitemap::node()->getChildren('submit')->getUrl() }}">
                         @if($dataResult['is_reservation'] == 0)
 						<div class="col-xs-12 text-center">

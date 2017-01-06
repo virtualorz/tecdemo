@@ -33,6 +33,7 @@ class ActivityController extends Controller {
                                             'activity_data.salt',
                                             DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y.%m.%d") as start_dt'),
                                             DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y.%m.%d") as end_dt'),
+                                            DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y-%m-%d") as end_dt_org'),
                                             'activity_data.activity_id',
                                             'activity_type.name as type_name',
                                             'activity_data.activity_name',
@@ -52,13 +53,14 @@ class ActivityController extends Controller {
             $liest_aResult = DB::table('activity_data')
                             ->whereNull('end_dt')
                             ->orWhere(function ($query) {
-                                $query->whereDate('start_dt','<',date('Y-m-d'))
-                                    ->whereDate('end_dt', '>', date('Y-m-d'));
+                                $query->whereDate('end_dt', '>', date('Y-m-d')
+                                    );
                             })
                             ->select('activity_data.uid',
                                                 'activity_data.salt',
                                                 DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y.%m.%d") as start_dt'),
                                                 DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y.%m.%d") as end_dt'),
+                                                DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y-%m-%d") as end_dt_org'),
                                                 'activity_data.activity_id',
                                                 'activity_type.name as type_name',
                                                 'activity_data.activity_name',
@@ -78,6 +80,7 @@ class ActivityController extends Controller {
                                                 'activity_data.salt',
                                                 DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y.%m.%d") as start_dt'),
                                                 DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y.%m.%d") as end_dt'),
+                                                DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y-%m-%d") as end_dt_org'),
                                                 'activity_data.activity_id',
                                                 'activity_type.name as type_name',
                                                 'activity_data.activity_name',
@@ -116,6 +119,7 @@ class ActivityController extends Controller {
                                         'activity_data.salt',
                                         DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y.%m.%d") as start_dt'),
                                         DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y.%m.%d") as end_dt'),
+                                        DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y-%m-%d") as end_dt_org'),
                                         'activity_data.activity_id',
                                         'activity_type.name as type_name',
                                         'activity_data.activity_name',
