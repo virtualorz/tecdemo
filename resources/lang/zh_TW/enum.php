@@ -195,5 +195,12 @@ return [
     'is_read' => [
         0=>'未讀',
         1=>'已讀',
-    ]
+    ],
+    'label' => [
+        'is_read' => [
+            0=>'success',
+            1=>'default'
+        ]
+    ],
+
 ];
