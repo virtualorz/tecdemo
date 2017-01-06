@@ -38,6 +38,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.title') }}</th>
+                                <td>
+                                    <input type="text" name="title" id="data-title" class="form-control required">
+                                </td>
+                            </tr>
+                            <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.content') }}</th>
                                 <td>
                                     <div name="content" id="content" class="btseditor" data-name="content"></div>

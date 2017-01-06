@@ -543,6 +543,7 @@ class MemberProtofolioController extends Controller {
 
     public function ajax_notice() {
         $validator = Validator::make(Request::all(), [
+                    'title' => 'string|required|max:20',
                     'content' => 'string|required'
         ]);
         if ($validator->fails()) {
@@ -576,6 +577,7 @@ class MemberProtofolioController extends Controller {
                                     'member_notice_log_id'=>$member_notice_log_id,
                                     'created_at'=>date('Y-m-d H:i:s'),
                                     'email'=>Request::input('email'),
+                                    'title'=>Request::input('title'),
                                     'content'=>Request::input('content'),
                                     'is_read'=>'0',
                                     'create_admin_id'=>User::id()

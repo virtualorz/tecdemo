@@ -39,7 +39,7 @@
 							<td>
                           	<a href="{{ asset('member/message/detail/id-'.$v['member_notice_log_id']) }}">{{ $v['title'] }}</a>
                            	</td>
-                            <td><span class="label label-default">{{ trans('enum.is_read.'.$v['is_read']) }}</span></td> 
+                            <td><span class="label label-{{trans('enum.label.is_read.'.$v['is_read'])}}">{{ trans('enum.is_read.'.$v['is_read']) }}</span></td> 
                             <td>{{ $v['create_admin_name'] }}</td>
                         </tr> 
                         @endforeach
