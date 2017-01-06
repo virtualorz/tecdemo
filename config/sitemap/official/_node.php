@@ -348,25 +348,14 @@ return [
                     ],
                 ],
             ],
-            'edit' => [
+            'detail' => [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'route' => [
                         'method' => 'get',
                         'param' => '{id}',
                         'attr' => [
-                            'uses' => 'MemberJournalController@edit',
-                        ],
-                    ],
-                ],
-                'submit' => [
-                    '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
-                        'route' => [
-                            'method' => 'post',
-                            'attr' => [
-                                'uses' => 'MemberJournalController@ajax_edit',
-                            ],
+                            'uses' => 'MemberJournalController@detail',
                         ],
                     ],
                 ],
