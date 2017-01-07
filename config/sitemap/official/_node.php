@@ -286,7 +286,7 @@ return [
     ],
     'member' => [
         '_prop' => [
-            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+            'permission' => SitemapAccess::LOGIN_REQUIRED,
             'route' => [
                 'method' => 'get',
                 'attr' => [
@@ -296,7 +296,7 @@ return [
         ],
         'basic' => [
             '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'permission' => SitemapAccess::LOGIN_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'attr' => [
@@ -318,7 +318,7 @@ return [
         ],
         'journal' => [
             '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'permission' => SitemapAccess::LOGIN_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'attr' => [
@@ -328,7 +328,7 @@ return [
             ],
             'add' => [
                 '_prop' => [
-                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'permission' => SitemapAccess::LOGIN_REQUIRED,
                     'route' => [
                         'method' => 'get',
                         'attr' => [
@@ -350,7 +350,7 @@ return [
             ],
             'detail' => [
                 '_prop' => [
-                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'permission' => SitemapAccess::LOGIN_REQUIRED,
                     'route' => [
                         'method' => 'get',
                         'param' => '{id}',
@@ -374,7 +374,7 @@ return [
         ],
         'e_portfolio' => [
             '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'permission' => SitemapAccess::LOGIN_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'attr' => [
@@ -385,7 +385,7 @@ return [
         ],
         'message' => [
             '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'permission' => SitemapAccess::LOGIN_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'attr' => [
@@ -395,7 +395,7 @@ return [
             ],
             'detail' => [
                 '_prop' => [
-                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'permission' => SitemapAccess::LOGIN_REQUIRED,
                     'route' => [
                         'method' => 'get',
                         'param' => '{id}',
@@ -408,7 +408,7 @@ return [
         ],
         'activity' => [
             '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'permission' => SitemapAccess::LOGIN_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'attr' => [
@@ -418,7 +418,7 @@ return [
             ],
             'reg' => [
                 '_prop' => [
-                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'permission' => SitemapAccess::LOGIN_REQUIRED,
                     'route' => [
                         'method' => 'get',
                         'param' => '{id}',
@@ -453,7 +453,7 @@ return [
         ],
         'instrument' => [
             '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'permission' => SitemapAccess::LOGIN_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'attr' => [
@@ -475,7 +475,7 @@ return [
         ],
         'bill' => [
             '_prop' => [
-                'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                'permission' => SitemapAccess::LOGIN_REQUIRED,
                 'route' => [
                     'method' => 'get',
                     'attr' => [

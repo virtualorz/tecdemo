@@ -75,10 +75,12 @@ class MemberController extends Controller {
                                         DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'))
                             ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
                             ->leftJoin('instrument_section','instrument_reservation_data.reservation_section_id','=','instrument_section.id')
-                            ->OrWhere('instrument_reservation_data.reservation_status','=',1)
-                            ->OrWhere('instrument_reservation_data.reservation_status','=',0)
-                            ->whereNull('instrument_reservation_data.attend_status')
                             ->where('instrument_reservation_data.member_id','=',User::Id())
+                            ->whereNull('instrument_reservation_data.attend_status')
+                            ->where(function($query){
+                                $query->OrWhere('instrument_reservation_data.reservation_status','=',1);
+                                $query->OrWhere('instrument_reservation_data.reservation_status','=',0);
+                            })
                             ->orderBy('instrument_reservation_data.reservation_dt','desc')
                             ->take(5)
                             ->get();
