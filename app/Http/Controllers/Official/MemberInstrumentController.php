@@ -165,18 +165,18 @@ class MemberInstrumentController extends Controller {
                 $result_before = DB::table('instrument_reservation_data')
                                     ->where('instrument_reservation_data_id',$id[0])
                                     ->where('member_id',User::id())
-                                    ->where('created_at',$id[1])
+                                    ->where('create_date',$id[1])
                                     ->get();
                 DB::table('instrument_reservation_data')
                     ->where('instrument_reservation_data_id',$id[0])
                     ->where('member_id',User::id())
-                    ->where('created_at',$id[1])
+                    ->where('create_date',$id[1])
                     ->update(['reservation_status'=>'2']);
                 
                 $result_after = DB::table('instrument_reservation_data')
                                     ->where('instrument_reservation_data_id',$id[0])
                                     ->where('member_id',User::id())
-                                    ->where('created_at',$id[1])
+                                    ->where('create_date',$id[1])
                                     ->get();
                 DBProcedure::writeLog([
                     'table' => 'instrument_reservation_data',

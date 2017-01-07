@@ -111,7 +111,7 @@
 								<td>{{ $v['level'] }}</td>
 								<td>{{ $v['time'] }}hr</td> 
 								<td class="text-center">
-									<a href="#"> 
+									<a href="#" class="cancel_activity" data-id="{{ $v['id'].'_'.$v['created_at'] }}"> 
 									<i class="fa fa-times" aria-hidden="true"></i>
 									</a>
 								</td>
@@ -147,7 +147,7 @@
 									</td>
 									<td>{{ $v['start_time'] }} - {{ $v['end_time'] }}</td>
 									<td class="text-center">
-								  	<a href="#"> 
+								  	<a href="#" class="cancel_instrument" data-id="{{ $v['instrument_reservation_data_id'].'_'.$v['create_date'] }}"> 
 									<i class="fa fa-times" aria-hidden="true"></i>
 									</a>
 									</td>
@@ -162,6 +162,9 @@
             </div>
     	</div>
     </div>
+	<form id="form1" method="post" action="">
+    	<input type='hidden' name='id' id='cancel_id'>
+    </form>
     
     <div class="spacer6030"></div>
 @endsection
@@ -170,9 +173,48 @@
 {!! ViewHelper::plugin()->renderJs() !!}
 <script type="text/javascript">
     $(document).ready(function () {
-        
+        initValidation();
+        urlBack = location.href;
+        $(".cancel_activity").click(function(e){
+            e.preventDefault();
+            $("#form1").attr('action',"{{ Sitemap::node()->getChildren('cancel_activity')->getUrl() }}");
+            $("#cancel_id").val($(this).attr('data-id'));
+            $("#form1").submit();
+
+            $(this).parent().parent().animate({
+                opacity: 0,
+            }, 1000, function() {
+                // Animation complete.
+				location.reload();
+            });
+        });
+
+		$(".cancel_instrument").click(function(e){
+            e.preventDefault();
+            $("#form1").attr('action',"{{ Sitemap::node()->getChildren('cancel_instrument')->getUrl() }}");
+            $("#cancel_id").val($(this).attr('data-id'));
+            $("#form1").submit();
+
+            $(this).parent().parent().animate({
+                opacity: 0,
+            }, 1000, function() {
+                // Animation complete.
+				location.reload();
+            });
+        });
 
     });
+
+	function initValidation() {
+        $('#form1').validate({
+            submitHandler: function (form) {
+                if (ajaxRequest.submit(form, {
+                }) === false) {
+                    return false;
+                }
+            }
+        });
+    }
     
 </script>
 @endsection

@@ -495,6 +495,28 @@ return [
                  ],
             ],
         ],
+        'cancel_activity' => [
+            '_prop' => [
+                'permission' => SitemapAccess::INHERIT,
+                'route' => [
+                    'method' => 'post',
+                    'attr' => [
+                        'uses' => 'MemberActivityController@ajax_cancel',
+                    ],
+                ],
+            ],
+        ],
+        'cancel_instrument' => [
+            '_prop' => [
+                'permission' => SitemapAccess::INHERIT,
+                'route' => [
+                    'method' => 'post',
+                    'attr' => [
+                        'uses' => 'MemberInstrumentController@ajax_cancel',
+                    ],
+                ],
+            ],
+        ],
     ],
     'upload' => [
         '_prop' => [

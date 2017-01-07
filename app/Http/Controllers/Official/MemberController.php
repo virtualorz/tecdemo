@@ -51,9 +51,11 @@ class MemberController extends Controller {
                             ->get();
         
         $activityResult = DB::table('activity_reservation_data')
-                            ->select('activity_data.uid',
+                            ->select('activity_data.id',
+                                        'activity_data.uid',
                                         'activity_data.salt',
                                         'activity_data.activity_id',
+                                        'activity_reservation_data.created_at',
                                         DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y.%m.%d") as start_dt'),
                                         DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y.%m.%d") as end_dt'),
                                         'activity_data.activity_name',
@@ -61,6 +63,7 @@ class MemberController extends Controller {
                                         'activity_data.time')
                             ->leftJoin('activity_data','activity_reservation_data.activity_id','=','activity_data.id')
                             ->where('activity_reservation_data.member_id','=',User::Id())
+                            ->where('activity_reservation_data.reservation_status','=',1)
                             ->where('activity_reservation_data.attend_status','=',0)
                             ->orderBy('activity_data.start_dt','desc')
                             ->take(5)
@@ -70,6 +73,8 @@ class MemberController extends Controller {
                             ->select('instrument_reservation_data.uid',
                                         'instrument_reservation_data.salt',
                                         'instrument_reservation_data.reservation_dt',
+                                        'instrument_reservation_data.instrument_reservation_data_id',
+                                        'instrument_reservation_data.create_date',
                                         'instrument_data.name',
                                         DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
                                         DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'))
