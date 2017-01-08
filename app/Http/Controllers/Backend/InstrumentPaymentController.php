@@ -301,7 +301,6 @@ class InstrumentPaymentController extends Controller {
                             ->get();
         $suppliesResult = DB::table('instrument_supplies')
                             ->select('instrument_supplies.*')
-                            ->where('enable','1')
                             ->get();
         
         foreach($reservationlogResult as $k=>$v)
