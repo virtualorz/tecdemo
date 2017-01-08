@@ -27,7 +27,7 @@
                     </li>
                     
                     <li>
-                        <a href="{{ asset('contact') }}">聯絡我們</a>
+                        <a href="{{ asset('contact_us') }}">聯絡我們</a>
                     </li>
                     @if(User::Id() == null)
                     <li>
