@@ -70,13 +70,24 @@ class ActivityAttendController extends Controller {
             return $this->view;
         }
         $ids = Request::input('id', "0_0");
+
+        $activity_data = DB::table('activity_data')
+            ->select('pass_type')
+            ->where('id',$id[0])
+            ->get();
+        $pass_status = 0;
+        if($activity_data[0]['pass_type'] == 1)
+        {
+            $pass_status = 1;
+        }
+
         try {
             $id = explode('_',$ids);
 
                 DB::table('activity_reservation_data')
                     ->where('activity_id',$id[0])
                     ->where('member_id',$id[1])
-                    ->update(['attend_status'=>1
+                    ->update(['attend_status'=>1,'pass_status'=>$pass_status
                     ]);
         } catch (\PDOException $ex) {
             DB::rollBack();
