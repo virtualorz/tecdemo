@@ -153,7 +153,7 @@ return [
                         'route' => [
                         'method' => 'post',
                         'attr' => [
-                            'uses' => 'ForgetpwController@ajax_send',
+                            'uses' => 'ForgetpwController@ajax_resend',
                         ],
                     ],
                 ],
@@ -165,6 +165,7 @@ return [
             'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
             'route' => [
                 'method' => 'get',
+                'param' => '{id}',
                 'attr' => [
                     'uses' => 'ResetpwController@index',
                 ],
