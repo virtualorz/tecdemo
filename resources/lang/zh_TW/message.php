@@ -15,6 +15,7 @@ return [
         'reservation' => '預約成功',
         'reg' => '補登記成功',
         'request' => '申請成功',
+        'change' => '變更成功',
     ],
     'error' => [
         'validation' => '驗證錯誤',

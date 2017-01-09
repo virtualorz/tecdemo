@@ -60,7 +60,7 @@ class ForgetpwController extends Controller {
 
         $uid = Crypt::encrypt(date('Y-m-d H:i:s').'_'.$member_data['id']);
 
-        $dataResult = array('user'=>$member_data['name'],'url'=> asset('reset_pw/index/id-'.$uid));
+        $dataResult = array('user'=>$member_data['name'],'url'=> asset('reset_pw/id-'.$uid));
                 Mail::send('emails.fpw', [
                         'dataResult' => $dataResult,
                             ], function ($m) {
@@ -96,7 +96,7 @@ class ForgetpwController extends Controller {
 
         $uid = Crypt::encrypt(date('Y-m-d H:i:s').'_'.$id);
 
-        $dataResult = array('user'=>$name,'url'=> asset('reset_pw/index/id-'.$uid));
+        $dataResult = array('user'=>$name,'url'=> asset('reset_pw/id-'.$uid));
                 Mail::send('emails.fpw', [
                         'dataResult' => $dataResult,
                             ], function ($m)use($email) {
@@ -111,56 +111,6 @@ class ForgetpwController extends Controller {
         Cache::put('forget_pw_name', $name, $expiresAt);
 
         $this->view['msg'] = trans('message.success.request');
-        return $this->view;
-    }
-
-    public function ajax_delete() {
-        $validator = Validator::make(Request::all(), [
-                    'id' => 'integer|required'
-        ]);
-        if ($validator->fails()) {
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.validation');
-            $this->view['detail'] = $validator->errors();
-
-            return $this->view;
-        }
-        
-        try {
-            $id = Request::input('id', '0');;
-
-                $result_before = DB::table('member_journal')
-                                    ->where('member_journal_id',$id)
-                                    ->where('member_data_id',User::id())
-                                    ->get();
-                DB::table('member_journal')
-                    ->where('member_journal_id',$id)
-                    ->where('member_data_id',User::id())
-                    ->delete();
-                DBProcedure::writeLog([
-                    'table' => 'member_journal',
-                    'operator' => DBOperator::OP_DELETE,
-                    'data_before' => isset($result_before[0]) ? $result_before[0] : [],
-                    'member_id' => User::id()
-                ]);
-        } catch (\PDOException $ex) {
-            DB::rollBack();
-
-            \Log::error($ex->getMessage());
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.database');
-            return $this->view;
-        } catch (\Exception $ex) {
-            DB::rollBack();
-
-            \Log::error($ex->getMessage());
-            $this->view['result'] = 'no';
-            $this->view['msg'] = $ex->getMessage();
-            return $this->view;
-        }
-
-        
-        $this->view['msg'] = trans('message.success.delete');
         return $this->view;
     }
 }
