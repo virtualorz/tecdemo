@@ -20,6 +20,8 @@ class MemberEportfolioController extends Controller {
 
         $activityResult = DB::table('activity_reservation_data')
                             ->select('activity_data.id',
+                                        'activity_data.uid',
+                                        'activity_data.salt',
                                         DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y.%m.%d") as start_dt'),
                                         'activity_data.activity_name',
                                         'activity_data.relative_plateform',
