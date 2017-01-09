@@ -23,6 +23,8 @@ p.large {
     font-size: 16px;
 }
 
+.small{font-size: 10px; font-weight: normal}
+
 a,
 a:hover,
 a:focus,
@@ -669,7 +671,7 @@ input[type=date], input[type=time], input[type=datetime-local], input[type=month
 /*--預約儀器--*/
 #instrument_reservation td{ text-align: center}
 @media (min-width: 992px){
-	#instrument_reservation td{ height: 80px; }
+	#instrument_reservation td{ height: 80px; line-height: 80px}
 }
 
 #instrument_reservation btn { padding: 10px}

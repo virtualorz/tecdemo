@@ -74,7 +74,7 @@
         @include('official.elements.header')
         <div class="contentmt">
         @yield('content')
-        <div class="clearfix"></div>
+        <div class="clearfix_"></div>
         </div>
     
     <footer>
@@ -138,10 +138,10 @@
 
     function setbodyheight()
     {
-        if(($("body").height() + parseInt($(".navbar").css('height'))) - $(".clearfix").height() < $(document).height())
+        if(($("body").height() + parseInt($(".navbar").css('height'))) - $(".clearfix_").height() < $(document).height())
         {
-            $(".clearfix").height("0");
-            $(".clearfix").height($(document).height() -  $("body").height() - parseInt($(".navbar").css('height')));
+            $(".clearfix_").height("0");
+            $(".clearfix_").height($(document).height() -  $("body").height() - parseInt($(".navbar").css('height')));
         }
     }
     
