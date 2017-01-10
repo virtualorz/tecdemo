@@ -70,20 +70,20 @@
                                                 @if( in_array(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$vacationResult) )
                                                 尚未開放
                                                 @elseif(!isset($v['reservation_log']))
-                                                <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" @if($reservation_count >= $dataResult['reservation_limit']) disabled @endif>預約</a>
+                                                <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" @if($reservation_count >= $dataResult['reservation_limit'] || strtotime('+'.$i.' days',strtotime($start_dt_org)) < strtotime(date('Y-m-d'))) disabled @endif>預約</a>
                                                 @else 
                                                     @if(array_key_exists(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$v['reservation_log']))
                                                         @if($v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['attend_status'] == '1')
                                                         {{$v1['member_name']}} 使用中
                                                         @elseif($v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['reservation_status'] == '1' || $v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['reservation_status'] == '0')
                                                             @if($v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['member_id'] == User::Id())
-                                                            <a href="#" class="btn btn-default reservation" data-id="0_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}">取消</a>
+                                                            <a href="#" class="btn btn-default reservation" data-id="0_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" @if(strtotime('+'.$i.' days',strtotime($start_dt_org)) <= strtotime($dataResult['cancel_limit_dt'])) disabled @endif>取消</a>
                                                             @else
-                                                            <a href="#" class="btn btn-default reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}">候補</a>
+                                                            <a href="#" class="btn btn-default reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" @if($reservation_count >= $dataResult['reservation_limit'] || strtotime('+'.$i.' days',strtotime($start_dt_org)) < strtotime(date('Y-m-d'))) disabled @endif>候補</a>
                                                             @endif
                                                         @endif
                                                     @else
-                                                    <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" @if($reservation_count >= $dataResult['reservation_limit']) disabled @endif>預約</a>
+                                                    <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" @if($reservation_count >= $dataResult['reservation_limit'] || strtotime('+'.$i.' days',strtotime($start_dt_org)) < strtotime(date('Y-m-d'))) disabled @endif>預約</a>
                                                     @endif
                                                 @endif
 

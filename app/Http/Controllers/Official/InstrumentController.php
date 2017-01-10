@@ -171,6 +171,8 @@ class InstrumentController extends Controller {
         $reservationResult = array();
         if (count($dataResult) > 0)
         {
+            //寫入預約取消最後期限
+            $dataResult[0]['cancel_limit_dt'] = date('Y-m-d',strtotime("+".$dataResult[0]['cancel_limit']." days",strtotime(date('Y-m-d'))));
             //開放時段
             $instrumentPermission = User::get('instrumentPermission');
             $sectionResult = array();
