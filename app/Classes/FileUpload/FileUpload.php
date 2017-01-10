@@ -7,6 +7,7 @@ use Config;
 use File;
 use Image;
 use Storage;
+use Log;
 
 class FileUpload {
 
@@ -215,6 +216,10 @@ class FileUpload {
                         {
                             $real_path = public_path().'/files/'.$v['dir'].'/'.$file;
                             $new_path = public_path().'/files/'.$v['dir_real'].'/'.$file;
+                            if(!file_exists(public_path().'/files/'.$v2['file']['dir_real'].'/'))
+                            {
+                                mkdir(public_path().'/files/'.$v2['file']['dir_real'].'/',0777);
+                            }
                             if(file_exists($real_path))
                             {
                                 rename($real_path,$new_path);
@@ -284,6 +289,10 @@ class FileUpload {
                                     {
                                         $real_path = public_path().'/files/'.$v2['file']['dir'].'/'.$file;
                                         $new_path = public_path().'/files/'.$v2['file']['dir_real'].'/'.$file;
+                                        if(!file_exists(public_path().'/files/'.$v2['file']['dir_real'].'/'))
+                                        {
+                                            mkdir(public_path().'/files/'.$v2['file']['dir_real'].'/',0777);
+                                        }
                                         if(file_exists($real_path))
                                         {
                                             rename($real_path,$new_path);
