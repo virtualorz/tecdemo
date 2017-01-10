@@ -72,10 +72,24 @@
 								<td>
 								<a href="{{ asset('member/bill/detail/id-'.$v['uid'].'-'.$v['salt']) }}">{{ $v['pi_name'] }}</a>
 								</td>
-								<td><span class="label label-default">已列印</span></td>
-								<td><span class="label label-default">已繳費</span></td>
+								<td>
+									@if($v['print_member_id'] == null)
+									<span class="label label-success">未列印</span>
+									@else
+									<span class="label label-default">已列印</span>
+									@endif
+								</td>
+								<td>
+									@if($v['payment_sum'] == $v['total'])
+									<span class="label label-default">已繳費</span>
+									@else
+									<span class="label label-success">未繳費</span>
+									@endif
+								</td>
 								<td class="text-center max767none">
+									@if($v['payment_sum'] != $v['total'])
 									<a href="#"><i class="fa fa-print"></i></a>
+									@endif
 								</td>
 							</tr>
                             @endforeach 
