@@ -20,6 +20,8 @@ class MemberController extends Controller {
         $noticeResult = DB::table('member_notice_log')
                             ->select('member_notice_log.member_notice_log_id',
                                         DB::raw('DATE_FORMAT(member_notice_log.created_at, "%Y.%m.%d") as created_at'),
+                                        'member_notice_log.uid',
+                                        'member_notice_log.salt',
                                         'member_notice_log.title',
                                         'member_notice_log.email',
                                         'member_notice_log.is_read',
