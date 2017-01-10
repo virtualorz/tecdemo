@@ -22,35 +22,35 @@
 					  <div class="form-group">
 						<label class="col-sm-3 control-label">E-Mail</label>
 						<div class="col-sm-8">
-						  <input type="email" name="email" id="data-email" class="form-control" placeholder="Email">
+						  <input type="email" name="email" id="data-email" class="form-control required" placeholder="Email">
 						</div>
 					  </div>
 					  
 					  <div class="form-group">
 						<label class="col-sm-3 control-label">登入密碼</label>
 						<div class="col-sm-8">
-						  <input type="password" name="password" id="data-password"class="form-control" placeholder="Password">
+						  <input type="password" name="password" id="data-password"class="form-control required" placeholder="Password">
 						</div>
 					  </div>
 					  
 					  <div class="form-group">
 						<label class="col-sm-3 control-label">確認密碼</label>
 						<div class="col-sm-8">
-						  <input type="password" name="passwordR" id="data-passwordR" class="form-control" placeholder="Password">
+						  <input type="password" name="passwordR" id="data-passwordR" class="form-control required" placeholder="Password">
 						</div>
 					  </div>
 					  
 					  <div class="form-group">
 						<label class="col-sm-3 control-label">姓名</label>
 						<div class="col-sm-8">
-						  <input type="text" name="name" id="data-name" class="form-control" placeholder="">
+						  <input type="text" name="name" id="data-name" class="form-control required" placeholder="">
 						</div>
 					  </div>
 					  
 					  <div class="form-group">
 						<label class="col-sm-3 control-label">學號/證件卡號</label>
 						<div class="col-sm-8">
-						  <input type="text" name="card_id_number" id="data-card_id_number" class="form-control" placeholder="">
+						  <input type="text" name="card_id_number" id="data-card_id_number" class="form-control required" placeholder="">
 						</div>
 					  </div>
 					  
@@ -58,14 +58,14 @@
 						<label class="col-sm-3 control-label">身份證字號
 						</label>
 						<div class="col-sm-8">
-						  <input type="text" name="id_number" id="data-id_number" class="form-control" placeholder="">
+						  <input type="text" name="id_number" id="data-id_number" class="form-control required" placeholder="">
 						</div>
 					  </div>
 					  
 					  <div class="form-group">
 						<label class="col-sm-3 control-label">機關/學校</label>
 						<div class="col-sm-8">
-						  	<select class="form-control" name="organize" id="data-organize">
+						  	<select class="form-control required" name="organize" id="data-organize">
                                 <option value="">{{trans('page.text.select_item')}}</option>
                                 @foreach($organizeResult as $k=>$v)
                                 <option value="{{$v['id']}}">{{$v['name']}}</option>
@@ -77,7 +77,7 @@
 					  <div class="form-group">
 						<label class="col-sm-3 control-label">系所/部門</label>
 						<div class="col-sm-8">
-						  	<select class="form-control" name="department" id="data-department">
+						  	<select class="form-control required" name="department" id="data-department">
                                 <option value="">{{trans('page.text.select_item')}}</option>
 							</select>
 						</div>
@@ -93,7 +93,7 @@
 					  <div class="form-group">
 						<label class="col-sm-3 control-label">指導教授</label>
                         <div class="col-sm-8">
-						  	<select class="form-control" name="pi" id="data-pi">
+						  	<select class="form-control required" name="pi" id="data-pi">
                                 <option value="">{{trans('page.text.select_item')}}</option>
 							</select>
 					    </div>
@@ -102,14 +102,14 @@
                      <div class="form-group">
 						<label class="col-sm-3 control-label">聯絡電話</label>
 						<div class="col-sm-8">
-						  <input type="text" name="phone" id="data-phone" class="form-control" placeholder="">
+						  <input type="text" name="phone" id="data-phone" class="form-control required" placeholder="">
 						</div>
 					  </div>
 
                       <div class="form-group">
 						<label class="col-sm-3 control-label">實驗室電話</label>
 						<div class="col-sm-8">
-						  <input type="text" name="lab_phone" id="data-lab_phone" class="form-control" placeholder="">
+						  <input type="text" name="lab_phone" id="data-lab_phone" class="form-control required" placeholder="">
 						</div>
 					  </div>
 					  	
@@ -117,7 +117,7 @@
 							<div class="col-sm-12 text-center">
 								<div class="checkbox"> 
 									<label> 
-										<input type="checkbox" name="member_agree"> 我同意<a href="#l" Target="_blank">會員使用條款</a>
+										<input type="checkbox" name="member_agree" class='required'> 我同意<a href="{{ asset('policy')}}" Target="_blank">會員使用條款</a>
 									</label> 
 								</div>
 							</div>

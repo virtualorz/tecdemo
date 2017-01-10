@@ -497,7 +497,7 @@ return [
             ],
             'detail' => [
                 '_prop' => [
-                    'permission' => SitemapAccess::ACCESS_REQUIRED,
+                    'permission' => SitemapAccess::LOGIN_REQUIRED,
                     'route' => [
                         'method' => 'get',
                         'param' => '{id}',
@@ -527,6 +527,17 @@ return [
                     'attr' => [
                         'uses' => 'MemberInstrumentController@ajax_cancel',
                     ],
+                ],
+            ],
+        ],
+    ],
+    'policy' => [
+        '_prop' => [
+            'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+            'route' => [
+                'method' => 'get',
+                'attr' => [
+                    'uses' => 'PolicyController@index',
                 ],
             ],
         ],
