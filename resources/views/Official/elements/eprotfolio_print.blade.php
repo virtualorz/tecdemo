@@ -91,19 +91,6 @@
 								<td class="text-center">{{ $v['score'] }}</td>
 							</tr>  
                             @endforeach
-							
-							<tr> 
-							  	<td>2014.6.2</td>
-							  	<td>EndNote 書目管理軟體工作坊</td>
-							  	<td>TC3 蛋白質體</td>
-							  	<td class="text-center">1.5</td>
-							  	<td class="text-center">初階</td>
-								<td>出席 /<br>
-							    通過 /<br>
-							    考試後通過</td>
-								<td class="text-center">-</td>
-								<td class="text-center">-</td>
-							</tr> 
 						</tbody> 
 					</table>
 				  	</div>
