@@ -37,6 +37,18 @@ trait ViewButton {
             return '';
         }
     }
+
+    private function _btn_addv2($param) {
+        $html = '<button type="button" class="btn btn-default btnAdd btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('add')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('add')->getPath()) . '">' . e(trans('page.btn.add')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('add')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
     
     private function _btn_edit($param) {
         $html = '<button type="button" class="btn btn-default btnEdit btnLink btnSetUrlBack" '

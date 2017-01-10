@@ -32,6 +32,14 @@ class InstrumentRateController extends Controller {
         
         $this->view->with('listResult', $listResult);
         $this->view->with('pagination', $pagination);
+        $this->view->with('id', $id);
+        return $this->view;
+    }
+
+    public function add() {
+
+        $this->view->with('id', Route::input('id', 0));
+
         return $this->view;
     }
 
@@ -63,6 +71,70 @@ class InstrumentRateController extends Controller {
     }
 
     ##
+
+    public function ajax_add() {
+        $validator = Validator::make(Request::all(), [
+                    'start_dt' => 'string|required',
+                    'rate_type' => 'string|required',
+                    'member_1' => 'numeric|required',
+                    'member_2' => 'numeric|required',
+                    'member_3' => 'numeric|required',
+                    'member_4' => 'numeric|required',
+                    'rate' => 'numeric|required',
+        ]);
+        if ($validator->fails()) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = $validator->errors();
+
+            return $this->view;
+        }
+
+        try {
+            DB::transaction(function(){
+
+                $id = DB::table('instrument_rate')
+                        ->insertGetId(
+                            array('instrument_rate_id'=>1,
+                                    'instrument_data_id'=>Request::input('id'),
+                                    'created_at'=>date('Y-m-d H:i:s'),
+                                    'start_dt'=>Request::input('start_dt'),
+                                    'rate_type'=>Request::input('rate_type'),
+                                    'member_1'=>Request::input('member_1'),
+                                    'member_2'=>Request::input('member_2'),
+                                    'member_3'=>Request::input('member_3'),
+                                    'member_4'=>Request::input('member_4'),
+                                    'rate'=>Request::input('rate'),
+                                    'remark'=>Request::input('remark'),
+                                    'disabled'=>0,
+                                    'create_admin_id'=>User::id(),
+                            )
+                        );
+                $result_after = DB::table('instrument_rate')
+                                ->where('instrument_rate_id',1)
+                                ->where('instrument_data_id',Request::input('id'))
+                                ->get();
+                DBProcedure::writeLog([
+                    'table' => 'instrument_rate',
+                    'operator' => DBOperator::OP_INSERT,
+                    'data_after' => isset($result_after[0]) ? $result_after[0] : [],
+                    'admin_id' => User::id()
+                ]);
+
+            });
+
+        } catch (\PDOException $ex) {
+            DB::rollBack();
+
+            \Log::error($ex->getMessage());
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.database');
+            return $this->view;
+        }
+
+        $this->view['msg'] = trans('message.success.edit');
+        return $this->view;
+    }
 
     public function ajax_edit() {
         $validator = Validator::make(Request::all(), [

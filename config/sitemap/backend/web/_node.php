@@ -1106,6 +1106,29 @@ return [
                             ],
                         ],
                     ],
+                    'add' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::ACCESS_REQUIRED,
+                            'route' => [
+                                'method' => 'get',
+                                'param' => '{id}',
+                                'attr' => [
+                                    'uses' => 'InstrumentRateController@add',
+                                ],
+                            ],
+                        ],
+                        'submit' => [
+                            '_prop' => [
+                                'permission' => SitemapAccess::INHERIT,
+                                'route' => [
+                                    'method' => 'post',
+                                    'attr' => [
+                                        'uses' => 'InstrumentRateController@ajax_add',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                     'edit' => [
                         '_prop' => [
                             'permission' => SitemapAccess::ACCESS_REQUIRED,

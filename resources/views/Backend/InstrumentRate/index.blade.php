@@ -12,7 +12,9 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-            {!! ViewHelper::button('add') !!}
+            @if(count($listResult) == 0)
+            {!! ViewHelper::button('addv2',['id' => $id]) !!}
+            @endif
             {!! ViewHelper::button('delete') !!}
             </div>
 
