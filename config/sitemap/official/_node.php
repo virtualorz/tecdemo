@@ -383,6 +383,17 @@ return [
                     ],
                 ],
             ],
+            'print' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::LOGIN_REQUIRED,
+                    'route' => [
+                        'method' => 'get',
+                        'attr' => [
+                            'uses' => 'MemberEportfolioController@print_protofolio',
+                        ],
+                    ],
+                ],
+            ],
         ],
         'message' => [
             '_prop' => [
