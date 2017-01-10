@@ -26,13 +26,13 @@
                                 <td>{{ date('Y/m/d') }}</td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.start_dt') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.start_dt') }}</th>
                                 <td>
                                     <input type="text" name="start_dt" id="data-start_dt" class="form-control required datepicker">
                                 </td>
                             </tr>  
                             <tr>
-                                <th>{{ trans('validation.attributes.rate_type') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.rate_type') }}</th>
                                 <td>
                                     <label class="check"><input type="radio" name="rate_type" id="data_rate_type_1" class="iradio required" value="1" @if($dataResult['rate_type'] == 1) checked @endif /> {{ trans('enum.rate_type.1') }}</label>
                                     <label class="check"><input type="radio" name="rate_type" id="data_rate_type_2" class="iradio required" value="2" @if($dataResult['rate_type'] == 2) checked @endif /> {{ trans('enum.rate_type.2') }}</label> 
@@ -40,31 +40,31 @@
                                 </td>
                             </tr>  
                             <tr>
-                                <th>{{ trans('validation.attributes.rate1') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.rate1') }}</th>
                                 <td>
                                     <input type="number" name="member_1" id="data-member_1" class="form-control required" value="{{ $dataResult['member_1'] }}">
                                 </td>
                             </tr> 
                             <tr>
-                                <th>{{ trans('validation.attributes.rate2') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.rate2') }}</th>
                                 <td>
                                     <input type="number" name="member_2" id="data-member_2" class="form-control required" value="{{ $dataResult['member_2'] }}">
                                 </td>
                             </tr> 
                             <tr>
-                                <th>{{ trans('validation.attributes.rate3') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.rate3') }}</th>
                                 <td>
                                     <input type="number" name="member_3" id="data-member_3" class="form-control required" value="{{ $dataResult['member_3'] }}">
                                 </td>
                             </tr> 
                             <tr>
-                                <th>{{ trans('validation.attributes.rate4') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.rate4') }}</th>
                                 <td>
                                     <input type="number" name="member_4" id="data-member_4" class="form-control required" value="{{ $dataResult['member_4'] }}">
                                 </td>
                             </tr>  
                             <tr>
-                                <th>{{ trans('validation.attributes.rate_multi') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.rate_multi') }}</th>
                                 <td>
                                     <input type="number" name="rate" id="data-rate" class="form-control required" value="{{ $dataResult['rate'] }}">
                                 </td>
