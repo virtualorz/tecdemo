@@ -25,7 +25,7 @@
                                 <td>{{ $dataResult['created_at'] }}</td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.site_name') }}</th>
+                                <th>{{ trans('validation.attributes.name') }}</th>
                                 <td>
                                     {{ $dataResult['name'] }}
                                 </td>
