@@ -286,7 +286,7 @@ class InstrumentController extends Controller {
                 }
             }
         }
-        
+        log::error($sectionResult);
         $this->view->with('dataResult', $dataResult[0]);
         $this->view->with('sectionResult', $sectionResult);
         $this->view->with('start_dt', $start_dt);
