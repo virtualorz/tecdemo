@@ -44,7 +44,7 @@
 				
        	  	  
 				  <h3 class="clearfix textcenter">
-				 使用者姓名<span class="small">Name of user</span> : 李馨敏
+				 使用者姓名<span class="small">Name of user</span> : {{ User::get('name')}}
             	  </h3>
             	  
 					<p class="mb--b textcenter">
@@ -69,57 +69,28 @@
 						</thead> 
 
 						<tbody> 
+                            @foreach($activityResult as $k=>$v)
 							<tr> 
-							  	<td>2014.6.2</td>
-							  	<td>EndNote 書目管理軟體工作坊</td>
-							  	<td>TC3 蛋白質體</td>
-							  	<td class="text-center">1.5</td>
-							  	<td class="text-center">初階</td>
+							  	<td>{{ $v['start_dt'] }}</td>
+							  	<td>
+								<a href="{{ asset('activity/reservation/id-'.$v['uid'].'-'.$v['salt']) }}">{{ $v['activity_name'] }}</a>
+								</td>
+							  	<td>{{ $v['plate_formResult_string'] }}</td>
+							  	<td class="text-center">{{ $v['time'] }}</td>
+							  	<td class="text-center">{{ $v['level'] }}</td>
 								<td>出席 /<br>
+                                @if($v['pass_status'] == 1)
 							    通過 /<br>
+                                @else
+                                未通過 /<br>
+                                @endif
+                                @if($v['pass_type'] == 2 && $v['pass_status'] == 1)
 							    考試後通過</td>
-								<td class="text-center">-</td>
-								<td class="text-center">-</td>
+                                @endif
+								<td class="text-center">{{ $v['pass_score'] }}</td>
+								<td class="text-center">{{ $v['score'] }}</td>
 							</tr>  
-							
-							<tr> 
-							  	<td>2014.6.2</td>
-							  	<td>EndNote 書目管理軟體工作坊</td>
-							  	<td>TC3 蛋白質體</td>
-							  	<td class="text-center">1.5</td>
-							  	<td class="text-center">初階</td>
-								<td>出席 /<br>
-							    通過 /<br>
-							    考試後通過</td>
-								<td class="text-center">-</td>
-								<td class="text-center">-</td>
-							</tr> 
-							
-							<tr> 
-							  	<td>2014.6.2</td>
-							  	<td>EndNote 書目管理軟體工作坊</td>
-							  	<td>TC3 蛋白質體</td>
-							  	<td class="text-center">1.5</td>
-							  	<td class="text-center">初階</td>
-								<td>出席 /<br>
-							    通過 /<br>
-							    考試後通過</td>
-								<td class="text-center">-</td>
-								<td class="text-center">-</td>
-							</tr> 
-							
-							<tr> 
-							  	<td>2014.6.2</td>
-							  	<td>EndNote 書目管理軟體工作坊</td>
-							  	<td>TC3 蛋白質體</td>
-							  	<td class="text-center">1.5</td>
-							  	<td class="text-center">初階</td>
-								<td>出席 /<br>
-							    通過 /<br>
-							    考試後通過</td>
-								<td class="text-center">-</td>
-								<td class="text-center">-</td>
-							</tr> 
+                            @endforeach
 							
 							<tr> 
 							  	<td>2014.6.2</td>

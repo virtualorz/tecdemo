@@ -15,7 +15,7 @@
             <div class="col-sm-9 col-xs-12">
 				<h2 class="bigtitle">臺大生科院科技共同空間活動記錄與認證
 					<p>Certification of participation and techniques</p>
-					<a href="#" class="btn btn-default btn-sm floatright max767none"><i class="fa fa-print" aria-hidden="true"></i> 列印</a>
+					<a href="{{ asset('member/e_portfolio/print') }}" class="btn btn-default btn-sm floatright max767none"><i class="fa fa-print" aria-hidden="true"></i> 列印</a>
 				</h2>
 
 				<p class="mb--b">

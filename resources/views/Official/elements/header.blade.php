@@ -38,7 +38,9 @@
                         <a href="{{ asset('member') }}">
                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                          你好，{{User::get('name')}}
+                         @if($message_count != 0)
                          <span class="badge">{{ $message_count }}</span>
+                         @endif
                         </a>
                     </li>
                     

@@ -14,7 +14,7 @@
                 </a>
                 
                 <a href="{{ asset('member/message') }}" class="col-xs-6 contentbtn slmenu04">
-                通知訊息<span class="badge">{{ $message_count }}</span>
+                通知訊息@if($message_count != 0)<span class="badge">{{ $message_count }}</span>@endif
                 </a>
                 
                 <a href="{{ asset('member/activity') }}" class="col-xs-6 contentbtn slmenu05">
