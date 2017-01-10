@@ -144,15 +144,15 @@ class InstrumentReservationController extends Controller {
         $instrument_dataResult = DB::table('instrument_rate')
             ->select('rate_type','member_1','member_2','member_3','member_4','rate')
             ->where('instrument_data_id',$dataResult[0]['instrument_id'])
-            ->where('start_dt','>=',date('Y-m-d'))
+            ->whereDate('start_dt','<=',date('Y-m-d'))
             ->orderBy('instrument_data_id','desc')
-            ->limit('1')
+            ->take(1)
             ->get();
         if(!isset($instrument_dataResult[0]['rate_type']))
         {
             $this->view['result'] = 'no';
             $this->view['msg'] = trans('message.error.validation');
-            $this->view['detail'] = array('message.error.rate_error');
+            $this->view['detail'] = array(trans('message.error.rate_error'));
 
             return $this->view;
         }

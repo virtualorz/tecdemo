@@ -61,10 +61,10 @@ class MemberJournalController extends Controller {
         $validator = Validator::make(Request::all(), [
                     'journal_type' => 'integer|required',
                     'release_dt' => 'date|required',
-                    'topic' => 'string|required|max:50',
-                    'journal' => 'string|required|max:50',
+                    'topic' => 'string|required|max:150',
+                    'journal' => 'string|required|max:150',
                     'author' => 'string|required',
-                    'url' => 'string|required|max:256',
+                    'url' => 'string|required|max:1024',
         ]);
         if ($validator->fails()) {
             $this->view['result'] = 'no';
