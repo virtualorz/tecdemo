@@ -29,7 +29,7 @@
                     <li>
                         <a href="{{ asset('contact_us') }}">聯絡我們</a>
                     </li>
-                    @if(User::Id() == null)
+                    @if(User::id() == null)
                     <li>
                         <a href="{{ asset('login') }}">登入</a>
                     </li>
@@ -38,7 +38,7 @@
                         <a href="{{ asset('member') }}">
                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                          你好，{{User::get('name')}}
-                         <span class="badge">1</span>
+                         <span class="badge">{{ $message_count }}</span>
                         </a>
                     </li>
                     

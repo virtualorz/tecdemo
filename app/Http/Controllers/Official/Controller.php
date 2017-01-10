@@ -57,6 +57,16 @@ abstract class Controller extends BaseController {
             if (view()->exists($viewPath)) {
                 $this->view = view($viewPath);
 
+                //取得未讀訊息數量
+                if(User::id() != null)
+                {
+                    $message_count = DB::table('member_notice_log')
+                            ->where('member_data_id',User::id())
+                            ->where('is_read','0')
+                            ->count();
+                    $this->view->with('message_count', $message_count);
+                }
+
                 if(!Session::has('bts_template'))
                 {
                     $bts_template = array();

@@ -87,7 +87,7 @@ class MemberMessageController extends Controller {
                 return redirect('/');
             }
         }
-        else if($login_uid == '' && User::id() == null)
+        else if(!isset($id[2]) && User::id() == null)
         {
             return redirect('login');
         }
