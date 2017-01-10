@@ -70,7 +70,7 @@
                 @if(count($listResult) !=0)
                 @foreach($listResult as $k=>$v) 
            	  	<div class="tablebox">
-                    <h4 class="mb--b">{{ array_values($listResult)[0][0]['type_name'] }}</h4>
+                    <h4 class="mb--b">{{ $listResult[$k][0]['type_name'] }}</h4>
              		      		<div class="table-responsive">
        							<table class="table table-striped"> 
 									<thead> 
