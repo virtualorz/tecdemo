@@ -33,7 +33,9 @@
                                         @foreach($organizeResult as $k=>$v)
                                         <option value="{{$v['id']}}" @if($v['id'] == $dataResult['organize_id']) selected @endif>{{$v['name']}}</option>
                                         @endforeach
+                                        <option value="-1">{{trans('page.text.other')}}</option>
                                     </select>
+                                    <input type="text" name="other_organize" id="data-other_organize" class="form-control" style="display:none">
                                 </td>
                             </tr>
                             <tr>
@@ -44,7 +46,9 @@
                                         @foreach($departmentResult as $k=>$v)
                                         <option value="{{$v['id']}}" @if($v['id'] == $dataResult['department_id']) selected @endif>{{$v['name']}}</option>
                                         @endforeach
+                                        <option value="-1">{{trans('page.text.other')}}</option>
                                     </select>
+                                    <input type="text" name="other_department" id="data-other_department" class="form-control" style="display:none">
                                 </td>
                             </tr>
                             <tr>
@@ -113,6 +117,15 @@
     $(document).ready(function () {
         initValidation();
         $("#data-organize_id").change(function(){
+            if($(this).val() == '-1')
+            {
+                $("#data-other_organize").show();
+            }
+            else
+            {
+                $("#data-other_organize").val('');
+                $("#data-other_organize").hide();
+            }
             var ajaxProp = {
                 url: "{{ Sitemap::node()->getChildren('get_department')->getUrl() }}",
                 type: "get",
@@ -127,11 +140,23 @@
                     {
                         $html += "<option value='"+response[key]['id']+"'>"+response[key]['name']+"</option>";
                     }
+                    $html += "<option value='-1'>{{trans('page.text.other')}}</option>";
                     $("#data-department_id").html($html);
                     
                 }
             }
             $.ajax(ajaxProp);
+        });
+        $("#data-department_id").change(function(){
+            if($(this).val() == '-1')
+            {
+                $("#data-other_department").show();
+            }
+            else
+            {
+                $("#data-other_department").val('');
+                $("#data-other_department").hide();
+            }
         });
     });
     

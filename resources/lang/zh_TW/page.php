@@ -120,5 +120,6 @@ return [
         'apply_item-pay_way-text' => ' 元整',
         'hello' => '您好',
         'days' => '天',
+        'other' => '其他',
     ]
 ];

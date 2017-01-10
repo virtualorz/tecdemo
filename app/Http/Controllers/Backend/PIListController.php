@@ -136,16 +136,86 @@ class PIListController extends Controller {
             $this->view['detail'] = array(trans('message.error.PI_exist'));
             return $this->view;
         }
+        //檢查學校重複
+        if(Request::input('organize_id','') == '-1' && Request::input('other_organize','') != '')
+        {
+            $organizecount = DB::table('system_organize')
+                            ->where('name',Request::input('other_organize'))
+                            ->count();
+            if($organizecount != 0)
+            {
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.validation');
+                $this->view['detail'] = array(trans('message.error.organize_exist'));
+                return $this->view;
+            }
+        }
+        //檢查系所重複
+        if(Request::input('organize_id','') != '-1' && Request::input('other_department','') != '')
+        {
+            $departmentcount = DB::table('system_department')
+                            ->where('organize_id',Request::input('organize_id'))
+                            ->where('name',Request::input('other_department'))
+                            ->count();
+            if($departmentcount != 0)
+            {
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.validation');
+                $this->view['detail'] = array(trans('message.error.department_exist'));
+                return $this->view;
+            }
+        }
+
+        //新增其他學校資料
+        $organize_id = 0;
+        if(Request::input('organize_id','') == '-1' && Request::input('other_organize','') != '')
+        {
+            $id = DB::table('system_organize')
+                ->insertGetId(
+                            array('created_at'=>date('Y-m-d H:i:s'),
+                                    'updated_at'=>date('Y-m-d H:i:s'),
+                                    'name'=>Request::input('other_organize'),
+                                    'create_admin_id'=>User::id(),
+                                    'update_admin_id'=>User::id()
+                            )
+                        );
+            $organize_id = $id;
+        }
+        //新增其他系所資料
+        $department_id = 0;
+        if(Request::input('organize_id','') != '-1')
+        {
+            $organize_id = Request::input('organize_id');
+        }
+        if(Request::input('department_id','') == '-1' && Request::input('other_department','') != '')
+        {
+            $id = DB::table('system_department')
+                ->insertGetId(
+                            array('created_at'=>date('Y-m-d H:i:s'),
+                                    'updated_at'=>date('Y-m-d H:i:s'),
+                                    'organize_id'=>$organize_id,
+                                    'name'=>Request::input('other_department'),
+                                    'create_admin_id'=>User::id(),
+                                    'update_admin_id'=>User::id()
+                            )
+                        );
+            $department_id = $id;
+        }
+        if(Request::input('department_id','') != '-1')
+        {
+            $department_id = Request::input('department_id');
+        }
+        $param = array($organize_id,$department_id);
 
 
         try {
-            DB::transaction(function(){
+            DB::transaction(function()use($param){
                 $id = DB::table('system_pi_list')
                         ->insertGetId(
                             array('created_at'=>date('Y-m-d H:i:s'),
                                     'updated_at'=>date('Y-m-d H:i:s'),
-                                    'organize_id'=>Request::input('organize_id'),
-                                    'department_id'=>Request::input('department_id'),
+                                    'organize_id'=>$param[0],
+                                    'department_id'=>$param[1],
                                     'name'=>Request::input('name'),
                                     'email'=>Request::input('email'),
                                     'phone'=>Request::input('phone'),
@@ -211,16 +281,87 @@ class PIListController extends Controller {
             return $this->view;
         }
 
+        //檢查學校重複
+        if(Request::input('organize_id','') == '-1' && Request::input('other_organize','') != '')
+        {
+            $organizecount = DB::table('system_organize')
+                            ->where('name',Request::input('other_organize'))
+                            ->count();
+            if($organizecount != 0)
+            {
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.validation');
+                $this->view['detail'] = array(trans('message.error.organize_exist'));
+                return $this->view;
+            }
+        }
+        //檢查系所重複
+        if(Request::input('organize_id','') != '-1' && Request::input('other_department','') != '')
+        {
+            $departmentcount = DB::table('system_department')
+                            ->where('organize_id',Request::input('organize_id'))
+                            ->where('name',Request::input('other_department'))
+                            ->count();
+            if($departmentcount != 0)
+            {
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.validation');
+                $this->view['detail'] = array(trans('message.error.department_exist'));
+                return $this->view;
+            }
+        }
+
+        //新增其他學校資料
+        $organize_id = 0;
+        if(Request::input('organize_id','') == '-1' && Request::input('other_organize','') != '')
+        {
+            $id = DB::table('system_organize')
+                ->insertGetId(
+                            array('created_at'=>date('Y-m-d H:i:s'),
+                                    'updated_at'=>date('Y-m-d H:i:s'),
+                                    'name'=>Request::input('other_organize'),
+                                    'create_admin_id'=>User::id(),
+                                    'update_admin_id'=>User::id()
+                            )
+                        );
+            $organize_id = $id;
+        }
+        //新增其他系所資料
+        $department_id = 0;
+        if(Request::input('organize_id','') != '-1')
+        {
+            $organize_id = Request::input('organize_id');
+        }
+        if(Request::input('department_id','') == '-1' && Request::input('other_department','') != '')
+        {
+            $id = DB::table('system_department')
+                ->insertGetId(
+                            array('created_at'=>date('Y-m-d H:i:s'),
+                                    'updated_at'=>date('Y-m-d H:i:s'),
+                                    'organize_id'=>$organize_id,
+                                    'name'=>Request::input('other_department'),
+                                    'create_admin_id'=>User::id(),
+                                    'update_admin_id'=>User::id()
+                            )
+                        );
+            $department_id = $id;
+        }
+        if(Request::input('department_id','') != '-1')
+        {
+            $department_id = Request::input('department_id');
+        }
+        $param = array($organize_id,$department_id);
+
         try {
-            DB::transaction(function(){
+            DB::transaction(function()use($param){
                 $result_before = DB::table('system_pi_list')
                                     ->where('id',Request::input('id'))
                                     ->get();
                 DB::table('system_pi_list')
                     ->where('id',Request::input('id'))
                     ->update(['updated_at'=>date('Y-m-d H:i:s'),
-                                'organize_id'=>Request::input('organize_id'),
-                                'department_id'=>Request::input('department_id'),
+                                'organize_id'=>$param[0],
+                                'department_id'=>$param[1],
                                 'name'=>Request::input('name'),
                                 'email'=>Request::input('email'),
                                 'phone'=>Request::input('phone'),
