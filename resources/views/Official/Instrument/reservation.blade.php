@@ -70,7 +70,7 @@
                                                 @if( in_array(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$vacationResult) )
                                                 尚未開放
                                                 @elseif(!isset($v['reservation_log']))
-											    <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}">預約</a>
+                                                <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" @if($reservation_count >= $dataResult['reservation_limit']) disabled @endif>預約</a>
                                                 @else 
                                                     @if(array_key_exists(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$v['reservation_log']))
                                                         @if($v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['attend_status'] == '1')
@@ -83,7 +83,7 @@
                                                             @endif
                                                         @endif
                                                     @else
-                                                    <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}">預約</a>
+                                                    <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" @if($reservation_count >= $dataResult['reservation_limit']) disabled @endif>預約</a>
                                                     @endif
                                                 @endif
 

@@ -162,6 +162,9 @@ class InstrumentController extends Controller {
                                         'instrument_data.salt',
                                         'instrument_data.instrument_id',
                                         'instrument_data.name',
+                                        'instrument_data.reservation_limit',
+                                        'instrument_data.cancel_limit',
+                                        'instrument_data.cancel_notice',
                                         'instrument_data.function')
                     ->get();
         $sectionResult = array();
@@ -217,6 +220,12 @@ class InstrumentController extends Controller {
                         ->whereDate('instrument_reservation_data.reservation_dt','>=',$start_dt)
                         ->whereDate('instrument_reservation_data.reservation_dt','<=',$end_dt)
                         ->get();
+            //計算所有本儀器所有預約次數
+            $reservation_count = DB::table('instrument_reservation_data')
+                ->where('instrument_id',$dataResult[0]['id'])
+                ->where('reservation_status','!=','2')
+                ->where('member_id',User::id())
+                ->count();
 
             //排休使用權限設定
             $vacationResult = array();
@@ -290,6 +299,7 @@ class InstrumentController extends Controller {
         $this->view->with('id', Route::input('id', '0-0'));
         $this->view->with('search_date', $search_date);
         $this->view->with('vacationResult', $vacationResult);
+        $this->view->with('reservation_count', $reservation_count);
 
         return $this->view;
     }

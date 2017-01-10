@@ -223,7 +223,7 @@ class MemberBillController extends Controller {
         }
         $suppliesResult = DB::table('instrument_supplies')
                             ->select('instrument_supplies.*')
-                            ->get();log::error($reservationlogResult);
+                            ->get();
         
         foreach($reservationlogResult as $k=>$v)
         {
