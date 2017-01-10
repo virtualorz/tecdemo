@@ -28,7 +28,7 @@
                             <tr>
                                 <th>{{ trans('validation.attributes.page_id') }}</th>
                                 <td>
-                                    {{ $dataResult['uid'] }}-{{ $dataResult['salt'] }}
+                                    {{ date('ym',strtotime($dataResult['pay_year'].'-'.$dataResult['pay_month'].'-01')) }}{{ $dataResult['salt'] }}
                                 </td>
                             </tr>
                             <tr>

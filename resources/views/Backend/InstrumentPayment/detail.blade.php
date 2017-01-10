@@ -27,7 +27,7 @@
                             <tr>
                                 <th>{{ trans('validation.attributes.page_id') }}</th>
                                 <td>
-                                    {{ $dataResult['uid'] }}-{{ $dataResult['salt'] }}
+                                    {{ date('ym',strtotime($dataResult['pay_year'].'-'.$dataResult['pay_month'].'-01')) }}{{ $dataResult['salt'] }}
                                 </td>
                             </tr>
                             <tr>
@@ -47,7 +47,7 @@
                                         <tbody>
                                             @foreach($reservationlogResult as $k=>$v)
                                             <tr>
-                                                <td>{{ $v['uid'] }}-{{ $v['salt'] }}</td>
+                                                <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
                                                 <td>{{ $v['use_dt_start'] }}-{{ $v['use_dt_end'] }}</td>
                                                 <td>{{ $v['member_name'] }}</td>
                                                 <td>{{ $v['instrument_name'] }}</td>
@@ -77,7 +77,7 @@
                                             @foreach($reservationlogResult as $k=>$v)
                                                 @foreach($v['supplies_JOSN'] as $k1=>$v1)
                                                 <tr>
-                                                    <td>{{ $v['uid'] }}-{{ $v['salt'] }}</td>
+                                                    <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
                                                     @foreach($suppliesResult as $k2=>$v2)
                                                         @if($v2['id'] == $v1['id'])
                                                         <td>{{ $v2['name'] }}</td>

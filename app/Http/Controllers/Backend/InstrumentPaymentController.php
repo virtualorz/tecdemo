@@ -237,6 +237,7 @@ class InstrumentPaymentController extends Controller {
                                     'payment_reservation_log.pay_year',
                                     'payment_reservation_log.pay_month',
                                     'instrument_reservation_data.*',
+                                    DB::raw('DATE_FORMAT(instrument_reservation_data.create_date, "%Y%m") as create_date_ym'),
                                     'instrument_data.name as instrument_name',
                                     'member_data.name as member_name',
                                     'member_data.type as member_type')
@@ -253,7 +254,6 @@ class InstrumentPaymentController extends Controller {
                             ->get();
         $suppliesResult = DB::table('instrument_supplies')
                             ->select('instrument_supplies.*')
-                            ->where('enable','1')
                             ->get();
 
         $this->view->with('dataResult', $dataResult[0]);
@@ -285,6 +285,7 @@ class InstrumentPaymentController extends Controller {
                                     'payment_reservation_log.supplies_JOSN',
                                     'payment_reservation_log.supplies_total',
                                     'instrument_reservation_data.*',
+                                    DB::raw('DATE_FORMAT(instrument_reservation_data.create_date, "%Y%m") as create_date_ym'),
                                     'instrument_data.name as instrument_name',
                                     'member_data.name as member_name',
                                     'member_data.type as member_type')
