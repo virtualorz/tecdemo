@@ -396,7 +396,7 @@ return [
             ],
             'detail' => [
                 '_prop' => [
-                    'permission' => SitemapAccess::LOGIN_REQUIRED,
+                    'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
                     'route' => [
                         'method' => 'get',
                         'param' => '{id}',

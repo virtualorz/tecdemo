@@ -16,6 +16,7 @@ use SitemapAccess;
 use Log;
 use FileUpload;
 use Mail;
+use Crypt;
 
 class MemberProtofolioController extends Controller {
 
@@ -573,7 +574,9 @@ class MemberProtofolioController extends Controller {
 
                 $id = DB::table('member_notice_log')
                         ->insertGetId(
-                            array('member_data_id'=>Request::input('id'),
+                            array('uid'=>'-',
+                                    'salt'=>'-',
+                                    'member_data_id'=>Request::input('id'),
                                     'member_notice_log_id'=>$member_notice_log_id,
                                     'created_at'=>date('Y-m-d H:i:s'),
                                     'email'=>Request::input('email'),
@@ -583,6 +586,35 @@ class MemberProtofolioController extends Controller {
                                     'create_admin_id'=>User::id()
                             )
                         );
+                //製作uid以及salt
+                $date = date('Y-m-d H:i:s').$id;
+                $salt = substr(md5($date),5,5);
+                $uid = md5($salt.$date);
+                
+                DB::table('member_notice_log')
+                    ->where('member_data_id',Request::input('id'))
+                    ->where('member_notice_log_id',$member_notice_log_id)
+                    ->update(['uid'=>$uid,
+                                'salt'=>$salt
+                    ]);
+                
+                //取得會員個人資料
+                $member_data = DB::table('member_data')
+                        ->select('name','email','password')
+                        ->where('id',Request::input('id'))
+                        ->first();
+                if(count($member_data) !=0)
+                {
+                    $login_uid = Crypt::encrypt($member_data['email'].'_'.$member_data['password']);
+                    
+                    $dataResult = array('user'=>$member_data['name'],'url'=> asset('/member/message/detail/id-'.$uid.'-'.$salt.'-'.$login_uid));
+                    Mail::send('emails.notice', [
+                                'dataResult' => $dataResult,
+                                    ], function ($m) {
+                                $m->to(Request::input('email'), '');
+                                $m->subject("系統通知訊息");
+                    });
+                }
             });
 
         } catch (DBProcedureException $e) {

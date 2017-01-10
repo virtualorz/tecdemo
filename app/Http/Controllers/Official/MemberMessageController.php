@@ -13,6 +13,9 @@ use FileUpload;
 use Log;
 use User;
 use Validator;
+use Crypt;
+use Sitemap;
+use SitemapAccess;
 
 class MemberMessageController extends Controller {
 
@@ -20,6 +23,8 @@ class MemberMessageController extends Controller {
         $listResult = DB::table('member_notice_log')
                             ->select('member_notice_log.member_notice_log_id',
                                         DB::raw('DATE_FORMAT(member_notice_log.created_at, "%Y.%m.%d") as created_at'),
+                                        'member_notice_log.uid',
+                                        'member_notice_log.salt',
                                         'member_notice_log.title',
                                         'member_notice_log.email',
                                         'member_notice_log.is_read',
@@ -37,17 +42,67 @@ class MemberMessageController extends Controller {
     }
 
     public function detail() {
-        $id = Route::input('id');
+        $id = explode('-',Route::input('id'));
+        if(isset($id[2]))
+        {
+            $login_uid = explode('_',Crypt::decrypt($id[2]));
+            $dataResult = DB::table('member_data')
+                            ->select('id','email','name','title','start_dt','limit_month','enable','pi_list_id')
+                            ->where('email',$login_uid[0])
+                            ->where('password',$login_uid[1])
+                            ->first();
+            if(count($dataResult) !=0)
+            {
+                if($dataResult['enable'] == 0 || strtotime($dataResult['start_dt']) > strtotime(date('Y-m-d')) || strtotime("+".$dataResult['limit_month']." month",strtotime($dataResult['start_dt'])) < strtotime(date('Y-m-d')))
+                {
+                    return redirect('/');
+                }
+
+                //取得儀器使用權限
+                $instrumentPermission = array();
+                $instrumentResult = DB::table('member_permission')
+                            ->select('permission')
+                            ->where('member_data_id',$dataResult['id'])
+                            ->get();
+                foreach($instrumentResult as $k=>$v)
+                {
+                    array_push($instrumentPermission,$v['permission']);
+                }
+
+                $dataUser = [
+                    'id' => $dataResult['id'],
+                    'account' => $dataResult['email'],
+                    'name' => $dataResult['name'],
+                    'title' => $dataResult['title'],
+                    'pi_list_id' => $dataResult['pi_list_id'],
+                    'permission' => Sitemap::getPermissionAll('official', SitemapAccess::SUPER_REQUIRED),
+                    'instrumentPermission' => $instrumentPermission,
+                ];
+
+                User::login($dataUser);
+                User::cacheClear();
+            }
+            else
+            {
+                return redirect('/');
+            }
+        }
+        else if($login_uid == '' && User::id() == null)
+        {
+            return redirect('login');
+        }
         //設定為已讀
         DB::table('member_notice_log')
+            ->where('uid',$id[0])
+            ->where('salt',$id[1])
             ->where('member_data_id',User::id())
-            ->where('member_notice_log_id',$id)
             ->update(['is_read'=>1]);
         $dataResult = DB::table('member_notice_log')
                             ->select('member_notice_log.*',
                                     DB::raw('DATE_FORMAT(member_notice_log.created_at, "%Y.%m.%d") as created_at'))
+                            ->where('uid',$id[0])
+                            ->where('salt',$id[1])
                             ->where('member_data_id',User::id())
-                            ->where('member_notice_log_id',$id)
                             ->get();
         if(count($dataResult) > 0)
         {
