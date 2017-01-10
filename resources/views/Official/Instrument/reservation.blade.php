@@ -74,7 +74,7 @@
                                                 @else 
                                                     @if(array_key_exists(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$v['reservation_log']))
                                                         @if($v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['attend_status'] == '1')
-                                                        {{$v1['member_name']}} 使用中
+                                                        {{$v['member_name']}} 使用中
                                                         @elseif($v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['reservation_status'] == '1' || $v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['reservation_status'] == '0')
                                                             @if($v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['member_id'] == User::Id())
                                                             <a href="#" class="btn btn-default reservation" data-id="0_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" @if(strtotime('+'.$i.' days',strtotime($start_dt_org)) <= strtotime($dataResult['cancel_limit_dt'])) disabled @endif>取消</a>
