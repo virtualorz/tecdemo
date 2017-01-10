@@ -70,7 +70,7 @@
 							<tr> 
                               <td>{{ $v['pay_year'] }}.{{ $v['pay_month'] }}</td> 
 								<td>
-								<a href="#">{{ $v['pi_name'] }}</a>
+								<a href="{{ asset('member/bill/detail/id-'.$v['uid'].'-'.$v['salt']) }}">{{ $v['pi_name'] }}</a>
 								</td>
 								<td><span class="label label-default">已列印</span></td>
 								<td><span class="label label-default">已繳費</span></td>

@@ -71,7 +71,7 @@ class InstrumentController extends Controller {
                 }
                 array_push($listResult[$v['instrument_type_id']],$v);
             }
-        }log::error($listResult);
+        }
 
         $this->view->with('searchResult', $searchResult);
         $this->view->with('listResult', $listResult);
