@@ -48,7 +48,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.instrument_id') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.instrument_id') }}</th>
                                 <td>
                                     <input type="text" name="instrument_id" id="data-instrument_id" class="form-control required" value="{{ $dataResult['instrument_id'] }}">
                                 </td>
