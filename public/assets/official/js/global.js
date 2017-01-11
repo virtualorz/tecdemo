@@ -29,7 +29,10 @@ var ajaxRequest = {
         },
         ok: function (response) {
             var detailText = ajaxRequest.getDetailText(response.detail);
-
+            if(detailText == "")
+            {
+                detailText = "<br>";
+            }
             var message = $('div.growlUI');
             $('div.growlUI').find("h1").html(response.msg);
             $('div.growlUI').find("h2").html(detailText);
