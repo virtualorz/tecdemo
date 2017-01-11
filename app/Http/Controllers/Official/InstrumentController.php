@@ -225,7 +225,8 @@ class InstrumentController extends Controller {
             //計算所有本儀器所有預約次數
             $reservation_count = DB::table('instrument_reservation_data')
                 ->where('instrument_id',$dataResult[0]['id'])
-                ->where('reservation_status','!=','2')
+                ->where('reservation_status',1)
+                ->whereNull('attend_status')
                 ->where('member_id',User::id())
                 ->count();
 
@@ -301,7 +302,7 @@ class InstrumentController extends Controller {
         $this->view->with('id', Route::input('id', '0-0'));
         $this->view->with('search_date', $search_date);
         $this->view->with('vacationResult', $vacationResult);
-        $this->view->with('reservation_count', $reservation_count);
+        $this->view->with('reservation_count', $reservation_count);log::error($reservation_count);
 
         return $this->view;
     }
