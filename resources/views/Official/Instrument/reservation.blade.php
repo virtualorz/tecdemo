@@ -97,7 +97,7 @@
 				</div>
          		
           		<div class="text-center">	
-          	  	<a href="index.html" class="btn btn-sm btn-default">
+          	  	<a href="{{ asset('instrument') }}" class="btn btn-sm btn-default">
           	  	<i class="fa fa-angle-left"></i> 
           	  	回上一頁
           	  	</a>
