@@ -21,7 +21,7 @@ var ajaxRequest = {
                             backgroundColor: '#000', 
                             '-webkit-border-radius': '10px', 
                             '-moz-border-radius': '10px', 
-                            opacity: .6, 
+                            opacity: message_opacity, 
                             color: '#fff' 
                         } 
                     }); 
@@ -53,7 +53,7 @@ var ajaxRequest = {
                             backgroundColor: '#000', 
                             '-webkit-border-radius': '10px', 
                             '-moz-border-radius': '10px', 
-                            opacity: .6, 
+                            opacity: message_opacity, 
                             color: '#fff' 
                         } 
                     }); 
@@ -81,7 +81,7 @@ var ajaxRequest = {
                             backgroundColor: '#000', 
                             '-webkit-border-radius': '10px', 
                             '-moz-border-radius': '10px', 
-                            opacity: .6, 
+                            opacity: message_opacity, 
                             color: '#fff' 
                         } 
                     }); 
@@ -109,7 +109,7 @@ var ajaxRequest = {
                             backgroundColor: '#000', 
                             '-webkit-border-radius': '10px', 
                             '-moz-border-radius': '10px', 
-                            opacity: .6, 
+                            opacity: message_opacity, 
                             color: '#fff' 
                         } 
                     }); 

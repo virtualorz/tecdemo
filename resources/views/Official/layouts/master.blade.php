@@ -61,6 +61,7 @@
                     var appLocale = {!! json_encode($_appLocale) !!};
                     var message_width = 350;
                     var message_top = 100;
+                    var message_opacity = 0.6;
                     
         </script> 
     </head>
@@ -146,13 +147,15 @@
     {
         if($(document).width() <768)
         {
-            message_width = parseInt($(document).width())-20;
+            message_width = parseInt($(document).width())-30;
             message_top = 60;
+            message_opacity = 0.8;
         }
         else
         {
             message_width = 350;
             message_top = 100;
+            message_opacity = 0.6
         }
     }
     
