@@ -93,16 +93,22 @@
                             </td>
                             <td>{{ $v['reservation_dt'] }}</td>
                             <td>{{ $v['start_time'] }} - {{ $v['end_time'] }}</td>
-                            <td>{{ trans('enum.reservation_status.'.$v['reservation_status']) }}</td>
+                            <td>
+                                @if($v['attend_status'] === 0)
+                                {{ trans('enum.attend_status.'.$v['attend_status']) }}
+                                @else
+                                {{ trans('enum.reservation_status.'.$v['reservation_status']) }}
+                                @endif
+                            </td>
                             <td>{{ $v['instrument_id'] }}</td>
                             <td>{{ $v['name'] }}</td>
                             <td>{{ $v['member_name'] }}</td>
                             <td>
-                                @if($v['attend_status'] == null && $v['reservation_status'] !== null && $v['reservation_status'] !== 2)
+                                @if($v['attend_status'] == null && $v['attend_status'] !== 0 && $v['reservation_status'] !== null && $v['reservation_status'] !== 2 )
                                 {!! ViewHelper::button('complete', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date']]) !!}
                                 {!! ViewHelper::button('dcomplete', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date'],'use_dt_start'=>$v['reservation_dt'].' '.$v['start_time'],'use_dt_end'=>$v['reservation_dt'].' '.$v['end_time']]) !!}
                                 @endif
-                                @if($v['reservation_status'] == 1 && $v['reservation_status'] !== 2)
+                                @if($v['reservation_status'] == 1 && $v['reservation_status'] !== 2 && $v['attend_status'] !== 0)
                                 {!! ViewHelper::button('notattend', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date']]) !!}
                                 @endif
                                 @if($v['reservation_status'] !== null && $v['reservation_status'] == 0 && $v['reservation_status'] !== 2)
