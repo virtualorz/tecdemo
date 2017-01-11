@@ -146,6 +146,7 @@
 
         $(".reservation").click(function(e){console.log("{{ Sitemap::node()->getChildren('submit')->getUrl() }}");
             e.preventDefault();
+            $.blockUI({ message: null }); 
             var ajaxProp = {
                 url: "{{ Sitemap::node()->getChildren('submit')->getUrl() }}",
                 type: "post",
