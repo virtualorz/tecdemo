@@ -66,6 +66,10 @@ abstract class Controller extends BaseController {
                             ->count();
                     $this->view->with('message_count', $message_count);
                 }
+                else
+                {
+                    $this->view->with('message_count', '0');
+                }
 
                 if(!Session::has('bts_template'))
                 {

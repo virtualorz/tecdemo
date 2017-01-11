@@ -45,7 +45,11 @@ class MemberMessageController extends Controller {
         $id = explode('-',Route::input('id'));
         if(isset($id[2]))
         {
-            $login_uid = explode('_',Crypt::decrypt($id[2]));
+            $login_uid = DB::table('member_login_hash')
+                    ->select('uid')
+                    ->where('hash',$id[2])
+                    ->first();
+            $login_uid = explode('_',Crypt::decrypt($login_uid['uid']));
             $dataResult = DB::table('member_data')
                             ->select('id','email','name','title','start_dt','limit_month','enable','pi_list_id')
                             ->where('email',$login_uid[0])

@@ -729,10 +729,33 @@ class InstrumentPaymentController extends Controller {
                         ->update(['uid'=>$uid,
                                     'salt'=>$salt
                         ]);
-
-                    $login_uid = Crypt::encrypt($v['email'].'_'.$v['password']);
+                    //寄出訊息
+                    $login_hash = DB::table('member_login_hash')
+                        ->select('hash')
+                        ->where('email',$v['email'])
+                        ->where('password',$v['password'])
+                        ->first();
+                    if(count($login_hash) == 0)
+                    {
+                        $login_uid = Crypt::encrypt($v['email'].'_'.$v['password']);
+                        $hash = md5($login_uid);
+                        DB::table('member_login_hash')
+                            ->where('email',$v['email'])
+                            ->delete();
+                        DB::table('member_login_hash')
+                            ->insert(array(
+                                    'email'=>$v['email'],
+                                    'password'=>$v['password'],
+                                    'hash'=>$hash,
+                                    'uid'=>$login_uid
+                                    ));
+                    }
+                    else
+                    {
+                        $hash = $login_hash['hash'];
+                    }
                     
-                    $dataResult = array('user'=>$v['name'],'pay_month'=> $id[1].'年'.$id[2].'月','url'=> asset('/member/message/detail/id-'.$uid.'-'.$salt.'-'.$login_uid));
+                    $dataResult = array('user'=>$v['name'],'pay_month'=> $id[1].'年'.$id[2].'月','url'=> asset('/member/message/detail/id-'.$uid.'-'.$salt.'-'.$hash));
                     Mail::send('emails.reminder', [
                                 'dataResult' => $dataResult,
                                     ], function ($m)use($v) {

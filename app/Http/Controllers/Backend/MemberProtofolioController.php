@@ -605,9 +605,32 @@ class MemberProtofolioController extends Controller {
                         ->first();
                 if(count($member_data) !=0)
                 {
-                    $login_uid = Crypt::encrypt($member_data['email'].'_'.$member_data['password']);
+                    $login_hash = DB::table('member_login_hash')
+                        ->select('hash')
+                        ->where('email',$member_data['email'])
+                        ->where('password',$member_data['password'])
+                        ->first();
+                    if(count($login_hash) == 0)
+                    {
+                        $login_uid = Crypt::encrypt($member_data['email'].'_'.$member_data['password']);
+                        $hash = md5($login_uid);
+                        DB::table('member_login_hash')
+                            ->where('email',$member_data['email'])
+                            ->delete();
+                        DB::table('member_login_hash')
+                            ->insert(array(
+                                    'email'=>$member_data['email'],
+                                    'password'=>$member_data['password'],
+                                    'hash'=>$hash,
+                                    'uid'=>$login_uid
+                                    ));
+                    }
+                    else
+                    {
+                        $hash = $login_hash['hash'];
+                    }
                     
-                    $dataResult = array('user'=>$member_data['name'],'url'=> asset('/member/message/detail/id-'.$uid.'-'.$salt.'-'.$login_uid));
+                    $dataResult = array('user'=>$member_data['name'],'url'=> asset('/member/message/detail/id-'.$uid.'-'.$salt.'-'.$hash));
                     Mail::send('emails.notice', [
                                 'dataResult' => $dataResult,
                                     ], function ($m) {
