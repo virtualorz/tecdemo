@@ -335,6 +335,25 @@ class InstrumentPaymentController extends Controller {
         return $this->view;
     }
 
+    public function reminder() {
+        $id = explode('_',Route::input('id', '0_0_0'));
+        $listResult = DB::table('payment_reminder_log')
+                            ->select(DB::raw('DATE_FORMAT(payment_reminder_log.created_at, "%Y.%m/%d") as created_at'),
+                                    'payment_reminder_log.email',
+                                    'member_admin.name as create_admin_name'
+                            )
+                            ->leftJoin('member_admin','payment_reminder_log.crete_admin_id','=','member_admin.id')
+                            ->where('pi_list_id',$id[0])
+                            ->where('pay_year',$id[1])
+                            ->where('pay_month',$id[2])
+                            ->get();
+
+        $this->view->with('listResult', $listResult);
+        $this->view->with('id', $id);
+
+        return $this->view;
+    }
+
     ##
 
     public function ajax_confirm() {

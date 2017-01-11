@@ -70,6 +70,7 @@ class ActivityAttendController extends Controller {
             return $this->view;
         }
         $ids = Request::input('id', "0_0");
+        $id = explode('_',$ids);
 
         $activity_data = DB::table('activity_data')
             ->select('pass_type')

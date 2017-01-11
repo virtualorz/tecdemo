@@ -404,6 +404,18 @@ trait ViewButton {
         }
     }
 
+    private function _btn_reminderadd($param) {
+        $html = '<button type="button" class="btn btn-default btnDelete btnCheckShow" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('reminderadd')->getUrl()) . '" '
+                . 'data-mbTitle="' . e(trans('message.question.delete')) . '">' . e(trans('page.btn.delete')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('reminderadd')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
 
 
 }

@@ -1329,7 +1329,7 @@ return [
                             ],
                         ],
                     ],
-                    'submit' => [
+                    'reminderadd' => [
                         '_prop' => [
                             'permission' => SitemapAccess::INHERIT,
                             'route' => [

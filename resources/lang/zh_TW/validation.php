@@ -604,6 +604,10 @@ return [
         'reservation_section' => '預約時段',
         'reservation_status' => '預約狀態',
         #
+        #reminder
+        'reminder_dt' => '催繳日期',
+        'reminder_name' => '催繳人員',
+        #
         #reply
         'reply-content' => '回覆內容',
         'reply-dt' => '回覆日期',
