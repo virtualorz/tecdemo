@@ -12,8 +12,8 @@ var ajaxRequest = {
                         showOverlay: false, 
                         centerY: false, 
                         css: { 
-                            width: '350px', 
-                            top: '100px', 
+                            width: message_width+'px', 
+                            top: message_top+'px', 
                             left: '', 
                             right: '10px', 
                             border: 'none', 
@@ -44,8 +44,8 @@ var ajaxRequest = {
                         showOverlay: false, 
                         centerY: false, 
                         css: { 
-                            width: '350px', 
-                            top: '100px', 
+                            width: message_width+'px', 
+                            top: message_top+'px', 
                             left: '', 
                             right: '10px', 
                             border: 'none', 
@@ -72,8 +72,8 @@ var ajaxRequest = {
                         showOverlay: false, 
                         centerY: false, 
                         css: { 
-                            width: '350px', 
-                            top: '100px', 
+                            width: message_width+'px', 
+                            top: message_top+'px', 
                             left: '', 
                             right: '10px', 
                             border: 'none', 
@@ -100,8 +100,8 @@ var ajaxRequest = {
                         showOverlay: false, 
                         centerY: false, 
                         css: { 
-                            width: '350px', 
-                            top: '100px', 
+                            width: message_width+'px', 
+                            top: message_top+'px',
                             left: '', 
                             right: '10px', 
                             border: 'none', 

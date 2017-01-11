@@ -43,13 +43,6 @@
             background-size:48px 48px;
         }
     </style>
-
-        
-        <script>
-            var urlUploader = {!! json_encode(Sitemap::getUrl("official.upload")) !!};
-            var urlUploaderDelete = {!! json_encode(Sitemap::getUrl("official.upload.delete")) !!};
-            var urlUpload = {!! json_encode(FileUpload::getRootUrl()) !!};
-        </script>
         <script type="text/javascript">
             var urlHome = {!! json_encode(Sitemap::getUrl("official")) !!};
                     var urlUploader = {!! json_encode(Sitemap::getUrl("official.upload")) !!};
@@ -66,6 +59,8 @@
                     var routeName = {!! json_encode($_routeName) !!};
                     var csrf_token = {!! json_encode(csrf_token()) !!};
                     var appLocale = {!! json_encode($_appLocale) !!};
+                    var message_width = 350;
+                    var message_top = 100;
                     
         </script> 
     </head>
@@ -129,9 +124,11 @@
 <script type="text/javascript">
     $(document).ready(function () {
         setbodyheight();
+        adjmessagelocation();
 
        $(window).resize(function(){
             setbodyheight();
+            adjmessagelocation();
         });
 
     });
@@ -142,6 +139,20 @@
         {
             $(".clearfix_").height("0");
             $(".clearfix_").height($(document).height() -  $("body").height() - parseInt($(".navbar").css('height')));
+        }
+    }
+
+    function adjmessagelocation()
+    {
+        if($(document).width() <768)
+        {
+            message_width = parseInt($(document).width())-20;
+            message_top = 60;
+        }
+        else
+        {
+            message_width = 350;
+            message_top = 100;
         }
     }
     
