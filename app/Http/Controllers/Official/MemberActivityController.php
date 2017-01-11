@@ -56,7 +56,11 @@ class MemberActivityController extends Controller {
                                         'activity_reservation_data.pass_status')
                             ->leftJoin('activity_data','activity_reservation_data.activity_id','=','activity_data.id')
                             ->where('activity_reservation_data.member_id','=',User::Id())
-                            ->whereDate('activity_data.end_dt','<',date('Y-m-d'))
+                            ->where(function($query){
+                                $query->whereDate('activity_data.end_dt','>',date('Y-m-d'));
+                                $query->where('activity_reservation_data.attend_status','=',1);
+                                $query->OrWhere('activity_data.end_dt','<',date('Y-m-d'));
+                            })
                             ->orderBy('activity_data.start_dt','desc')
                              ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($historyResult->toJson(),true)['total']);

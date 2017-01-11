@@ -48,7 +48,22 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        
+        $(".btnAttend").click(function(){
+            var ajaxProp = {
+                url: $(this).attr('data-url'),
+                type: "post",
+                dataType: "json",
+                data: {'id':$(this).attr('data-id'),'_token':csrf_token},
+                error: function (jqXHR, textStatus, errorThrown) {
+                        
+                },
+                success: function (response) {
+                    location.reload();
+                        
+                }
+            }
+            $.ajax(ajaxProp);
+        });
     });
 
 </script>

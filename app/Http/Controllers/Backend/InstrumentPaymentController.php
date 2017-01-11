@@ -349,7 +349,7 @@ class InstrumentPaymentController extends Controller {
                             ->get();
 
         $this->view->with('listResult', $listResult);
-        $this->view->with('id', $id);
+        $this->view->with('id', Route::input('id', '0_0_0'));
 
         return $this->view;
     }
@@ -607,6 +607,139 @@ class InstrumentPaymentController extends Controller {
                             'receive'=>Request::input('receive'),
                             'create_admin_id'=>User::id()
                         ));
+
+            });
+
+        } catch (\PDOException $ex) {
+            DB::rollBack();
+
+            \Log::error($ex->getMessage());
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.database');
+            return $this->view;
+        }
+
+        $this->view['msg'] = trans('message.success.edit');
+        return $this->view;
+    }
+
+    public function ajax_reminder() {
+        $validator = Validator::make(Request::all(), [
+                    
+        ]);
+        if ($validator->fails()) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = $validator->errors();
+
+            return $this->view;
+        }
+        
+        try {
+            DB::transaction(function(){
+                $id = explode('_',Request::input('id'));
+                $payment_reminder_log_id = DB::table('payment_reminder_log')
+                        ->select('payment_reminder_log_id')
+                        ->where('pi_list_id',$id[0])
+                        ->where('pay_year',$id[1])
+                        ->where('pay_month',$id[2])
+                        ->orderBy('payment_reminder_log_id','desc')
+                        ->limit(1)
+                        ->get();
+                if(!isset($payment_reminder_log_id[0]['payment_reminder_log_id']))
+                {
+                    $payment_reminder_log_id = 0;
+                }
+                else
+                {
+                    $payment_reminder_log_id = $payment_reminder_log_id[0]['payment_reminder_log_id'];
+                }
+                $payment_reminder_log_id = intval($payment_reminder_log_id)+1;
+
+                //取得老師email
+                $pi = DB::table('system_pi_list')
+                    ->select('name','email')
+                    ->where('id',$id[0])
+                    ->first();
+                //取得實驗室所有人員email
+                $member = DB::table('member_data')
+                    ->select('id','name','email','password')
+                    ->where('pi_list_id',$id[0])
+                    ->get();
+
+                DB::table('payment_reminder_log')
+                    ->insert(array(
+                            'payment_reminder_log_id'=>$payment_reminder_log_id,
+                            'pi_list_id'=>$id[0],
+                            'pay_year'=>$id[1],
+                            'pay_month'=>$id[2],
+                            'created_at'=>date('Y-m-d H:i:s'),
+                            'email'=>$pi['email'],
+                            'create_admin_id'=>User::id()
+                        ));
+                //給老師的信
+                $dataResult = array('user'=>$pi['name'],'pay_month'=> $id[1].'年'.$id[2].'月');
+                Mail::send('emails.reminder', [
+                                'dataResult' => $dataResult,
+                                    ], function ($m) {
+                                $m->to($pi['email'], '');
+                                $m->subject("系統催繳通知");
+                });
+                //給學生的信
+                foreach($member as $k=>$v)
+                {
+                    $member_notice_log_id = DB::table('member_notice_log')
+                            ->select('member_notice_log_id')
+                            ->where('member_data_id',$v['id'])
+                            ->orderBy('member_notice_log_id','desc')
+                            ->first();
+                    if(!isset($member_notice_log_id['member_notice_log_id']))
+                    {
+                        $member_notice_log_id = 0;
+                    }
+                    else
+                    {
+                        $member_notice_log_id = $member_notice_log_id['member_notice_log_id'];
+                    }
+                    $member_notice_log_id = intval($member_notice_log_id) +1;
+
+                    $id = DB::table('member_notice_log')
+                            ->insertGetId(
+                                array('uid'=>'-',
+                                        'salt'=>'-',
+                                        'member_data_id'=>$v['id'],
+                                        'member_notice_log_id'=>$member_notice_log_id,
+                                        'created_at'=>date('Y-m-d H:i:s'),
+                                        'email'=>$v['email'],
+                                        'title'=>'系統催繳通知',
+                                        'content'=>'[{"column":1,"cell":[{"weight":1,"item":[{"type":"text","title":"","content":"您所屬的實驗室'.$id[1].'年'.$id[2].'月'.'帳單已逾期未，請儘速至系統列印帳單並繳交"}]}]}]',
+                                        'is_read'=>'0',
+                                        'create_admin_id'=>User::id()
+                                )
+                            );
+                    //製作uid以及salt
+                    $date = date('Y-m-d H:i:s').$id;
+                    $salt = substr(md5($date),5,5);
+                    $uid = md5($salt.$date);
+                    
+                    DB::table('member_notice_log')
+                        ->where('member_data_id',$v['id'])
+                        ->where('member_notice_log_id',$member_notice_log_id)
+                        ->update(['uid'=>$uid,
+                                    'salt'=>$salt
+                        ]);
+
+                    $login_uid = Crypt::encrypt($v['email'].'_'.$v['password']);
+                    
+                    $dataResult = array('user'=>$v['name'],'pay_month'=> $id[1].'年'.$id[2].'月','url'=> asset('/member/message/detail/id-'.$uid.'-'.$salt.'-'.$login_uid));
+                    Mail::send('emails.reminder', [
+                                'dataResult' => $dataResult,
+                                    ], function ($m) {
+                                $m->to($v['email'], '');
+                                $m->subject("系統催繳通知");
+                    });
+                }
+                
 
             });
 

@@ -53,6 +53,7 @@ return [
         'active' => '啟用帳號',
         'notice_message' => '通知訊息',
         'activitylog' => '活動紀錄',
+        'reminderadd' => '送出催繳通知',
         //
         //
         'course_class_status_1' => '正常開課',
