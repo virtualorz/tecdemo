@@ -16,6 +16,7 @@ use SitemapAccess;
 use Log;
 use FileUpload;
 use Mail;
+use Crypt;
 
 class InstrumentPaymentController extends Controller {
 
@@ -342,7 +343,7 @@ class InstrumentPaymentController extends Controller {
                                     'payment_reminder_log.email',
                                     'member_admin.name as create_admin_name'
                             )
-                            ->leftJoin('member_admin','payment_reminder_log.crete_admin_id','=','member_admin.id')
+                            ->leftJoin('member_admin','payment_reminder_log.create_admin_id','=','member_admin.id')
                             ->where('pi_list_id',$id[0])
                             ->where('pay_year',$id[1])
                             ->where('pay_month',$id[2])
@@ -681,7 +682,7 @@ class InstrumentPaymentController extends Controller {
                 $dataResult = array('user'=>$pi['name'],'pay_month'=> $id[1].'年'.$id[2].'月');
                 Mail::send('emails.reminder', [
                                 'dataResult' => $dataResult,
-                                    ], function ($m) {
+                                    ], function ($m)use($pi) {
                                 $m->to($pi['email'], '');
                                 $m->subject("系統催繳通知");
                 });
@@ -703,7 +704,7 @@ class InstrumentPaymentController extends Controller {
                     }
                     $member_notice_log_id = intval($member_notice_log_id) +1;
 
-                    $id = DB::table('member_notice_log')
+                    $id_ = DB::table('member_notice_log')
                             ->insertGetId(
                                 array('uid'=>'-',
                                         'salt'=>'-',
@@ -718,7 +719,7 @@ class InstrumentPaymentController extends Controller {
                                 )
                             );
                     //製作uid以及salt
-                    $date = date('Y-m-d H:i:s').$id;
+                    $date = date('Y-m-d H:i:s').$id_;
                     $salt = substr(md5($date),5,5);
                     $uid = md5($salt.$date);
                     
@@ -734,7 +735,7 @@ class InstrumentPaymentController extends Controller {
                     $dataResult = array('user'=>$v['name'],'pay_month'=> $id[1].'年'.$id[2].'月','url'=> asset('/member/message/detail/id-'.$uid.'-'.$salt.'-'.$login_uid));
                     Mail::send('emails.reminder', [
                                 'dataResult' => $dataResult,
-                                    ], function ($m) {
+                                    ], function ($m)use($v) {
                                 $m->to($v['email'], '');
                                 $m->subject("系統催繳通知");
                     });

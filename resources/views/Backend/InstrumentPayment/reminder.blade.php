@@ -45,17 +45,19 @@
 
 
 @section('script')
+<script src="{{ asset('assets/official/js/jquery.blockUI.min.js') }}"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
-        $(".btnAttend").click(function(){
+        $("#reminderadd").click(function(){
+            $.blockUI({ message: null });
             var ajaxProp = {
                 url: $(this).attr('data-url'),
                 type: "post",
                 dataType: "json",
                 data: {'id':$(this).attr('data-id'),'_token':csrf_token},
                 error: function (jqXHR, textStatus, errorThrown) {
-                        
+                    location.reload();
                 },
                 success: function (response) {
                     location.reload();
