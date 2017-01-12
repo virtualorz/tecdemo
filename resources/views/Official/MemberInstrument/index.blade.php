@@ -28,6 +28,7 @@
 								  	<th class="ttt100">時段</th>
 								  	<th class="ttw100">服務編號</th> 
 									<th class="ttt160">儀器名稱</th>
+									<th class="ttw80">狀態</th>
 									<th class="ttw50 text-center">取消</th> 
 								</tr> 
 							</thead> 
@@ -42,6 +43,13 @@
 									<td>
 									<a href="{{ asset('instrument/reservation/id-'.$v['instrument_uid'].'-'.$v['instrument_salt']) }}">{{ $v['name'] }}</a>
 									</td>
+									<td>
+                                        @if($v['reservation_status'] === 0)
+                                        <span class="label label-default">候補中</span>
+                                        @elseif($v['reservation_status'] === 1)
+                                        <span class="label label-success">預約中</span>
+                                        @endif
+                                    </td>
 									<td class="text-center">
 								  	<a href="#" class="cancel" data-id="{{ $v['instrument_reservation_data_id'].'_'.$v['create_date'] }}"> 
 									<i class="fa fa-times" aria-hidden="true"></i>

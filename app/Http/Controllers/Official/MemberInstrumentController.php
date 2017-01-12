@@ -23,6 +23,7 @@ class MemberInstrumentController extends Controller {
                                         'instrument_reservation_data.reservation_dt',
                                         'instrument_reservation_data.instrument_reservation_data_id',
                                         'instrument_reservation_data.create_date',
+                                        'instrument_reservation_data.reservation_status',
                                         'instrument_data.name',
                                         'instrument_data.instrument_id',
                                         'instrument_data.uid as instrument_uid',
