@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>eportfolio</title>
+<title>{{ $memberResult['name'] }} 資料申請表</title>
 </head>
 
 	<style>

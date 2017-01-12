@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>eportfolio</title>
+<title>{{ $dataResult['pay_year'] }}年{{ $dataResult['pay_month'] }}月 繳費單</title>
 </head>
 
 	<style>

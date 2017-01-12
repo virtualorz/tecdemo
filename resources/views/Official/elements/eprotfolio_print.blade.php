@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>eportfolio</title>
+<title>{{ User::get('name')}} E-Portfolio</title>
 </head>
 
 	<style>
