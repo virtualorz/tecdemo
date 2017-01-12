@@ -82,7 +82,7 @@
                     @if($v['end_dt'] == null)
                     <p>{{ $v['start_dt']}} 起</p>
                     @else
-                    <p>{{ $v['start_dt']}} - {{ $v['end_dt']}}</p>
+                    <p>{{ $v['start_dt']}} <br>-<br> {{ $v['end_dt']}}</p>
                     @endif
                 </div>
                 <div class="col-md-8 col-sm-10">
