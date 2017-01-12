@@ -253,12 +253,11 @@ class MemberBillController extends Controller {
     public function print_bill() {
         $id = explode('-',Route::input('id', '0-0'));
         $dataResult = DB::table('payment_data')
-                            ->select('payment_data.*','member_data.name as created_admin_name','system_department.name as department_name','system_organize.name as organize_name','system_pi_list.name')
+                            ->select('payment_data.*','member_data.name as created_admin_name','system_department.name as department_name','system_organize.name as organize_name','system_pi_list.name as pi_name')
                             ->leftJoin('member_data','payment_data.create_admin_id','=','member_data.id')
                             ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
                             ->leftJoin('system_department','system_pi_list.department_id','=','system_department.id')
                             ->leftJoin('system_organize','system_department.organize_id','=','system_organize.id')
-                            ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
                             ->where('payment_data.uid',$id[0])
                             ->where('payment_data.salt',$id[1])
                             ->get();
@@ -315,7 +314,7 @@ class MemberBillController extends Controller {
         $pdf_name = md5(date('Y-m-d H:i:s'));
 
         $pdf = PDF::loadView('Official.elements.payment_print', array(
-            'dataResult'=>$dataResult,
+            'dataResult'=>$dataResult[0],
             'reservationlogResult'=>$reservationlogResult,
             'discount_type'=>Config::get('data.discount_type'),
             ));

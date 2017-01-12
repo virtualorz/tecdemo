@@ -54,7 +54,7 @@
 <body>
        	  	  
        	  	  	<h2 class="textcenter">
-       	  	  	<img src="{{asset('assets/official/img/logotc.png')}}" width="130" height="53" alt=""/><br><br>
+       	  	  	<img src="http://localhost:8086/techcomm/public/assets/official/img/logotc.png" width="130" height="53" alt=""/><br><br>
        	  	  	TechComm 科技共同空間繳費單<br>
        	  	  	<span class="small">國立臺灣大學生命科學院科技共同空間</span>
        	  	  	</h2>
@@ -62,11 +62,11 @@
 				
        	  	  	  <div style="width: 1000px; margin: auto; margin-top: 40px">
 				  <p class="clearfix">
-				  	帳單月份：{{ $dataResult['pay_year'] }}年{{ $dataResult['pay_month'] }}月<br>
-					應繳金額：{{ $dataResult['total'] }}元<br>
-					單號：{{ date('ym',strtotime($dataResult['pay_year'].'-'.$dataResult['pay_month'].'-01')) }}{{ $dataResult['salt'] }}<br>
-					使用單位：{{ $dataResult['organize_name'] }}/{{ $dataResult['department_name'] }}<br>
-					計畫主持人：{{ $dataResult['pi_name'] }}
+				  	帳單月份：2016年12月<br>
+					應繳金額：元<br>
+					單號：1612528db<br>
+					使用單位：國立台灣大學/資訊工程學系<br>
+					計畫主持人：Alvin Chen
             	  </p>
 				  </div>
 				  
@@ -89,24 +89,7 @@
 						</thead> 
 
 						<tbody> 
-                            @foreach($reservationlogResult as $k=>$v)
-							<tr> 
-                                <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
-							  	<td>{{ $v['date'] }}</td>
-							  	<td>{{ $v['use_dt_start'] }}-{{ $v['use_dt_end'] }}</td>
-							  	<td>
-								{{ $v['instrument_name'] }}
-								</td>
-							  	<td>{{ $v['member_name'] }}</td>
-								<td>{{ $v['pay'] }}</td>
-                                <td>
-									@if($v['discount_JSON'] != '')
-									{{ $discount_type[$v['discount_JSON']['type']] }} : <br>
-                                    {{ $v['discount_JSON']['number'] }}
-									@endif
-								</td>
-							</tr> 
-                            @endforeach
+                            
 						</tbody> 
 					</table>
 				  	</div>
@@ -127,17 +110,7 @@
 						</thead> 
 
 						<tbody> 
-                            @foreach($reservationlogResult as $k=>$v)
-                                @foreach($v['supplies_JOSN'] as $k1=>$v1)
-                                <tr>
-                                    <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
-                                    <td>{{ $v1['name'] }}</td>
-                                    <td>{{ $v1['count'] }}個</td>
-                                    <td>{{ $v1['total'] }}</td>
-                                </tr>
-                                @endforeach
-                            @endforeach
-						</tbody> 
+                                                                                        						</tbody> 
 					</table>
 				  	</div>
 				  	
