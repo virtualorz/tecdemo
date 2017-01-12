@@ -55,7 +55,7 @@
 <body>
        	  	  
        	  	  	<h2 class="textcenter">
-       	  	  	<img src="img/logotc.png" width="130" height="53" alt=""/><br><br>
+       	  	  	<img src="{{asset('assets/official/img/logotc.png')}}'" width="130" height="53" alt=""/><br><br>
        	  	  	臺大生科院科技共同空間活動記錄與認證<br>
        	  	  	<span class="small">Certification of participation and techniques</span>
        	  	  	</h2>

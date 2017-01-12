@@ -54,7 +54,7 @@
 <body>
        	  	  
        	  	  	<h2 class="textcenter">
-       	  	  	<img src="img/logotc.png" width="130" height="53" alt=""/><br><br>
+       	  	  	<img src="{{asset('assets/official/img/logotc.png')}}'" width="130" height="53" alt=""/><br><br>
        	  	  	科技共同空間電子護照申請表<br>
        	  	  	</h2>
 				

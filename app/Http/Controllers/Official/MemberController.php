@@ -148,7 +148,7 @@ class MemberController extends Controller {
                             ->leftJoin('system_department','member_data.department_id','=','system_department.id')
                             ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
                             ->leftJoin('member_admin','member_data.create_admin_id','=','member_admin.id')
-                            ->where('id','=',User::Id())
+                            ->where('member_data.id','=',User::Id())
                             ->first();
 
         $pdf_name = md5(date('Y-m-d H:i:s'));
