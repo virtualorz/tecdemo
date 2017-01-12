@@ -107,14 +107,14 @@
 								</td>
                                 <td>{{ $v['total'] }}</td>
 								<td>
-                                    @if($v['create_admin_id'] === null)
-                                    <span class="label label-success">未繳費</span>
-                                    @else
+                                    @if($v['payment_count'] != 0)
                                     <span class="label label-default">已繳費</span>
+                                    @else
+                                    <span class="label label-success">未繳費</span>
                                     @endif
                                 </td>
 								<td class="text-center max767none">
-                                    @if($v['create_admin_id'] === null)
+                                    @if($v['payment_count'] == 0)
                                     <a href="{{ asset('member/bill/detail/print/id-'.$v['uid'].'-'.$v['salt']) }}"><i class="fa fa-print"></i></a>
                                     @endif
 								</td>

@@ -167,10 +167,19 @@ class MemberBillController extends Controller {
                                             'payment_data.salt',
                                             'payment_data.total',
                                             'payment_data.print_member_id',
+                                            DB::raw('count(payment_paylog.payment) as payment_count'),
                                             'payment_data.create_admin_id',
                                             'system_pi_list.name as pi_name')
+                                    ->leftJoin('payment_paylog',function($join){
+                                        $join->on('payment_data.pi_list_id','=','payment_paylog.pi_list_id');
+                                        $join->on('payment_data.pay_year','=','payment_paylog.pay_year');
+                                        $join->on('payment_data.pay_month','=','payment_paylog.pay_month');
+                                    })
                                     ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
-                                    ->where('pi_list_id','=',User::get('pi_list_id'))
+                                    ->where('payment_data.pi_list_id','=',User::get('pi_list_id'))
+                                    ->groupBy('payment_data.pi_list_id')
+                                    ->groupBy('payment_data.pay_year')
+                                    ->groupBy('payment_data.pay_month')
                                     ->orderBy('payment_data.pay_year','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
