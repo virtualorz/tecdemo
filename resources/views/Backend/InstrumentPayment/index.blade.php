@@ -112,7 +112,9 @@
                             <td>{{ $v['pi_name'] }}</td>
                             <td>{{ $v['total'] }}</td>
                             <td>
-                                @if($v['create_admin_id'] === null) 
+                                @if($v['pay_count'] != 0)
+                                    {{ trans('enum.apply_item-is_pay.1') }} 
+                                @elseif($v['create_admin_id'] === null) 
                                     {{ trans('enum.payment_status.0') }} 
                                 @else 
                                     @if($v['print_member_id'] === null) 
@@ -126,7 +128,7 @@
                                 @if($v['create_admin_id'] === null)
                                 {!! ViewHelper::button('confirm_pay', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
                                 @endif
-                                @if($v['print_member_id'] !== null)
+                                @if($v['print_member_id'] !== null && $v['pay_count'] == 0)
                                 {!! ViewHelper::button('complete_pay', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
                                 @endif
                                 @if($v['create_admin_id'] === null)

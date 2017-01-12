@@ -49,7 +49,7 @@
                                             @foreach($reservationlogResult as $k=>$v)
                                             <tr>
                                                 <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
-                                                <td>{{ $v['use_dt_start'] }}-{{ $v['use_dt_end'] }}</td>
+                                                <td>{{ date('Y.m.d H:i',strtotime($v['use_dt_start'])) }} <br> - <br> {{ date('Y.m.d H:i',strtotime($v['use_dt_end'])) }}</td>
                                                 <td>{{ $v['member_name'] }}</td>
                                                 <td>{{ $v['instrument_name'] }}</td>
                                                 <td id="pay_{{$k}}">{{ $v['pay'] }}</td>
@@ -71,48 +71,6 @@
                             <tr>
                                 <th>{{ trans('validation.attributes.supplies') }}</th>
                                 <td>
-                                    <table class="table nohead">
-                                        <tr>
-                                            <th>{{ trans('validation.attributes.pay_code') }}</th>
-                                            <td>
-                                                <select name="pay_code_set" id="data-pay_code" class="form-control supplies_change">
-                                                    <option value="">{{trans('page.text.select_item')}}</option>
-                                                    @foreach($reservationlogResult as $k=>$v)
-                                                    <option value="{{ $v['payment_reservation_log_id'] }}-{{ $v['pi_list_id'] }}-{{ $v['pay_year'] }}-{{ $v['pay_month'] }}" data-type="{{ $v['member_type'] }}">{{ $v['create_date_ym'] }}{{ $v['salt'] }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('validation.attributes.supplies') }}</th>
-                                            <td>
-                                                <select name="supplies_set" id="data-supplies" class="form-control supplies_change">
-                                                    <option value="">{{trans('page.text.select_item')}}</option>
-                                                    @foreach($suppliesResult as $k=>$v)
-                                                    <option value="{{ $v['id'] }}" data-rate1="{{ $v['rate1'] }}" data-rate2="{{ $v['rate2'] }}" data-rate3="{{ $v['rate3'] }}" data-rate4="{{ $v['rate4'] }}">{{ $v['name'] }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('validation.attributes.item_count') }}</th>
-                                            <td>
-                                                <input type="number" name="count_set" id="data-count" class="form-control supplies_change">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>{{ trans('validation.attributes.apply_item-fee') }}</th>
-                                            <td>
-                                                <span id="pay_supplies"></span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <input type="button" id="add_supplies" class="btn btn-default" value="{{trans('page.btn.add_list')}}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>{{ trans('validation.attributes.supplies_add') }}</th>
-                                <td>
                                     <table class="table datatable_simple">
                                         <thead>
                                             <tr>
@@ -120,10 +78,19 @@
                                                 <th>{{ trans('validation.attributes.supplies') }}</th>
                                                 <th>{{ trans('validation.attributes.item_count') }}</th>
                                                 <th>{{ trans('validation.attributes.apply_item-fee') }}</th>
-                                                <th>{{ trans('page.text.function') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody id="supplies_add">
+                                            @foreach($reservationlogResult as $k=>$v)
+                                                @foreach($v['supplies_JOSN'] as $k1=>$v1)
+                                                <tr>
+                                                    <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
+                                                    <td>{{ $v1['name'] }}</td>
+                                                    <td>{{ $v1['count'] }}</td>
+                                                    <td class="supplies_pay">{{ $v1['total'] }}</td>
+                                                </tr>
+                                                @endforeach
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </td>
@@ -186,31 +153,6 @@
             $(this).parent().parent().remove();
             cal_total();
         });
-        $("#add_supplies").click(function(){
-            if($("#data-pay_code").val() != "" && $("#data-supplies").val() != "" && $("#data-count").val() != "")
-            {
-                $("#supplies_add").find(".dataTables_empty").parent().remove();
-                var html="<tr><td>"+$("#data-pay_code :selected").text()+"<input type='hidden' class='pay_code' name='pay_code[]' value='"+$("#data-pay_code").val()+"'></td>";
-                html +="<td>"+$("#data-supplies :selected").text()+"<input type='hidden' class='supplies' name='supplies[]' value='"+$("#data-supplies").val()+"'></td>";
-                html +="<td>"+$("#data-count").val()+"<input type='hidden' class='count' name='count[]' value='"+$("#data-count").val()+"'></td>";
-                html +="<td class='supplies_pay'>"+$("#data-supplies :selected").attr('data-rate'+$("#data-pay_code :selected").attr('data-type'))*$("#data-count").val().toString()+"</td>";
-                html +="<td><input type='button' class='btn btn-default del_sipplies' value='刪除'></td></tr>";
-
-                $("#supplies_add").append(html);
-                $("#data-pay_code").val("");
-                $("#data-supplies").val("");
-                $("#data-count").val("");
-                $("#pay_supplies").html("");
-                cal_total();
-            }
-        });
-
-        $(".supplies_change").change(function(){
-            if($("#data-pay_code").val() != "" && $("#data-supplies").val() != "" && $("#data-count").val() != "")
-            {
-                $("#pay_supplies").html($("#data-supplies :selected").attr('data-rate'+$("#data-pay_code :selected").attr('data-type'))*$("#data-count").val().toString());
-            }
-        });
 
         $(".discount").change(function(){
             if($("#data-discount_number_"+$(this).attr('data-id')).val() != "" && $(this).val() != "")
@@ -248,7 +190,7 @@
                 total += parseFloat($("#pay_"+$(this).attr('data-id')).html()) * (parseFloat((100 - parseInt($("#data-discount_number_"+$(this).attr('data-id')).val())))/100);
             }
             else if($tmp[1] == "2")
-            {
+            {console.log(parseInt($("#pay_"+$(this).attr('data-id')).html()));console.log(parseInt($("#data-discount_number_"+$(this).attr('data-id')).val()));
                 total += parseInt($("#pay_"+$(this).attr('data-id')).html()) - parseInt($("#data-discount_number_"+$(this).attr('data-id')).val());
             }
         });

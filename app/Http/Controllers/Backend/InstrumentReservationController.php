@@ -78,6 +78,7 @@ class InstrumentReservationController extends Controller {
                                         'instrument_data.instrument_id',
                                         'instrument_data.name',
                                         'member_data.name as member_name',
+                                        'member_data.type as member_type',
                                         'system_pi_list.name as pi_name')
                             ->leftJoin('instrument_section','instrument_reservation_data.reservation_section_id','=','instrument_section.id')
                             ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
@@ -87,7 +88,12 @@ class InstrumentReservationController extends Controller {
                             ->where('instrument_reservation_data.create_date',$id[1])
                             ->get();
 
+        $suppliesResult = DB::table('instrument_supplies')
+                            ->select('instrument_supplies.*')
+                            ->get();
+
         $this->view->with('dataResult', $dataResult[0]);
+        $this->view->with('suppliesResult', $suppliesResult);
 
         return $this->view;
     }
@@ -111,6 +117,21 @@ class InstrumentReservationController extends Controller {
                             ->where('instrument_reservation_data.instrument_reservation_data_id',$id[0])
                             ->where('instrument_reservation_data.create_date',$id[1])
                             ->get();
+        if(count($dataResult) != 0)
+        {
+            $dataResult[0]['supplies_JOSN'] = json_decode($dataResult[0]['supplies_JOSN'],true);
+            foreach($dataResult[0]['supplies_JOSN'] as $k=>$v)
+            {
+                $supplies = DB::table('instrument_supplies')
+                    ->select('name')
+                    ->where('id',$v['id'])
+                    ->first();
+                if(isset($supplies['name']))
+                {
+                    $dataResult[0]['supplies_JOSN'][$k]['name'] = $supplies['name'];
+                }
+            }
+        }
 
         $this->view->with('dataResult', $dataResult[0]);
 
@@ -171,9 +192,31 @@ class InstrumentReservationController extends Controller {
             $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']]*$use_hour;
         }
 
+        //耗材計算
+        $supplies = Request::input('supplies',array());
+        $count = Request::input('count',array());
+        $member_type = Request::input('member_type','1');
+        
+        $supplies_JOSN = array();
+        $supplies_total = 0;
+        foreach($supplies as $k=>$v)
+        {
+            $suppliesResult = DB::table('instrument_supplies')
+                    ->select('instrument_supplies.rate'.$member_type)
+                    ->where('id',$v)
+                    ->get();
+            if(isset($suppliesResult[0]['rate'.$member_type]))
+            {
+                $supplies_total_tmp = $suppliesResult[0]['rate'.$member_type] * $count[$k];
+                $supplies_total += $supplies_total_tmp;
+                array_push($supplies_JOSN,array('id'=>$v,'count'=>$count[$k],'total'=>$supplies_total_tmp));
+            }
+        }
+
+        $param = array($pay,json_encode($supplies_JOSN),$supplies_total);
         
         try {
-            DB::transaction(function()use($pay){
+            DB::transaction(function()use($param){
                 $id = explode('_',Request::input('id'));
                 
                 DB::table('instrument_reservation_data')
@@ -183,7 +226,9 @@ class InstrumentReservationController extends Controller {
                                 'use_dt_start'=>Request::input('use_dt_start'),
                                 'use_dt_end'=>Request::input('use_dt_end'),
                                 'attend_status'=>1,
-                                'pay'=>$pay,
+                                'pay'=>$param[0],
+                                'supplies_JOSN'=>$param[1],
+                                'supplies_total'=>$param[2],
                                 'remark'=>Request::input('remark'),
                                 'update_admin_id'=>User::id()
                     ]);

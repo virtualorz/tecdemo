@@ -73,6 +73,29 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th>{{ trans('validation.attributes.supplies') }}</th>
+                                <td>
+                                    <table class="table datatable_simple">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ trans('validation.attributes.supplies') }}</th>
+                                                <th>{{ trans('validation.attributes.item_count') }}</th>
+                                                <th>{{ trans('validation.attributes.apply_item-fee') }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="supplies_add">
+                                            @foreach($dataResult['supplies_JOSN'] as $k=>$v)
+                                                <tr>
+                                                    <td>{{ $v['name'] }}</td>
+                                                    <td>{{ $v['count'] }}</td>
+                                                    <td>{{ $v['total'] }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>{{ trans('validation.attributes.remark') }}</th>
                                 <td>
                                     {{ $dataResult['remark'] }}

@@ -64,13 +64,61 @@
                             <tr>
                                 <th>{{ trans('validation.attributes.start_time') }}</th>
                                 <td>
-                                    <input type="datetime-local" name="use_dt_start" id="data-use_dt_start" class="form-control required" value="{{ $dataResult['start_time'] }}">
+                                    <input type="datetime-local" name="use_dt_start" id="data-use_dt_start" class="form-control required" value="{{ $dataResult['reservation_dt'] }}T{{ $dataResult['start_time'] }}">
                                 </td>
                             </tr> 
                             <tr>
                                 <th>{{ trans('validation.attributes.end_time') }}</th>
                                 <td>
-                                    <input type="datetime-local" name="use_dt_end" id="data-use_dt_end" class="form-control required" value="{{ $dataResult['end_time'] }}">
+                                    <input type="datetime-local" name="use_dt_end" id="data-use_dt_end" class="form-control required" value="{{ $dataResult['reservation_dt'] }}T{{ $dataResult['end_time'] }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ trans('validation.attributes.supplies') }}</th>
+                                <td>
+                                    <table class="table nohead">
+                                        <tr>
+                                            <th>{{ trans('validation.attributes.supplies') }}</th>
+                                            <td>
+                                                <select name="supplies_set" id="data-supplies" class="form-control supplies_change">
+                                                    <option value="">{{trans('page.text.select_item')}}</option>
+                                                    @foreach($suppliesResult as $k=>$v)
+                                                    <option value="{{ $v['id'] }}" data-rate1="{{ $v['rate1'] }}" data-rate2="{{ $v['rate2'] }}" data-rate3="{{ $v['rate3'] }}" data-rate4="{{ $v['rate4'] }}">{{ $v['name'] }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ trans('validation.attributes.item_count') }}</th>
+                                            <td>
+                                                <input type="number" name="count_set" id="data-count" class="form-control supplies_change">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ trans('validation.attributes.apply_item-fee') }}</th>
+                                            <td>
+                                                <span id="pay_supplies"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <input type="button" id="add_supplies" class="btn btn-default" value="{{trans('page.btn.add_list')}}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ trans('validation.attributes.supplies_add') }}</th>
+                                <td>
+                                    <table class="table datatable_simple">
+                                        <thead>
+                                            <tr>
+                                                <th>{{ trans('validation.attributes.supplies') }}</th>
+                                                <th>{{ trans('validation.attributes.item_count') }}</th>
+                                                <th>{{ trans('validation.attributes.apply_item-fee') }}</th>
+                                                <th>{{ trans('page.text.function') }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="supplies_add">
+                                        </tbody>
+                                    </table>
                                 </td>
                             </tr>
                             <tr>
@@ -87,6 +135,7 @@
                                 <th>&nbsp;</th>
                                 <td> 
                                     <input type="hidden" name="id" value="{{ $dataResult['instrument_reservation_data_id'] }}_{{ $dataResult['create_date'] }}" />
+                                    <input type="hidden" name="member_type" value="{{ $dataResult['member_type'] }}" />
                                     {!! ViewHelper::button('submit') !!}
                                     {!! ViewHelper::button('cancel') !!}
                                 </td>
@@ -115,6 +164,33 @@
 
     $(document).ready(function () {
         initValidation();
+        var member_type = "{{ $dataResult['member_type'] }}";
+
+        $(document).on("click",".del_sipplies",function(){
+            $(this).parent().parent().remove();
+        });
+        $("#add_supplies").click(function(){
+            if($("#data-supplies").val() != "" && $("#data-count").val() != "")
+            {
+                $("#supplies_add").find(".dataTables_empty").parent().remove();
+                var html ="<tr><td>"+$("#data-supplies :selected").text()+"<input type='hidden' class='supplies' name='supplies[]' value='"+$("#data-supplies").val()+"'></td>";
+                html +="<td>"+$("#data-count").val()+"<input type='hidden' class='count' name='count[]' value='"+$("#data-count").val()+"'></td>";
+                html +="<td class='supplies_pay'>"+$("#data-supplies :selected").attr('data-rate'+member_type)*$("#data-count").val().toString()+"</td>";
+                html +="<td><input type='button' class='btn btn-default del_sipplies' value='刪除'></td></tr>";
+
+                $("#supplies_add").append(html);
+                $("#data-supplies").val("");
+                $("#data-count").val("");
+                $("#pay_supplies").html("");
+            }
+        });
+
+        $(".supplies_change").change(function(){
+            if($("#data-supplies").val() != "" && $("#data-count").val() != "")
+            {
+                $("#pay_supplies").html($("#data-supplies :selected").attr('data-rate'+member_type)*$("#data-count").val().toString());
+            }
+        });
     });
     
     function initValidation() {

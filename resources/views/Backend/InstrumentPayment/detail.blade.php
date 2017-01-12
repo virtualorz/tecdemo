@@ -48,7 +48,7 @@
                                             @foreach($reservationlogResult as $k=>$v)
                                             <tr>
                                                 <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
-                                                <td>{{ $v['use_dt_start'] }}-{{ $v['use_dt_end'] }}</td>
+                                                <td>{{ date('Y.m.d H:i',strtotime($v['use_dt_start'])) }} <br> - <br> {{ date('Y.m.d H:i',strtotime($v['use_dt_end'])) }}</td>
                                                 <td>{{ $v['member_name'] }}</td>
                                                 <td>{{ $v['instrument_name'] }}</td>
                                                 <td id="pay_{{$k}}">{{ $v['pay'] }}</td>
@@ -78,11 +78,7 @@
                                                 @foreach($v['supplies_JOSN'] as $k1=>$v1)
                                                 <tr>
                                                     <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
-                                                    @foreach($suppliesResult as $k2=>$v2)
-                                                        @if($v2['id'] == $v1['id'])
-                                                        <td>{{ $v2['name'] }}</td>
-                                                        @endif
-                                                    @endforeach
+                                                    <td>{{ $v1['name'] }}</td>
                                                     <td>{{ $v1['count'] }}</td>
                                                     <td>{{ $v1['total'] }}</td>
                                                 </tr>
@@ -93,7 +89,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th><span class="red">*</span>{{ trans('validation.attributes.pay_total') }}</th>
+                                <th>{{ trans('validation.attributes.pay_total') }}</th>
                                 <td>
                                     {{ $dataResult['total'] }}
                                 </td>
