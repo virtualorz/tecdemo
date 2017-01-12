@@ -82,7 +82,6 @@
 							<th class="ttt100 textcenter">時段</th>
 							<th class="ttt80 textcenter">儀器名稱</th>
 							<th class="ttt50 textcenter">使用人</th>
-							<th class="ttt50 textcenter">單價</th>
 							<th class="ttt50 textcenter">折扣</th>
 							<th class="ttt50 textcenter">使用費小計</th>
 							</tr>
@@ -98,13 +97,13 @@
 								{{ $v['instrument_name'] }}
 								</td>
 							  	<td>{{ $v['member_name'] }}</td>
-								<td>{{ $v['pay'] }}</td>
                                 <td>
 									@if($v['discount_JSON'] != '')
 									{{ $discount_type[$v['discount_JSON']['type']] }} : <br>
                                     {{ $v['discount_JSON']['number'] }}
 									@endif
 								</td>
+								<td>{{ $v['pay'] }}</td>
 							</tr> 
                             @endforeach
 						</tbody> 
