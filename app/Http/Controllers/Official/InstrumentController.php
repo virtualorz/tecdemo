@@ -15,6 +15,7 @@ use Validator;
 use Log;
 use Sitemap;
 use SitemapAccess;
+use Mail;
 
 class InstrumentController extends Controller {
 
@@ -407,6 +408,23 @@ class InstrumentController extends Controller {
                         ->where('member_id',User::Id())
                         ->update(['reservation_status'=>'2'
                         ]);
+                    //寄信通知管理員
+                    $instrument_admin = DB::table('instrument_data')
+                        ->select('instrument_admin.name','instrument_admin.email','instrument_data.name as instrument_name')
+                        ->leftJoin('instrument_admin','instrument_admin.instrument_data_id','=','instrument_data.id')
+                        ->where('instrument_data.cancel_notice','1')
+                        ->where('instrument_data.id',$id[3])
+                        ->get();log::error($instrument_admin);
+                    foreach($instrument_admin as $k=>$v)
+                    {
+                        $dataResult = array('user'=>$v['name'],'instrument'=>$v['instrument_name']);
+                        Mail::send('emails.cancel_notice', [
+                                    'dataResult' => $dataResult,
+                                        ], function ($m)use($v) {
+                                    $m->to($v['email'], '');
+                                    $m->subject("預約取消通知訊息");
+                        });
+                    }
 
                     $this->view['msg'] = trans('message.success.cancel');
                 }
