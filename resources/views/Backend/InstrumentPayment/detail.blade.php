@@ -52,8 +52,11 @@
                                                 <td>{{ $v['member_name'] }}</td>
                                                 <td>{{ $v['instrument_name'] }}</td>
                                                 <td id="pay_{{$k}}">{{ $v['pay'] }}</td>
-                                                <td>{{ $discount_type[$v['discount_JSON']['type']] }} : <br>
+                                                <td>
+                                                    @if($v['discount_JSON'] != '')
+                                                    {{ $discount_type[$v['discount_JSON']['type']] }} : <br>
                                                     {{ $v['discount_JSON']['number'] }}
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach

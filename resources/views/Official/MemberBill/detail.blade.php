@@ -90,18 +90,14 @@
 						</thead> 
 
 						<tbody> 
-                            @foreach($reservationlogResult as $k=>$v)
+							@foreach($reservationlogResult as $k=>$v)
                                 @foreach($v['supplies_JOSN'] as $k1=>$v1)
-							<tr>
-                                <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
-                                @foreach($suppliesResult as $k2=>$v2)
-                                    @if($v2['id'] == $v1['id'])
-                                    <td>{{ $v2['name'] }}</td>
-                                    @endif
-                                @endforeach
-							  	<td>{{ $v1['count'] }}個</td>
-							  	<td>{{ $v1['total'] }}</td>
-							</tr> 
+                                <tr>
+                                    <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
+                                    <td>{{ $v1['name'] }}</td>
+                                    <td>{{ $v1['count'] }}個</td>
+                                    <td>{{ $v1['total'] }}</td>
+                                </tr>
                                 @endforeach
                             @endforeach
 						</tbody> 

@@ -197,8 +197,6 @@ class MemberBillController extends Controller {
                                     'payment_reservation_log.pay_year',
                                     'payment_reservation_log.pay_month',
                                     'payment_reservation_log.discount_JSON',
-                                    'payment_reservation_log.supplies_JOSN',
-                                    'payment_reservation_log.supplies_total',
                                     'instrument_reservation_data.*',
                                     DB::raw('DATE_FORMAT(instrument_reservation_data.create_date, "%Y%m") as create_date_ym'),
                                     'instrument_data.name as instrument_name',
@@ -220,20 +218,31 @@ class MemberBillController extends Controller {
             $reservationlogResult[$k]['date'] = date('Y.m.d',strtotime($v['use_dt_start']));
             $reservationlogResult[$k]['use_dt_start'] = date('H:i',strtotime($v['use_dt_start']));
             $reservationlogResult[$k]['use_dt_end'] = date('H:i',strtotime($v['use_dt_end']));
-        }
-        $suppliesResult = DB::table('instrument_supplies')
-                            ->select('instrument_supplies.*')
-                            ->get();
-        
-        foreach($reservationlogResult as $k=>$v)
-        {
+
             $reservationlogResult[$k]['discount_JSON'] = json_decode($v['discount_JSON'],true);
             $reservationlogResult[$k]['supplies_JOSN'] = json_decode($v['supplies_JOSN'],true);
+            if($reservationlogResult[$k]['supplies_JOSN'] != '')
+            {
+                foreach($reservationlogResult[$k]['supplies_JOSN'] as $k1=>$v1)
+                {
+                    $supplies = DB::table('instrument_supplies')
+                        ->select('name')
+                        ->where('id',$v1['id'])
+                        ->first();
+                    if(isset($supplies['name']))
+                    {
+                        $reservationlogResult[$k]['supplies_JOSN'][$k1]['name'] = $supplies['name'];
+                    }
+                }
+            }
+            else
+            {
+                $reservationlogResult[$k]['supplies_JOSN'] = array();
+            }
         }
 
         $this->view->with('dataResult', $dataResult[0]);
         $this->view->with('reservationlogResult', $reservationlogResult);
-        $this->view->with('suppliesResult', $suppliesResult);
         $this->view->with('discount_type', Config::get('data.discount_type'));
         
         return $this->view;
