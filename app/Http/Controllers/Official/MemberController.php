@@ -13,6 +13,7 @@ use FileUpload;
 use Log;
 use User;
 use Validator;
+use PDF;
 
 class MemberController extends Controller {
 

@@ -54,7 +54,7 @@
 <body>
        	  	  
        	  	  	<h2 class="textcenter">
-       	  	  	<img src="{{asset('assets/official/img/logotc.png')}}'" width="130" height="53" alt=""/><br><br>
+       	  	  	<img src="{{asset('assets/official/img/logotc.png')}}" width="130" height="53" alt=""/><br><br>
        	  	  	TechComm 科技共同空間繳費單<br>
        	  	  	<span class="small">國立臺灣大學生命科學院科技共同空間</span>
        	  	  	</h2>
