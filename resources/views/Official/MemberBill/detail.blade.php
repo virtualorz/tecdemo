@@ -67,8 +67,12 @@
 								</td>
 							  	<td>{{ $v['member_name'] }}</td>
 								<td>{{ $v['pay'] }}</td>
-                                <td>{{ $discount_type[$v['discount_JSON']['type']] }} : <br>
-                                    {{ $v['discount_JSON']['number'] }}</td>
+                                <td>
+									@if($v['discount_JSON'] != "")
+									{{ $discount_type[$v['discount_JSON']['type']] }} : <br>
+                                    {{ $v['discount_JSON']['number'] }}
+									@endif
+								</td>
 							</tr> 
                             @endforeach
 						</tbody> 
@@ -113,7 +117,7 @@
          			
          			<div class="row">
 						<div class="col-sm-12 text-center mb--b">
-						  <a href="#" class="btn btn-sm btn-primary max767none"><i class="fa fa-print"></i> 列印</a>
+						  <a href="{{ asset('member/bill/print/id-'.$id) }}" class="btn btn-sm btn-primary max767none"><i class="fa fa-print"></i> 列印</a>
 						</div>
 					</div>
           		</div>

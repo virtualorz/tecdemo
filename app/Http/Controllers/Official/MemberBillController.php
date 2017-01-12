@@ -244,8 +244,82 @@ class MemberBillController extends Controller {
         $this->view->with('dataResult', $dataResult[0]);
         $this->view->with('reservationlogResult', $reservationlogResult);
         $this->view->with('discount_type', Config::get('data.discount_type'));
+        $this->view->with('id', Route::input('id', '0-0'));
         
         return $this->view;
+    }
+
+    public function print_bill() {
+        $id = explode('-',Route::input('id', '0-0'));
+        $dataResult = DB::table('payment_data')
+                            ->select('payment_data.*','member_data.name as created_admin_name','system_department.name as department_name','system_organize.name as organize_name','system_pi_list.name')
+                            ->leftJoin('member_data','payment_data.create_admin_id','=','member_data.id')
+                            ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
+                            ->leftJoin('system_department','system_pi_list.department_id','=','system_department.id')
+                            ->leftJoin('system_organize','system_department.organize_id','=','system_organize.id')
+                            ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
+                            ->where('payment_data.uid',$id[0])
+                            ->where('payment_data.salt',$id[1])
+                            ->get();
+        $reservationlogResult = DB::table('payment_reservation_log')
+                            ->select('payment_reservation_log.payment_reservation_log_id',
+                                    'payment_reservation_log.pi_list_id',
+                                    'payment_reservation_log.pay_year',
+                                    'payment_reservation_log.pay_month',
+                                    'payment_reservation_log.discount_JSON',
+                                    'instrument_reservation_data.*',
+                                    DB::raw('DATE_FORMAT(instrument_reservation_data.create_date, "%Y%m") as create_date_ym'),
+                                    'instrument_data.name as instrument_name',
+                                    'member_data.name as member_name',
+                                    'member_data.type as member_type')
+                            ->leftJoin('instrument_reservation_data', function ($join) {
+                                $join->on('payment_reservation_log.instrument_reservation_data_id', '=', 'instrument_reservation_data.instrument_reservation_data_id');
+                                $join->on('payment_reservation_log.create_date', '=', 'instrument_reservation_data.create_date');
+                            })
+                            ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
+                            ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
+                            ->where('payment_reservation_log.pi_list_id',$dataResult[0]['pi_list_id'])
+                            ->where('payment_reservation_log.pay_year',$dataResult[0]['pay_year'])
+                            ->where('payment_reservation_log.pay_month',$dataResult[0]['pay_month'])
+                            ->orderBy('payment_reservation_log.payment_reservation_log_id','desc')
+                            ->get();
+        foreach($reservationlogResult as $k=>$v)
+        {
+            $reservationlogResult[$k]['date'] = date('Y.m.d',strtotime($v['use_dt_start']));
+            $reservationlogResult[$k]['use_dt_start'] = date('H:i',strtotime($v['use_dt_start']));
+            $reservationlogResult[$k]['use_dt_end'] = date('H:i',strtotime($v['use_dt_end']));
+
+            $reservationlogResult[$k]['discount_JSON'] = json_decode($v['discount_JSON'],true);
+            $reservationlogResult[$k]['supplies_JOSN'] = json_decode($v['supplies_JOSN'],true);
+            if($reservationlogResult[$k]['supplies_JOSN'] != '')
+            {
+                foreach($reservationlogResult[$k]['supplies_JOSN'] as $k1=>$v1)
+                {
+                    $supplies = DB::table('instrument_supplies')
+                        ->select('name')
+                        ->where('id',$v1['id'])
+                        ->first();
+                    if(isset($supplies['name']))
+                    {
+                        $reservationlogResult[$k]['supplies_JOSN'][$k1]['name'] = $supplies['name'];
+                    }
+                }
+            }
+            else
+            {
+                $reservationlogResult[$k]['supplies_JOSN'] = array();
+            }
+        }
+
+        $pdf_name = md5(date('Y-m-d H:i:s'));
+
+        $pdf = PDF::loadView('Official.elements.payment_print', array(
+            'dataResult'=>$dataResult,
+            'reservationlogResult'=>$reservationlogResult,
+            'discount_type'=>Config::get('data.discount_type'),
+            ));
+        $pdf->setTemporaryFolder(env('DIR_WEB').'files\\tmp\\');
+        return $pdf->download($pdf_name.'.pdf');
     }
 
     ##

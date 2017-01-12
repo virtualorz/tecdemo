@@ -316,6 +316,17 @@ return [
                     ],
                 ],
             ],
+            'print' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::LOGIN_REQUIRED,
+                    'route' => [
+                        'method' => 'get',
+                        'attr' => [
+                            'uses' => 'MemberController@print_data',
+                        ],
+                    ],
+                ],
+            ],
         ],
         'journal' => [
             '_prop' => [
@@ -506,6 +517,30 @@ return [
                         ],
                     ],
                  ],
+                 'print' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::LOGIN_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'MemberBillController@print_bill',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'print' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::LOGIN_REQUIRED,
+                    'route' => [
+                        'method' => 'get',
+                        'param' => '{id}',
+                        'attr' => [
+                            'uses' => 'MemberBillController@print_bill',
+                        ],
+                    ],
+                ],
             ],
         ],
         'cancel_activity' => [
@@ -526,6 +561,18 @@ return [
                     'method' => 'post',
                     'attr' => [
                         'uses' => 'MemberInstrumentController@ajax_cancel',
+                    ],
+                ],
+            ],
+        ],
+        'print_bill' => [
+            '_prop' => [
+                'permission' => SitemapAccess::LOGIN_REQUIRED,
+                'route' => [
+                    'method' => 'get',
+                    'param' => '{id}',
+                    'attr' => [
+                        'uses' => 'MemberBillController@print_bill',
                     ],
                 ],
             ],

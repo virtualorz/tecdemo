@@ -135,6 +135,31 @@ class MemberController extends Controller {
         return $this->view;
     }
 
+    public function print_data() {
+        $memberResult = DB::table('member_data')
+                            ->select('member_data.*',
+                                        DB::raw('DATE_FORMAT(member_data.start_dt, "%Y.%m.%d") as start_dt'),
+                                        'member_data.start_dt as start_dt_org',
+                                        'system_organize.name as organize_name',
+                                        'system_department.name as department_name',
+                                        'system_pi_list.name as pi_name',
+                                        'member_admin.name as created_admin_name')
+                            ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                            ->leftJoin('system_department','member_data.department_id','=','system_department.id')
+                            ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
+                            ->leftJoin('member_admin','member_data.create_admin_id','=','member_admin.id')
+                            ->where('id','=',User::Id())
+                            ->first();
+
+        $pdf_name = md5(date('Y-m-d H:i:s'));
+
+        $pdf = PDF::loadView('Official.elements.apply_print', array(
+            'memberResult'=>$memberResult
+            ));
+        $pdf->setTemporaryFolder(env('DIR_WEB').'files\\tmp\\');
+        return $pdf->download($pdf_name.'.pdf');
+    }
+
     ##
 
     public function ajax_edit() {

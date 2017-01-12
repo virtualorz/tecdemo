@@ -14,7 +14,7 @@
             
             <div class="col-sm-9 col-xs-12">
 				<h2 class="bigtitle">基本資料管理
-             	<a href="#" class="btn btn-default btn-sm floatright max767none"><i class="fa fa-print" aria-hidden="true"></i> 列印</a>
+             	<a href="{{ asset('member/basic/print') }}" class="btn btn-default btn-sm floatright max767none"><i class="fa fa-print" aria-hidden="true"></i> 列印</a>
              	
              	</h2>
              

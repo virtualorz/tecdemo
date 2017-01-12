@@ -88,7 +88,7 @@
 								</td>
 								<td class="text-center max767none">
 									@if($v['payment_sum'] != $v['total'])
-									<a href="#"><i class="fa fa-print"></i></a>
+									<a href="{{ asset('member/print_bill') }}"><i class="fa fa-print"></i></a>
 									@endif
 								</td>
 							</tr>
