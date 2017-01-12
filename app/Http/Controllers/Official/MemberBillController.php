@@ -320,6 +320,25 @@ class MemberBillController extends Controller {
             }
         }
 
+         try {
+            DB::transaction(function()use($id){
+
+                DB::table('payment_data')
+                    ->where('uid',$id[0])
+                    ->where('salt',$id[1])
+                    ->update(['print_member_id'=>User::id()]);
+
+            });
+
+        } catch (\PDOException $ex) {
+            DB::rollBack();
+
+            \Log::error($ex->getMessage());
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.database');
+            return $this->view;
+        }
+
         $pdf_name = md5(date('Y-m-d H:i:s'));
 
         $pdf = PDF::loadView('Official.elements.payment_print', array(
