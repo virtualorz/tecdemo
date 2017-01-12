@@ -120,16 +120,23 @@ class InstrumentReservationController extends Controller {
         if(count($dataResult) != 0)
         {
             $dataResult[0]['supplies_JOSN'] = json_decode($dataResult[0]['supplies_JOSN'],true);
-            foreach($dataResult[0]['supplies_JOSN'] as $k=>$v)
+            if($dataResult[0]['supplies_JOSN'] != '')
             {
-                $supplies = DB::table('instrument_supplies')
-                    ->select('name')
-                    ->where('id',$v['id'])
-                    ->first();
-                if(isset($supplies['name']))
+                foreach($dataResult[0]['supplies_JOSN'] as $k=>$v)
                 {
-                    $dataResult[0]['supplies_JOSN'][$k]['name'] = $supplies['name'];
+                    $supplies = DB::table('instrument_supplies')
+                        ->select('name')
+                        ->where('id',$v['id'])
+                        ->first();
+                    if(isset($supplies['name']))
+                    {
+                        $dataResult[0]['supplies_JOSN'][$k]['name'] = $supplies['name'];
+                    }
                 }
+            }
+            else
+            {
+                $dataResult[0]['supplies_JOSN'] = array();
             }
         }
 
