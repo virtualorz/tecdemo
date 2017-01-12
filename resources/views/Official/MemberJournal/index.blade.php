@@ -10,7 +10,7 @@
 <div class="container">
     	
         <div class="row">
-            @include('official.elements.member_menu')
+            @include('Official.elements.member_menu')
             
             <div class="col-sm-9 col-xs-12">
 				<h2 class="bigtitle">我的期刊發表</h2>
@@ -57,7 +57,7 @@
                     <form id="form1" method="post" action="{{ Sitemap::node()->getChildren('delete')->getUrl() }}">
                         <input type='hidden' name='id' id='del_id'>
                     </form>
-				  	@include('official.elements.pagination')
+				  	@include('Official.elements.pagination')
 
 			  </div>
            		

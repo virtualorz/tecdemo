@@ -10,7 +10,7 @@
 <div class="container">
     	
         <div class="row">
-            @include('official.elements.member_menu')
+            @include('Official.elements.member_menu')
             
             <div class="col-sm-9 col-xs-12">
 				<h2 class="bigtitle">儀器預約記錄</h2>

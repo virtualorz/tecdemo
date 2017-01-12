@@ -103,7 +103,7 @@
 						<div class="col-sm-2"><h5>內容</h5></div>
 					 	<div class="col-sm-10 mt-xs-10">
                         @if(isset($dataResult['content']))
-                        @include('official.elements.btseditor', ['btseditorContent' => $dataResult['content']])
+                        @include('Official.elements.btseditor', ['btseditorContent' => $dataResult['content']])
                         @endif
          	  			</div>
 					</div>

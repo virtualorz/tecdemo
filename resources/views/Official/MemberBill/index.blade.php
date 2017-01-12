@@ -10,7 +10,7 @@
 <div class="container">
     	
         <div class="row">
-            @include('official.elements.member_menu')
+            @include('Official.elements.member_menu')
             
             <div id="faq" class="col-sm-9 col-xs-12">
 				<h2 class="bigtitle">帳務管理</h2>
@@ -124,7 +124,7 @@
 					</table>			  	
 				  	</div>
 				
-         		@include('official.elements.pagination')
+         		@include('Official.elements.pagination')
 
           		</div>
            

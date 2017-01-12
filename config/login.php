@@ -15,8 +15,8 @@ return [
                 'name' => 'Super Admin',
                 'title' => 'Super Admin',
             ],
-            'login' => 'official.login',
-            'logout' => 'official.login.logout',
+            'login' => 'Official.login',
+            'logout' => 'Official.login.logout',
         ],
         'admin' => [
             'super' => [

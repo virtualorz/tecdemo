@@ -10,7 +10,7 @@
 <div class="container">
     	
         <div class="row">
-           @include('official.elements.member_menu')
+           @include('Official.elements.member_menu')
             
             <form id="form1" method="post" action="{{ Sitemap::node()->getChildren('submit')->getUrl() }}">
             <div class="col-sm-9 col-xs-12">

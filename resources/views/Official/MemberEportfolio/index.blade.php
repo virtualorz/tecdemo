@@ -10,7 +10,7 @@
 <div class="container">
     	
         <div class="row">
-            @include('official.elements.member_menu')
+            @include('Official.elements.member_menu')
             
             <div class="col-sm-9 col-xs-12">
 				<h2 class="bigtitle">臺大生科院科技共同空間活動記錄與認證

@@ -45,11 +45,11 @@
     </style>
         <script type="text/javascript">
             var urlHome = {!! json_encode(Sitemap::getUrl("official")) !!};
-                    var urlUploader = {!! json_encode(Sitemap::getUrl("official.upload")) !!};
-                    var urlUploaderDelete = {!! json_encode(Sitemap::getUrl("official.upload.delete")) !!};
+                    var urlUploader = {!! json_encode(Sitemap::getUrl("Official.upload")) !!};
+                    var urlUploaderDelete = {!! json_encode(Sitemap::getUrl("Official.upload.delete")) !!};
                     var urlUpload = {!! json_encode(FileUpload::getRootUrl()) !!};
                     var urlUploadABS = {!! json_encode(FileUpload::getRootUrlABS()) !!};
-                    var urlLogin = {!! json_encode(Sitemap::getUrl("official.login")) !!};
+                    var urlLogin = {!! json_encode(Sitemap::getUrl("Official.login")) !!};
                     var urlBase = {!! json_encode($_urlBase) !!};
                     var urlBasePath = {!! json_encode($_urlBasePath) !!};
                     var urlLast = {!! json_encode($_urlLast) !!};
@@ -67,7 +67,7 @@
     </head>
     <body id="page-top" class="index">
         @yield('head')
-        @include('official.elements.header')
+        @include('Official.elements.header')
         <div class="contentmt">
         @yield('content')
         <div class="clearfix_"></div>

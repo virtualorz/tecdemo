@@ -18,7 +18,7 @@
            	  	<div class="tablebox">
                     <h4 class="mb--b">{{ $v['name'] }}</h4>
                     @if(isset($v['content']))
-                    @include('official.elements.btseditor', ['btseditorContent' => $v['content']])
+                    @include('Official.elements.btseditor', ['btseditorContent' => $v['content']])
                     @endif
 				</div>
                 @endforeach

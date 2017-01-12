@@ -39,7 +39,7 @@
             <article class="container tpcontent">
                 <div class="row">
                     <section>
-                        <h1>{{ Sitemap::getName('official.course') }}</h1>
+                        <h1>{{ Sitemap::getName('Official.course') }}</h1>
                         <h2>{{ $_pageTitle }}</h2>
 
                         <div class="spacer-15"></div>
@@ -121,23 +121,23 @@
 
                             <h3>{{ trans('validation.attributes.course-goal') }}</h3>
                             <div class="coursecontent">
-                                @include('official.elements.btseditor', ['btseditorContent' => $data_course['goal']])
+                                @include('Official.elements.btseditor', ['btseditorContent' => $data_course['goal']])
                             </div>
 
                             <h3>{{ trans('validation.attributes.course-target') }}</h3>
                             <div class="coursecontent">
-                                @include('official.elements.btseditor', ['btseditorContent' => $data_course['target']])
+                                @include('Official.elements.btseditor', ['btseditorContent' => $data_course['target']])
                             </div>
 
 
                             <h3>{{ trans('validation.attributes.course-content') }}</h3>
                             <div class="coursecontent">
-                                @include('official.elements.btseditor', ['btseditorContent' => $data_course['content']])
+                                @include('Official.elements.btseditor', ['btseditorContent' => $data_course['content']])
                             </div>
 
                             <h3>{{ trans('validation.attributes.course-basic') }}</h3>
                             <div class="coursecontent">
-                                @include('official.elements.btseditor', ['btseditorContent' => $data_course['basic']])
+                                @include('Official.elements.btseditor', ['btseditorContent' => $data_course['basic']])
                             </div>
                         </div>
                         @else

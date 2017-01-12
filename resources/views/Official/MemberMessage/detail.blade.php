@@ -10,7 +10,7 @@
 <div class="container">
     	
         <div class="row">
-            @include('official.elements.member_menu')
+            @include('Official.elements.member_menu')
             
             <div class="col-sm-9 col-xs-12">
 				<h2 class="bigtitle">通知訊息</h2>
@@ -31,7 +31,7 @@
 						<div class="col-sm-2"><h5>內容</h5></div>
 					<div class="col-sm-10 mt-xs-10">
 					@if(isset($dataResult['content']))
-                        @include('official.elements.btseditor', ['btseditorContent' => $dataResult['content']])
+                        @include('Official.elements.btseditor', ['btseditorContent' => $dataResult['content']])
                     @endif
           	  		</div>
 					</div>
