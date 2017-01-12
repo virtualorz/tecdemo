@@ -530,18 +530,6 @@ return [
                     ],
                 ],
             ],
-            'print' => [
-                '_prop' => [
-                    'permission' => SitemapAccess::LOGIN_REQUIRED,
-                    'route' => [
-                        'method' => 'get',
-                        'param' => '{id}',
-                        'attr' => [
-                            'uses' => 'MemberBillController@print_bill',
-                        ],
-                    ],
-                ],
-            ],
         ],
         'cancel_activity' => [
             '_prop' => [
@@ -561,18 +549,6 @@ return [
                     'method' => 'post',
                     'attr' => [
                         'uses' => 'MemberInstrumentController@ajax_cancel',
-                    ],
-                ],
-            ],
-        ],
-        'print_bill' => [
-            '_prop' => [
-                'permission' => SitemapAccess::LOGIN_REQUIRED,
-                'route' => [
-                    'method' => 'get',
-                    'param' => '{id}',
-                    'attr' => [
-                        'uses' => 'MemberBillController@print_bill',
                     ],
                 ],
             ],

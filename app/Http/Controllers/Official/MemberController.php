@@ -40,7 +40,7 @@ class MemberController extends Controller {
                                         'payment_data.salt',
                                         'payment_data.total',
                                         'payment_data.print_member_id',
-                                        DB::raw('SUM(payment_paylog.payment) as payment_sum'),
+                                        DB::raw('count(payment_paylog.payment) as payment_count'),
                                         'system_pi_list.name as pi_name')
                             ->leftJoin('payment_paylog',function($join){
                                 $join->on('payment_data.pi_list_id','=','payment_paylog.pi_list_id');
@@ -50,6 +50,9 @@ class MemberController extends Controller {
                             ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
                             ->where('payment_data.pi_list_id','=',User::get('pi_list_id'))
                             ->whereNull('payment_data.print_member_id')
+                            ->groupBy('payment_data.pi_list_id')
+                            ->groupBy('payment_data.pay_year')
+                            ->groupBy('payment_data.pay_month')
                             ->orderBy('payment_data.created_at','desc')
                             ->get();
         

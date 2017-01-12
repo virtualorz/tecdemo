@@ -80,15 +80,15 @@
 									@endif
 								</td>
 								<td>
-									@if($v['payment_sum'] == $v['total'])
+									@if($v['payment_count'] != 0)
 									<span class="label label-default">已繳費</span>
 									@else
 									<span class="label label-success">未繳費</span>
 									@endif
 								</td>
 								<td class="text-center max767none">
-									@if($v['payment_sum'] != $v['total'])
-									<a href="{{ asset('member/print_bill') }}"><i class="fa fa-print"></i></a>
+									@if($v['payment_count'] == 0)
+									<a href="{{ asset('member/bill/detail/print/id-'.$v['uid'].'-'.$v['salt']) }}"><i class="fa fa-print"></i></a>
 									@endif
 								</td>
 							</tr>
