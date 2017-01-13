@@ -14,6 +14,7 @@ use Log;
 use User;
 use Validator;
 use PDF;
+use Cache;
 
 class MemberController extends Controller {
 
@@ -162,6 +163,36 @@ class MemberController extends Controller {
             ));
         $pdf->setTemporaryFolder(env('DIR_WEB').'files\\tmp\\');
         return $pdf->download($pdf_name.'.pdf');
+    }
+
+    public function print_register_data() {
+        $memberResult = Cache::get('cache_register',array());
+        if(count($memberResult) !=0)
+        {
+            $organize = DB::table('system_organize')
+                ->select('name')
+                ->where('id',$memberResult['organize_id'])
+                ->first();
+            if(count($organize) !=0)
+            {
+                $memberResult['organize_name'] = $organize['name'];
+            }
+            $department = DB::table('system_department')
+                ->select('name')
+                ->where('id',$memberResult['department_id'])
+                ->first();
+            if(count($department) !=0)
+            {
+                $memberResult['department_name'] = $department['name'];
+            }
+            $pdf_name = md5(date('Y-m-d H:i:s'));
+
+            $pdf = PDF::loadView('Official.elements.apply_print', array(
+                'memberResult'=>$memberResult
+                ));
+            $pdf->setTemporaryFolder(env('DIR_WEB').'files\\tmp\\');
+            return $pdf->download($pdf_name.'.pdf');
+        }
     }
 
     ##

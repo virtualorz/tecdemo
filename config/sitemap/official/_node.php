@@ -327,6 +327,17 @@ return [
                     ],
                 ],
             ],
+            'print_reg' => [
+                '_prop' => [
+                    'permission' => SitemapAccess::LOGIN_NOT_REQUIRED,
+                    'route' => [
+                        'method' => 'get',
+                        'attr' => [
+                            'uses' => 'MemberController@print_register_data',
+                        ],
+                    ],
+                ],
+            ],
         ],
         'journal' => [
             '_prop' => [

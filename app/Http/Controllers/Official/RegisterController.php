@@ -15,6 +15,8 @@ use Validator;
 use Log;
 use Sitemap;
 use SitemapAccess;
+use Cache;
+use Carbon\Carbon;
 
 class RegisterController extends Controller {
 
@@ -40,7 +42,7 @@ class RegisterController extends Controller {
     public function ajax_register() {
         $invalid = [];
         $validator = Validator::make(Request::all(), [
-                    'name' => 'string|required|max:10',
+                    'name' => 'string|required|max:15',
                     'card_id_number' => 'string|required|max:20',
                     'id_number' => 'string|required|max:12',
                     'organize' => 'integer|required',
@@ -62,16 +64,35 @@ class RegisterController extends Controller {
             return $this->view;
         }
         //檢查重複
-        $count = DB::table('member_data')
-                ->select('email')
+        $count1 = DB::table('member_data')
                 ->where('email',Request::input('email'))
                 ->count();
+        $count2 = DB::table('member_data')
+                ->where('card_id_number',Request::input('card_id_number'))
+                ->count();
+        $count3 = DB::table('member_data')
+                ->where('id_number',Request::input('id_number'))
+                ->count();
         
-        if($count != 0)
+        if($count1 != 0)
         {
             $this->view['result'] = 'no';
             $this->view['msg'] = trans('message.error.validation');
             $this->view['detail'] = array('帳號重複！');
+            return $this->view;
+        }
+        if($count2 != 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('此學生號已註冊過！');
+            return $this->view;
+        }
+        if($count3 != 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('此身分證號已註冊過！');
             return $this->view;
         }
 
@@ -113,6 +134,24 @@ class RegisterController extends Controller {
 
             return $this->view;
         }
+
+        //快取註冊資料
+        $expiresAt = Carbon::now()->addMinutes(10);
+        $register_data = array('created_at'=>date('Y-m-d H:i:s'),
+                                    'name'=>Request::input('name'),
+                                    'card_id_number'=>Request::input('card_id_number'),
+                                    'id_number'=>Request::input('id_number'),
+                                    'organize_id'=>Request::input('organize'),
+                                    'department_id'=>Request::input('department'),
+                                    'title'=>Request::input('title'),
+                                    'email'=>Request::input('email'),
+                                    'password'=>User::hashPassword(Request::input('password')),
+                                    'phone'=>Request::input('phone'),
+                                    'pi_list_id'=>Request::input('pi'),
+                                    'lab_phone'=>Request::input('lab_phone'),
+                                    'enable'=>0
+                            );
+        Cache::put('cache_register', $register_data, $expiresAt);
 
         $this->view['msg'] = trans('message.success.register');
         return $this->view;

@@ -23,7 +23,7 @@
 					  
 					  <div class="form-group">
 						<div class="col-sm-12 text-center">
-                          <a href="#" class="btn btn-sm btn-primary">列印</a>
+                          <a href="{{ asset('member/basic/print_reg') }}" class="btn btn-sm btn-primary">列印</a>
 						  <a href="{{ asset('login') }}" class="btn btn-sm btn-primary">登入</a>
 
 						</div>
