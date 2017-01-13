@@ -446,42 +446,45 @@ class InstrumentPaymentController extends Controller {
         $discount_number = Request::input('discount_number',array());
         foreach($discount as $k=>$v)
         {
-            $v = explode('_',$v);
-            $uid = explode('-',$v[0]);
-            $discount_total = 0;
-            $discount_JSON = array();
-            $payment_reservation_log_id = 0;
-            foreach($reservationlogResult as $k1=>$v1)
+            if($v != '')
             {
-                if($v1["payment_reservation_log_id"] == $uid[0] && $v1["pi_list_id"] == $uid[1] && $v1["pay_year"] == $uid[2] && $v1["pay_month"] == $uid[3])
+                $v = explode('_',$v);
+                $uid = explode('-',$v[0]);
+                $discount_total = 0;
+                $discount_JSON = array();
+                $payment_reservation_log_id = 0;
+                foreach($reservationlogResult as $k1=>$v1)
                 {
-                    if($v[1] == "1")
+                    if($v1["payment_reservation_log_id"] == $uid[0] && $v1["pi_list_id"] == $uid[1] && $v1["pay_year"] == $uid[2] && $v1["pay_month"] == $uid[3])
                     {
-                        $discount_total = floatval($v1['pay']) - (floatval($v1['pay']) * (floatval(100 - intval($discount_number[$k1]))/100));
+                        if($v[1] == "1")
+                        {
+                            $discount_total = floatval($v1['pay']) - (floatval($v1['pay']) * (floatval(100 - intval($discount_number[$k1]))/100));
+                        }
+                        else if($v[1] == "2")
+                        {
+                            $discount_total = floatval($discount_number[$k]);
+                        }
+                        $discount_JSON = json_encode(array('type'=>$v[1],'number'=>$discount_number[$k]));
+                        $payment_reservation_log_id = $v1['payment_reservation_log_id'];
                     }
-                    else if($v[1] == "2")
-                    {
-                        $discount_total = floatval($discount_number[$k]);
-                    }
-                    $discount_JSON = json_encode(array('type'=>$v[1],'number'=>$discount_number[$k]));
-                    $payment_reservation_log_id = $v1['payment_reservation_log_id'];
                 }
-            }
-            $payment_total -= floatval($discount_total);
-            
-            //更新折扣紀錄
-            $param = array($payment_reservation_log_id,$id,$discount_JSON,$discount_total);
-            DB::transaction(function()use($param){
-                $id = explode('_',Request::input('id'));
+                $payment_total -= floatval($discount_total);
                 
-                DB::table('payment_reservation_log')
-                    ->where('payment_reservation_log_id',$param[0])
-                    ->where('pi_list_id',$param[1][0])
-                    ->where('pay_year',$param[1][1])
-                    ->where('pay_month',$param[1][2])
-                    ->update(['discount_JSON'=>$param[2]
-                    ]);
-            });
+                //更新折扣紀錄
+                $param = array($payment_reservation_log_id,$id,$discount_JSON,$discount_total);
+                DB::transaction(function()use($param){
+                    $id = explode('_',Request::input('id'));
+                    
+                    DB::table('payment_reservation_log')
+                        ->where('payment_reservation_log_id',$param[0])
+                        ->where('pi_list_id',$param[1][0])
+                        ->where('pay_year',$param[1][1])
+                        ->where('pay_month',$param[1][2])
+                        ->update(['discount_JSON'=>$param[2]
+                        ]);
+                });
+            }
         }
         
         //儲存帳單紀錄
