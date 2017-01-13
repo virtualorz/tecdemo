@@ -41,6 +41,7 @@ class MemberController extends Controller {
                                         'payment_data.salt',
                                         'payment_data.total',
                                         'payment_data.print_member_id',
+                                        'payment_data.create_admin_id',
                                         DB::raw('count(payment_paylog.payment) as payment_count'),
                                         'system_pi_list.name as pi_name')
                             ->leftJoin('payment_paylog',function($join){

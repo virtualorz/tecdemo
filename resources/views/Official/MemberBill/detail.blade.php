@@ -116,9 +116,11 @@
         			<div class="line-schoolpage"></div>
          			
          			<div class="row">
+					 	@if($dataResult['create_admin_id'] != null $dataResult['payment_count'] == 0)
 						<div class="col-sm-12 text-center mb--b">
 						  <a href="{{ asset('member/bill/print/id-'.$id) }}" class="btn btn-sm btn-primary max767none"><i class="fa fa-print"></i> 列印</a>
 						</div>
+						@endif
 					</div>
           		</div>
            			<div class="row">
