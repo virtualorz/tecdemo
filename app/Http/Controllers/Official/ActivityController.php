@@ -53,7 +53,7 @@ class ActivityController extends Controller {
             $liest_aResult = DB::table('activity_data')
                             ->whereNull('end_dt')
                             ->orWhere(function ($query) {
-                                $query->whereDate('end_dt', '>', date('Y-m-d')
+                                $query->whereDate('end_dt', '>=', date('Y-m-d')
                                     );
                             })
                             ->select('activity_data.uid',
