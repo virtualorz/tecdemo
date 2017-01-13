@@ -22,7 +22,7 @@ class MemberBillController extends Controller {
         $memberResult = array();
         $memberResultTmp = DB::table('member_data')
             ->select('id')
-            ->where('pi_list_id',User::Id())
+            ->where('pi_list_id',User::get('pi_list_id'))
             ->get();
         foreach($memberResultTmp as $k=>$v)
         {
