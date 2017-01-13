@@ -193,11 +193,16 @@ class MemberBillController extends Controller {
     public function detail() {
         $id = explode('-',Route::input('id', '0-0'));
         $dataResult = DB::table('payment_data')
-                            ->select('payment_data.*','member_data.name as created_admin_name','system_department.name as department_name','system_organize.name as organize_name')
+                            ->select('payment_data.*','member_data.name as created_admin_name','system_department.name as department_name','system_organize.name as organize_name',DB::raw('count(payment_paylog.payment) as payment_count'))
                             ->leftJoin('member_data','payment_data.create_admin_id','=','member_data.id')
                             ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
                             ->leftJoin('system_department','system_pi_list.department_id','=','system_department.id')
                             ->leftJoin('system_organize','system_department.organize_id','=','system_organize.id')
+                             ->leftJoin('payment_paylog',function($join){
+                                        $join->on('payment_data.pi_list_id','=','payment_paylog.pi_list_id');
+                                        $join->on('payment_data.pay_year','=','payment_paylog.pay_year');
+                                        $join->on('payment_data.pay_month','=','payment_paylog.pay_month');
+                            })
                             ->where('payment_data.uid',$id[0])
                             ->where('payment_data.salt',$id[1])
                             ->get();
