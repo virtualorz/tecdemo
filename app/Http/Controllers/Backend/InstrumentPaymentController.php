@@ -86,13 +86,13 @@ class InstrumentPaymentController extends Controller {
                             ->where('pay_month',$param[2])
                             ->orderBy('payment_reservation_log_id','desc')
                             ->first();
-                    if(!isset($reservation_log_id[0]['payment_reservation_log_id']))
+                    if(!isset($reservation_log_id['payment_reservation_log_id']))
                     {
                         $reservation_log_id = 0;
                     }
                     else
                     {
-                        $reservation_log_id = $reservation_log_id[0]['payment_reservation_log_id'];
+                        $reservation_log_id = $reservation_log_id['payment_reservation_log_id'];
                     }
                     $reservation_log_id = intval($reservation_log_id) +1;
                     
