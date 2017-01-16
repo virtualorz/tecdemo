@@ -120,7 +120,7 @@
 							<tr> 
                               <td>{{ $v['start_dt'] }}</td> 
 								<td>
-								<a href="#">{{ $v['activity_name'] }}</a>
+								<a href="{{ asset('activity/reservation/id-'.$v['uid'].'-'.$v['salt']) }}">{{ $v['activity_name'] }}</a>
 								</td>
 								<td>{{ $v['level'] }}</td>
 								<td>{{ $v['time'] }}hr</td> 
@@ -157,7 +157,7 @@
 								<tr> 
 								  <td>{{ $v['reservation_dt'] }}</td> 
 									<td>
-									<a href="#">{{ $v['name'] }}</a>
+									<a href="{{ asset('instrument/reservation/id-'.$v['instrument_uid'].'-'.$v['instrument_salt']) }}">{{ $v['name'] }}</a>
 									</td>
 									<td>{{ $v['start_time'] }} - {{ $v['end_time'] }}</td>
 									<td class="text-center">

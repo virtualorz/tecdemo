@@ -85,6 +85,8 @@ class MemberController extends Controller {
                                         'instrument_reservation_data.instrument_reservation_data_id',
                                         'instrument_reservation_data.create_date',
                                         'instrument_data.name',
+                                        'instrument_data.uid as instrument_uid',
+                                        'instrument_data.salt as instrument_salt',
                                         DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
                                         DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'))
                             ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
