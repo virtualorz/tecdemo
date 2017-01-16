@@ -133,7 +133,7 @@
                                 <th>{{ trans('validation.attributes.content') }}</th>
                                 <td>
                                     @if(isset($dataResult['content']))
-                                    @include('backend.elements.btseditor', ['btseditorContent' => $dataResult['content']])
+                                    @include('Backend.elements.btseditor', ['btseditorContent' => $dataResult['content']])
                                     @endif
                                 </td>
                             </tr> 

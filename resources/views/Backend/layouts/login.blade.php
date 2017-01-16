@@ -46,7 +46,7 @@
 
 
         </div> 
-        @include('backend.elements.footer')
+        @include('Backend.elements.footer')
 
 
 

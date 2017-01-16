@@ -28,7 +28,7 @@ class MasterBackendComposer {
         $tmpCacheKey = $locale . '_menu_top';
         $pageMenuTop = User::cacheGet($tmpCacheKey);
         if (is_null($pageMenuTop)) {
-            $tmpView = view('backend.elements._build_menu_top');
+            $tmpView = view('Backend.elements._build_menu_top');
             $tmpView->with('nodes', $nodeAllSys)
                     ->with('permission', $permission);
             $pageMenuTop = $tmpView->render();
@@ -42,7 +42,7 @@ class MasterBackendComposer {
             $tmpCacheKey = $locale . '_menu_left_' . $nodeCurrSys->getKey();
             $pageMenuLeft = User::cacheGet($tmpCacheKey);
             if (is_null($pageMenuLeft)) {
-                $tmpView = view('backend.elements._build_menu_left');
+                $tmpView = view('Backend.elements._build_menu_left');
                 $tmpView->with('node', $nodeCurrSys)
                         ->with('pos', 'root')
                         ->with('permission', $permission);
@@ -53,7 +53,7 @@ class MasterBackendComposer {
         }
 
         //navi path        
-        $tmpView = view('backend.elements._build_navi_path');
+        $tmpView = view('Backend.elements._build_navi_path');
         $tmpView->with('nodeAllPath', $nodeAllPath)
                 ->with('nodeCurr', $nodeCurr);
         $pageNaviPath = $tmpView->render();

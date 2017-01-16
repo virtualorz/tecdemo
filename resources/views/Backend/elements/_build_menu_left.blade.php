@@ -1,6 +1,6 @@
 @if($pos === 'root')
 @foreach(($nodeAllMenu = $node->getChildren(null, ['menu' => true])) as $k => $v)
-{!! view('backend.elements._build_menu_left')->with('node', $v)->with('pos', 'head')->with('permission', $permission)->render() !!}
+{!! view('Backend.elements._build_menu_left')->with('node', $v)->with('pos', 'head')->with('permission', $permission)->render() !!}
 @endforeach
 
 
@@ -14,7 +14,7 @@
 <li class="xn-title menuitem_{{ str_replace('.', '_', $node->getPath()) }}">{{ $node->getName() }}</li>
 @endif
 @foreach(($nodeAllMenu = $node->getChildren(null, ['menu' => true])) as $k => $v)
-{!! view('backend.elements._build_menu_left')->with('node', $v)->with('pos', 'item')->with('permission', $permission)->render() !!}
+{!! view('Backend.elements._build_menu_left')->with('node', $v)->with('pos', 'item')->with('permission', $permission)->render() !!}
 @endforeach
 @endif
 
@@ -46,7 +46,7 @@
     @if(count($nodeAllMenu) > 0)
     <ul>
         @foreach($nodeAllMenu as $k => $v)
-        {!! view('backend.elements._build_menu_left')->with('node', $v)->with('pos', 'item')->with('permission', $permission)->render() !!}
+        {!! view('Backend.elements._build_menu_left')->with('node', $v)->with('pos', 'item')->with('permission', $permission)->render() !!}
         @endforeach
     </ul>
     @endif

@@ -123,7 +123,7 @@
                 </table>
                 </form>
                 
-                @include('backend.elements.pagination')
+                @include('Backend.elements.pagination')
             </div>
         </div>
     </div>

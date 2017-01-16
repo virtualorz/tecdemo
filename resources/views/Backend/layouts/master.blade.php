@@ -41,9 +41,9 @@
     </head>
     <body>
         <div class="page-container">
-            @include('backend.elements.menu_left')
+            @include('Backend.elements.menu_left')
             <div class="page-content">
-                @include('backend.elements.menu_top')
+                @include('Backend.elements.menu_top')
 
                 <ul class="breadcrumb">
                     {!! $_pageNaviPath !!}
@@ -57,7 +57,7 @@
                     @yield('content')
                 </div>
 
-                @include('backend.elements.footer')
+                @include('Backend.elements.footer')
             </div>
         </div> 
 
