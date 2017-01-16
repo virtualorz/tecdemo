@@ -18,7 +18,7 @@ class ComposerServiceProvider extends ServiceProvider
         );
         //
         view()->composer(
-            ['backend.layouts.master'], 'App\Http\ViewComposers\MasterBackendComposer'
+            ['Backend.layouts.master'], 'App\Http\ViewComposers\MasterBackendComposer'
         );
         //
     }

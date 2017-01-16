@@ -1,4 +1,4 @@
-@extends('backend.layouts.login')
+@extends('Backend.layouts.login')
 
 
 @section('head')

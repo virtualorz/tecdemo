@@ -1,4 +1,4 @@
-@extends('backend.layouts.master')
+@extends('Backend.layouts.master')
 @expr(ViewHelper::plugin()->load('jstree'))
 
 @section('head')
