@@ -191,7 +191,7 @@ class MemberController extends Controller {
             $pdf = PDF::loadView('Official.elements.apply_print', array(
                 'memberResult'=>$memberResult
                 ));
-            $pdf->setTemporaryFolder(public_path().'files/tmp/');
+            $pdf->setTemporaryFolder(public_path().'/files/tmp/');
             return $pdf->download($pdf_name.'.pdf');
         }
     }
