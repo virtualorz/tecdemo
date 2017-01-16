@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel {
      * @return void
      */
     protected function schedule(Schedule $schedule) {
-        return;
+        
         $schedule->call(function() {
             //取得24小時候預約時段名單
             $tomorrow = date('Y-m-d',strtotime('+1 day',strtotime(date('Y-m-d'))));
@@ -41,8 +41,8 @@ class Kernel extends ConsoleKernel {
                         ->get();
             foreach($notice_list as $k=>$v)
             {
-                //if( (strtotime($v['reservation_dt'].' '.$v['start_time']) - strtotime(date('Y-m-d H:i:s'))) >=82800 && (strtotime($v['reservation_dt'].' '.$v['start_time']) - strtotime(date('Y-m-d H:i:s'))) <= 86400)
-                //{
+                if( (strtotime($v['reservation_dt'].' '.$v['start_time']) - strtotime(date('Y-m-d H:i:s'))) >=82800 && (strtotime($v['reservation_dt'].' '.$v['start_time']) - strtotime(date('Y-m-d H:i:s'))) <= 86400)
+                {
                     $dataResult = array('user'=>$v['member_name'],'date'=> $v['reservation_dt'], 'instrument'=>$v['name']);
                     Mail::send('emails.instrument_use', [
                                     'dataResult' => $dataResult,
@@ -51,9 +51,9 @@ class Kernel extends ConsoleKernel {
                                     $m->subject("系統使用通知");
                     });
                     log::error($v['member_name'].' '.$v['email']);
-                //}
+                }
             }
-        })->everyMinute()->withoutOverlapping();
+        })->everyMinute();
     }
 
 }
