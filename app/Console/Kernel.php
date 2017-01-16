@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use DB;
 use Mail;
+use Log;
 
 class Kernel extends ConsoleKernel {
 
@@ -47,8 +48,9 @@ class Kernel extends ConsoleKernel {
                                     'dataResult' => $dataResult,
                                         ], function ($m)use($v) {
                                     $m->to($v['email'], '');
-                                    $m->subject("系統催繳通知");
+                                    $m->subject("系統使用通知");
                     });
+                    log::error($v['member_name'].' '.$v['email']);
                 //}
             }
         })->everyMinute()->withoutOverlapping();
