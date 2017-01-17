@@ -39,6 +39,7 @@ class ActivityController extends Controller {
                                             'activity_data.activity_name',
                                             'activity_data.time',
                                             'activity_data.score',
+                                            'activity_data.relative_plateform',
                                             DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
                             ->leftJoin('activity_reservation_data', function ($join) {
                                 $join->on('activity_reservation_data.activity_id', '=', 'activity_data.id')->where('activity_reservation_data.reservation_status', '=', 1);
@@ -66,6 +67,7 @@ class ActivityController extends Controller {
                                                 'activity_data.activity_name',
                                                 'activity_data.time',
                                                 'activity_data.score',
+                                                'activity_data.relative_plateform',
                                                 DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
                             ->leftJoin('activity_reservation_data', function ($join) {
                                 $join->on('activity_reservation_data.activity_id', '=', 'activity_data.id')->where('activity_reservation_data.reservation_status', '=', 1);
@@ -86,6 +88,7 @@ class ActivityController extends Controller {
                                                 'activity_data.activity_name',
                                                 'activity_data.time',
                                                 'activity_data.score',
+                                                'activity_data.relative_plateform',
                                                 DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
                             ->leftJoin('activity_reservation_data', function ($join) {
                                 $join->on('activity_reservation_data.activity_id', '=', 'activity_data.id')->where('activity_reservation_data.reservation_status', '=', 1);
@@ -96,13 +99,19 @@ class ActivityController extends Controller {
                             ->paginate(Config::get('pagination.items'));
             $pagination = $this->getPagination(json_decode($liest_unaResult->toJson(),true)['total']);
         }
-
-        
-        
+        $instrument_type = array();
+        $instrument_type_tmp = DB::table('instrument_type')
+                        ->select('id','name')
+                        ->get();
+        foreach($instrument_type_tmp as $k=>$v)
+        {
+            $instrument_type[$v['id']] = $v['name'];
+        }
 
         $this->view->with('searchResult', $searchResult);
         $this->view->with('liest_aResult', $liest_aResult);
         $this->view->with('liest_unaResult', $liest_unaResult);
+        $this->view->with('instrument_type', $instrument_type);
         $this->view->with('pagination', $pagination);
 
         return $this->view;

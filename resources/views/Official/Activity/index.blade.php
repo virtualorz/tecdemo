@@ -56,7 +56,7 @@
 									<tbody> 
                                         @foreach($searchResult as $k=>$v) 
 										<tr>
-                                            <td>{{ $v['type_name'] }}</td> 
+											<td>{{ $instrument_type[json_decode($v['relative_plateform'],true)[0]] }}</td> 
                                             @if($v['end_dt'] == null)
                                             <td>{{ $v['start_dt'] }} 起</td>
                                             @else
@@ -103,7 +103,7 @@
 									<tbody>
                                         @foreach($liest_aResult as $k=>$v) 
 										<tr>
-                                            <td>{{ $v['type_name'] }}</td> 
+                                            <td>{{ $instrument_type[json_decode($v['relative_plateform'],true)[0]] }}</td> 
                                             @if($v['end_dt'] == null)
                                             <td>{{ $v['start_dt'] }} 起</td>
                                             @else
@@ -147,7 +147,7 @@
 									<tbody> 
                                         @foreach($liest_unaResult as $k=>$v) 
 										<tr>
-                                            <td>{{ $v['type_name'] }}</td> 
+                                            <td>{{ $instrument_type[json_decode($v['relative_plateform'],true)[0]] }}</td> 
                                             @if($v['end_dt'] == null)
                                             <td>{{ $v['start_dt'] }} 起</td>
                                             @else
