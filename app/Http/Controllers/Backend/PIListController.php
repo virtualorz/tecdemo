@@ -56,6 +56,7 @@ class PIListController extends Controller {
                                     'system_pi_list.phone',
                                     'system_pi_list.contact_name',
                                     'system_pi_list.contact_phone',
+                                    'system_pi_list.contact_email',
                                     'member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','system_pi_list.create_admin_id','=','member_admin.id')
                             ->where('system_pi_list.id',$id)
@@ -87,6 +88,7 @@ class PIListController extends Controller {
                                     'system_pi_list.phone',
                                     'system_pi_list.contact_name',
                                     'system_pi_list.contact_phone',
+                                    'system_pi_list.contact_email',
                                     'member_admin.name as created_admin_name',
                                     'system_organize.name as organize_name',
                                     'system_department.name as department_name')
@@ -112,6 +114,7 @@ class PIListController extends Controller {
                     'phone' => 'string|required|max:12',
                     'contact_name' => 'string|required|max:24',
                     'contact_phone' => 'string|required|max:12',
+                    'contact_email' => 'string|required|max:384',
         ]);
         if ($validator->fails()) {
             $invalid[] = $validator->errors();
@@ -221,6 +224,7 @@ class PIListController extends Controller {
                                     'phone'=>Request::input('phone'),
                                     'contact_name'=>Request::input('contact_name'),
                                     'contact_phone'=>Request::input('contact_phone'),
+                                    'contact_email'=>Request::input('contact_email'),
                                     'create_admin_id'=>User::id(),
                                     'update_admin_id'=>User::id()
                             )
@@ -257,6 +261,7 @@ class PIListController extends Controller {
                     'phone' => 'string|required|max:12',
                     'contact_name' => 'string|required|max:24',
                     'contact_phone' => 'string|required|max:12',
+                    'contact_email' => 'string|required|max:384',
         ]);
         if ($validator->fails()) {
             $this->view['result'] = 'no';
@@ -367,6 +372,7 @@ class PIListController extends Controller {
                                 'phone'=>Request::input('phone'),
                                 'contact_name'=>Request::input('contact_name'),
                                 'contact_phone'=>Request::input('contact_phone'),
+                                'contact_email'=>Request::input('contact_email'),
                                 'update_admin_id'=>User::id()
                     ]);
                 $result_after = DB::table('system_pi_list')

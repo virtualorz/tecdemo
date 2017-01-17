@@ -78,6 +78,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.email-contact') }}</th>
+                                <td>
+                                    <input type="text" name="contact_email" id="data-contact_email" class="form-control required">
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>{{ trans('validation.attributes.create_admin_id') }}</th>
                                 <td>{{ User::get('name', '') }}</td>
                             </tr>

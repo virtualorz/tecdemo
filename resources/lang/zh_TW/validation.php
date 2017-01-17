@@ -378,6 +378,7 @@ return [
         #
         #email
         'email' => 'email',
+        'email-contact' => '聯絡人email',
         #
         #edm
         'edm-name' => '名稱',

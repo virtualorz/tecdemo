@@ -53,6 +53,10 @@
                                 <td>{{ $dataResult['contact_phone'] }}</td>
                             </tr>
                             <tr>
+                                <th><{{ trans('validation.attributes.email-contact') }}</th>
+                                <td>{{ $dataResult['contact_email'] }}</td>
+                            </tr>
+                            <tr>
                                 <th>{{ trans('validation.attributes.create_admin_id') }}</th>
                                 <td>{{ $dataResult['created_admin_name'] }}</td>
                             </tr>
