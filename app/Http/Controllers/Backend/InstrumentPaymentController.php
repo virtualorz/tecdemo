@@ -846,7 +846,7 @@ class InstrumentPaymentController extends Controller {
 
                 //取得老師email
                 $pi = DB::table('system_pi_list')
-                    ->select('name','email')
+                    ->select('name','email','contact_email')
                     ->where('id',$id[0])
                     ->first();
                 //取得實驗室所有人員email
@@ -871,6 +871,12 @@ class InstrumentPaymentController extends Controller {
                                 'dataResult' => $dataResult,
                                     ], function ($m)use($pi) {
                                 $m->to($pi['email'], '');
+                                $m->subject("系統催繳通知");
+                });
+                Mail::send('emails.reminder', [
+                                'dataResult' => $dataResult,
+                                    ], function ($m)use($pi) {
+                                $m->to($pi['contact_email'], '');
                                 $m->subject("系統催繳通知");
                 });
                 //給學生的信
