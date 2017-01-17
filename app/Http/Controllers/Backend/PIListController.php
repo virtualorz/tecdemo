@@ -416,6 +416,25 @@ class PIListController extends Controller {
                 DB::table('system_pi_list')
                     ->where('id',$id)
                     ->delete();
+                //判斷是否有其他相同系所 學校的pi 若無責刪除系所 學校
+                $count_department = DB::table('system_pi_list')
+                                    ->where('department_id',$result_before[0]['department_id'])
+                                    ->count();
+                $count_organize = DB::table('system_pi_list')
+                                    ->where('organize_id',$result_before[0]['organize_id'])
+                                    ->count();
+                if($count_department == 0)
+                {
+                    DB::table('system_department')
+                        ->where('id',$result_before[0]['department_id'])
+                        ->delete();
+                }
+                if($count_organize == 0)
+                {
+                    DB::table('system_organize')
+                        ->where('id',$result_before[0]['organize_id'])
+                        ->delete();
+                }
                 DBProcedure::writeLog([
                     'table' => 'system_pi_list',
                     'operator' => DBOperator::OP_DELETE,
