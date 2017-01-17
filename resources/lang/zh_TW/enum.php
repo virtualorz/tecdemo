@@ -150,7 +150,7 @@ return [
     ],
     'attend_status' => [
         0 => '未出席',
-        1 => '以出席',
+        1 => '已出席',
     ],
     'payment_status' => [
         0 => '未確認',
