@@ -285,6 +285,39 @@ class MemberProtofolioController extends Controller {
             return $this->view;
         }
 
+        //檢查重複
+        $count1 = DB::table('member_data')
+                ->where('email',Request::input('email'))
+                ->count();
+        $count2 = DB::table('member_data')
+                ->where('card_id_number',Request::input('card_id_number'))
+                ->count();
+        $count3 = DB::table('member_data')
+                ->where('id_number',Request::input('id_number'))
+                ->count();
+        
+        if($count1 != 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('帳號重複！');
+            return $this->view;
+        }
+        if($count2 != 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('此學生號已註冊過！');
+            return $this->view;
+        }
+        if($count3 != 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('此身分證號已註冊過！');
+            return $this->view;
+        }
+
         try {
             DB::transaction(function(){
                 $id = DB::table('member_data')
@@ -380,6 +413,42 @@ class MemberProtofolioController extends Controller {
             $this->view['msg'] = trans('message.error.validation');
             $this->view['detail'] = $validator->errors();
 
+            return $this->view;
+        }
+
+        //檢查重複
+        $count1 = DB::table('member_data')
+                ->where('email',Request::input('email'))
+                ->where('id','!=',Request::input('id'))
+                ->count();
+        $count2 = DB::table('member_data')
+                ->where('card_id_number',Request::input('card_id_number'))
+                ->where('id','!=',Request::input('id'))
+                ->count();
+        $count3 = DB::table('member_data')
+                ->where('id_number',Request::input('id_number'))
+                ->where('id','!=',Request::input('id'))
+                ->count();
+        
+        if($count1 != 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('帳號重複！');
+            return $this->view;
+        }
+        if($count2 != 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('此學生號已註冊過！');
+            return $this->view;
+        }
+        if($count3 != 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('此身分證號已註冊過！');
             return $this->view;
         }
         
