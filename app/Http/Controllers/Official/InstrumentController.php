@@ -26,11 +26,23 @@ class InstrumentController extends Controller {
         $listResult = array();
         if($keyword != "")
         {
-            $searchResult = DB::table('instrument_data')
+            $searchResult = DB::table('instrument_data');
+            if (mb_strlen($keyword, mb_detect_encoding($keyword)) == strlen($keyword))
+            {//無中文
+                $searchResult = $searchResult
                             ->orWhere('instrument_type.name','like','%'.$keyword.'%')
                             ->orWhere('instrument_data.instrument_id','like','%'.$keyword.'%')
                             ->orWhere('instrument_data.name','like','%'.$keyword.'%')
-                            ->orWhere('instrument_data.function','like','%'.$keyword.'%')
+                            ->orWhere('instrument_data.function','like','%'.$keyword.'%');
+            }
+            else
+            {//有中文
+                $searchResult = $searchResult
+                            ->orWhere('instrument_type.name','like','%'.$keyword.'%')
+                            ->orWhere('instrument_data.name','like','%'.$keyword.'%')
+                            ->orWhere('instrument_data.function','like','%'.$keyword.'%');
+            }
+            $searchResult = $searchResult
                             ->select('instrument_data.uid',
                                             'instrument_data.salt',
                                             'instrument_type.name as type_name',
