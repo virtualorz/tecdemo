@@ -259,7 +259,7 @@ class MemberProtofolioController extends Controller {
     public function ajax_add() {
         $invalid = [];
         $validator = Validator::make(Request::all(), [
-                    'name' => 'string|required|max:10',
+                    'name' => 'string|required|max:16',
                     'card_id_number' => 'string|required|max:20',
                     'id_number' => 'string|required|max:12',
                     'organize_id' => 'integer|required',
@@ -393,7 +393,7 @@ class MemberProtofolioController extends Controller {
 
     public function ajax_edit() {
         $validator = Validator::make(Request::all(), [
-                    'name' => 'string|required|max:10',
+                    'name' => 'string|required|max:16',
                     'card_id_number' => 'string|required|max:20',
                     'id_number' => 'string|required|max:12',
                     'organize_id' => 'integer|required',

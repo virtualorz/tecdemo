@@ -25,7 +25,7 @@
           	  		<div class="row mb-xs-20 mb--b">
 						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>姓名*</h5></div>
 						<div class="col-md-7 col-sm-9">
-							<input type="text" class="form-control" name="name" id="data-name" value="{{ $dataResult['name'] }}">
+							<input type="text" class="form-control required" name="name" id="data-name" value="{{ $dataResult['name'] }}">
 						</div>
 					</div>
        	  			
@@ -39,10 +39,8 @@
          	  		<div class="line-schoolpage"></div>
          	  		
          	  		<div class="row mb-xs-20 mb--b">
-						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>身份證字號*</h5></div>
-						<div class="col-md-7 col-sm-9">
-							<input type="text" class="form-control" name="id_number" id="data-id_number" value="{{ $dataResult['id_number'] }}">
-						</div>
+						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>身份證字號</h5></div>
+						<div class="col-md-9 col-sm-9 col-xs-8">{{ $dataResult['id_number'] }}</div>
 					</div>
         	  		
          	  		<div class="line-schoolpage"></div>
@@ -64,7 +62,7 @@
          	  		<div class="line-schoolpage"></div>
          	  		
          	  		<div class="row mb-xs-20 mb--b">
-						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>職稱*</h5></div>
+						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>職稱</h5></div>
 						<div class="col-md-7 col-sm-9">
 							<input type="text" class="form-control" name="title" id="data-title" value="{{ $dataResult['title'] }}">
 						</div>
@@ -73,10 +71,8 @@
          	  		<div class="line-schoolpage"></div>
          	  		
          	  		<div class="row mb-xs-20 mb--b">
-						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>E-Mail*</h5></div>
-						<div class="col-md-7 col-sm-9">
-							<input type="email" class="form-control" -placeholder="Email" name="email" id="data-email" value="{{ $dataResult['email'] }}">
-						</div>
+						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>E-Mail</h5></div>
+						<div class="col-md-9 col-sm-9 col-xs-8">{{ $dataResult['email'] }}</div>
 					</div>
 
                     <div class="line-schoolpage"></div>
@@ -84,7 +80,7 @@
          	  		<div class="row mb-xs-20 mb--b">
 						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>密碼*</h5></div>
 						<div class="col-md-7 col-sm-9">
-							<input type="password" class="form-control" name="password" id="data-password" value="{{ $dataResult['password'] }}">
+							<input type="password" class="form-control required" name="password" id="data-password" value="{{ $dataResult['password'] }}">
 						</div>
 					</div>
 
@@ -93,7 +89,7 @@
          	  		<div class="row mb-xs-20 mb--b">
 						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>密碼確認*</h5></div>
 						<div class="col-md-7 col-sm-9">
-							<input type="password" class="form-control" name="passwordR" id="data-password" value="{{ $dataResult['password'] }}">
+							<input type="password" class="form-control required" name="passwordR" id="data-password" value="{{ $dataResult['password'] }}">
 						</div>
 					</div>
         	  		
@@ -103,7 +99,7 @@
          	  		<div class="row mb-xs-20 mb--b">
 						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>聯絡電話*</h5></div>
 						<div class="col-md-7 col-sm-9">
-							<input type="text" class="form-control" name="phone" id="data-phone" value="{{ $dataResult['phone'] }}">
+							<input type="text" class="form-control required" name="phone" id="data-phone" value="{{ $dataResult['phone'] }}">
 						</div>
 					</div>
          	  		
@@ -112,7 +108,7 @@
                     <div class="row mb-xs-20 mb--b">
 						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>實驗室電話*</h5></div>
 						<div class="col-md-7 col-sm-9">
-							<input type="text" class="form-control" name="lab_phone" id="data-lab_phone" value="{{ $dataResult['lab_phone'] }}">
+							<input type="text" class="form-control required" name="lab_phone" id="data-lab_phone" value="{{ $dataResult['lab_phone'] }}">
 						</div>
 					</div>
          	  		
