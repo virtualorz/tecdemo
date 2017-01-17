@@ -83,6 +83,7 @@
             <div class="panel-heading">
             {!! ViewHelper::button('add') !!}
             {!! ViewHelper::button('delete') !!}
+            {!! ViewHelper::button('output') !!}
             </div>
 
 
@@ -153,6 +154,12 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        var name = "{{ Request::input('name', '') }}";
+        var card_id_number = "{{ Request::input('card_id_number', '') }}";
+        var department = "{{ Request::input('department', '') }}";
+        var page_id = "{{ Request::input('page_id', '') }}";
+        var member_type = "{{ Request::input('member_type', '') }}";
+
         $("#data-city").change(function(){
             var ajaxProp = {
                 url: "{{ Sitemap::node()->getChildren('get_town')->getUrl() }}",
@@ -195,6 +202,31 @@
                 }
             }
             $.ajax(ajaxProp);
+        });
+
+        $(".btn_output").click(function(){
+            var search_condition = "?";
+            if(name != '')
+            {
+                search_condition +="name="+name+"&";
+            }
+            if(card_id_number != '')
+            {
+                search_condition +="card_id_number="+card_id_number+"&";
+            }
+            if(department != '')
+            {
+                search_condition +="department="+department+"&";
+            }
+            if(page_id != '')
+            {
+                search_condition +="page_id="+page_id+"&";
+            }
+            if(member_type != '')
+            {
+                search_condition +="member_type="+member_type+"&";
+            }
+            location.href = $(this).attr('data-url')+search_condition;
         });
     });
 

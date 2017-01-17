@@ -54,6 +54,7 @@ return [
         'notice_message' => '通知訊息',
         'activitylog' => '活動紀錄',
         'reminderadd' => '送出催繳通知',
+        'output' => '匯出Excel',
         //
         //
         'course_class_status_1' => '正常開課',

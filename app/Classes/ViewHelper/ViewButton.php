@@ -417,6 +417,18 @@ trait ViewButton {
         }
     }
 
+    private function _btn_output($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnSetUrlBack btn_output" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('output')->getUrl()) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('output')->getPath()) . '">' . e(trans('page.btn.output')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('output')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
 
 
 }

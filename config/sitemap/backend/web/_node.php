@@ -1343,11 +1343,12 @@ return [
                 ],
                 'output' => [
                     '_prop' => [
-                        'permission' => SitemapAccess::INHERIT,
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
                         'route' => [
-                            'method' => 'post',
+                            'method' => 'get',
+                            'param' => '{optional?}',
                             'attr' => [
-                                'uses' => 'InstrumentPaymentController@ajax_output',
+                                'uses' => 'InstrumentPaymentController@output',
                             ],
                         ],
                     ],
