@@ -81,12 +81,14 @@ class MemberController extends Controller {
         $instrumentResult = DB::table('instrument_reservation_data')
                             ->select('instrument_reservation_data.uid',
                                         'instrument_reservation_data.salt',
-                                        'instrument_reservation_data.reservation_dt',
+                                        'instrument_reservation_data.reservation_dt as reservation_dt_org',
+                                        DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%Y.%m.%d") as reservation_dt'),
                                         'instrument_reservation_data.instrument_reservation_data_id',
                                         'instrument_reservation_data.create_date',
                                         'instrument_data.name',
                                         'instrument_data.uid as instrument_uid',
                                         'instrument_data.salt as instrument_salt',
+                                        'instrument_data.cancel_limit',
                                         DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
                                         DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'))
                             ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
@@ -100,6 +102,11 @@ class MemberController extends Controller {
                             ->orderBy('instrument_reservation_data.reservation_dt','desc')
                             ->take(5)
                             ->get();
+        foreach($instrumentResult as $k=>$v)
+        {
+            //寫入預約取消最後期限
+            $instrumentResult[$k]['cancel_limit_dt'] = date('Y-m-d',strtotime("+".$v['cancel_limit']." days",strtotime(date('Y-m-d')))); 
+        }
 
         $this->view->with('noticeResult', $noticeResult);
         $this->view->with('paymentResult', $paymentResult);
