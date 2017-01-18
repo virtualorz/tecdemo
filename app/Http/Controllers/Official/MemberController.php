@@ -74,7 +74,7 @@ class MemberController extends Controller {
                             ->where('activity_reservation_data.reservation_status','=',1)
                             ->where('activity_reservation_data.attend_status','=',0)
                             ->whereDate('activity_data.end_dt','>',date('Y-m-d'))
-                            ->orderBy('activity_data.start_dt','desc')
+                            ->orderBy('activity_data.start_dt','asc')
                             ->take(5)
                             ->get();
 
@@ -95,11 +95,12 @@ class MemberController extends Controller {
                             ->leftJoin('instrument_section','instrument_reservation_data.reservation_section_id','=','instrument_section.id')
                             ->where('instrument_reservation_data.member_id','=',User::Id())
                             ->whereNull('instrument_reservation_data.attend_status')
+                            ->whereDate('instrument_reservation_data.reservation_dt','>=',date('Y-m-d'))
                             ->where(function($query){
                                 $query->OrWhere('instrument_reservation_data.reservation_status','=',1);
                                 $query->OrWhere('instrument_reservation_data.reservation_status','=',0);
                             })
-                            ->orderBy('instrument_reservation_data.reservation_dt','desc')
+                            ->orderBy('instrument_reservation_data.reservation_dt','asc')
                             ->take(5)
                             ->get();
         foreach($instrumentResult as $k=>$v)
