@@ -230,54 +230,69 @@ class ActivityController extends Controller {
             $this->view['detail'] = array(trans('message.error.not_login_info'));
             return $this->view;
         }
-        if(Request::input('reservation') == 1)
+        //檢查是否已經預約過
+        $member_count = DB::table('activity_reservation_data')
+                        ->where('activity_id',Request::input('activity_id'))
+                        ->where('member_id',User::Id())
+                        ->count();
+        if($member_count == 0)
         {
-            try {
-                DB::transaction(function(){
-                    $id = DB::table('activity_reservation_data')
-                            ->insertGetId(
-                                array('activity_id'=>Request::input('activity_id'),
-                                        'member_id'=>User::Id(),
-                                        'created_at'=>date('Y-m-d H:i:s'),
-                                        'reservation_status'=>1,
-                                        'attend_status'=>0,
-                                        'pass_status'=>0
-                                )
-                            );
-                });
+            if(Request::input('reservation') == 1)
+            {
+                try {
+                    DB::transaction(function(){
+                        $id = DB::table('activity_reservation_data')
+                                ->insertGetId(
+                                    array('activity_id'=>Request::input('activity_id'),
+                                            'member_id'=>User::Id(),
+                                            'created_at'=>date('Y-m-d H:i:s'),
+                                            'reservation_status'=>1,
+                                            'attend_status'=>0,
+                                            'pass_status'=>0
+                                    )
+                                );
+                    });
 
-            } catch (DBProcedureException $e) {
-                $this->view['result'] = 'no';
-                $this->view['msg'] = trans('message.error.database');
-                $this->view['detail'][] = $e->getMessage();
+                } catch (DBProcedureException $e) {
+                    $this->view['result'] = 'no';
+                    $this->view['msg'] = trans('message.error.database');
+                    $this->view['detail'][] = $e->getMessage();
 
-                return $this->view;
+                    return $this->view;
+                }
+                $this->view['msg'] = trans('message.success.reservation');
             }
-            $this->view['msg'] = trans('message.success.reservation');
+            else
+            {
+                try {
+                    DB::transaction(function(){
+                        DB::table('activity_reservation_data')
+                                ->where('activity_id',Request::input('activity_id'))
+                                ->where('member_id',User::Id())
+                                ->where('reservation_status',1)
+                                ->where('attend_status',0)
+                                ->update(
+                                    array('reservation_status'=>0
+                                    )
+                        );
+                    });
+
+                } catch (DBProcedureException $e) {
+                    $this->view['result'] = 'no';
+                    $this->view['msg'] = trans('message.error.database');
+                    $this->view['detail'][] = $e->getMessage();
+
+                    return $this->view;
+                }
+                $this->view['msg'] = trans('message.success.cancel');
+            }
         }
         else
         {
-            try {
-                DB::transaction(function(){
-                    DB::table('activity_reservation_data')
-                            ->where('activity_id',Request::input('activity_id'))
-                            ->where('member_id',User::Id())
-                            ->where('reservation_status',1)
-                            ->where('attend_status',0)
-                            ->update(
-                                array('reservation_status'=>0
-                                )
-                    );
-                });
-
-            } catch (DBProcedureException $e) {
-                $this->view['result'] = 'no';
-                $this->view['msg'] = trans('message.error.database');
-                $this->view['detail'][] = $e->getMessage();
-
-                return $this->view;
-            }
-            $this->view['msg'] = trans('message.success.cancel');
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('已在預約名單內無法再次預約');
+            return $this->view;
         }
         
         return $this->view;

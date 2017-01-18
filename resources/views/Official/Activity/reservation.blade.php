@@ -19,7 +19,7 @@
            	  		<div class="row mb--b">
            	  			<div class="col-xs-12">
 						<h4>{{ $dataResult['activity_name'] }}
-                        @if($dataResult['end_dt'] == null or strtotime($dataResult['end_dt_org']) > strtotime(date('Y-m-d'))) 
+                        @if($dataResult['end_dt'] == null or strtotime($dataResult['end_dt_org']) >= strtotime(date('Y-m-d'))) 
                         <span class="label label-success">已報名: {{ $dataResult['reservation_count'] }}人</span>
                         @else
 						<span class="label label-default">已結束</span>
