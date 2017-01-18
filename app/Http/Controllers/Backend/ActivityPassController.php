@@ -34,7 +34,6 @@ class ActivityPassController extends Controller {
                                         $join->on('activity_reservation_data.activity_id','=','activity_data.id')
                                         ->where('activity_reservation_data.attend_status','=',1);
                                     })
-                                    ->leftJoin('activity_instrument','activity_instrument.activity_id','=','activity_data.id')
                                     ->where('activity_data.pass_type',2)
                                     ->orderBy('activity_data.id','desc')
                                     ->groupBy('activity_data.id')
