@@ -36,7 +36,8 @@ class ActivityPassController extends Controller {
                                     })
                                     ->leftJoin('activity_instrument','activity_instrument.activity_id','=','activity_data.id')
                                     ->where('activity_data.pass_type',2)
-                                    ->orderBy('id','desc')
+                                    ->orderBy('activity_data.id','desc')
+                                    ->groupBy('activity_data.id')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
         
