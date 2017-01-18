@@ -24,6 +24,8 @@ class MemberProtofolioController extends Controller {
 
         $name = Request::input('name', '');
         $card_id_number = Request::input('card_id_number', '');
+        $email = Request::input('email', '');
+        $id_number = Request::input('id_number', '');
         $member_type = Request::input('member_type', '');
         $organize = Request::input('organize', '');
         $department = Request::input('department', '');
@@ -37,6 +39,14 @@ class MemberProtofolioController extends Controller {
         if($card_id_number != "")
         {
             $listResult->where('member_data.card_id_number','=',$card_id_number);
+        }
+        if($email != "")
+        {
+            $listResult->where('member_data.email','=',$email);
+        }
+        if($id_number != "")
+        {
+            $listResult->where('member_data.id_number','=',$id_number);
         }
         if($member_type != "")
         {
