@@ -43,7 +43,7 @@
 										<tr>
 										<th class="ttw50">平台</th>
 										<th class="ttw100">儀器編號</th> 
-										<th>儀器名稱</th>
+										<th class="ttt100">儀器名稱</th>
 										<th>功能簡述</th>
 										<th class="ttw80">管理員</th>
 										<th class="ttw80 text-center">地點</th>
@@ -77,7 +77,7 @@
 										<tr>
 										<th class="ttw50">平台</th>
 										<th class="ttw100">儀器編號</th> 
-										<th>儀器名稱</th>
+										<th class="ttt100">儀器名稱</th>
 										<th>功能簡述</th>
 										<th class="ttw80">管理員</th>
 										<th class="ttw80 text-center">地點</th>
