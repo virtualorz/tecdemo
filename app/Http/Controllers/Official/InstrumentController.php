@@ -356,60 +356,78 @@ class InstrumentController extends Controller {
                     {//候補
                         $reservation_status = 0;
                     }
-                    $reservation_id = DB::table('instrument_reservation_data')
+                    //檢查是否已經在預約中
+                    $member_count = DB::table('instrument_reservation_data')
                         ->select('instrument_reservation_data_id')
-                        ->where('create_date',date('Y-m-d'))
-                        ->orderBy('instrument_reservation_data_id','desc')
-                        ->limit(1)
-                        ->get();
-                    if(!isset($reservation_id[0]['instrument_reservation_data_id']))
+                        ->where('instrument_id',$id[3])
+                        ->where('reservation_dt',$id[2])
+                        ->where('reservation_section_id',$id[1])
+                        ->where('member_id',User::Id())
+                        ->count();
+                    if($member_count == 0)
                     {
-                        $reservation_id = 0;
+                        $reservation_id = DB::table('instrument_reservation_data')
+                            ->select('instrument_reservation_data_id')
+                            ->where('create_date',date('Y-m-d'))
+                            ->orderBy('instrument_reservation_data_id','desc')
+                            ->limit(1)
+                            ->get();
+                        if(!isset($reservation_id[0]['instrument_reservation_data_id']))
+                        {
+                            $reservation_id = 0;
+                        }
+                        else
+                        {
+                            $reservation_id = $reservation_id[0]['instrument_reservation_data_id'];
+                        }
+                        $reservation_id = intval($reservation_id)+1;
+
+                        DB::table('instrument_reservation_data')
+                            ->insert(array(
+                                'instrument_reservation_data_id'=>$reservation_id,
+                                'create_date'=>date('Y-m-d'),
+                                'uid'=>'-',
+                                'salt'=>'-',
+                                'created_at'=>date('Y-m-d H:i:s'),
+                                'updated_at'=>date('Y-m-d H:i:s'),
+                                'instrument_id'=>$id[3],
+                                'member_id'=>User::Id(),
+                                'reservation_dt'=>$id[2],
+                                'reservation_section_id'=>$id[1],
+                                'reservation_status'=>$reservation_status,
+                                'remark'=>''
+                            ));
+                        //製作uid以及salt
+                        $date = date('Y-m-d H:i:s').$reservation_id.date('Y-m-d');
+                        $salt = substr(md5($date),5,5);
+                        $uid = md5($salt.$date);
+                        
+                        DB::table('instrument_reservation_data')
+                            ->where('instrument_reservation_data_id',$reservation_id)
+                            ->where('create_date',date('Y-m-d'))
+                            ->update(['uid'=>$uid,
+                                        'salt'=>$salt
+                            ]);
+                        $result_after = DB::table('instrument_reservation_data')
+                                        ->where('instrument_reservation_data_id',$reservation_id)
+                                        ->where('create_date',date('Y-m-d'))
+                                        ->get();
+                        DBProcedure::writeLog([
+                            'table' => 'instrument_reservation_data',
+                            'operator' => DBOperator::OP_INSERT,
+                            'data_after' => isset($result_after[0]) ? $result_after[0] : [],
+                            'admin_id' => User::id()
+                        ]);
+
+                        $this->view['msg'] = trans('message.success.reservation');
                     }
                     else
                     {
-                        $reservation_id = $reservation_id[0]['instrument_reservation_data_id'];
+                        $this->view['result'] = 'no';
+                        $this->view['msg'] = trans('message.error.validation');
+                        $this->view['detail'] = array('已在預約名單內無法再次預約');
+                        return $this->view;
                     }
-                    $reservation_id = intval($reservation_id)+1;
-
-                    DB::table('instrument_reservation_data')
-                        ->insert(array(
-                            'instrument_reservation_data_id'=>$reservation_id,
-                            'create_date'=>date('Y-m-d'),
-                            'uid'=>'-',
-                            'salt'=>'-',
-                            'created_at'=>date('Y-m-d H:i:s'),
-                            'updated_at'=>date('Y-m-d H:i:s'),
-                            'instrument_id'=>$id[3],
-                            'member_id'=>User::Id(),
-                            'reservation_dt'=>$id[2],
-                            'reservation_section_id'=>$id[1],
-                            'reservation_status'=>$reservation_status,
-                            'remark'=>''
-                        ));
-                    //製作uid以及salt
-                    $date = date('Y-m-d H:i:s').$reservation_id.date('Y-m-d');
-                    $salt = substr(md5($date),5,5);
-                    $uid = md5($salt.$date);
-                    
-                    DB::table('instrument_reservation_data')
-                        ->where('instrument_reservation_data_id',$reservation_id)
-                        ->where('create_date',date('Y-m-d'))
-                        ->update(['uid'=>$uid,
-                                    'salt'=>$salt
-                        ]);
-                    $result_after = DB::table('instrument_reservation_data')
-                                    ->where('instrument_reservation_data_id',$reservation_id)
-                                    ->where('create_date',date('Y-m-d'))
-                                    ->get();
-                    DBProcedure::writeLog([
-                        'table' => 'instrument_reservation_data',
-                        'operator' => DBOperator::OP_INSERT,
-                        'data_after' => isset($result_after[0]) ? $result_after[0] : [],
-                        'admin_id' => User::id()
-                    ]);
-
-                    $this->view['msg'] = trans('message.success.reservation');
                 }
                 else
                 {//取消預約
