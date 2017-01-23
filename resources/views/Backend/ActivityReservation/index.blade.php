@@ -78,6 +78,7 @@
                             <th width="15%">{{ trans('validation.attributes.reservation_at') }}</th>
                             <th width="15%">{{ trans('validation.attributes.name') }}</th>
                             <th width="15%">{{ trans('validation.attributes.email') }}</th>
+                            <th width="25%">{{ trans('validation.attributes.system-organize') }}/{{ trans('validation.attributes.system-department') }}/{{ trans('validation.attributes.pi') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -89,6 +90,7 @@
                             <td>{{ $v['created_at'] }}</td>
                             <td>{{ $v['name'] }}</td>
                             <td>{{ $v['email'] }}</td>
+                            <td>{{ $v['organize_name'] }}/{{ $v['department_name'] }}/{{ $v['pi_name'] }}</td>
                         </tr>
                         @endforeach
                     </tbody>

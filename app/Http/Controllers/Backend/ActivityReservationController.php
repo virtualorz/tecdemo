@@ -44,11 +44,17 @@ class ActivityReservationController extends Controller {
                                             'activity_reservation_data.member_id',
                                             DB::raw('DATE_FORMAT(activity_reservation_data.created_at, "%Y-%m-%d") as created_at'),
                                             'member_data.name',
-                                            'member_data.email')
+                                            'member_data.email',
+                                            'system_pi_list.name as pi_name',
+                                            'system_organize.name as organize_name',
+                                            'system_department.name as department_name')
                                     ->leftJoin('member_data','activity_reservation_data.member_id','=','member_data.id')
+                                    ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
+                                    ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                                    ->leftJoin('system_department','member_data.department_id','=','system_department.id')
                                     ->where('reservation_status',1)
                                     ->where('activity_id',$id)
-                                    ->orderBy('id','desc')
+                                    ->orderBy('member_data.id','desc')
                                     ->get();
         $this->view->with('listResult', $listResult);
         $this->view->with('id_type', Config::get('data.id_type'));
