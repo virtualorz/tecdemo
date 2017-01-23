@@ -137,6 +137,7 @@
 										<th class="ttw100">日期</th>
 										<th class="ttw100">活動編號</th> 
 										<th>活動名稱</th>
+										<th class="ttw100">開通儀器</th>
 										<th class="ttw80">類型</th>
 										<th class="ttw80 text-center">學分數</th>
 										<th class="ttw80 text-center">時數</th>
@@ -156,6 +157,13 @@
 											<td>{{ $v['activity_id'] }}</td> 
 											<td>
 											<a href="{{ asset('activity/reservation/id-'.$v['uid'].'-'.$v['salt'])}}">{{ $v['activity_name'] }}</a>
+											</td>
+											<td>
+												{{--*/ $instrument_name = $v['instrument_name'] /*--}}
+												@foreach($permission as $k1=>$v1)
+												{{--*/ $instrument_name = str_replace('('.$k1.')','('.$permission[$k1].')',$instrument_name) /*--}}
+												@endforeach
+												{{ $instrument_name }}
 											</td>
 											<td>{{ $v['type_name'] }}</td>
 											<td class="text-center">{{ $v['score'] }}</td>

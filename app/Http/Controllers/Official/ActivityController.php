@@ -89,11 +89,16 @@ class ActivityController extends Controller {
                                                 'activity_data.time',
                                                 'activity_data.score',
                                                 'activity_data.relative_plateform',
-                                                DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
+                                                DB::raw('count(activity_reservation_data.member_id) as reservation_count'),
+                                                DB::raw('GROUP_CONCAT( 
+                                                                        DISTINCT CONCAT(instrument_data.name,"(",activity_instrument.permission_id,")")
+                                                                        SEPARATOR ",") as instrument_name'))
                             ->leftJoin('activity_reservation_data', function ($join) {
                                 $join->on('activity_reservation_data.activity_id', '=', 'activity_data.id')->where('activity_reservation_data.reservation_status', '=', 1);
                             })
                             ->leftJoin('activity_type','activity_data.activity_type_id','=','activity_type.id')
+                            ->leftJoin('activity_instrument','activity_instrument.activity_id','=','activity_data.id')
+                            ->leftJoin('instrument_data','activity_instrument.instrument_id','=','instrument_data.id')
                             ->groupBy('activity_data.id')
                             ->orderBy('end_dt','desc')
                             ->paginate(Config::get('pagination.items'));
@@ -112,6 +117,7 @@ class ActivityController extends Controller {
         $this->view->with('liest_aResult', $liest_aResult);
         $this->view->with('liest_unaResult', $liest_unaResult);
         $this->view->with('instrument_type', $instrument_type);
+        $this->view->with('permission', Config::get('data.permission'));
         $this->view->with('pagination', $pagination);
 
         return $this->view;
