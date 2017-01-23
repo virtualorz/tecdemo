@@ -207,6 +207,7 @@ class ActivityController extends Controller {
         }
         
         $this->view->with('dataResult', $dataResult[0]);
+        $this->view->with('level', Config::get('data.level'));
 
         return $this->view;
     }
