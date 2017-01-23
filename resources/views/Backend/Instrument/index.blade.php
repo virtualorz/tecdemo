@@ -88,8 +88,8 @@
                             <th width="5%" nowrap style="color:#fff;">
                                 <label class="check"><input type="checkbox" class="icheckbox ckbItemAll" /> {{ trans('page.btn.select_all') }}</label>
                             </th>
-                            <th width="15%">{{ trans('validation.attributes.created_at') }}</th>
                             <th width="15%">{{ trans('validation.attributes.instrument_type') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.instrument_id') }}</th>
                             <th width="15%">{{ trans('validation.attributes.name') }}</th>
                             <th width="15%">{{ trans('validation.attributes.open_section') }}</th>
                             <th width="15%">{{ trans('validation.attributes.create_admin_id') }}</th>
@@ -102,8 +102,8 @@
                             <td data-headname="{{ trans('page.btn.select') }}">
                                 <label class="check"><input type="checkbox" class="icheckbox ckbItem" value="{{ $v['id'] }}" /></label>
                             </td>
-                            <td>{{ $v['created_at'] }}</td>
                             <td>{{ $v['type_name'] }}</td>
+                            <td>{{ $v['instrument_id'] }}</td>
                             <td>{{ $v['name'] }}</td>
                             <td>{{ trans('enum.section.'.explode('_',$v['open_section'])[0]) }}/{{ trans('enum.section.'.explode('_',$v['open_section'])[1]) }}</td>
                             <td>{{ $v['created_admin_name'] }}</td>

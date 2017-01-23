@@ -56,6 +56,7 @@ class InstrumentController extends Controller {
         $listResult = $listResult->select('instrument_data.id',
                                             DB::raw('DATE_FORMAT(instrument_data.created_at, "%Y-%m-%d") as created_at'),
                                             'instrument_type.name as type_name',
+                                            'instrument_data.instrument_id',
                                             'instrument_data.name',
                                             'instrument_data.open_section',
                                             'member_admin.name as created_admin_name')
