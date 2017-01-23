@@ -256,8 +256,11 @@ class InstrumentController extends Controller {
         {
             if($v['section_type'] == 1)
             {
-                $tmp = array('1'=>$v,'2'=>'');
-                array_push($sectionResult,$tmp);
+                if(in_array($v['id'],$sectionSetResult))
+                {
+                    $tmp = array('1'=>$v,'2'=>'');
+                    array_push($sectionResult,$tmp);
+                }
             }
         }
         foreach($sectionResultTmp as $k=>$v)
@@ -267,7 +270,7 @@ class InstrumentController extends Controller {
                 $isset = false;
                 foreach($sectionResult as $k1=>$v1)
                 {
-                    if($v1['2']== '')
+                    if(in_array($v['id'],$sectionSetResult) && $v1['2']== '')
                     {
                         $isset = true;
                         $sectionResult[$k1]['2'] = $v;
@@ -276,8 +279,11 @@ class InstrumentController extends Controller {
                 }
                 if(!$isset)
                 {
-                    $tmp = array('1'=>'','2'=>$v);
-                    array_push($sectionResult,$tmp);
+                    if(in_array($v['id'],$sectionSetResult))
+                    {
+                        $tmp = array('1'=>'','2'=>$v);
+                        array_push($sectionResult,$tmp);
+                    }
                 }
             }
         }
