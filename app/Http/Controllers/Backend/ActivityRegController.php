@@ -107,10 +107,21 @@ class ActivityRegController extends Controller {
                 
                 if($is_pass == 1)
                 {
+                    $activity_data = DB::table('activity_data')
+                        ->select('pass_type')
+                        ->where('id',$result_before[0]['activity_id'])
+                        ->get();
+                    $pass_status = 0;
+                    if($activity_data[0]['pass_type'] == 1)
+                    {
+                        $pass_status = 1;
+                    }
+
                     DB::table('activity_reservation_data')
                         ->where('activity_id',$result_before[0]['activity_id'])
                         ->where('member_id',$result_before[0]['member_id'])
                         ->update(['attend_status'=>1,
+                                    'pass_status'=>$pass_status,
                                     'activity_reg_id'=>Request::input('id')
                         ]);
                 }
