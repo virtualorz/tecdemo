@@ -52,7 +52,8 @@ class InstrumentReservationController extends Controller {
                                     ->leftJoin('instrument_section','instrument_reservation_data.reservation_section_id','=','instrument_section.id')
                                     ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
                                     ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
-                                    ->orderBy('instrument_reservation_data.created_at','desc')
+                                    ->orderBy('instrument_reservation_data.reservation_dt','desc')
+                                    ->orderBy('instrument_reservation_data.created_at','asc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
         
