@@ -19,7 +19,7 @@
             <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-xs-12">
             	<div class="frombox">
 					<form class="form-horizontal">
-					  <h4 class="col-sm-12 text-center mb--l">註冊完成，請列印紙本並繳交至職科所辦公室以開通使用權限</h4>
+					  <h4 class="col-sm-12 text-center mb--l">註冊完成，請列印紙本並繳交至 TechComm (生科館 304) 以開通使用權限</h4>
 					  
 					  <div class="form-group">
 						<div class="col-sm-12 text-center">
