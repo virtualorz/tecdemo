@@ -184,6 +184,144 @@ class InstrumentController extends Controller {
         $reservationResult = array();
         if (count($dataResult) > 0)
         {
+            if(User::id() != null)
+            {//已登入使用者
+                //開放時段
+                $instrumentPermission = User::get('instrumentPermission');
+                $sectionResult = DB::table('instrument_section_set')
+                            ->select('instrument_section.section_type',
+                                        'instrument_section.id',
+                                        DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
+                                        DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'))
+                            ->leftJoin('instrument_section','instrument_section_set.instrument_section_id','=','instrument_section.id')
+                            ->where('instrument_section_set.instrument_data_id',$dataResult[0]['id'])
+                            ->get();
+                //取得使用者通過的假日權限
+                $permissionResult = array();
+                $permissionResultTmp = DB::table('activity_reservation_data')
+                    ->select('activity_instrument.permission_id')
+                    ->leftJoin('activity_instrument','activity_reservation_data.activity_id','=','activity_instrument.activity_id')
+                    ->where('activity_reservation_data.member_id',User::Id())
+                    ->where('activity_instrument.instrument_id',$dataResult[0]['id'])
+                    ->where('activity_reservation_data.pass_status','1')
+                    ->get();
+                foreach($permissionResultTmp as $k=>$v)
+                {
+                    array_push($permissionResult,$v['permission_id']);
+                }
+                //註記使用者沒有權限的時段
+                foreach($sectionResult as $k=>$v)
+                {
+                    if(in_array($v['section_type'],$instrumentPermission) && in_array($v['section_type'],$permissionResult))
+                    {
+                        $sectionResult[$k]['can_use'] = 1;
+                    }
+                }
+            }
+            else
+            {//未登入使用者
+                //開放時段
+                $instrumentPermission = array_keys(Config::get('data.member_permission'));
+                $sectionResult = DB::table('instrument_section_set')
+                            ->select('instrument_section.section_type',
+                                        'instrument_section.id',
+                                        DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
+                                        DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'))
+                            ->leftJoin('instrument_section','instrument_section_set.instrument_section_id','=','instrument_section.id')
+                            ->where('instrument_section_set.instrument_data_id',$dataResult[0]['id'])
+                            ->get();
+                //取得使用者通過的假日權限
+                $permissionResult = array_keys(Config::get('data.member_permission'));
+                //註記使用者沒有權限的時段
+                foreach($sectionResult as $k=>$v)
+                {
+                    $sectionResult[$k]['can_use'] = 1;
+                }
+            }
+
+            //預約資料
+            $reservationResult = DB::table('instrument_reservation_data')
+                        ->select('member_data.name as member_name',
+                                    'instrument_reservation_data.member_id',
+                                    'instrument_reservation_data.reservation_dt',
+                                    'instrument_reservation_data.reservation_section_id',
+                                    'instrument_reservation_data.reservation_status',
+                                    'instrument_reservation_data.attend_status'
+                                )
+                        ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
+                        ->where('instrument_reservation_data.instrument_id',$dataResult[0]['id'])
+                        ->where('instrument_reservation_data.reservation_status','!=','2')
+                        ->whereDate('instrument_reservation_data.reservation_dt','>=',$start_dt)
+                        ->whereDate('instrument_reservation_data.reservation_dt','<=',$end_dt)
+                        ->get();
+            //計算所有本儀器所有預約次數
+            $reservation_count = DB::table('instrument_reservation_data')
+                ->where('instrument_id',$dataResult[0]['id'])
+                ->where('reservation_status',1)
+                ->whereNull('attend_status')
+                ->where('member_id',User::id())
+                ->count();
+
+            //排休使用權限設定
+            $vacationResult = array();
+            $vacationResultTmp = DB::table('instrument_vacation')
+                        ->select('vacation_type','vacation_dt')
+                        ->whereDate('vacation_dt','>=',$start_dt)
+                        ->whereDate('vacation_dt','<=',$end_dt)
+                        ->where(function($query)use($dataResult){
+                            $query->orWhere('instrument_id',$dataResult[0]['id']);
+                            $query->orWhere('instrument_id','0');
+                        })
+                        ->get();
+                
+            foreach($vacationResultTmp as $k=>$v)
+            {
+                if($v['vacation_type'] == "1" || $v['vacation_type'] == "2")
+                {//國定假日或臨時休假
+                    if(!in_array("3",$permissionResult))
+                    {//使用者沒有假日權限則本日無法預約
+                        array_push($vacationResult,$v['vacation_dt']);
+                    }
+                }
+                else if($v['vacation_type'] == "4")
+                {//長假期
+                    if(!in_array("4",$permissionResult))
+                    {//使用者沒有長假期權限限則本日無法預約
+                        array_push($vacationResult,$v['vacation_dt']);
+                    }
+                }
+            }
+
+            foreach($sectionResult as $k=>$v)
+            {
+                foreach($reservationResult as $k1=>$v1)
+                {
+                    if($v['id'] == $v1['reservation_section_id'])
+                    {//比對各時段預約記錄
+                        if(!isset($sectionResult[$k]['reservation_log']))
+                        {//將各時段預約日期寫入時段中
+                            $sectionResult[$k]['reservation_log'] = array();
+                            $sectionResult[$k]['reservation_log'][$v1['reservation_dt']] = $v1;
+                        }
+                        else
+                        {
+                            if(!isset($sectionResult[$k]['reservation_log'][$v1['reservation_dt']]))
+                            {
+                                $sectionResult[$k]['reservation_log'][$v1['reservation_dt']] = $v1;
+                            }
+                            else if(isset($sectionResult[$k]['reservation_log'][$v1['reservation_dt']]) && $v1['member_id'] == User::Id())
+                            {
+                                $sectionResult[$k]['reservation_log'][$v1['reservation_dt']] = $v1;
+                            }
+                        }
+                            
+                    }
+                }
+            }
+            
+            //寫入預約取消最後期限
+            $dataResult[0]['cancel_limit_dt'] = date('Y-m-d',strtotime("+".$dataResult[0]['cancel_limit']." days",strtotime(date('Y-m-d'))));
+            /*
             //寫入預約取消最後期限
             $dataResult[0]['cancel_limit_dt'] = date('Y-m-d',strtotime("+".$dataResult[0]['cancel_limit']." days",strtotime(date('Y-m-d'))));
             //開放時段
@@ -298,7 +436,7 @@ class InstrumentController extends Controller {
                         
                     }
                 }
-            }
+            }*/
         }
         
         $this->view->with('dataResult', $dataResult[0]);
@@ -315,7 +453,7 @@ class InstrumentController extends Controller {
         $this->view->with('id', Route::input('id', '0-0'));
         $this->view->with('search_date', $search_date);
         $this->view->with('vacationResult', $vacationResult);
-        $this->view->with('reservation_count', $reservation_count);log::error($reservation_count);
+        $this->view->with('reservation_count', $reservation_count);
 
         return $this->view;
     }
@@ -334,6 +472,15 @@ class InstrumentController extends Controller {
             $this->view['result'] = 'no';
             $this->view['msg'] = trans('message.error.validation');
             $this->view['detail'] = $invalid;
+            return $this->view;
+        }
+
+        if(User::id() == null)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('請登入後再進行預約');
+            $this->view['login'] = 0;
             return $this->view;
         }
 
@@ -444,7 +591,7 @@ class InstrumentController extends Controller {
                         ->leftJoin('instrument_admin','instrument_admin.instrument_data_id','=','instrument_data.id')
                         ->where('instrument_data.cancel_notice','1')
                         ->where('instrument_data.id',$id[3])
-                        ->get();log::error($instrument_admin);
+                        ->get();
                     foreach($instrument_admin as $k=>$v)
                     {
                         $dataResult = array('user'=>$v['name'],'instrument'=>$v['instrument_name']);

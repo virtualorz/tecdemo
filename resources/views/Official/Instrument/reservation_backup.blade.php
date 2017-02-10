@@ -67,16 +67,14 @@
                                             <td>{{ $v['start_time'] }}-{{ $v['end_time'] }}</td>
                                             @for($i=0;$i<7;$i++)
                                             <td>
-                                                @if(!isset($v['reservation_log']))
-                                                    @if(!isset($v['can_use']) || in_array(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$vacationResult))
-                                                    尚未開放
-                                                    @else
-                                                    <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" 
-                                                        @if($reservation_count >= $dataResult['reservation_limit'] 
-                                                            || strtotime('+'.$i.' days',strtotime($start_dt_org)) < strtotime(date('Y-m-d')) 
-                                                            || strtotime(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))).' '.$v['start_time']) < strtotime(date('Y-m-d H:i'))) disabled @endif
-                                                    >預約</a>
-                                                    @endif
+                                                @if( in_array(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$vacationResult) )
+                                                尚未開放
+                                                @elseif(!isset($v['reservation_log']))
+                                                <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" 
+                                                    @if($reservation_count >= $dataResult['reservation_limit'] 
+                                                        || strtotime('+'.$i.' days',strtotime($start_dt_org)) < strtotime(date('Y-m-d')) 
+                                                        || strtotime(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))).' '.$v['start_time']) < strtotime(date('Y-m-d H:i'))) disabled @endif
+                                                >預約</a>
                                                 @else 
                                                     @if(array_key_exists(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$v['reservation_log']))
                                                         @if($v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['attend_status'] == '1')
@@ -87,25 +85,17 @@
                                                                 @if(strtotime('+'.$i.' days',strtotime($start_dt_org)) <= strtotime($dataResult['cancel_limit_dt'])) disabled @endif
                                                             >取消</a>
                                                             @else
-                                                                @if(!isset($v['can_use']) || in_array(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$vacationResult) || User::id() == null)
-                                                                {{$v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['member_name']}} 已預約
-                                                                @else
-                                                                <a href="#" class="btn btn-default reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" 
-                                                                    @if($reservation_count >= $dataResult['reservation_limit'] || strtotime('+'.$i.' days',strtotime($start_dt_org)) < strtotime(date('Y-m-d'))) disabled @endif
-                                                                >候補</a>
-                                                                @endif
+                                                            <a href="#" class="btn btn-default reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" 
+                                                                @if($reservation_count >= $dataResult['reservation_limit'] || strtotime('+'.$i.' days',strtotime($start_dt_org)) < strtotime(date('Y-m-d'))) disabled @endif
+                                                            >候補</a>
                                                             @endif
                                                         @endif
                                                     @else
-                                                        @if(!isset($v['can_use']) || in_array(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$vacationResult))
-                                                        尚未開放
-                                                        @else
-                                                        <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" 
-                                                            @if($reservation_count >= $dataResult['reservation_limit'] 
-                                                                || strtotime('+'.$i.' days',strtotime($start_dt_org)) < strtotime(date('Y-m-d')) 
-                                                                || strtotime(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))).' '.$v['start_time']) < strtotime(date('Y-m-d H:i'))) disabled @endif
-                                                        >預約</a>
-                                                        @endif
+                                                    <a href="#" class="btn btn-info reservation" data-id="1_{{$v['id']}}_{{ date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}_{{ $dataResult['id'] }}" 
+                                                        @if($reservation_count >= $dataResult['reservation_limit'] 
+                                                            || strtotime('+'.$i.' days',strtotime($start_dt_org)) < strtotime(date('Y-m-d')) 
+                                                            || strtotime(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))).' '.$v['start_time']) < strtotime(date('Y-m-d H:i'))) disabled @endif
+                                                    >預約</a>
                                                     @endif
                                                 @endif
 
@@ -171,13 +161,11 @@
                     {
                         var message = $('div.growlUI');
                         $('div.growlUI').find("h1").html(response.msg);
-                        $('div.growlUI2').find("h2").html();
                     }
                     else
                     {
                         var message = $('div.growlUI2');
                         $('div.growlUI2').find("h1").html(response.msg);
-                        $('div.growlUI2').find("h2").html(response.detail);
                     }
                     
                     $.blockUI({ 
@@ -202,15 +190,7 @@
                                 } 
                             }); 
                     setTimeout(function() {
-                        if(response.login == 0)
-                        {
-                            sessionStorage.setItem('urlBack', window.location.href);
-                            location.href = "{{ asset('login') }}";
-                        }
-                        else
-                        {
-                            location.reload();
-                        }
+                        location.reload();
                     }, 2000);
                     
                 }
