@@ -184,18 +184,21 @@ class InstrumentController extends Controller {
         $reservationResult = array();
         if (count($dataResult) > 0)
         {
+            //開放時段
+            $instrumentPermission = User::get('instrumentPermission');
+            $sectionResult = DB::table('instrument_section_set')
+                        ->select('instrument_section.section_type',
+                                    'instrument_section.id',
+                                    DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
+                                    DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'))
+                        ->leftJoin('instrument_section','instrument_section_set.instrument_section_id','=','instrument_section.id')
+                        ->where('instrument_section_set.instrument_data_id',$dataResult[0]['id'])
+                        ->orderBy('start_time','asc')
+                        ->orderBy('end_time','asc')
+                        ->get();
             if(User::id() != null)
             {//已登入使用者
-                //開放時段
-                $instrumentPermission = User::get('instrumentPermission');
-                $sectionResult = DB::table('instrument_section_set')
-                            ->select('instrument_section.section_type',
-                                        'instrument_section.id',
-                                        DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
-                                        DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'))
-                            ->leftJoin('instrument_section','instrument_section_set.instrument_section_id','=','instrument_section.id')
-                            ->where('instrument_section_set.instrument_data_id',$dataResult[0]['id'])
-                            ->get();
+                
                 //取得使用者通過的假日權限
                 $permissionResult = array();
                 $permissionResultTmp = DB::table('activity_reservation_data')
@@ -220,16 +223,6 @@ class InstrumentController extends Controller {
             }
             else
             {//未登入使用者
-                //開放時段
-                $instrumentPermission = array_keys(Config::get('data.member_permission'));
-                $sectionResult = DB::table('instrument_section_set')
-                            ->select('instrument_section.section_type',
-                                        'instrument_section.id',
-                                        DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
-                                        DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'))
-                            ->leftJoin('instrument_section','instrument_section_set.instrument_section_id','=','instrument_section.id')
-                            ->where('instrument_section_set.instrument_data_id',$dataResult[0]['id'])
-                            ->get();
                 //取得使用者通過的假日權限
                 $permissionResult = array_keys(Config::get('data.member_permission'));
                 //註記使用者沒有權限的時段
