@@ -27,12 +27,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.card_id_number') }}</th>
-                                <td>
-                                    {{ $dataResult['card_id_number'] }}
-                                </td>
-                            </tr>
-                            <tr>
                                 <th>{{ trans('validation.attributes.system-organize') }}</th>
                                 <td>
                                     {{ $dataResult['organize_name'] }}
@@ -127,6 +121,12 @@
                                         <option value="{{$k}}">{{$v}}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.card_id_number') }}</th>
+                                <td>
+                                    <input type="text" name="card_id_number" id="data-card_id_number" class="form-control required">
                                 </td>
                             </tr>
                             <tr>

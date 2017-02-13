@@ -521,6 +521,7 @@ class MemberProtofolioController extends Controller {
                     'department_id' => 'integer|required',
                     'pi_list_id' => 'integer|required',
                     'type' => 'integer|required',
+                    'card_id_number' => 'string|required|max:32',
                     'start_dt' => 'date|required',
                     'limit_month' => 'integer|required',
                     'permission' => 'array|required',
@@ -531,6 +532,19 @@ class MemberProtofolioController extends Controller {
             $this->view['msg'] = trans('message.error.validation');
             $this->view['detail'] = $validator->errors();
 
+            return $this->view;
+        }
+
+        //檢查重複
+        $count1 = DB::table('member_data')
+                ->where('card_id_number',Request::input('card_id_number'))
+                ->count();
+        
+        if($count1 != 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('卡號重複！');
             return $this->view;
         }
         
@@ -545,6 +559,7 @@ class MemberProtofolioController extends Controller {
                                 'department_id'=>Request::input('department_id'),
                                 'pi_list_id'=>Request::input('pi_list_id'),
                                 'type'=>Request::input('type'),
+                                'card_id_number'=>Request::input('card_id_number'),
                                 'start_dt'=>Request::input('start_dt'),
                                 'limit_month'=>Request::input('limit_month'),
                                 'enable'=>Request::input('enable'),
