@@ -43,7 +43,6 @@ class RegisterController extends Controller {
         $invalid = [];
         $validator = Validator::make(Request::all(), [
                     'name' => 'string|required|max:15',
-                    'card_id_number' => 'string|required|max:20',
                     'organize' => 'integer|required',
                     'department' => 'integer|required',
                     'email' => 'string|required|max:200',
@@ -91,7 +90,6 @@ class RegisterController extends Controller {
                         ->insertGetId(
                             array('created_at'=>date('Y-m-d H:i:s'),
                                     'name'=>Request::input('name'),
-                                    'card_id_number'=>Request::input('card_id_number'),
                                     'organize_id'=>Request::input('organize'),
                                     'department_id'=>Request::input('department'),
                                     'title'=>Request::input('title'),
@@ -124,10 +122,9 @@ class RegisterController extends Controller {
         }
 
         //快取註冊資料
-        $expiresAt = Carbon::now()->addMinutes(10);
+        $expiresAt = Carbon::now()->addMinutes(20);
         $register_data = array('created_at'=>date('Y-m-d H:i:s'),
                                     'name'=>Request::input('name'),
-                                    'card_id_number'=>Request::input('card_id_number'),
                                     'organize_id'=>Request::input('organize'),
                                     'department_id'=>Request::input('department'),
                                     'title'=>Request::input('title'),

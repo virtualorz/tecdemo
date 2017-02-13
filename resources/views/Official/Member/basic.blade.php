@@ -32,7 +32,7 @@
        	  			<div class="line-schoolpage"></div>
        	  			
        	  			<div class="row mb-xs-20 mb--b">
-						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>學號/證件卡號</h5></div>
+						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>卡號</h5></div>
                         <div class="col-md-9 col-sm-9 col-xs-8">{{ $dataResult['card_id_number'] }}</div>
 					</div>
         	  		

@@ -25,7 +25,6 @@ class MemberProtofolioController extends Controller {
         $name = Request::input('name', '');
         $card_id_number = Request::input('card_id_number', '');
         $email = Request::input('email', '');
-        $id_number = Request::input('id_number', '');
         $member_type = Request::input('member_type', '');
         $organize = Request::input('organize', '');
         $department = Request::input('department', '');
@@ -43,10 +42,6 @@ class MemberProtofolioController extends Controller {
         if($email != "")
         {
             $listResult->where('member_data.email','=',$email);
-        }
-        if($id_number != "")
-        {
-            $listResult->where('member_data.id_number','=',$id_number);
         }
         if($member_type != "")
         {
@@ -271,7 +266,6 @@ class MemberProtofolioController extends Controller {
         $validator = Validator::make(Request::all(), [
                     'name' => 'string|required|max:16',
                     'card_id_number' => 'string|required|max:20',
-                    'id_number' => 'string|required|max:12',
                     'organize_id' => 'integer|required',
                     'department_id' => 'integer|required',
                     'email' => 'string|required|max:200',
@@ -302,9 +296,6 @@ class MemberProtofolioController extends Controller {
         $count2 = DB::table('member_data')
                 ->where('card_id_number',Request::input('card_id_number'))
                 ->count();
-        $count3 = DB::table('member_data')
-                ->where('id_number',Request::input('id_number'))
-                ->count();
         
         if($count1 != 0)
         {
@@ -320,13 +311,6 @@ class MemberProtofolioController extends Controller {
             $this->view['detail'] = array('此學生號已註冊過！');
             return $this->view;
         }
-        if($count3 != 0)
-        {
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.validation');
-            $this->view['detail'] = array('此身分證號已註冊過！');
-            return $this->view;
-        }
 
         try {
             DB::transaction(function(){
@@ -335,7 +319,6 @@ class MemberProtofolioController extends Controller {
                             array('created_at'=>date('Y-m-d H:i:s'),
                                     'name'=>Request::input('name'),
                                     'card_id_number'=>Request::input('card_id_number'),
-                                    'id_number'=>Request::input('id_number'),
                                     'organize_id'=>Request::input('organize_id'),
                                     'department_id'=>Request::input('department_id'),
                                     'title'=>Request::input('title'),
@@ -405,7 +388,6 @@ class MemberProtofolioController extends Controller {
         $validator = Validator::make(Request::all(), [
                     'name' => 'string|required|max:16',
                     'card_id_number' => 'string|required|max:20',
-                    'id_number' => 'string|required|max:12',
                     'organize_id' => 'integer|required',
                     'department_id' => 'integer|required',
                     'email' => 'string|required|max:200',
@@ -435,10 +417,6 @@ class MemberProtofolioController extends Controller {
                 ->where('card_id_number',Request::input('card_id_number'))
                 ->where('id','!=',Request::input('id'))
                 ->count();
-        $count3 = DB::table('member_data')
-                ->where('id_number',Request::input('id_number'))
-                ->where('id','!=',Request::input('id'))
-                ->count();
         
         if($count1 != 0)
         {
@@ -454,13 +432,6 @@ class MemberProtofolioController extends Controller {
             $this->view['detail'] = array('此學生號已註冊過！');
             return $this->view;
         }
-        if($count3 != 0)
-        {
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.validation');
-            $this->view['detail'] = array('此身分證號已註冊過！');
-            return $this->view;
-        }
         
         try {
             DB::transaction(function(){
@@ -473,7 +444,6 @@ class MemberProtofolioController extends Controller {
                         ->where('id',Request::input('id'))
                         ->update(['name'=>Request::input('name'),
                                     'card_id_number'=>Request::input('card_id_number'),
-                                    'id_number'=>Request::input('id_number'),
                                     'organize_id'=>Request::input('organize_id'),
                                     'department_id'=>Request::input('department_id'),
                                     'title'=>Request::input('title'),
@@ -492,7 +462,6 @@ class MemberProtofolioController extends Controller {
                         ->where('id',Request::input('id'))
                         ->update(['name'=>Request::input('name'),
                                     'card_id_number'=>Request::input('card_id_number'),
-                                    'id_number'=>Request::input('id_number'),
                                     'organize_id'=>Request::input('organize_id'),
                                     'department_id'=>Request::input('department_id'),
                                     'title'=>Request::input('title'),

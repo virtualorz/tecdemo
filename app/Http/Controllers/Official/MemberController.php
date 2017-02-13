@@ -196,6 +196,7 @@ class MemberController extends Controller {
             {
                 $memberResult['department_name'] = $department['name'];
             }
+            $memberResult['card_id_number'] = '';
             $pdf_name = md5(date('Y-m-d H:i:s'));
 
             $pdf = PDF::loadView('Official.elements.apply_print', array(

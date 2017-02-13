@@ -76,7 +76,7 @@
 							</tr>
 							
 							<tr>
-							  <td>學號/證件卡號： {{ $memberResult['card_id_number'] }}</td>
+							  <td>卡號： {{ $memberResult['card_id_number'] }}</td>
 							  <td>系所/部門： {{ $memberResult['department_name'] }}</td>
 					  	  	</tr>
 					  	  	
