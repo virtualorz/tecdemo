@@ -17,7 +17,7 @@
                 </ul>                                
             </div>
             <div class="panel-body">
-                <form id="formq" method="get" action="{{ Sitemap::node()->getUrl() }}">
+                <form id="formq" method="get" action="{{ Sitemap::node()->getUrl(['id'=>Route::input('id')]) }}">
                     <table class="table datatable_simple nohead">
                         <thead>
                             <tr>
