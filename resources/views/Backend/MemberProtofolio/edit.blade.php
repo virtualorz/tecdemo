@@ -38,12 +38,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th><span class="red">*</span>{{ trans('validation.attributes.id_number') }}</th>
-                                <td>
-                                    <input type="text" name="id_number" id="data-id_number" class="form-control required"  value="{{ $dataResult['id_number'] }}">
-                                </td>
-                            </tr>
-                            <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.system-organize') }}</th>
                                 <td>
                                     <select name="organize_id" id="data-organize" class="form-control required">

@@ -45,12 +45,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>{{ trans('validation.attributes.id_number') }}</td>
-                                <td>
-                                    <input type="text" name="id_number" id="data-id_number" class="form-control" value="{{ Request::input('id_number', '') }}">
-                                </td>
-                            </tr>
-                            <tr>
                                 <td>{{ trans('validation.attributes.id_type') }}</td>
                                 <td>
                                     <select name="member_type" id="data-member_type" class="form-control required">

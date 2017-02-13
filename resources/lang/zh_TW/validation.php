@@ -213,7 +213,7 @@ return [
         'check_out' => '付款方式',
         #
         #card_id_number
-        'card_id_number' => '證號',
+        'card_id_number' => '卡號',
         #
         #company
         'company' => '公司',

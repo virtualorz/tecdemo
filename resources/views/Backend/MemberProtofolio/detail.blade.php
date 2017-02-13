@@ -37,12 +37,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.id_number') }}</th>
-                                <td>
-                                    {{ $dataResult['id_number'] }}
-                                </td>
-                            </tr>
-                            <tr>
                                 <th>{{ trans('validation.attributes.system-organize') }}</th>
                                 <td>
                                     {{ $dataResult['organize_name'] }}

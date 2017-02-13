@@ -263,7 +263,6 @@ class MemberErrorController extends Controller {
         $validator = Validator::make(Request::all(), [
                     'name' => 'string|required|max:10',
                     'card_id_number' => 'string|required|max:20',
-                    'id_number' => 'string|required|max:12',
                     'organize_id' => 'integer|required',
                     'department_id' => 'integer|required',
                     'email' => 'string|required|max:200',
@@ -293,7 +292,6 @@ class MemberErrorController extends Controller {
                             array('created_at'=>date('Y-m-d H:i:s'),
                                     'name'=>Request::input('name'),
                                     'card_id_number'=>Request::input('card_id_number'),
-                                    'id_number'=>Request::input('id_number'),
                                     'organize_id'=>Request::input('organize_id'),
                                     'department_id'=>Request::input('department_id'),
                                     'title'=>Request::input('title'),
@@ -362,7 +360,6 @@ class MemberErrorController extends Controller {
         $validator = Validator::make(Request::all(), [
                     'name' => 'string|required|max:10',
                     'card_id_number' => 'string|required|max:20',
-                    'id_number' => 'string|required|max:12',
                     'organize_id' => 'integer|required',
                     'department_id' => 'integer|required',
                     'email' => 'string|required|max:200',
@@ -391,7 +388,6 @@ class MemberErrorController extends Controller {
                     ->where('id',Request::input('id'))
                     ->update(['name'=>Request::input('name'),
                                 'card_id_number'=>Request::input('card_id_number'),
-                                'id_number'=>Request::input('id_number'),
                                 'organize_id'=>Request::input('organize_id'),
                                 'department_id'=>Request::input('department_id'),
                                 'title'=>Request::input('title'),

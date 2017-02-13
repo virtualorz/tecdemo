@@ -81,7 +81,7 @@
 					  	  	</tr>
 					  	  	
 							<tr>
-							  	<td>身分證字號： {{ $memberResult['id_number'] }}</td>
+							  	<td></td>
 							  	<td>職稱： {{ $memberResult['title'] }}</td>
 							</tr>
 							

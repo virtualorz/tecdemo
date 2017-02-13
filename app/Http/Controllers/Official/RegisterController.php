@@ -44,7 +44,6 @@ class RegisterController extends Controller {
         $validator = Validator::make(Request::all(), [
                     'name' => 'string|required|max:15',
                     'card_id_number' => 'string|required|max:20',
-                    'id_number' => 'string|required|max:12',
                     'organize' => 'integer|required',
                     'department' => 'integer|required',
                     'email' => 'string|required|max:200',
@@ -70,9 +69,6 @@ class RegisterController extends Controller {
         $count2 = DB::table('member_data')
                 ->where('card_id_number',Request::input('card_id_number'))
                 ->count();
-        $count3 = DB::table('member_data')
-                ->where('id_number',Request::input('id_number'))
-                ->count();
         
         if($count1 != 0)
         {
@@ -88,13 +84,6 @@ class RegisterController extends Controller {
             $this->view['detail'] = array('此學生號已註冊過！');
             return $this->view;
         }
-        if($count3 != 0)
-        {
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.validation');
-            $this->view['detail'] = array('此身分證號已註冊過！');
-            return $this->view;
-        }
 
         try {
             DB::transaction(function(){
@@ -103,7 +92,6 @@ class RegisterController extends Controller {
                             array('created_at'=>date('Y-m-d H:i:s'),
                                     'name'=>Request::input('name'),
                                     'card_id_number'=>Request::input('card_id_number'),
-                                    'id_number'=>Request::input('id_number'),
                                     'organize_id'=>Request::input('organize'),
                                     'department_id'=>Request::input('department'),
                                     'title'=>Request::input('title'),
@@ -140,7 +128,6 @@ class RegisterController extends Controller {
         $register_data = array('created_at'=>date('Y-m-d H:i:s'),
                                     'name'=>Request::input('name'),
                                     'card_id_number'=>Request::input('card_id_number'),
-                                    'id_number'=>Request::input('id_number'),
                                     'organize_id'=>Request::input('organize'),
                                     'department_id'=>Request::input('department'),
                                     'title'=>Request::input('title'),

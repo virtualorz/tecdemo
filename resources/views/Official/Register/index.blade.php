@@ -55,14 +55,6 @@
 					  </div>
 					  
 					  <div class="form-group">
-						<label class="col-sm-3 control-label">身份證字號
-						</label>
-						<div class="col-sm-8">
-						  <input type="text" name="id_number" id="data-id_number" class="form-control required" placeholder="">
-						</div>
-					  </div>
-					  
-					  <div class="form-group">
 						<label class="col-sm-3 control-label">機關/學校</label>
 						<div class="col-sm-8">
 						  	<select class="form-control required" name="organize" id="data-organize">
