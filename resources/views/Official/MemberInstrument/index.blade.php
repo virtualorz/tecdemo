@@ -51,8 +51,10 @@
                                         @endif
                                     </td>
 									<td class="text-center">
+									@if(strtotime($v['reservation_dt_org']) > strtotime($v['cancel_limit_dt']))
 								  	<a href="#" class="cancel" data-id="{{ $v['instrument_reservation_data_id'].'_'.$v['create_date'] }}"> 
 									<i class="fa fa-times" aria-hidden="true"></i>
+									@endif
 									</a>
 									</td>
 								</tr> 

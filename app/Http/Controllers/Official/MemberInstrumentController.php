@@ -20,7 +20,7 @@ class MemberInstrumentController extends Controller {
         $instrumentResult = DB::table('instrument_reservation_data')
                             ->select('instrument_reservation_data.uid',
                                         'instrument_reservation_data.salt',
-                                        'instrument_reservation_data.reservation_dt',
+                                        'instrument_reservation_data.reservation_dt as reservation_dt_org',
                                         'instrument_reservation_data.instrument_reservation_data_id',
                                         'instrument_reservation_data.create_date',
                                         'instrument_reservation_data.reservation_status',
@@ -28,6 +28,7 @@ class MemberInstrumentController extends Controller {
                                         'instrument_data.instrument_id',
                                         'instrument_data.uid as instrument_uid',
                                         'instrument_data.salt as instrument_salt',
+                                        'instrument_data.cancel_limit',
                                         DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%Y.%m.%d") as reservation_dt'),
                                         DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%y%m") as reservation_dt_ym'),
                                         DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
@@ -42,6 +43,11 @@ class MemberInstrumentController extends Controller {
                             })
                             ->orderBy('instrument_reservation_data.reservation_dt','desc')
                             ->get();
+        foreach($instrumentResult as $k=>$v)
+        {
+            //寫入預約取消最後期限
+            $instrumentResult[$k]['cancel_limit_dt'] = date('Y-m-d',strtotime("+".$v['cancel_limit']." days",strtotime(date('Y-m-d')))); 
+        }
 
         $historyResult = DB::table('instrument_reservation_data')
                             ->select('instrument_reservation_data.uid',
