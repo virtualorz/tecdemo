@@ -216,7 +216,7 @@ class InstrumentController extends Controller {
                 foreach($sectionResult as $k=>$v)
                 {
                     if(in_array($v['section_type'],$instrumentPermission) && in_array($v['section_type'],$permissionResult))
-                    {
+                    {//此段只檢查白天夜間是否有權限
                         $sectionResult[$k]['can_use'] = 1;
                     }
                 }
@@ -271,14 +271,14 @@ class InstrumentController extends Controller {
             {
                 if($v['vacation_type'] == "1" || $v['vacation_type'] == "2")
                 {//國定假日或臨時休假
-                    if(!in_array("3",$permissionResult))
+                    if(!in_array("3",$permissionResult) || !in_array("3",$instrumentPermission))
                     {//使用者沒有假日權限則本日無法預約
                         array_push($vacationResult,$v['vacation_dt']);
                     }
                 }
                 else if($v['vacation_type'] == "4")
                 {//長假期
-                    if(!in_array("4",$permissionResult))
+                    if(!in_array("4",$permissionResult)|| !in_array("4",$instrumentPermission))
                     {//使用者沒有長假期權限限則本日無法預約
                         array_push($vacationResult,$v['vacation_dt']);
                     }
