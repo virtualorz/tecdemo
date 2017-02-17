@@ -37,7 +37,12 @@
                   <tr> 
                     <!-- Row container for Intro/ Description -->
                     <td align="left" style="font-size: 16px; font-style: normal; font-weight: 100; color: #666; line-height: 1.8; text-align:justify; padding:10px 20px 0px 20px; font-family: sans-serif;"><p>親愛的 {{ $dataResult['user'] }}先生/ 小姐，您好：<br>
-                      您所管理已的儀器{{ $dataResult['instrument'] }}已有使用者取消預約時段，詳細資料請登入後台查詢</p>
+                      您所管理已的儀器{{ $dataResult['instrument'] }}已有使用者取消預約時段，詳細資料如下:</p>
+                      <p>使用者:{{ $dataResult['cancel_member']['name'] }}</p>
+                      <p>email:{{ $dataResult['cancel_member']['email'] }}</p>
+                      <p>指導教授:{{ $dataResult['cancel_member']['pi_name'] }}</p>
+                      <p>取消日期:{{ $dataResult['cancel_date'] }}</p>
+                      <p>取消時段:{{ $dataResult['cancel_section']['start_time'] }} ~ {{ $dataResult['cancel_section']['end_time'] }}</p>
                       <p></p>
                       <p>科技共同空間 敬啟<br>
                       </p></td>

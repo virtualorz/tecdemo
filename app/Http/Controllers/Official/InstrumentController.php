@@ -578,22 +578,37 @@ class InstrumentController extends Controller {
                         ->where('member_id',User::Id())
                         ->update(['reservation_status'=>'2'
                         ]);
+                    //取得個人資料
+                    $member = DB::table('member_data')
+                        ->select('member_data.name','member_data.email','system_pi_list.name as pi_name')
+                        ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
+                        ->where('member_data.id',User::Id())
+                        ->first();
+                    //取得取消時間區間
+                    $section = DB::table('instrument_section')
+                        ->select(DB::raw('DATE_FORMAT(start_time, "%H:%i") as start_time'),
+                                    DB::raw('DATE_FORMAT(end_time, "%H:%i") as end_time'))
+                        ->where('id',$id[1])
+                        ->first();
                     //寄信通知管理員
-                    $instrument_admin = DB::table('instrument_data')
-                        ->select('instrument_admin.name','instrument_admin.email','instrument_data.name as instrument_name')
-                        ->leftJoin('instrument_admin','instrument_admin.instrument_data_id','=','instrument_data.id')
-                        ->where('instrument_data.cancel_notice','1')
-                        ->where('instrument_data.id',$id[3])
-                        ->get();
-                    foreach($instrument_admin as $k=>$v)
+                    if(count($member) != 0 && count($section) != 0)
                     {
-                        $dataResult = array('user'=>$v['name'],'instrument'=>$v['instrument_name']);
-                        Mail::send('emails.cancel_notice', [
-                                    'dataResult' => $dataResult,
-                                        ], function ($m)use($v) {
-                                    $m->to($v['email'], '');
-                                    $m->subject("預約取消通知訊息");
-                        });
+                        $instrument_admin = DB::table('instrument_data')
+                            ->select('instrument_admin.name','instrument_admin.email','instrument_data.name as instrument_name')
+                            ->leftJoin('instrument_admin','instrument_admin.instrument_data_id','=','instrument_data.id')
+                            ->where('instrument_data.cancel_notice','1')
+                            ->where('instrument_data.id',$id[3])
+                            ->get();
+                        foreach($instrument_admin as $k=>$v)
+                        {
+                            $dataResult = array('user'=>$v['name'],'instrument'=>$v['instrument_name'],'cancel_member'=>$member,'cancel_date'=>$id[2],'cancel_section'=>$section);
+                            Mail::send('emails.cancel_notice', [
+                                        'dataResult' => $dataResult,
+                                            ], function ($m)use($v) {
+                                        $m->to($v['email'], '');
+                                        $m->subject("預約取消通知訊息");
+                            });
+                        }
                     }
 
                     $this->view['msg'] = trans('message.success.cancel');
