@@ -225,6 +225,7 @@ class InstrumentController extends Controller {
             {//未登入使用者
                 //取得使用者通過的假日權限
                 $permissionResult = array_keys(Config::get('data.member_permission'));
+                $instrumentPermission = array_keys(Config::get('data.member_permission'));
                 //註記使用者沒有權限的時段
                 foreach($sectionResult as $k=>$v)
                 {
