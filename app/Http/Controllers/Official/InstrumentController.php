@@ -76,7 +76,7 @@ class InstrumentController extends Controller {
                             ->leftJoin('instrument_admin','instrument_admin.instrument_data_id','=','instrument_data.id')
                             ->groupBy('instrument_data.id')
                             ->orderBy('type_name','asc')
-                            ->orderBy('name','asc')
+                            ->orderBy('instrument_id','asc')
                             ->get();
             foreach($instrumentResult as $k=>$v)
             {
