@@ -32,12 +32,14 @@ class InstrumentVacationController extends Controller {
                                             'vacation_type',
                                             'remark')
                                     ->where('instrument_id',$id)
+                                    ->where('vacation_dt','>=',$year.'-'.$month.'-01')
+                                    ->where('vacation_dt','<=',date('Y-m-d',strtotime('+1 month -1 days',strtotime($year.'-'.$month.'-01'))))
                                     ->orderBy('vacation_dt','asc')
                                     ->get();
         foreach($listResultTmp as $k=>$v)
         {
             $listResult[$v['vacation_dt']] = $v;
-        }
+        }log::error($listResult);
         $week_first = date('w',strtotime($year.'-'.$month.'-01'));
         $last_day = date('d', strtotime ("-1 day", strtotime($year.'-'.($month+1).'-01')));
 
@@ -80,10 +82,23 @@ class InstrumentVacationController extends Controller {
                     ->whereMonth('vacation_dt','=', $month)
                     ->where('instrument_id','=',Request::input('id'))
                     ->delete();
-                
+                log::error($vacation_type);
                 foreach($vacation_type as $k=>$v)
                 {
                     $value = explode('_',$v);
+                    if($value[1] != '')
+                    {
+                        DB::table('instrument_vacation')
+                            ->insert(['vacation_dt'=>$value[0],
+                                        'instrument_id'=>Request::input('id'),
+                                        'created_at'=>date('Y-m-d H:i:s'),
+                                        'vacation_type'=>$value[1],
+                                        'remark'=>$remark[$k],
+                                        'create_admin_id'=>User::id()
+                            ]);
+                    }
+
+                    /*
                     $week = date('w',strtotime($value[0]));
                     if(($week == 6 || $week == 0) && $value[1] != '1'  && $value[1] != '')
                     {
@@ -110,6 +125,7 @@ class InstrumentVacationController extends Controller {
                                 ]);
                         }
                     }
+                    */
                 }
                 DBProcedure::writeLog([
                     'table' => 'instrument_vacation',

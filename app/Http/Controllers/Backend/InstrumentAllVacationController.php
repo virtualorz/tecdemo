@@ -31,6 +31,8 @@ class InstrumentAllVacationController extends Controller {
                                             'vacation_type',
                                             'remark')
                                     ->where('instrument_id','0')
+                                    ->where('vacation_dt','>=',$year.'-'.$month.'-01')
+                                    ->where('vacation_dt','<=',date('Y-m-d',strtotime('+1 month -1 days',strtotime($year.'-'.$month.'-01'))))
                                     ->orderBy('vacation_dt','asc')
                                     ->get();
         foreach($listResultTmp as $k=>$v)

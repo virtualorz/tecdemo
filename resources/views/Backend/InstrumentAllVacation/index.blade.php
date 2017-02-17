@@ -117,6 +117,7 @@
                                 <input type="hidden" name="month" value="{{ $month }}" />
                                 {!! ViewHelper::button('submit') !!}
                                 {!! ViewHelper::button('cancel') !!}
+                                @if(count($listResult) == 0) <span style="color:red;font-weight:bold">{{ trans('page.text.pre_data') }}</span>@endif
                             </td>
                         </tr>
                     </tbody>
