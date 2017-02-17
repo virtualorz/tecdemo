@@ -55,7 +55,8 @@ class InstrumentController extends Controller {
                             ->leftJoin('instrument_site','instrument_data.instrument_site_id','=','instrument_site.id')
                             ->leftJoin('instrument_admin','instrument_admin.instrument_data_id','=','instrument_data.id')
                             ->groupBy('instrument_data.id')
-                            ->orderBy('instrument_data.id','desc')
+                            ->orderBy('type_name','asc')
+                            ->orderBy('name','asc')
                             ->get();
         }
         else
@@ -74,7 +75,8 @@ class InstrumentController extends Controller {
                             ->leftJoin('instrument_site','instrument_data.instrument_site_id','=','instrument_site.id')
                             ->leftJoin('instrument_admin','instrument_admin.instrument_data_id','=','instrument_data.id')
                             ->groupBy('instrument_data.id')
-                            ->orderBy('instrument_data.instrument_type_id','desc')
+                            ->orderBy('type_name','asc')
+                            ->orderBy('name','asc')
                             ->get();
             foreach($instrumentResult as $k=>$v)
             {
