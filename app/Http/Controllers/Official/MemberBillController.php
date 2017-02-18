@@ -230,7 +230,7 @@ class MemberBillController extends Controller {
                             ->get();
         foreach($reservationlogResult as $k=>$v)
         {
-            $reservationlogResult[$k]['date'] = date('Y.m.d',strtotime($v['use_dt_start']));
+            $reservationlogResult[$k]['date'] = date('Y/m/d',strtotime($v['use_dt_start']));
             $reservationlogResult[$k]['use_dt_start'] = date('H:i',strtotime($v['use_dt_start']));
             $reservationlogResult[$k]['use_dt_end'] = date('H:i',strtotime($v['use_dt_end']));
 
@@ -299,7 +299,7 @@ class MemberBillController extends Controller {
                             ->get();
         foreach($reservationlogResult as $k=>$v)
         {
-            $reservationlogResult[$k]['date'] = date('Y.m.d',strtotime($v['use_dt_start']));
+            $reservationlogResult[$k]['date'] = date('Y/m/d',strtotime($v['use_dt_start']));
             $reservationlogResult[$k]['use_dt_start'] = date('H:i',strtotime($v['use_dt_start']));
             $reservationlogResult[$k]['use_dt_end'] = date('H:i',strtotime($v['use_dt_end']));
 

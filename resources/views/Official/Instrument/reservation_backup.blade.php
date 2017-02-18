@@ -56,7 +56,7 @@
                                         <th class="ttw100 text-center">時段</th>
                                         @for($i=0;$i<7;$i++)
                                             <th class="ttw80 text-center">{{ trans('enum.week_name.'.$i) }}<br>
-                                            {{ date('Y.m.d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}</th>
+                                            {{ date('Y/m/d',strtotime('+'.$i.' days',strtotime($start_dt_org))) }}</th>
                                         @endfor
 										</tr> 
 									</thead> 

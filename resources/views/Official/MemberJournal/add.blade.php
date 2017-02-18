@@ -19,7 +19,7 @@
            	  	<div class="messagebox">
            	  		<div class="row mb-xs-20 mb--b">
 						<div class="col-md-2 col-sm-3 col-xs-4"><h5>新增日期</h5></div>
-                        <div class="col-md-10 col-sm-9 col-xs-8">{{ date('Y.m.d') }}</div>
+                        <div class="col-md-10 col-sm-9 col-xs-8">{{ date('Y/m/d') }}</div>
           	  		</div>
 					
          	  		<div class="line-schoolpage"></div>

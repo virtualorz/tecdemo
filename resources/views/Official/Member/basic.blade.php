@@ -132,7 +132,7 @@
          	  		
          	  		<div class="row mb-xs-20 mb--b">
 						<div class="col-md-3 col-sm-3 col-xs-4"><h5>使用期限</h5></div>
-                        <div class="col-md-9 col-sm-9 col-xs-8">{{ $dataResult['start_dt'] }} - {{ date('Y.m.d',strtotime('+'.$dataResult['limit_month'].' month',strtotime($dataResult['start_dt_org']))) }}</div>
+                        <div class="col-md-9 col-sm-9 col-xs-8">{{ $dataResult['start_dt'] }} - {{ date('Y/m/d',strtotime('+'.$dataResult['limit_month'].' month',strtotime($dataResult['start_dt_org']))) }}</div>
           	  		</div>
 					
          	  		<div class="line-schoolpage"></div>

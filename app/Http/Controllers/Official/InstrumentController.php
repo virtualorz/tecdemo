@@ -97,8 +97,8 @@ class InstrumentController extends Controller {
     public function reservation() {
 
         //整體可查看的兩個月
-        $total_start_dt = date('Y.m.d',strtotime('-2 months',strtotime(date('Y-m-d'))));
-        $total_end_dt = date('Y.m.d',strtotime('+2 months',strtotime(date('Y-m-d'))));
+        $total_start_dt = date('Y/m/d',strtotime('-2 months',strtotime(date('Y-m-d'))));
+        $total_end_dt = date('Y/m/d',strtotime('+2 months',strtotime(date('Y-m-d'))));
         $total_start_dt_org = date('Y-m-d',strtotime('-2 months',strtotime(date('Y-m-d'))));
         $total_end_dt_org = date('Y-m-d',strtotime('+2 months',strtotime(date('Y-m-d'))));
 
@@ -116,9 +116,9 @@ class InstrumentController extends Controller {
             if($start_dt == '' || $end_dt == '')
             {
                 $week = date('w',strtotime(date('Y-m-d')));
-                $start_dt = date('Y.m.d',strtotime('-'.$week.' days',strtotime(date('Y-m-d'))));
+                $start_dt = date('Y/m/d',strtotime('-'.$week.' days',strtotime(date('Y-m-d'))));
                 $start_dt_org = date('Y-m-d',strtotime('-'.$week.' days',strtotime(date('Y-m-d'))));
-                $end_dt = date('Y.m.d',strtotime('+6 days',strtotime($start_dt_org)));
+                $end_dt = date('Y/m/d',strtotime('+6 days',strtotime($start_dt_org)));
                 if(strtotime('+7 days',strtotime($start_dt_org)) >= strtotime($total_start_dt_org) && strtotime('+7 days',strtotime($start_dt_org)) <= strtotime($total_end_dt_org))
                 {
                     $start_dt_next = date('Y-m-d',strtotime('+7 days',strtotime($start_dt_org)));
@@ -133,8 +133,8 @@ class InstrumentController extends Controller {
             else
             {
                 $start_dt_org = date('Y-m-d',strtotime($start_dt));
-                $start_dt = date('Y.m.d',strtotime($start_dt));
-                $end_dt = date('Y.m.d',strtotime('+6 days',strtotime($start_dt_org)));
+                $start_dt = date('Y/m/d',strtotime($start_dt));
+                $end_dt = date('Y/m/d',strtotime('+6 days',strtotime($start_dt_org)));
                 if(strtotime('+7 days',strtotime($start_dt_org)) >= strtotime($total_start_dt_org) && strtotime('+7 days',strtotime($start_dt_org)) <= strtotime($total_end_dt_org))
                 {
                     $start_dt_next = date('Y-m-d',strtotime('+7 days',strtotime($start_dt_org)));
@@ -150,9 +150,9 @@ class InstrumentController extends Controller {
         else
         {
             $week = date('w',strtotime($search_date));
-            $start_dt = date('Y.m.d',strtotime('-'.$week.' days',strtotime($search_date)));
+            $start_dt = date('Y/m/d',strtotime('-'.$week.' days',strtotime($search_date)));
             $start_dt_org = date('Y-m-d',strtotime('-'.$week.' days',strtotime($search_date)));
-            $end_dt = date('Y.m.d',strtotime('+6 days',strtotime($start_dt_org)));
+            $end_dt = date('Y/m/d',strtotime('+6 days',strtotime($start_dt_org)));
             if(strtotime('+7 days',strtotime($start_dt_org)) >= strtotime($total_start_dt_org) && strtotime('+7 days',strtotime($start_dt_org)) <= strtotime($total_end_dt_org))
             {
                 $start_dt_next = date('Y-m-d',strtotime('+7 days',strtotime($start_dt_org)));

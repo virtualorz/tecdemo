@@ -48,7 +48,7 @@
                                             @foreach($reservationlogResult as $k=>$v)
                                             <tr>
                                                 <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
-                                                <td>{{ date('Y.m.d H:i',strtotime($v['use_dt_start'])) }} <br> - <br> {{ date('Y.m.d H:i',strtotime($v['use_dt_end'])) }}</td>
+                                                <td>{{ date('Y/m/d H:i',strtotime($v['use_dt_start'])) }} <br> - <br> {{ date('Y/m/d H:i',strtotime($v['use_dt_end'])) }}</td>
                                                 <td>{{ $v['member_name'] }}</td>
                                                 <td>{{ $v['instrument_name'] }}</td>
                                                 <td id="pay_{{$k}}">{{ $v['pay'] }}</td>

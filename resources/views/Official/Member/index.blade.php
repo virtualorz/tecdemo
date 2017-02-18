@@ -68,7 +68,7 @@
 						<tbody> 
                             @foreach($paymentResult as $k=>$v)
 							<tr> 
-                              <td>{{ $v['pay_year'] }}.{{ $v['pay_month'] }}</td> 
+                              <td>{{ $v['pay_year'] }}/{{ $v['pay_month'] }}</td> 
 								<td>
 								<a href="{{ asset('member/bill/detail/id-'.$v['uid'].'-'.$v['salt']) }}">{{ $v['pi_name'] }}</a>
 								</td>

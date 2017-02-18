@@ -29,7 +29,7 @@ class MemberInstrumentController extends Controller {
                                         'instrument_data.uid as instrument_uid',
                                         'instrument_data.salt as instrument_salt',
                                         'instrument_data.cancel_limit',
-                                        DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%Y.%m.%d") as reservation_dt'),
+                                        DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%Y/%m/%d") as reservation_dt'),
                                         DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%y%m") as reservation_dt_ym'),
                                         DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
                                         DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'))
@@ -59,7 +59,7 @@ class MemberInstrumentController extends Controller {
                                         'instrument_reservation_data.attend_status',
                                         'instrument_data.uid as instrument_uid',
                                         'instrument_data.salt as instrument_salt',
-                                        DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%Y.%m.%d") as reservation_dt'),
+                                        DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%Y/%m/%d") as reservation_dt'),
                                         DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%y%m") as reservation_dt_ym'),
                                         DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
                                         DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'))
@@ -102,8 +102,8 @@ class MemberInstrumentController extends Controller {
         $id = Route::input('id');
         $dataResult = DB::table('member_journal')
                             ->select('member_journal.*',
-                                        DB::raw('DATE_FORMAT(member_journal.created_at, "%Y.%m.%d") as created_at'),
-                                        DB::raw('DATE_FORMAT(member_journal.release_dt, "%Y.%m.%d") as release_dt'))
+                                        DB::raw('DATE_FORMAT(member_journal.created_at, "%Y/%m/%d") as created_at'),
+                                        DB::raw('DATE_FORMAT(member_journal.release_dt, "%Y/%m/%d") as release_dt'))
                             ->where('member_data_id',User::id())
                             ->where('member_journal_id',$id)
                             ->get();

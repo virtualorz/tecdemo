@@ -378,7 +378,7 @@ class InstrumentPaymentController extends Controller {
     public function reminder() {
         $id = explode('_',Route::input('id', '0_0_0'));
         $listResult = DB::table('payment_reminder_log')
-                            ->select(DB::raw('DATE_FORMAT(payment_reminder_log.created_at, "%Y.%m/%d") as created_at'),
+                            ->select(DB::raw('DATE_FORMAT(payment_reminder_log.created_at, "%Y/%m/%d") as created_at'),
                                     'payment_reminder_log.email',
                                     'member_admin.name as create_admin_name'
                             )
@@ -579,7 +579,7 @@ class InstrumentPaymentController extends Controller {
 
         /*$id = explode('_',Route::input('id', '0_0_0'));
         $listResult = DB::table('payment_reminder_log')
-                            ->select(DB::raw('DATE_FORMAT(payment_reminder_log.created_at, "%Y.%m/%d") as created_at'),
+                            ->select(DB::raw('DATE_FORMAT(payment_reminder_log.created_at, "%Y/%m/%d") as created_at'),
                                     'payment_reminder_log.email',
                                     'member_admin.name as create_admin_name'
                             )

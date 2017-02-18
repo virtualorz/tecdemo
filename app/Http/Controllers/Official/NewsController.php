@@ -17,7 +17,7 @@ class NewsController extends Controller {
     public function index() {
         $id = Route::input('id', '');
         $dataResult = DB::table('system_index_notice')
-                            ->select('system_index_notice.title','system_index_notice.content',DB::raw('DATE_FORMAT(system_index_notice.created_at, "%Y.%m.%d") as created_at'))
+                            ->select('system_index_notice.title','system_index_notice.content',DB::raw('DATE_FORMAT(system_index_notice.created_at, "%Y/%m/%d") as created_at'))
                             ->where('system_index_notice.id','=',$id)
                             ->get();
         if (count($dataResult) > 0)

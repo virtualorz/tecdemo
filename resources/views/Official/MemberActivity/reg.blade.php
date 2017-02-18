@@ -20,7 +20,7 @@
            	  	<div class="messagebox">
            	  		<div class="row mb-xs-20 mb--b">
 						<div class="col-sm-2 col-xs-3"><h5>日期</h5></div>
-                    <div class="col-sm-10 col-xs-9">{{ date('Y.m.d') }}</div>
+                    <div class="col-sm-10 col-xs-9">{{ date('Y/m/d') }}</div>
           	  		</div>
 					
          	  		<div class="line-schoolpage"></div>

@@ -19,7 +19,7 @@ class MemberJournalController extends Controller {
     public function index() {
         $listResult = DB::table('member_journal')
                             ->select('member_journal.*',
-                                        DB::raw('DATE_FORMAT(member_journal.release_dt, "%Y.%m.%d") as release_dt'))
+                                        DB::raw('DATE_FORMAT(member_journal.release_dt, "%Y/%m/%d") as release_dt'))
                             ->where('member_data_id','=',User::id())
                             ->orderBy('created_at','desc')
                             ->paginate(Config::get('pagination.items'));
@@ -43,8 +43,8 @@ class MemberJournalController extends Controller {
         $id = Route::input('id');
         $dataResult = DB::table('member_journal')
                             ->select('member_journal.*',
-                                        DB::raw('DATE_FORMAT(member_journal.created_at, "%Y.%m.%d") as created_at'),
-                                        DB::raw('DATE_FORMAT(member_journal.release_dt, "%Y.%m.%d") as release_dt'))
+                                        DB::raw('DATE_FORMAT(member_journal.created_at, "%Y/%m/%d") as created_at'),
+                                        DB::raw('DATE_FORMAT(member_journal.release_dt, "%Y/%m/%d") as release_dt'))
                             ->where('member_data_id',User::id())
                             ->where('member_journal_id',$id)
                             ->get();

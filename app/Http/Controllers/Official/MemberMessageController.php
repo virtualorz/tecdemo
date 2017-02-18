@@ -22,7 +22,7 @@ class MemberMessageController extends Controller {
     public function index() {
         $listResult = DB::table('member_notice_log')
                             ->select('member_notice_log.member_notice_log_id',
-                                        DB::raw('DATE_FORMAT(member_notice_log.created_at, "%Y.%m.%d") as created_at'),
+                                        DB::raw('DATE_FORMAT(member_notice_log.created_at, "%Y/%m/%d") as created_at'),
                                         'member_notice_log.uid',
                                         'member_notice_log.salt',
                                         'member_notice_log.title',
@@ -103,7 +103,7 @@ class MemberMessageController extends Controller {
             ->update(['is_read'=>1]);
         $dataResult = DB::table('member_notice_log')
                             ->select('member_notice_log.*',
-                                    DB::raw('DATE_FORMAT(member_notice_log.created_at, "%Y.%m.%d") as created_at'))
+                                    DB::raw('DATE_FORMAT(member_notice_log.created_at, "%Y/%m/%d") as created_at'))
                             ->where('uid',$id[0])
                             ->where('salt',$id[1])
                             ->where('member_data_id',User::id())

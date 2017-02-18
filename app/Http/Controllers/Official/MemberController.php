@@ -21,7 +21,7 @@ class MemberController extends Controller {
     public function index() {
         $noticeResult = DB::table('member_notice_log')
                             ->select('member_notice_log.member_notice_log_id',
-                                        DB::raw('DATE_FORMAT(member_notice_log.created_at, "%Y.%m.%d") as created_at'),
+                                        DB::raw('DATE_FORMAT(member_notice_log.created_at, "%Y/%m/%d") as created_at'),
                                         'member_notice_log.uid',
                                         'member_notice_log.salt',
                                         'member_notice_log.title',
@@ -64,8 +64,8 @@ class MemberController extends Controller {
                                         'activity_data.salt',
                                         'activity_data.activity_id',
                                         'activity_reservation_data.created_at',
-                                        DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y.%m.%d") as start_dt'),
-                                        DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y.%m.%d") as end_dt'),
+                                        DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y/%m/%d") as start_dt'),
+                                        DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y/%m/%d") as end_dt'),
                                         'activity_data.activity_name',
                                         'activity_data.level',
                                         'activity_data.time')
@@ -82,7 +82,7 @@ class MemberController extends Controller {
                             ->select('instrument_reservation_data.uid',
                                         'instrument_reservation_data.salt',
                                         'instrument_reservation_data.reservation_dt as reservation_dt_org',
-                                        DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%Y.%m.%d") as reservation_dt'),
+                                        DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%Y/%m/%d") as reservation_dt'),
                                         'instrument_reservation_data.instrument_reservation_data_id',
                                         'instrument_reservation_data.create_date',
                                         'instrument_data.name',
@@ -121,7 +121,7 @@ class MemberController extends Controller {
         $id = User::Id();
         $dataResult = DB::table('member_data')
                             ->select('member_data.*',
-                                        DB::raw('DATE_FORMAT(member_data.start_dt, "%Y.%m.%d") as start_dt'),
+                                        DB::raw('DATE_FORMAT(member_data.start_dt, "%Y/%m/%d") as start_dt'),
                                         'member_data.start_dt as start_dt_org',
                                         'system_organize.name as organize_name',
                                         'system_department.name as department_name',
@@ -154,7 +154,7 @@ class MemberController extends Controller {
     public function print_data() {
         $memberResult = DB::table('member_data')
                             ->select('member_data.*',
-                                        DB::raw('DATE_FORMAT(member_data.start_dt, "%Y.%m.%d") as start_dt'),
+                                        DB::raw('DATE_FORMAT(member_data.start_dt, "%Y/%m/%d") as start_dt'),
                                         'member_data.start_dt as start_dt_org',
                                         'system_organize.name as organize_name',
                                         'system_department.name as department_name',
