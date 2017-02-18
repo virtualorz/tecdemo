@@ -23,10 +23,8 @@
            	  		
           	  		
           	  		<div class="row mb-xs-20 mb--b">
-						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>姓名*</h5></div>
-						<div class="col-md-7 col-sm-9">
-							<input type="text" class="form-control required" name="name" id="data-name" value="{{ $dataResult['name'] }}">
-						</div>
+						<div class="col-md-3 col-sm-3 mb-xs-10"><h5>姓名</h5></div>
+						<div class="col-md-9 col-sm-9 col-xs-8">{{ $dataResult['name'] }}</div>
 					</div>
        	  			
        	  			<div class="line-schoolpage"></div>

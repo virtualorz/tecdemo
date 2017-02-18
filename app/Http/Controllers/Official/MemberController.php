@@ -211,7 +211,6 @@ class MemberController extends Controller {
 
     public function ajax_edit() {
         $validator = Validator::make(Request::all(), [
-                    'name' => 'string|required|max:15',
                     'password' => 'string|required|max:200|same:passwordR',
                     'phone' => 'string|required|max:24',
                     'lab_phone' => 'string|required|max:24',
@@ -235,8 +234,7 @@ class MemberController extends Controller {
                 {
                     DB::table('member_data')
                         ->where('id',$id)
-                        ->update(['name'=>Request::input('name'),
-                                    'title'=>Request::input('title'),
+                        ->update(['title'=>Request::input('title'),
                                     'phone'=>Request::input('phone'),
                                     'lab_phone'=>Request::input('lab_phone')
                         ]);
@@ -245,8 +243,7 @@ class MemberController extends Controller {
                 {
                     DB::table('member_data')
                         ->where('id',$id)
-                        ->update(['name'=>Request::input('name'),
-                                    'title'=>Request::input('title'),
+                        ->update(['title'=>Request::input('title'),
                                     'password'=>User::hashPassword(Request::input('password')),
                                     'phone'=>Request::input('phone'),
                                     'lab_phone'=>Request::input('lab_phone')
