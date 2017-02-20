@@ -397,23 +397,35 @@ class ActivityListController extends Controller {
             return $this->view;
         }
         $ids = Request::input('id', []);
+        $un_del_id = array();
         try {
             foreach ($ids as $k => $v) {
                 $id = $v;
 
-                $result_before = DB::table('activity_data')
-                                    ->where('id',$id)
-                                    ->get();
-                DB::table('activity_data')
-                    ->where('id',$id)
-                    ->delete();
-                DBProcedure::writeLog([
-                    'table' => 'activity_data',
-                    'operator' => DBOperator::OP_DELETE,
-                    'data_before' => isset($result_before[0]) ? $result_before[0] : [],
-                    'admin_id' => User::id()
-                ]);
-                FileUpload::deleteEditor($result_before[0]['content']);
+                $passcount = DB::table('activity_reservation_data')
+                        ->where('activity_id',$id)
+                        ->where('attend_status',1)
+                        ->count();
+                if($passcount ==0)
+                {
+                    $result_before = DB::table('activity_data')
+                                        ->where('id',$id)
+                                        ->get();
+                    DB::table('activity_data')
+                        ->where('id',$id)
+                        ->delete();
+                    DBProcedure::writeLog([
+                        'table' => 'activity_data',
+                        'operator' => DBOperator::OP_DELETE,
+                        'data_before' => isset($result_before[0]) ? $result_before[0] : [],
+                        'admin_id' => User::id()
+                    ]);
+                    FileUpload::deleteEditor($result_before[0]['content']);
+                }
+                else
+                {
+                    array_push($un_del_id,$id);
+                }
             }
         } catch (\PDOException $ex) {
             DB::rollBack();
@@ -428,6 +440,21 @@ class ActivityListController extends Controller {
             \Log::error($ex->getMessage());
             $this->view['result'] = 'no';
             $this->view['msg'] = $ex->getMessage();
+            return $this->view;
+        }
+
+        if(count($un_del_id) !=0)
+        {
+            $text = "id: ";
+            foreach($un_del_id as $k=>$v)
+            {
+                $text .= $v.", ";
+            }
+            $text .= "已經有使用者報到無法刪除！請使用隱藏功能";
+            $this->view['result'] = 'ok';
+            $this->view['msg'] = trans('message.error.database');
+            $this->view['detail'] = array($text);
+
             return $this->view;
         }
 
