@@ -168,6 +168,15 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.status') }}</th>
+                                <td>
+                                    <div>                  
+                                        <label class="check"><input type="radio" name="enable" id="data_enable_1" class="iradio required" value="1" checked /> {{ trans('enum.display.1') }}</label>
+                                        <label class="check"><input type="radio" name="enable" id="data_enable_0" class="iradio required" value="0" /> {{ trans('enum.display.0') }}</label> 
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>{{ trans('validation.attributes.create_admin_id') }}</th>
                                 <td>{{ User::get('name', '') }}</td>
                             </tr>

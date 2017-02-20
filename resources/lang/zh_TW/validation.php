@@ -742,5 +742,6 @@ return [
         'password' => '密碼',
         'passwordR' => '確認密碼',
         'member_agree' =>'會員條款',
+        'status' => '狀態',
     ],
 ];

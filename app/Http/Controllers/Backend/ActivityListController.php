@@ -46,6 +46,7 @@ class ActivityListController extends Controller {
                                             DB::raw('DATE_FORMAT(activity_data.created_at, "%Y-%m-%d") as created_at'),
                                             'activity_data.activity_name',
                                             'activity_data.time',
+                                            'activity_data.enable',
                                             DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
                                     ->leftJoin('activity_reservation_data', function ($join) {
                                         $join->on('activity_reservation_data.activity_id', '=', 'activity_data.id')->where('activity_reservation_data.reservation_status', '=', 1);
@@ -180,6 +181,7 @@ class ActivityListController extends Controller {
                     'pass_type' => 'integer|required',
                     'pass_condition' => 'string|required|max:64',
                     'content' => 'string|required',
+                    'enable' => 'integer|required',
         ]);
         if ($validator->fails()) {
             $invalid[] = $validator->errors();
@@ -213,6 +215,7 @@ class ActivityListController extends Controller {
                                     'pass_type'=>Request::input('pass_type'),
                                     'pass_condition'=>Request::input('pass_condition'),
                                     'content'=>$content,
+                                    'enable'=>Request::input('enable'),
                                     'create_admin_id'=>User::id(),
                                     'update_admin_id'=>User::id()
                             )
@@ -291,6 +294,7 @@ class ActivityListController extends Controller {
                     'pass_type' => 'integer|required',
                     'pass_condition' => 'string|required|max:64',
                     'content' => 'string|required',
+                    'enable' => 'integer|required',
         ]);
         if ($validator->fails()) {
             $this->view['result'] = 'no';
@@ -321,6 +325,7 @@ class ActivityListController extends Controller {
                                 'pass_type'=>Request::input('pass_type'),
                                 'pass_condition'=>Request::input('pass_condition'),
                                 'content'=>$content,
+                                'enable'=>Request::input('enable'),
                                 'update_admin_id'=>User::id()
                     ]);
                 $result_after = DB::table('activity_data')

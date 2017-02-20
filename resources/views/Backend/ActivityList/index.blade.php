@@ -80,7 +80,8 @@
                             <th width="15%">{{ trans('validation.attributes.activity_date') }}</th>
                             <th width="15%">{{ trans('validation.attributes.activity_name') }}</th>
                             <th width="15%">{{ trans('validation.attributes.time') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.reservation_count') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.reservation_count') }}</th>
+                            <th width="5%">{{ trans('validation.attributes.status') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
@@ -100,6 +101,7 @@
                             <td>{{ $v['activity_name'] }}</td>
                             <td>{{ $v['time'] }}</td>
                             <td>{{ $v['reservation_count'] }}</td>
+                            <td>{{ trans('enum.display.'.$v['enable']) }}</td>
                             <td>
                                 {!! ViewHelper::button('reservation', ['id' => $v['id']]) !!}
                                 {!! ViewHelper::button('attend', ['id' => $v['id']]) !!}

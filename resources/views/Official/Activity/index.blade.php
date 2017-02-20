@@ -178,7 +178,7 @@
                             @include('Official.elements.pagination')
 			  </div>
               @endif
-			  <p>過期活動請連結至這裡查詢 (which the URL connects to <a href='http://techcomm.lifescience.ntu.edu.tw/workshop%20news.htm' target='_blank'>http://techcomm.lifescience.ntu.edu.tw/workshop%20news.htm</a>)</p>
+			  <p>過期活動請連結至<a href='http://techcomm.lifescience.ntu.edu.tw/workshop%20news.htm' target='_blank'>這裡</a>查詢</p>
             </div>
     	</div>
     </div>

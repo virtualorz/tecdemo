@@ -226,8 +226,8 @@ class InstrumentController extends Controller {
             else
             {//未登入使用者
                 //取得使用者通過的假日權限
-                $permissionResult = array_keys(Config::get('data.member_permission'));
-                $instrumentPermission = array_keys(Config::get('data.member_permission'));
+                $permissionResult = array_keys(Config::get('data.permission'));
+                $instrumentPermission = array_keys(Config::get('data.permission'));
                 //註記使用者沒有權限的時段
                 foreach($sectionResult as $k=>$v)
                 {
@@ -285,6 +285,10 @@ class InstrumentController extends Controller {
                     {//使用者沒有長假期權限限則本日無法預約
                         array_push($vacationResult,$v['vacation_dt']);
                     }
+                }
+                else if($v['vacation_type'] == "5")
+                {//保養維修
+                    array_push($vacationResult,$v['vacation_dt']);
                 }
             }
 

@@ -29,6 +29,7 @@ class ActivityController extends Controller {
         {
             $searchResult = DB::table('activity_data')
                             ->where('activity_data.activity_name','like','%'.$keyword.'%')
+                            ->where('activity_data.enable',1)
                             ->select('activity_data.uid',
                                             'activity_data.salt',
                                             DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y/%m/%d") as start_dt'),
@@ -52,6 +53,7 @@ class ActivityController extends Controller {
         else
         {
             $liest_aResult = DB::table('activity_data')
+                            ->where('activity_data.enable',1)
                             ->whereNull('end_dt')
                             ->orWhere(function ($query) {
                                 $query->whereDate('end_dt', '>=', date('Y-m-d')
@@ -77,6 +79,7 @@ class ActivityController extends Controller {
                             ->orderBy('end_dt','desc')
                             ->get();
             $liest_unaResult = DB::table('activity_data')
+                            ->where('activity_data.enable',1)
                             ->whereDate('end_dt','<',date('Y-m-d'))
                             ->select('activity_data.uid',
                                                 'activity_data.salt',
