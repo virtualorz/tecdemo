@@ -42,7 +42,7 @@ class ActivityReservationController extends Controller {
 
         $listResult = $listResult->select('activity_reservation_data.activity_id',
                                             'activity_reservation_data.member_id',
-                                            DB::raw('DATE_FORMAT(activity_reservation_data.created_at, "%Y-%m-%d") as created_at'),
+                                            DB::raw('DATE_FORMAT(activity_reservation_data.created_at, "%Y/%m/%d") as created_at'),
                                             'member_data.name',
                                             'member_data.email',
                                             'system_pi_list.name as pi_name',

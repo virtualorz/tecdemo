@@ -23,7 +23,7 @@
                         <tbody>
                             <tr>
                                 <th width="15%">{{ trans('validation.attributes.reservation_at') }}</th>
-                                <td>{{ $dataResult['reservation_dt'] }}</td>
+                                <td>{{ $dataResult['reservation_dt_formate'] }}</td>
                             </tr>
                             <tr>
                                 <th>{{ trans('validation.attributes.page_id') }}</th>
@@ -58,7 +58,7 @@
                             <tr>
                                 <th>{{ trans('validation.attributes.reservation_section') }}</th>
                                 <td>
-                                    {{ $dataResult['reservation_dt'] }} {{ $dataResult['start_time'] }} - {{ $dataResult['end_time'] }}
+                                    {{ $dataResult['reservation_dt_formate'] }} {{ $dataResult['start_time'] }} - {{ $dataResult['end_time'] }}
                                 </td>
                             </tr>  
                             <tr>

@@ -23,12 +23,12 @@
                         <tbody>
                             <tr>
                                 <th width="15%">{{ trans('validation.attributes.update_at') }}</th>
-                                <td>{{ date('Y/m/d') }}</td>
+                                <td>{{ $dataResult['created_at'] }}</td>
                             </tr>
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.start_dt') }}</th>
                                 <td>
-                                    <input type="text" name="start_dt" id="data-start_dt" class="form-control required datepicker">
+                                    <input type="text" name="start_dt" id="data-start_dt" value="{{ $dataResult['start_dt'] }}" class="form-control required datepicker">
                                 </td>
                             </tr>  
                             <tr>

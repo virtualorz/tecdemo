@@ -54,7 +54,7 @@ class InstrumentController extends Controller {
         }
 
         $listResult = $listResult->select('instrument_data.id',
-                                            DB::raw('DATE_FORMAT(instrument_data.created_at, "%Y-%m-%d") as created_at'),
+                                            DB::raw('DATE_FORMAT(instrument_data.created_at, "%Y/%m/%d") as created_at'),
                                             'instrument_type.name as type_name',
                                             'instrument_data.instrument_id',
                                             'instrument_data.name',
@@ -139,7 +139,9 @@ class InstrumentController extends Controller {
     public function edit() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('instrument_data')
-                            ->select('instrument_data.*','member_admin.name as created_admin_name')
+                            ->select('instrument_data.*',
+                                    DB::raw('DATE_FORMAT(instrument_data.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','instrument_data.create_admin_id','=','member_admin.id')
                             ->where('instrument_data.id',$id)
                             ->get();
@@ -220,6 +222,7 @@ class InstrumentController extends Controller {
         $id = Route::input('id', 0);
         $dataResult = DB::table('instrument_data')
                             ->select('instrument_data.*',
+                                        DB::raw('DATE_FORMAT(instrument_data.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
                                         'instrument_type.name as type_name',
                                         'instrument_site.name as site_name',
                                         'member_admin.name as created_admin_name')

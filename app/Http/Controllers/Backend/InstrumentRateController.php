@@ -24,7 +24,7 @@ class InstrumentRateController extends Controller {
         $id = Route::input('id');
         $listResult = DB::table('instrument_rate');
 
-        $listResult = $listResult->select('instrument_rate_id','instrument_data_id','start_dt','rate_type','member_1','member_2','member_3','member_4','rate','disabled')
+        $listResult = $listResult->select('instrument_rate_id','instrument_data_id',DB::raw('DATE_FORMAT(start_dt, "%Y/%m/%d") as start_dt'),'rate_type','member_1','member_2','member_3','member_4','rate','disabled')
                                     ->where('instrument_data_id',$id)
                                     ->orderBy('instrument_rate_id','desc')
                                     ->paginate(Config::get('pagination.items'));
@@ -46,7 +46,9 @@ class InstrumentRateController extends Controller {
     public function edit() {
         $id = explode('_',Route::input('id', 0));
         $dataResult = DB::table('instrument_rate')
-                            ->select('instrument_rate.*','member_admin.name as created_admin_name')
+                            ->select('instrument_rate.*',
+                                    DB::raw('DATE_FORMAT(start_dt, "%Y/%m/%d") as start_dt'),
+                                    'member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','instrument_rate.create_admin_id','=','member_admin.id')
                             ->where('instrument_rate.instrument_rate_id',$id[0])
                             ->where('instrument_rate.instrument_data_id',$id[1])
@@ -60,7 +62,9 @@ class InstrumentRateController extends Controller {
     public function detail() {
         $id = explode('_',Route::input('id', 0));
         $dataResult = DB::table('instrument_rate')
-                            ->select('instrument_rate.*','member_admin.name as created_admin_name')
+                            ->select('instrument_rate.*',
+                                    DB::raw('DATE_FORMAT(start_dt, "%Y/%m/%d") as start_dt'),
+                                    'member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','instrument_rate.create_admin_id','=','member_admin.id')
                             ->where('instrument_rate.instrument_rate_id',$id[0])
                             ->where('instrument_rate.instrument_data_id',$id[1])

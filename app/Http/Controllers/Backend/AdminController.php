@@ -21,7 +21,7 @@ class AdminController extends Controller {
 
     public function index() {
         $listResult = DB::table('member_admin')
-                            ->select('id','name','email',DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as created_at'))
+                            ->select('id','name','email',DB::raw('DATE_FORMAT(created_at, "%Y/%m/%d") as created_at'))
                             ->orderBy('id','desc')
                             ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
@@ -46,7 +46,9 @@ class AdminController extends Controller {
     public function edit() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('member_admin')
-                            ->select('member_admin.id','member_admin.created_at','member_admin.name','member_admin.email','member_admin.password','member_admin.permission_id','member_admin.enable','member_admin2.name as created_admin_name')
+                            ->select('member_admin.id',
+                                    DB::raw('DATE_FORMAT(member_admin.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'member_admin.name','member_admin.email','member_admin.password','member_admin.permission_id','member_admin.enable','member_admin2.name as created_admin_name')
                             ->leftJoin('member_admin as member_admin2','member_admin.create_admin_id','=','member_admin2.id')
                             ->where('member_admin.id',$id)
                             ->get();
@@ -65,7 +67,9 @@ class AdminController extends Controller {
     public function detail() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('member_admin')
-                            ->select('member_admin.id','member_admin.created_at','member_admin.name','member_admin.email','member_admin.password','member_admin.permission_id','member_admin.enable','member_admin2.name as created_admin_name')
+                            ->select('member_admin.id',
+                                    DB::raw('DATE_FORMAT(member_admin.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'member_admin.name','member_admin.email','member_admin.password','member_admin.permission_id','member_admin.enable','member_admin2.name as created_admin_name')
                             ->leftJoin('member_admin as member_admin2','member_admin.create_admin_id','=','member_admin2.id')
                             ->where('member_admin.id',$id)
                             ->get();

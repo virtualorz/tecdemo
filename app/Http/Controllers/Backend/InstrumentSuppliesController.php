@@ -23,7 +23,7 @@ class InstrumentSuppliesController extends Controller {
 
         $listResult = DB::table('instrument_supplies');
 
-        $listResult = $listResult->select('instrument_supplies.id','instrument_supplies.name','rate1','rate2','rate3','rate4',DB::raw('DATE_FORMAT(instrument_supplies.created_at, "%Y-%m-%d") as created_at'),'member_admin.name as created_admin_name')
+        $listResult = $listResult->select('instrument_supplies.id','instrument_supplies.name','rate1','rate2','rate3','rate4',DB::raw('DATE_FORMAT(instrument_supplies.created_at, "%Y/%m/%d") as created_at'),'member_admin.name as created_admin_name')
                                     ->leftJoin('member_admin','instrument_supplies.create_admin_id','=','member_admin.id')
                                     ->orderBy('id','desc')
                                     ->paginate(Config::get('pagination.items'));
@@ -42,7 +42,9 @@ class InstrumentSuppliesController extends Controller {
     public function edit() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('instrument_supplies')
-                            ->select('instrument_supplies.*','member_admin.name as created_admin_name')
+                            ->select('instrument_supplies.*',
+                                    DB::raw('DATE_FORMAT(instrument_supplies.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','instrument_supplies.create_admin_id','=','member_admin.id')
                             ->where('instrument_supplies.id',$id)
                             ->get();
@@ -55,7 +57,9 @@ class InstrumentSuppliesController extends Controller {
     public function detail() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('instrument_supplies')
-                            ->select('instrument_supplies.*','member_admin.name as created_admin_name')
+                            ->select('instrument_supplies.*',
+                                    DB::raw('DATE_FORMAT(instrument_supplies.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','instrument_supplies.create_admin_id','=','member_admin.id')
                             ->where('instrument_supplies.id',$id)
                             ->get();

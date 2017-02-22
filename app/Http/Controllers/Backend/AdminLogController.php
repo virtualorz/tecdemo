@@ -35,7 +35,7 @@ class AdminLogController extends Controller {
         }
 
         $listResult = $listResult->select('syslog.id',
-                                            DB::raw('DATE_FORMAT(syslog.created_at, "%Y-%m-%d") as created_at'),
+                                            DB::raw('DATE_FORMAT(syslog.created_at, "%Y/%m/%d") as created_at'),
                                             'member_admin.email',
                                             'syslog.operator',
                                             'syslog.page')
@@ -54,7 +54,9 @@ class AdminLogController extends Controller {
     public function detail() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('syslog')
-                            ->select('syslog.*','member_admin.name','member_admin.email')
+                            ->select('syslog.*',
+                                    DB::raw('DATE_FORMAT(syslog.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'member_admin.name','member_admin.email')
                             ->leftJoin('member_admin','syslog.admin_id','=','member_admin.id')
                             ->where('syslog.id',$id)
                             ->get();

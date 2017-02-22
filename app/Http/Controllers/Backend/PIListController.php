@@ -23,7 +23,7 @@ class PIListController extends Controller {
 
         $listResult = DB::table('system_pi_list');
 
-        $listResult = $listResult->select('system_pi_list.id','system_pi_list.name',DB::raw('DATE_FORMAT(system_pi_list.created_at, "%Y-%m-%d") as created_at'),'system_organize.name as organize_name','system_department.name as department_name')
+        $listResult = $listResult->select('system_pi_list.id','system_pi_list.name',DB::raw('DATE_FORMAT(system_pi_list.created_at, "%Y/%m/%d") as created_at'),'system_organize.name as organize_name','system_department.name as department_name')
                                     ->leftJoin('system_organize','system_pi_list.organize_id','=','system_organize.id')
                                     ->leftJoin('system_department','system_pi_list.department_id','=','system_department.id')
                                     ->orderBy('id','desc')
@@ -48,7 +48,7 @@ class PIListController extends Controller {
         $id = Route::input('id', 0);
         $dataResult = DB::table('system_pi_list')
                             ->select('system_pi_list.id',
-                                    'system_pi_list.created_at',
+                                    DB::raw('DATE_FORMAT(system_pi_list.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
                                     'system_pi_list.organize_id',
                                     'system_pi_list.department_id',
                                     'system_pi_list.name',
@@ -80,7 +80,7 @@ class PIListController extends Controller {
         $id = Route::input('id', 0);
         $dataResult = DB::table('system_pi_list')
                             ->select('system_pi_list.id',
-                                    'system_pi_list.created_at',
+                                    DB::raw('DATE_FORMAT(system_pi_list.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
                                     'system_pi_list.organize_id',
                                     'system_pi_list.department_id',
                                     'system_pi_list.name',

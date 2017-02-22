@@ -71,7 +71,7 @@ class MemberProtofolioController extends Controller {
         }
 
         $listResult = $listResult->select('member_data.id',
-                                            DB::raw('DATE_FORMAT(member_data.created_at, "%Y-%m-%d") as created_at'),
+                                            DB::raw('DATE_FORMAT(member_data.created_at, "%Y/%m/%d") as created_at'),
                                             'member_data.name',
                                             'member_data.card_id_number',
                                             'member_data.type',
@@ -110,6 +110,8 @@ class MemberProtofolioController extends Controller {
         $id = Route::input('id', 0);
         $dataResult = DB::table('member_data')
                             ->select('member_data.*',
+                                        DB::raw('DATE_FORMAT(member_data.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                        DB::raw('DATE_FORMAT(member_data.start_dt, "%Y/%m/%d") as start_dt'),
                                         'system_organize.name as organize_name',
                                         'system_department.name as department_name',
                                         'system_pi_list.name as pi_name',
@@ -159,6 +161,8 @@ class MemberProtofolioController extends Controller {
         $id = Route::input('id', 0);
         $dataResult = DB::table('member_data')
                             ->select('member_data.*',
+                                        DB::raw('DATE_FORMAT(member_data.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                        DB::raw('DATE_FORMAT(member_data.start_dt, "%Y/%m/%d") as start_dt'),
                                         'system_organize.name as organize_name',
                                         'system_department.name as department_name',
                                         'system_pi_list.name as pi_name',
@@ -229,8 +233,8 @@ class MemberProtofolioController extends Controller {
         $id = Route::input('id', 0);
         $listResult = DB::table('activity_reservation_data')
                             ->select('activity_data.id',
-                                        'activity_data.start_dt',
-                                        'activity_data.end_dt',
+                                        DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y/%m/%d") as start_dt'),
+                                        DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y/%m/%d") as end_dt'),
                                         'activity_data.activity_name',
                                         'activity_data.level',
                                         'activity_data.time',

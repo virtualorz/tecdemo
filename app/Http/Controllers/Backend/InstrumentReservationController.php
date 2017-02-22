@@ -41,7 +41,7 @@ class InstrumentReservationController extends Controller {
 
         $listResult = $listResult->select('instrument_reservation_data.instrument_reservation_data_id',
                                             'instrument_reservation_data.create_date',
-                                            'instrument_reservation_data.reservation_dt',
+                                            DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%Y/%m/%d") as reservation_dt'),
                                             'instrument_section.start_time',
                                             'instrument_section.end_time',
                                             'instrument_reservation_data.reservation_status',
@@ -75,6 +75,8 @@ class InstrumentReservationController extends Controller {
         $id = explode('_',Route::input('id', '0_0'));
         $dataResult = DB::table('instrument_reservation_data')
                             ->select('instrument_reservation_data.*',
+                                        DB::raw('DATE_FORMAT(instrument_reservation_data.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                        DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%Y/%m/%d") as reservation_dt_formate'),
                                         'instrument_section.start_time',
                                         'instrument_section.end_time',
                                         'instrument_data.instrument_id',
@@ -104,6 +106,8 @@ class InstrumentReservationController extends Controller {
         $id = explode('_',Route::input('id', '0_0'));
         $dataResult = DB::table('instrument_reservation_data')
                             ->select('instrument_reservation_data.*',
+                                        DB::raw('DATE_FORMAT(instrument_reservation_data.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                        DB::raw('DATE_FORMAT(instrument_reservation_data.reservation_dt, "%Y/%m/%d") as reservation_dt'),
                                         'instrument_section.start_time',
                                         'instrument_section.end_time',
                                         'instrument_data.instrument_id',

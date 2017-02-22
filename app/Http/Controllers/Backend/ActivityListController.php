@@ -43,7 +43,7 @@ class ActivityListController extends Controller {
         $listResult = $listResult->select('activity_data.id',
                                             'activity_data.start_dt',
                                             'activity_data.end_dt',
-                                            DB::raw('DATE_FORMAT(activity_data.created_at, "%Y-%m-%d") as created_at'),
+                                            DB::raw('DATE_FORMAT(activity_data.created_at, "%Y/%m/%d") as created_at'),
                                             'activity_data.activity_name',
                                             'activity_data.time',
                                             'activity_data.enable',
@@ -87,7 +87,9 @@ class ActivityListController extends Controller {
     public function edit() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('activity_data')
-                            ->select('activity_data.*','member_admin.name as created_admin_name')
+                            ->select('activity_data.*',
+                                    DB::raw('DATE_FORMAT(activity_data.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','activity_data.create_admin_id','=','member_admin.id')
                             ->where('activity_data.id',$id)
                             ->get();
@@ -133,7 +135,9 @@ class ActivityListController extends Controller {
     public function detail() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('activity_data')
-                            ->select('activity_data.*','member_admin.name as created_admin_name','activity_type.name as activity_type_name')
+                            ->select('activity_data.*',
+                                    DB::raw('DATE_FORMAT(activity_data.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'member_admin.name as created_admin_name','activity_type.name as activity_type_name')
                             ->leftJoin('member_admin','activity_data.create_admin_id','=','member_admin.id')
                             ->leftJoin('activity_type','activity_data.activity_type_id','=','activity_type.id')
                             ->where('activity_data.id',$id)

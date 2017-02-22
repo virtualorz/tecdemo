@@ -23,7 +23,7 @@ class TCDataController extends Controller {
 
         $listResult = DB::table('system_tc_data');
 
-        $listResult = $listResult->select('id','name',DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as created_at'),'enable')
+        $listResult = $listResult->select('id','name',DB::raw('DATE_FORMAT(created_at, "%Y/%m/%d") as created_at'),'enable')
                                     ->orderBy('id','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
@@ -41,7 +41,9 @@ class TCDataController extends Controller {
     public function edit() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('system_tc_data')
-                            ->select('system_tc_data.id','system_tc_data.created_at','system_tc_data.name','system_tc_data.content','system_tc_data.enable','member_admin.name as created_admin_name')
+                            ->select('system_tc_data.id',
+                                    DB::raw('DATE_FORMAT(system_tc_data.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'system_tc_data.name','system_tc_data.content','system_tc_data.enable','member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','system_tc_data.create_admin_id','=','member_admin.id')
                             ->where('system_tc_data.id',$id)
                             ->get();
@@ -54,7 +56,9 @@ class TCDataController extends Controller {
     public function detail() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('system_tc_data')
-                            ->select('system_tc_data.id','system_tc_data.created_at','system_tc_data.name','system_tc_data.content','system_tc_data.enable','member_admin.name as created_admin_name')
+                            ->select('system_tc_data.id',
+                                    DB::raw('DATE_FORMAT(system_tc_data.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'system_tc_data.name','system_tc_data.content','system_tc_data.enable','member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','system_tc_data.create_admin_id','=','member_admin.id')
                             ->where('system_tc_data.id',$id)
                             ->get();

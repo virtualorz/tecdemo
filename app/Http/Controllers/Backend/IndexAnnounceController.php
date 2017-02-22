@@ -23,7 +23,7 @@ class IndexAnnounceController extends Controller {
 
         $listResult = DB::table('system_index_notice');
 
-        $listResult = $listResult->select('id','title',DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as created_at'),'enable')
+        $listResult = $listResult->select('id','title',DB::raw('DATE_FORMAT(created_at, "%Y/%m/%d") as created_at'),'enable')
                                     ->orderBy('id','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
@@ -41,7 +41,9 @@ class IndexAnnounceController extends Controller {
     public function edit() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('system_index_notice')
-                            ->select('system_index_notice.id','system_index_notice.created_at','system_index_notice.title','system_index_notice.content','system_index_notice.enable','member_admin.name as created_admin_name')
+                            ->select('system_index_notice.id',
+                                    DB::raw('DATE_FORMAT(system_index_notice.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'system_index_notice.title','system_index_notice.content','system_index_notice.enable','member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','system_index_notice.create_admin_id','=','member_admin.id')
                             ->where('system_index_notice.id',$id)
                             ->get();
@@ -54,7 +56,9 @@ class IndexAnnounceController extends Controller {
     public function detail() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('system_index_notice')
-                            ->select('system_index_notice.id','system_index_notice.created_at','system_index_notice.title','system_index_notice.content','system_index_notice.enable','member_admin.name as created_admin_name')
+                            ->select('system_index_notice.id',
+                                    DB::raw('DATE_FORMAT(system_index_notice.created_at, "%Y/%m/%d %H:%i:%s") as created_at')
+                                    ,'system_index_notice.title','system_index_notice.content','system_index_notice.enable','member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','system_index_notice.create_admin_id','=','member_admin.id')
                             ->where('system_index_notice.id',$id)
                             ->get();

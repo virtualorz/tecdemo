@@ -43,7 +43,7 @@ class ActivityAttendController extends Controller {
         $listResult = $listResult->select('activity_reservation_data.activity_id',
                                             'activity_reservation_data.member_id',
                                             'activity_reservation_data.attend_status',
-                                            DB::raw('DATE_FORMAT(activity_reservation_data.created_at, "%Y-%m-%d") as created_at'),
+                                            DB::raw('DATE_FORMAT(activity_reservation_data.created_at, "%Y/%m/%d") as created_at'),
                                             'member_data.name',
                                             'member_data.email')
                                     ->leftJoin('member_data','activity_reservation_data.member_id','=','member_data.id')

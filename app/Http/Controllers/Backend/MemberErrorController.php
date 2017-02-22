@@ -65,7 +65,7 @@ class MemberErrorController extends Controller {
         }
 
         $listResult = $listResult->select('member_data.id',
-                                            DB::raw('DATE_FORMAT(member_data.created_at, "%Y-%m-%d") as created_at'),
+                                            DB::raw('DATE_FORMAT(member_data.created_at, "%Y/%m/%d") as created_at'),
                                             'member_data.name',
                                             'member_data.card_id_number',
                                             'member_data.type',

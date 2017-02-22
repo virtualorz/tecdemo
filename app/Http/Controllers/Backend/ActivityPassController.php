@@ -25,7 +25,7 @@ class ActivityPassController extends Controller {
         $listResult = $listResult->select('activity_data.id',
                                             'activity_data.start_dt',
                                             'activity_data.end_dt',
-                                            DB::raw('DATE_FORMAT(activity_data.created_at, "%Y-%m-%d") as created_at'),
+                                            DB::raw('DATE_FORMAT(activity_data.created_at, "%Y/%m/%d") as created_at'),
                                             'activity_data.activity_name',
                                             'activity_data.level',
                                             'activity_data.time',
@@ -69,7 +69,7 @@ class ActivityPassController extends Controller {
 
         $listResult = $listResult->select('activity_reservation_data.activity_id',
                                             'activity_reservation_data.member_id',
-                                            DB::raw('DATE_FORMAT(activity_reservation_data.created_at, "%Y-%m-%d") as created_at'),
+                                            DB::raw('DATE_FORMAT(activity_reservation_data.created_at, "%Y%m/%d") as created_at'),
                                             'activity_reservation_data.attend_status',
                                             'activity_reservation_data.pass_status',
                                             'activity_reservation_data.score',

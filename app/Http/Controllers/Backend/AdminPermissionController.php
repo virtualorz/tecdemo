@@ -21,7 +21,7 @@ class AdminPermissionController extends Controller {
 
     public function index() {
         $listResult = DB::table('member_admin_permission')
-                            ->select('id','name','enable',DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as created_at'))
+                            ->select('id','name','enable',DB::raw('DATE_FORMAT(created_at, "%Y/%m/%d") as created_at'))
                             ->orderBy('id','desc')
                             ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
@@ -55,7 +55,9 @@ class AdminPermissionController extends Controller {
         $treePermission = [];
         $treeAutoFunctionSelectedJson = '[]';
         $dataResult = DB::table('member_admin_permission')
-                            ->select('member_admin_permission.id','member_admin_permission.created_at','member_admin_permission.name','member_admin_permission.content','member_admin_permission.enable','member_admin.name as created_admin_name')
+                            ->select('member_admin_permission.id',
+                                    DB::raw('DATE_FORMAT(member_admin_permission.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'member_admin_permission.name','member_admin_permission.content','member_admin_permission.enable','member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','member_admin_permission.create_admin_id','=','member_admin.id')
                             ->where('member_admin_permission.id',$id)
                             ->get();
@@ -87,7 +89,9 @@ class AdminPermissionController extends Controller {
         $treePermission = [];
         $treeAutoFunctionSelectedJson = '[]';
         $dataResult = DB::table('member_admin_permission')
-                            ->select('member_admin_permission.id','member_admin_permission.created_at','member_admin_permission.name','member_admin_permission.content','member_admin_permission.enable','member_admin.name as created_admin_name')
+                            ->select('member_admin_permission.id',
+                                    DB::raw('DATE_FORMAT(member_admin_permission.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'member_admin_permission.name','member_admin_permission.content','member_admin_permission.enable','member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','member_admin_permission.create_admin_id','=','member_admin.id')
                             ->where('member_admin_permission.id',$id)
                             ->get();

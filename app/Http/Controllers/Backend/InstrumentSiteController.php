@@ -23,7 +23,7 @@ class InstrumentSiteController extends Controller {
 
         $listResult = DB::table('instrument_site');
 
-        $listResult = $listResult->select('id','name',DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as created_at'),'enable')
+        $listResult = $listResult->select('id','name',DB::raw('DATE_FORMAT(created_at, "%Y/%m/%d") as created_at'),'enable')
                                     ->orderBy('id','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
@@ -41,7 +41,9 @@ class InstrumentSiteController extends Controller {
     public function edit() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('instrument_site')
-                            ->select('instrument_site.id','instrument_site.created_at','instrument_site.name','instrument_site.enable','member_admin.name as created_admin_name')
+                            ->select('instrument_site.id',
+                                    DB::raw('DATE_FORMAT(instrument_site.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'instrument_site.name','instrument_site.enable','member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','instrument_site.create_admin_id','=','member_admin.id')
                             ->where('instrument_site.id',$id)
                             ->get();
@@ -54,7 +56,9 @@ class InstrumentSiteController extends Controller {
     public function detail() {
         $id = Route::input('id', 0);
         $dataResult = DB::table('instrument_site')
-                            ->select('instrument_site.id','instrument_site.created_at','instrument_site.name','instrument_site.enable','member_admin.name as created_admin_name')
+                            ->select('instrument_site.id',
+                                    DB::raw('DATE_FORMAT(instrument_site.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
+                                    'instrument_site.name','instrument_site.enable','member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','instrument_site.create_admin_id','=','member_admin.id')
                             ->where('instrument_site.id',$id)
                             ->get();
