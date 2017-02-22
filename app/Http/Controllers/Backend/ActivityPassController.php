@@ -23,8 +23,8 @@ class ActivityPassController extends Controller {
 
         $listResult = DB::table('activity_data');
         $listResult = $listResult->select('activity_data.id',
-                                            'activity_data.start_dt',
-                                            'activity_data.end_dt',
+                                            DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y/%m/%d") as start_dt'),
+                                            DB::raw('DATE_FORMAT(activity_data.end_dt, "%Y/%m/%d") as end_dt'),
                                             DB::raw('DATE_FORMAT(activity_data.created_at, "%Y/%m/%d") as created_at'),
                                             'activity_data.activity_name',
                                             'activity_data.level',
