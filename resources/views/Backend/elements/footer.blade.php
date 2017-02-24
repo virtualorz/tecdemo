@@ -1,7 +1,7 @@
 <footer class="main-footer " role="contentinfo">
     <div class="copyright">
         <p>
-            © 2016 BTS Design. All Rights Reserved
+            Copyright© 2017  All rights reserved.
         </p>
     </div>
 </footer>
