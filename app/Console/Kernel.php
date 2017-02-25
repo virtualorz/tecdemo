@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel {
      */
     protected $commands = [
         \App\Console\Commands\Inspire::class,
+        \App\Console\Commands\ReservationNotice::class,
     ];
 
     /**
@@ -27,17 +28,9 @@ class Kernel extends ConsoleKernel {
      */
     protected function schedule(Schedule $schedule) {
         
+        $schedule->command('email:instrument_use')->everyMinute();
         $schedule->call(function() {
-            DB::table('syslog')
-                ->insert(array(
-                    'created_at'=> date('Y-m-d H:i:s'),
-                    'ip'=>'127.0.0.1',
-                    'page'=>'backend.web.web.instrument.section.add.submit',
-                    'table'=>'instrument_section',
-                    'operator'=>'2',
-                    'after_JSON'=>'{}',
-                    'admin_id'=>'0'
-                ));
+           
             /*
             //取得24小時候預約時段名單
             $tomorrow = date('Y-m-d',strtotime('+1 day',strtotime(date('Y-m-d'))));
