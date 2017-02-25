@@ -10,7 +10,26 @@ use Log;
 
 class ReservationNotice extends Command
 {
-    
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'email:instrument_use';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'notify to reservation user';
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+
     public function handle()
     {
         //取得24小時候預約時段名單
