@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel {
      */
     protected function schedule(Schedule $schedule) {
         
-        $schedule->call(function() {
+        $schedule->call(function() {log::error('run schedule');
             //取得24小時候預約時段名單
             $tomorrow = date('Y-m-d',strtotime('+1 day',strtotime(date('Y-m-d'))));
             $notice_list = DB::table('instrument_reservation_data')
@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel {
                         ->whereDate('instrument_reservation_data.reservation_dt','=',$tomorrow)
                         ->where('instrument_reservation_data.reservation_status','1')
                         ->where('instrument_data.notice','1')
-                        ->get();
+                        ->get();log::error($notice_list);
             foreach($notice_list as $k=>$v)
             {
                 if( (strtotime($v['reservation_dt'].' '.$v['start_time']) - strtotime(date('Y-m-d H:i:s'))) >=82800 && (strtotime($v['reservation_dt'].' '.$v['start_time']) - strtotime(date('Y-m-d H:i:s'))) <= 86400)
