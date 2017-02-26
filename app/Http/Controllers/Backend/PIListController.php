@@ -21,6 +21,81 @@ class PIListController extends Controller {
 
     public function index() {
 
+        /*if(env('INIT_PI',false))
+        {
+            $table1 = DB::table('table1')->get();
+            foreach($table1 as $k=>$v)
+            {
+                $system_organize = DB::table('system_organize')
+                                    ->select('id')
+                                    ->where('name',$v['organize'])
+                                    ->get();
+                if(count($system_organize) ==0)
+                {
+                    $organize_id = DB::table('system_organize')
+                                ->insertGetId(
+                                    array('created_at'=>date('Y-m-d H:i:s'),
+                                        'updated_at'=>date('Y-m-d H:i:s'),
+                                        'name'=>$v['organize'],
+                                        'create_admin_id'=>User::id(),
+                                        'update_admin_id'=>User::id()
+                                    )
+                                );
+                    $department_id = DB::table('system_department')
+                                ->insertGetId(
+                                    array('created_at'=>date('Y-m-d H:i:s'),
+                                        'updated_at'=>date('Y-m-d H:i:s'),
+                                        'organize_id'=>$organize_id,
+                                        'name'=>$v['department'],
+                                        'create_admin_id'=>User::id(),
+                                        'update_admin_id'=>User::id()
+                                    )
+                                );
+
+                }
+                else
+                {
+                    $organize_id = $system_organize[0]['id'];
+                    $system_department = DB::table('system_department')
+                                    ->select('id')
+                                    ->where('name',$v['department'])
+                                    ->get();
+                    if(count($system_department) ==0)
+                    {
+                        $department_id = DB::table('system_department')
+                                ->insertGetId(
+                                    array('created_at'=>date('Y-m-d H:i:s'),
+                                        'updated_at'=>date('Y-m-d H:i:s'),
+                                        'organize_id'=>$organize_id,
+                                        'name'=>$v['department'],
+                                        'create_admin_id'=>User::id(),
+                                        'update_admin_id'=>User::id()
+                                    )
+                                );
+                    }
+                    else
+                    {
+                        $department_id = $system_department[0]['id'];
+                    }
+                }
+
+                DB::table('system_pi_list')
+                        ->insert(
+                            array('created_at'=>date('Y-m-d H:i:s'),
+                                'updated_at'=>date('Y-m-d H:i:s'),
+                                'organize_id'=>$organize_id,
+                                'department_id'=>$department_id,
+                                'name'=>$v['name'],
+                                'email'=>$v['email'],
+                                'phone'=>$v['tel'],
+                                'contact_name'=>$v['contact_name'],
+                                'contact_phone'=>$v['contact_phone'],
+                                'contact_email'=>$v['contact_email'],
+                            )
+                );
+            }
+        }*/
+
         $listResult = DB::table('system_pi_list');
 
         $listResult = $listResult->select('system_pi_list.id','system_pi_list.name',DB::raw('DATE_FORMAT(system_pi_list.created_at, "%Y/%m/%d") as created_at'),'system_organize.name as organize_name','system_department.name as department_name')
