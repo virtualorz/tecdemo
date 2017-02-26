@@ -91,6 +91,19 @@ class LoginController extends Controller {
             }
             else
             {
+                $member_data = DB::table('member_data')
+                            ->select('id')
+                            ->where('email',$account)
+                            ->first();
+                if(count($member_data)!=0)
+                {
+                    DBProcedure::writeLog([
+                        'table' => 'member_data',
+                        'operator' => DBOperator::OP_LOGIN_FAIL,
+                        'member_id' => $member_data['id']
+                    ]);
+                }
+
                 $this->view['result'] = 'no';
                 $this->view['msg'] = trans('message.error.login');
                 $this->view['detail'][] = trans('message.question.login');

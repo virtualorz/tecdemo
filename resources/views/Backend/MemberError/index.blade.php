@@ -118,7 +118,6 @@
                             <th width="15%">{{ trans('validation.attributes.card_id_number') }}</th>
                             <th width="15%">{{ trans('validation.attributes.id_type') }}</th>
                             <th width="15%">{{ trans('validation.attributes.error_status') }}</th>
-                            <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -131,10 +130,7 @@
                             <td>{{ $v['name'] }}</td>
                             <td>{{ $v['card_id_number'] }}</td>
                             <td>{{ trans('enum.member_type.'.$v['type']) }}</td>
-                            <td></td>
-                            <td>
-                                
-                            </td>
+                            <td>{{ trans('page.text.login_error') }}</td>
                         </tr>
                         @endforeach
                     </tbody>
