@@ -621,9 +621,10 @@ class MemberProtofolioController extends Controller {
 
             return $this->view;
         }
+        $content = FileUpload::moveEditor(Request::input('content'));
         
         try {
-            DB::transaction(function(){
+            DB::transaction(function()use($content){
                 $member_notice_log_id = DB::table('member_notice_log')
                             ->select('member_notice_log_id')
                             ->where('member_data_id',Request::input('id'))
@@ -648,7 +649,7 @@ class MemberProtofolioController extends Controller {
                                     'created_at'=>date('Y-m-d H:i:s'),
                                     'email'=>Request::input('email'),
                                     'title'=>Request::input('title'),
-                                    'content'=>Request::input('content'),
+                                    'content'=>$content,
                                     'is_read'=>'0',
                                     'create_admin_id'=>User::id()
                             )
