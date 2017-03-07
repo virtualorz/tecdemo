@@ -108,7 +108,7 @@
                                 {!! ViewHelper::button('complete', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date']]) !!}
                                 {!! ViewHelper::button('dcomplete', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date'],'use_dt_start'=>$v['reservation_dt'].' '.$v['start_time'],'use_dt_end'=>$v['reservation_dt'].' '.$v['end_time']]) !!}
                                 @endif
-                                @if(($v['reservation_status'] == 1 || $v['reservation_status'] == 0) && $v['attend_status'] !== 1)
+                                @if(($v['reservation_status'] == 1 || $v['reservation_status'] == 0) && $v['attend_status'] == null)
                                 {!! ViewHelper::button('notattend', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date']]) !!}
                                 @endif
                                 @if($v['reservation_status'] !== null && $v['reservation_status'] == 0 && $v['reservation_status'] !== 2)
