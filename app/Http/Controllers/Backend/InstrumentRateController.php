@@ -78,7 +78,7 @@ class InstrumentRateController extends Controller {
 
     public function ajax_add() {
         $validator = Validator::make(Request::all(), [
-                    'start_dt' => 'string|required',
+                    'start_dt' => 'string|required|after:today',
                     'rate_type' => 'string|required',
                     'member_1' => 'numeric|required',
                     'member_2' => 'numeric|required',
@@ -142,7 +142,7 @@ class InstrumentRateController extends Controller {
 
     public function ajax_edit() {
         $validator = Validator::make(Request::all(), [
-                    'start_dt' => 'string|required',
+                    'start_dt' => 'string|required|after:today',
                     'rate_type' => 'string|required',
                     'member_1' => 'numeric|required',
                     'member_2' => 'numeric|required',
