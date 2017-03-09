@@ -599,7 +599,7 @@ return [
         'related_instrument' => '相關儀器',
         'reservation_at' => '預約日期',
         'reservation_limit' => '每人預約次數上限',
-        'reservation_notice' => '使用前一日提醒使者',
+        'reservation_notice' => '使用前一日提醒使用者',
         'reservation_cancel_limit' => '自行取消截止日',
         'reservation_cancel_notice' => '自行取消後通知管理員',
         'reservation_section' => '預約時段',
