@@ -24,50 +24,100 @@ class InstrumentPaymentController extends Controller {
     public function index() {
 
         //處理帳單單據
-        $reservation_data = DB::table('instrument_reservation_data')
-            ->select('instrument_reservation_data.*','member_data.pi_list_id')
-            ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
-            ->whereNotNull('reservation_status')
-            ->where('attend_status',1)
-            ->whereNotNull('update_admin_id')
-            ->whereNull('in_bill')
-            ->whereDate('use_dt_start','<', date('Y-m-d',mktime(0, 0, 0, date('m'), 1, date('Y'))))
-            ->get();
-        
-        foreach($reservation_data as $k=>$v)
+        if(intval(date('d')) >= 5)
         {
-            $pay_year = date("Y",strtotime($v['use_dt_start']));
-            $pay_month = date("m",strtotime($v['use_dt_start']));
-            //確認本月帳單是否存在
-            $payment_data = DB::table('payment_data')
-                ->select('pi_list_id','pay_year','pay_month')
-                ->where('pi_list_id',$v['pi_list_id'])
-                ->where('pay_year',$pay_year)
-                ->where('pay_month',$pay_month)
+            $reservation_data = DB::table('instrument_reservation_data')
+                ->select('instrument_reservation_data.*','member_data.pi_list_id')
+                ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
+                ->whereNotNull('reservation_status')
+                ->where('attend_status',1)
+                ->whereNotNull('update_admin_id')
+                ->whereNull('in_bill')
+                ->whereDate('use_dt_start','<', date('Y-m-d',mktime(0, 0, 0, date('m'), 1, date('Y'))))
+                ->whereDate('use_dt_start','>=', date('Y-m-d',strtotime('-1 month',mktime(0, 0, 0, date('m'), 1, date('Y')))))
                 ->get();
-            $param = array($v,$pay_year,$pay_month);
+            
+            foreach($reservation_data as $k=>$v)
+            {
+                $pay_year = date("Y",strtotime($v['use_dt_start']));
+                $pay_month = date("m",strtotime($v['use_dt_start']));
+                //確認本月帳單是否存在
+                $payment_data = DB::table('payment_data')
+                    ->select('pi_list_id','pay_year','pay_month')
+                    ->where('pi_list_id',$v['pi_list_id'])
+                    ->where('pay_year',$pay_year)
+                    ->where('pay_month',$pay_month)
+                    ->get();
+                $param = array($v,$pay_year,$pay_month);
 
-            if(count($payment_data) == 0)
-            {//帳單未建立
+                if(count($payment_data) == 0)
+                {//帳單未建立
+                    try {
+                        DB::transaction(function()use($param){
+                            //製作uid以及salt
+                            $date = $param[0]['pi_list_id'].$param[1].$param[2];
+                            $salt = substr(md5($date),5,5);
+                            $uid = md5($salt.$date);
+
+                            DB::table('payment_data')
+                                    ->insert(
+                                        array('pi_list_id'=>$param[0]['pi_list_id'],
+                                                'pay_year'=>$param[1],
+                                                'pay_month'=>$param[2],
+                                                'uid'=>$uid,
+                                                'salt'=>$salt,
+                                                'created_at'=>date('Y-m-d H:i:s'),
+                                                'remark' => ''
+                                        )
+                                    );
+                        });
+
+                    } catch (DBProcedureException $e) {
+                        $this->view['result'] = 'no';
+                        $this->view['msg'] = trans('message.error.database');
+                        $this->view['detail'][] = $e->getMessage();
+
+                        return $this->view;
+                    }
+                }
+                //寫入使用紀錄
                 try {
                     DB::transaction(function()use($param){
-                        //製作uid以及salt
-                        $date = $param[0]['pi_list_id'].$param[1].$param[2];
-                        $salt = substr(md5($date),5,5);
-                        $uid = md5($salt.$date);
-
-                        DB::table('payment_data')
+                        $reservation_log_id = DB::table('payment_reservation_log')
+                                ->select('payment_reservation_log_id')
+                                ->where('pi_list_id',$param[0]['pi_list_id'])
+                                ->where('pay_year',$param[1])
+                                ->where('pay_month',$param[2])
+                                ->orderBy('payment_reservation_log_id','desc')
+                                ->first();
+                        if(!isset($reservation_log_id['payment_reservation_log_id']))
+                        {
+                            $reservation_log_id = 0;
+                        }
+                        else
+                        {
+                            $reservation_log_id = $reservation_log_id['payment_reservation_log_id'];
+                        }
+                        $reservation_log_id = intval($reservation_log_id) +1;
+                        
+                        DB::table('payment_reservation_log')
                                 ->insert(
-                                    array('pi_list_id'=>$param[0]['pi_list_id'],
+                                    array('payment_reservation_log_id'=>$reservation_log_id,
+                                            'pi_list_id'=>$param[0]['pi_list_id'],
                                             'pay_year'=>$param[1],
                                             'pay_month'=>$param[2],
-                                            'uid'=>$uid,
-                                            'salt'=>$salt,
-                                            'created_at'=>date('Y-m-d H:i:s'),
-                                            'remark' => ''
+                                            'instrument_reservation_data_id'=>$param[0]['instrument_reservation_data_id'],
+                                            'create_date'=>$param[0]['create_date']
                                     )
                                 );
                     });
+                    //更新標注預約紀錄已寫入帳單
+                    DB::table('instrument_reservation_data')
+                        ->where('instrument_reservation_data_id',$param[0]['instrument_reservation_data_id'])
+                        ->where('create_date',$param[0]['create_date'])
+                        ->update(['in_bill'=>'1'
+                        ]);
+
 
                 } catch (DBProcedureException $e) {
                     $this->view['result'] = 'no';
@@ -76,52 +126,6 @@ class InstrumentPaymentController extends Controller {
 
                     return $this->view;
                 }
-            }
-            //寫入使用紀錄
-            try {
-                DB::transaction(function()use($param){
-                    $reservation_log_id = DB::table('payment_reservation_log')
-                            ->select('payment_reservation_log_id')
-                            ->where('pi_list_id',$param[0]['pi_list_id'])
-                            ->where('pay_year',$param[1])
-                            ->where('pay_month',$param[2])
-                            ->orderBy('payment_reservation_log_id','desc')
-                            ->first();
-                    if(!isset($reservation_log_id['payment_reservation_log_id']))
-                    {
-                        $reservation_log_id = 0;
-                    }
-                    else
-                    {
-                        $reservation_log_id = $reservation_log_id['payment_reservation_log_id'];
-                    }
-                    $reservation_log_id = intval($reservation_log_id) +1;
-                    
-                    DB::table('payment_reservation_log')
-                            ->insert(
-                                array('payment_reservation_log_id'=>$reservation_log_id,
-                                        'pi_list_id'=>$param[0]['pi_list_id'],
-                                        'pay_year'=>$param[1],
-                                        'pay_month'=>$param[2],
-                                        'instrument_reservation_data_id'=>$param[0]['instrument_reservation_data_id'],
-                                        'create_date'=>$param[0]['create_date']
-                                )
-                            );
-                });
-                //更新標注預約紀錄已寫入帳單
-                DB::table('instrument_reservation_data')
-                    ->where('instrument_reservation_data_id',$param[0]['instrument_reservation_data_id'])
-                    ->where('create_date',$param[0]['create_date'])
-                    ->update(['in_bill'=>'1'
-                    ]);
-
-
-            } catch (DBProcedureException $e) {
-                $this->view['result'] = 'no';
-                $this->view['msg'] = trans('message.error.database');
-                $this->view['detail'][] = $e->getMessage();
-
-                return $this->view;
             }
         }
 
