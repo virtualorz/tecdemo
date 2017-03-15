@@ -155,7 +155,7 @@ class InstrumentReservationController extends Controller {
 
     public function ajax_complete() {
         $validator = Validator::make(Request::all(), [
-                    'use_dt_start' => 'string|required',
+                    'use_dt_start' => 'string|required|before:use_dt_end',
                     'use_dt_end' => 'string|required',
         ]);
         if ($validator->fails()) {
@@ -166,94 +166,112 @@ class InstrumentReservationController extends Controller {
             return $this->view;
         }
 
-        $id = explode('_',Request::input('id'));
-        //使用費計算
-        $dataResult = DB::table('instrument_reservation_data')
-            ->select('instrument_reservation_data.instrument_id','member_data.type')
-            ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
-            ->where('instrument_reservation_data.instrument_reservation_data_id',$id[0])
-            ->where('instrument_reservation_data.create_date',$id[1])
-            ->get();
+        $year = intval(date('Y',strtotime(Request::input('use_dt_start'))));
+        $month = intval(date('m',strtotime(Request::input('use_dt_start'))));
+        //先檢查當月帳單是否已結算
+        $pay_count = DB::table('payment_data')
+        ->where('pay_year',$year)
+        ->where('pay_month',$month)
+        ->count();
+        if($pay_count == 0)
+        {
+            $id = explode('_',Request::input('id'));
+            //使用費計算
+            $dataResult = DB::table('instrument_reservation_data')
+                ->select('instrument_reservation_data.instrument_id','member_data.type')
+                ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
+                ->where('instrument_reservation_data.instrument_reservation_data_id',$id[0])
+                ->where('instrument_reservation_data.create_date',$id[1])
+                ->get();
+        
+            $instrument_dataResult = DB::table('instrument_rate')
+                ->select('rate_type','member_1','member_2','member_3','member_4','rate')
+                ->where('instrument_data_id',$dataResult[0]['instrument_id'])
+                ->whereDate('start_dt','<=',date('Y-m-d'))
+                ->orderBy('instrument_data_id','desc')
+                ->take(1)
+                ->get();
+            if(!isset($instrument_dataResult[0]['rate_type']))
+            {
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.validation');
+                $this->view['detail'] = array(trans('message.error.rate_error'));
 
-        $instrument_dataResult = DB::table('instrument_rate')
-            ->select('rate_type','member_1','member_2','member_3','member_4','rate')
-            ->where('instrument_data_id',$dataResult[0]['instrument_id'])
-            ->whereDate('start_dt','<=',date('Y-m-d'))
-            ->orderBy('instrument_data_id','desc')
-            ->take(1)
-            ->get();
-        if(!isset($instrument_dataResult[0]['rate_type']))
+                return $this->view;
+            }
+            $pay = 0;
+            $use_hour = (strtotime(Request::input('use_dt_end')) - strtotime(Request::input('use_dt_start')))/3600;
+            if($instrument_dataResult[0]['rate_type'] == 1)
+            {
+                $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']];
+            }
+            else if($instrument_dataResult[0]['rate_type'] == 2)
+            {
+                $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']]*$use_hour*2;
+            }
+            else if($instrument_dataResult[0]['rate_type'] == 3)
+            {
+                $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']]*$use_hour;
+            }
+
+            //耗材計算
+            $supplies = Request::input('supplies',array());
+            $count = Request::input('count',array());
+            $member_type = Request::input('member_type','1');
+            
+            $supplies_JOSN = array();
+            $supplies_total = 0;
+            foreach($supplies as $k=>$v)
+            {
+                $suppliesResult = DB::table('instrument_supplies')
+                        ->select('instrument_supplies.rate'.$member_type)
+                        ->where('id',$v)
+                        ->get();
+                if(isset($suppliesResult[0]['rate'.$member_type]))
+                {
+                    $supplies_total_tmp = $suppliesResult[0]['rate'.$member_type] * $count[$k];
+                    $supplies_total += $supplies_total_tmp;
+                    array_push($supplies_JOSN,array('id'=>$v,'count'=>$count[$k],'total'=>$supplies_total_tmp));
+                }
+            }
+
+            $param = array($pay,json_encode($supplies_JOSN),$supplies_total);
+            
+            try {
+                /*DB::transaction(function()use($param){
+                    $id = explode('_',Request::input('id'));
+                    
+                    DB::table('instrument_reservation_data')
+                        ->where('instrument_reservation_data_id',$id[0])
+                        ->where('create_date',$id[1])
+                        ->update(['updated_at'=>date('Y-m-d H:i:s'),
+                                    'use_dt_start'=>Request::input('use_dt_start'),
+                                    'use_dt_end'=>Request::input('use_dt_end'),
+                                    'attend_status'=>1,
+                                    'pay'=>$param[0],
+                                    'supplies_JOSN'=>$param[1],
+                                    'supplies_total'=>$param[2],
+                                    'remark'=>Request::input('remark'),
+                                    'update_admin_id'=>User::id()
+                        ]);
+
+                });*/
+
+            } catch (\PDOException $ex) {
+                DB::rollBack();
+
+                \Log::error($ex->getMessage());
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.database');
+                return $this->view;
+            }
+        }
+        else
         {
             $this->view['result'] = 'no';
             $this->view['msg'] = trans('message.error.validation');
-            $this->view['detail'] = array(trans('message.error.rate_error'));
+            $this->view['detail'] = array('當月份帳單已結算，請調整使用日期');
 
-            return $this->view;
-        }
-        $pay = 0;
-        $use_hour = (strtotime(Request::input('use_dt_end')) - strtotime(Request::input('use_dt_start')))/3600;
-        if($instrument_dataResult[0]['rate_type'] == 1)
-        {
-            $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']];
-        }
-        else if($instrument_dataResult[0]['rate_type'] == 2)
-        {
-            $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']]*$use_hour*2;
-        }
-        else if($instrument_dataResult[0]['rate_type'] == 3)
-        {
-            $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']]*$use_hour;
-        }
-
-        //耗材計算
-        $supplies = Request::input('supplies',array());
-        $count = Request::input('count',array());
-        $member_type = Request::input('member_type','1');
-        
-        $supplies_JOSN = array();
-        $supplies_total = 0;
-        foreach($supplies as $k=>$v)
-        {
-            $suppliesResult = DB::table('instrument_supplies')
-                    ->select('instrument_supplies.rate'.$member_type)
-                    ->where('id',$v)
-                    ->get();
-            if(isset($suppliesResult[0]['rate'.$member_type]))
-            {
-                $supplies_total_tmp = $suppliesResult[0]['rate'.$member_type] * $count[$k];
-                $supplies_total += $supplies_total_tmp;
-                array_push($supplies_JOSN,array('id'=>$v,'count'=>$count[$k],'total'=>$supplies_total_tmp));
-            }
-        }
-
-        $param = array($pay,json_encode($supplies_JOSN),$supplies_total);
-        
-        try {
-            DB::transaction(function()use($param){
-                $id = explode('_',Request::input('id'));
-                
-                DB::table('instrument_reservation_data')
-                    ->where('instrument_reservation_data_id',$id[0])
-                    ->where('create_date',$id[1])
-                    ->update(['updated_at'=>date('Y-m-d H:i:s'),
-                                'use_dt_start'=>Request::input('use_dt_start'),
-                                'use_dt_end'=>Request::input('use_dt_end'),
-                                'attend_status'=>1,
-                                'pay'=>$param[0],
-                                'supplies_JOSN'=>$param[1],
-                                'supplies_total'=>$param[2],
-                                'remark'=>Request::input('remark'),
-                                'update_admin_id'=>User::id()
-                    ]);
-
-            });
-
-        } catch (\PDOException $ex) {
-            DB::rollBack();
-
-            \Log::error($ex->getMessage());
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.database');
             return $this->view;
         }
 

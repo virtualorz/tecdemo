@@ -45,8 +45,8 @@ class MemberBillController extends Controller {
             
             foreach($reservation_data as $k=>$v)
             {
-                $pay_year = date("Y",strtotime($v['use_dt_start']));
-                $pay_month = date("m",strtotime($v['use_dt_start']));
+                $pay_year = intval(date("Y",strtotime($v['use_dt_start'])));
+                $pay_month = intval(date("m",strtotime($v['use_dt_start'])));
                 //確認本月帳單是否存在
                 $payment_data = DB::table('payment_data')
                     ->select('pi_list_id','pay_year','pay_month')

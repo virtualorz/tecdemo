@@ -140,10 +140,17 @@
                 dataType: "json",
                 data: {'id':$(this).attr('data-id'),'use_dt_start':$(this).attr('data-start'),'use_dt_end':$(this).attr('data-end'),'_token':csrf_token},
                 error: function (jqXHR, textStatus, errorThrown) {
-                    
+                    $.mbAlert().mbStyle('warning').mbTitleText(response.msg).mbContentHtml(response.detail[0]).mbOpen();
                 },
-                success: function (response) {
-                    location.reload();
+                success: function (response) {console.log(response);
+                    if(response.result == "no")
+                    {
+                        $.mbAlert().mbStyle('warning').mbTitleText(response.msg).mbContentHtml(response.detail[0]).mbOpen();
+                    }
+                    else
+                    {
+                        location.reload();
+                    }
                     
                 }
             }
@@ -156,10 +163,17 @@
                 dataType: "json",
                 data: {'id':$(this).attr('data-id'),'_token':csrf_token},
                 error: function (jqXHR, textStatus, errorThrown) {
-                    
+                    $.mbAlert().mbStyle('warning').mbTitleText(response.msg).mbContentHtml(response.detail[0]).mbOpen();
                 },
                 success: function (response) {
-                    location.reload();
+                    if(response.result == "no")
+                    {
+                        $.mbAlert().mbStyle('warning').mbTitleText(response.msg).mbContentHtml(response.detail[0]).mbOpen();
+                    }
+                    else
+                    {
+                        location.reload();
+                    }
                     
                 }
             }
@@ -173,10 +187,17 @@
                 dataType: "json",
                 data: {'id':$(this).attr('data-id'),'_token':csrf_token},
                 error: function (jqXHR, textStatus, errorThrown) {
-                    
+                    $.mbAlert().mbStyle('warning').mbTitleText(response.msg).mbContentHtml(response.detail[0]).mbOpen();
                 },
                 success: function (response) {
-                    location.reload();
+                    if(response.result == "no")
+                    {
+                        $.mbAlert().mbStyle('warning').mbTitleText(response.msg).mbContentHtml(response.detail[0]).mbOpen();
+                    }
+                    else
+                    {
+                        location.reload();
+                    }
                     
                 }
             }

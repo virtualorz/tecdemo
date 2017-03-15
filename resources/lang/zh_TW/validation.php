@@ -691,8 +691,13 @@ return [
         #ts_user_tabs
         'ts_user_tabs-name' => '名稱',
         'ts_user_tabs-content' => '編輯器內容',
+        #
         #time
         'time' => '時數',
+        #
+        #use_dt_start
+        'use_dt_start' => '開始時間',
+        'use_dt_end' => '結束時間',
         #
         #video
         'video_date' => '影片日期',
