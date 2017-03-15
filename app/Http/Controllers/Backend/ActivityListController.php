@@ -177,20 +177,41 @@ class ActivityListController extends Controller {
 
     public function ajax_add() {
         $invalid = [];
-        $validator = Validator::make(Request::all(), [
-                    'activity_id' => 'string|required|max:64',
-                    'start_dt' => 'date|required',
-                    'activity_name' => 'string|required|max:32',
-                    'activity_type_id' => 'integer|required',
-                    'relative_plateform' => 'array|required',
-                    'level' => 'integer|required',
-                    'time' => 'integer|required',
-                    'score' => 'integer|required',
-                    'pass_type' => 'integer|required',
-                    'pass_condition' => 'string|required|max:64',
-                    'content' => 'string|required',
-                    'enable' => 'integer|required',
-        ]);
+        if(Request::input('end_dt') != "")
+        {
+            $validator = Validator::make(Request::all(), [
+                        'activity_id' => 'string|required|max:64',
+                        'start_dt' => 'date|required|before:end_dt',
+                        'activity_name' => 'string|required|max:32',
+                        'activity_type_id' => 'integer|required',
+                        'relative_plateform' => 'array|required',
+                        'level' => 'integer|required',
+                        'time' => 'integer|required',
+                        'score' => 'integer|required',
+                        'pass_type' => 'integer|required',
+                        'pass_condition' => 'string|required|max:64',
+                        'content' => 'string|required',
+                        'enable' => 'integer|required',
+            ]);
+        }
+        else
+        {
+            $validator = Validator::make(Request::all(), [
+                        'activity_id' => 'string|required|max:64',
+                        'start_dt' => 'date|required',
+                        'activity_name' => 'string|required|max:32',
+                        'activity_type_id' => 'integer|required',
+                        'relative_plateform' => 'array|required',
+                        'level' => 'integer|required',
+                        'time' => 'integer|required',
+                        'score' => 'integer|required',
+                        'pass_type' => 'integer|required',
+                        'pass_condition' => 'string|required|max:64',
+                        'content' => 'string|required',
+                        'enable' => 'integer|required',
+            ]);
+        }
+
         if ($validator->fails()) {
             $invalid[] = $validator->errors();
         }
@@ -205,6 +226,14 @@ class ActivityListController extends Controller {
 
         try {
             DB::transaction(function()use($content){
+                if(Request::input('end_dt') != "")
+                {
+                    $end_dt = Request::input('end_dt');
+                }
+                else
+                {
+                    $end_dt = NULL;
+                }
                 $id = DB::table('activity_data')
                         ->insertGetId(
                             array('uid'=>'-',
@@ -213,7 +242,7 @@ class ActivityListController extends Controller {
                                     'updated_at'=>date('Y-m-d H:i:s'),
                                     'activity_id'=>Request::input('activity_id'),
                                     'start_dt'=>Request::input('start_dt'),
-                                    'end_dt'=>Request::input('end_dt'),
+                                    'end_dt'=>$end_dt,
                                     'activity_name'=>Request::input('activity_name'),
                                     'activity_type_id'=>Request::input('activity_type_id'),
                                     'relative_plateform'=>json_encode(Request::input('relative_plateform')),
@@ -290,20 +319,41 @@ class ActivityListController extends Controller {
     }
 
     public function ajax_edit() {
-        $validator = Validator::make(Request::all(), [
-                    'activity_id' => 'string|required|max:64',
-                    'start_dt' => 'date|required',
-                    'activity_name' => 'string|required|max:32',
-                    'activity_type_id' => 'integer|required',
-                    'relative_plateform' => 'array|required',
-                    'level' => 'integer|required',
-                    'time' => 'integer|required',
-                    'score' => 'integer|required',
-                    'pass_type' => 'integer|required',
-                    'pass_condition' => 'string|required|max:64',
-                    'content' => 'string|required',
-                    'enable' => 'integer|required',
-        ]);
+        if(Request::input('end_dt') != "")
+        {
+            $validator = Validator::make(Request::all(), [
+                        'activity_id' => 'string|required|max:64',
+                        'start_dt' => 'date|required|before:end_dt',
+                        'activity_name' => 'string|required|max:32',
+                        'activity_type_id' => 'integer|required',
+                        'relative_plateform' => 'array|required',
+                        'level' => 'integer|required',
+                        'time' => 'integer|required',
+                        'score' => 'integer|required',
+                        'pass_type' => 'integer|required',
+                        'pass_condition' => 'string|required|max:64',
+                        'content' => 'string|required',
+                        'enable' => 'integer|required',
+            ]);
+        }
+        else
+        {
+            $validator = Validator::make(Request::all(), [
+                        'activity_id' => 'string|required|max:64',
+                        'start_dt' => 'date|required',
+                        'activity_name' => 'string|required|max:32',
+                        'activity_type_id' => 'integer|required',
+                        'relative_plateform' => 'array|required',
+                        'level' => 'integer|required',
+                        'time' => 'integer|required',
+                        'score' => 'integer|required',
+                        'pass_type' => 'integer|required',
+                        'pass_condition' => 'string|required|max:64',
+                        'content' => 'string|required',
+                        'enable' => 'integer|required',
+            ]);
+        }
+
         if ($validator->fails()) {
             $this->view['result'] = 'no';
             $this->view['msg'] = trans('message.error.validation');
@@ -318,12 +368,20 @@ class ActivityListController extends Controller {
                 $result_before = DB::table('activity_data')
                                     ->where('id',Request::input('id'))
                                     ->get();
+                if(Request::input('end_dt') != "")
+                {
+                    $end_dt = Request::input('end_dt');
+                }
+                else
+                {
+                    $end_dt = NULL;
+                }
                 DB::table('activity_data')
                     ->where('id',Request::input('id'))
                     ->update(['updated_at'=>date('Y-m-d H:i:s'),
                                 'activity_id'=>Request::input('activity_id'),
                                 'start_dt'=>Request::input('start_dt'),
-                                'end_dt'=>Request::input('end_dt'),
+                                'end_dt'=>$end_dt,
                                 'activity_name'=>Request::input('activity_name'),
                                 'activity_type_id'=>Request::input('activity_type_id'),
                                 'relative_plateform'=>json_encode(Request::input('relative_plateform')),
