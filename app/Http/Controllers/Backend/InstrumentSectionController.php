@@ -78,7 +78,7 @@ class InstrumentSectionController extends Controller {
         $invalid = [];
         $validator = Validator::make(Request::all(), [
                     'section_type' => 'integer|required',
-                    'start_time' => 'string|required',
+                    'start_time' => 'string|required|before:end_time',
                     'end_time' => 'string|required',
                     'enable' => 'integer|required',
         ]);
@@ -132,7 +132,7 @@ class InstrumentSectionController extends Controller {
     public function ajax_edit() {
         $validator = Validator::make(Request::all(), [
                     'section_type' => 'integer|required',
-                    'start_time' => 'string|required',
+                    'start_time' => 'string|required|before:end_time',
                     'end_time' => 'string|required',
                     'enable' => 'integer|required',
         ]);
