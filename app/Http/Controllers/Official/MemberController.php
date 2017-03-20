@@ -15,6 +15,7 @@ use User;
 use Validator;
 use PDF;
 use Cache;
+use Session;
 
 class MemberController extends Controller {
 
@@ -177,7 +178,7 @@ class MemberController extends Controller {
     }
 
     public function print_register_data() {
-        $memberResult = Cache::get('cache_register',array());
+        $memberResult = Session::get('cache_register',array());
         if(count($memberResult) !=0)
         {
             $organize = DB::table('system_organize')

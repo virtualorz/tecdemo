@@ -15,8 +15,7 @@ use Validator;
 use Log;
 use Sitemap;
 use SitemapAccess;
-use Cache;
-use Carbon\Carbon;
+use Session;
 
 class RegisterController extends Controller {
 
@@ -112,7 +111,6 @@ class RegisterController extends Controller {
         }
 
         //快取註冊資料
-        $expiresAt = Carbon::now()->addMinutes(20);
         $register_data = array('created_at'=>date('Y-m-d H:i:s'),
                                     'name'=>Request::input('name'),
                                     'organize_id'=>Request::input('organize'),
@@ -125,7 +123,7 @@ class RegisterController extends Controller {
                                     'lab_phone'=>Request::input('lab_phone'),
                                     'enable'=>0
                             );
-        Cache::put('cache_register', $register_data, $expiresAt);
+        Session::set('cache_register', $register_data);
 
         $this->view['msg'] = trans('message.success.register');
         return $this->view;
