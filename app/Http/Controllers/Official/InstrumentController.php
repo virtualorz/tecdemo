@@ -50,9 +50,14 @@ class InstrumentController extends Controller {
                                             'instrument_data.name',
                                             'instrument_data.function',
                                             'instrument_site.name as site_name',
+                                            'instrument_rate.start_dt',
                                             'instrument_admin.name as admin_name')
                             ->leftJoin('instrument_type','instrument_data.instrument_type_id','=','instrument_type.id')
                             ->leftJoin('instrument_site','instrument_data.instrument_site_id','=','instrument_site.id')
+                            ->leftJoin('instrument_rate',function($join){
+                                $join->on('instrument_rate.instrument_data_id','=','instrument_data.id')
+                                    ->where('instrument_rate.start_dt','<=',date('Y-m-d'));
+                            })
                             ->leftJoin('instrument_admin','instrument_admin.instrument_data_id','=','instrument_data.id')
                             ->groupBy('instrument_data.id')
                             ->orderBy('type_name','asc')
@@ -70,9 +75,14 @@ class InstrumentController extends Controller {
                                             'instrument_data.function',
                                             'instrument_site.name as site_name',
                                             'instrument_data.instrument_type_id',
+                                            'instrument_rate.start_dt',
                                             'instrument_admin.name as admin_name')
                             ->leftJoin('instrument_type','instrument_data.instrument_type_id','=','instrument_type.id')
                             ->leftJoin('instrument_site','instrument_data.instrument_site_id','=','instrument_site.id')
+                            ->leftJoin('instrument_rate',function($join){
+                                $join->on('instrument_rate.instrument_data_id','=','instrument_data.id')
+                                    ->where('instrument_rate.start_dt','<=',date('Y-m-d'));
+                            })
                             ->leftJoin('instrument_admin','instrument_admin.instrument_data_id','=','instrument_data.id')
                             ->groupBy('instrument_data.id')
                             ->orderBy('type_name','asc')

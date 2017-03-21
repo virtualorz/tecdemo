@@ -55,10 +55,16 @@
 										<tr>
                                           <td>{{ $v['type_name'] }}</td>
 										  <td>{{ $v['instrument_id'] }}</td>
-										  <td><a href="{{ asset('instrument/reservation/id-'.$v['uid'].'-'.$v['salt']) }}">{{ $v['name'] }}</a></td> 
-											<td>{{ $v['function'] }}</td>
-											<td>{{ $v['admin_name'] }}</td>
-											<td class="text-center">{{ $v['site_name'] }}</td>
+										  <td>
+										  	@if( $v['start_dt'] != null )
+										  		<a href="{{ asset('instrument/reservation/id-'.$v['uid'].'-'.$v['salt']) }}">{{ $v['name'] }}</a>
+											@else
+												{{ $v['name'] }}
+											@endif
+										  </td> 
+										  <td>{{ $v['function'] }}</td>
+										  <td>{{ $v['admin_name'] }}</td>
+										  <td class="text-center">{{ $v['site_name'] }}</td>
 										</tr>
                                         @endforeach
 									</tbody> 
@@ -89,10 +95,16 @@
 										<tr>
 										  <td>{{ $v1['type_name'] }}</td>
 										  <td>{{ $v1['instrument_id'] }}</td>
-										  <td><a href="{{ asset('instrument/reservation/id-'.$v1['uid'].'-'.$v1['salt']) }}">{{ $v1['name'] }}</a></td> 
-											<td>{{ $v1['function'] }}</td>
-											<td>{{ $v1['admin_name'] }}</td>
-											<td class="text-center">{{ $v1['site_name'] }}</td>
+										  <td>
+										  	@if( $v1['start_dt'] != null )
+										  		<a href="{{ asset('instrument/reservation/id-'.$v1['uid'].'-'.$v1['salt']) }}">{{ $v1['name'] }}</a>
+											@else
+												{{ $v1['name'] }}
+											@endif
+										  </td> 
+										  <td>{{ $v1['function'] }}</td>
+										  <td>{{ $v1['admin_name'] }}</td>
+										  <td class="text-center">{{ $v1['site_name'] }}</td>
 										</tr>
                                          @endforeach
 
