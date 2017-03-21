@@ -92,7 +92,8 @@
                             <th width="15%">{{ trans('validation.attributes.instrument_id') }}</th>
                             <th width="15%">{{ trans('validation.attributes.name') }}</th>
                             <th width="15%">{{ trans('validation.attributes.open_section') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.create_admin_id') }}</th>
+                            <th width="7%">{{ trans('validation.attributes.rate_status') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.create_admin_id') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
@@ -106,6 +107,17 @@
                             <td>{{ $v['instrument_id'] }}</td>
                             <td>{{ $v['name'] }}</td>
                             <td>{{ trans('enum.section.'.explode('_',$v['open_section'])[0]) }}/{{ trans('enum.section.'.explode('_',$v['open_section'])[1]) }}</td>
+                            <td>
+                                @if($v['start_dt'] == null)
+                                {{ trans('enum.rate_status.0') }}
+                                @else
+                                    @if(strtotime($v['start_dt']) > strtotime(date('Y-m-d')))
+                                    {{ trans('enum.rate_status.2') }}
+                                    @else
+                                    {{ trans('enum.rate_status.1') }}
+                                    @endif
+                                @endif
+                            </td>
                             <td>{{ $v['created_admin_name'] }}</td>
                             <td>
                                 {!! ViewHelper::button('rate', ['id' => $v['id']]) !!}

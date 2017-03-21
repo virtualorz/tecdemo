@@ -587,6 +587,7 @@ return [
         'rate4' => '生科院內單價',
         'rate_type' => '計價方式',
         'rate_multi' => '計價倍率',
+        'rate_status' => '費率狀態',
         #
         #receive
         'receive' => '收據代碼',

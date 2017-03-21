@@ -59,8 +59,10 @@ class InstrumentController extends Controller {
                                             'instrument_data.instrument_id',
                                             'instrument_data.name',
                                             'instrument_data.open_section',
+                                            'instrument_rate.start_dt',
                                             'member_admin.name as created_admin_name')
                                     ->leftJoin('instrument_type','instrument_data.instrument_type_id','=','instrument_type.id')
+                                    ->leftJoin('instrument_rate','instrument_rate.instrument_data_id','=','instrument_data.id')
                                     ->leftJoin('member_admin','instrument_data.create_admin_id','=','member_admin.id')
                                     ->groupBy('instrument_data.id')
                                     ->orderBy('id','desc')

@@ -722,7 +722,7 @@ return [
                 '_prop' => [
                     'permission' => SitemapAccess::ACCESS_REQUIRED,
                     'menu' => true,
-                    'icon_class' => 'glyphicon glyphicon-time',
+                    'icon_class' => 'fa fa-clock-o',
                     'route' => [
                         'method' => 'get',
                         'param' => '{optional?}',
