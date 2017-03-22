@@ -51,6 +51,7 @@ class ActivityListController extends Controller {
                                     ->leftJoin('activity_reservation_data', function ($join) {
                                         $join->on('activity_reservation_data.activity_id', '=', 'activity_data.id')->where('activity_reservation_data.reservation_status', '=', 1);
                                     })
+                                    ->leftJoin('activity_instrument','activity_instrument.activity_id','=','activity_data.id')
                                     ->groupBy('activity_data.id')
                                     ->orderBy('id','desc')
                                     ->paginate(Config::get('pagination.items'));
