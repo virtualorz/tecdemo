@@ -37,7 +37,7 @@ class ActivityListController extends Controller {
         }
         if($instrument != "")
         {
-            $listResult->where('activity_instrument.activity_instrument_id','=',$instrument);
+            $listResult->where('activity_instrument.instrument_id','=',$instrument);
         }
 
         $listResult = $listResult->select('activity_data.id',
