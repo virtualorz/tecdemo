@@ -188,7 +188,7 @@ class InstrumentReservationController extends Controller {
                 ->select('rate_type','member_1','member_2','member_3','member_4','rate')
                 ->where('instrument_data_id',$dataResult[0]['instrument_id'])
                 ->whereDate('start_dt','<=',date('Y-m-d'))
-                ->orderBy('instrument_data_id','desc')
+                ->orderBy('start_dt','desc')
                 ->take(1)
                 ->get();
             if(!isset($instrument_dataResult[0]['rate_type']))
@@ -200,17 +200,19 @@ class InstrumentReservationController extends Controller {
                 return $this->view;
             }
             $pay = 0;
-            $use_hour = (strtotime(Request::input('use_dt_end')) - strtotime(Request::input('use_dt_start')))/3600;
+            $use_minute = ceil((strtotime(Request::input('use_dt_end')) - strtotime(Request::input('use_dt_start')))/60);
             if($instrument_dataResult[0]['rate_type'] == 1)
             {
                 $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']];
             }
             else if($instrument_dataResult[0]['rate_type'] == 2)
             {
-                $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']]*$use_hour*2;
+                $use_helf_hour = ceil($use_minute/30);
+                $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']]*$use_helf_hour;
             }
             else if($instrument_dataResult[0]['rate_type'] == 3)
             {
+                $use_hour = ceil($use_minute/60);
                 $pay = $instrument_dataResult[0]['member_'.$dataResult[0]['type']]*$use_hour;
             }
 
@@ -238,7 +240,7 @@ class InstrumentReservationController extends Controller {
             $param = array($pay,json_encode($supplies_JOSN),$supplies_total);
             
             try {
-                /*DB::transaction(function()use($param){
+                DB::transaction(function()use($param){
                     $id = explode('_',Request::input('id'));
                     
                     DB::table('instrument_reservation_data')
@@ -255,7 +257,7 @@ class InstrumentReservationController extends Controller {
                                     'update_admin_id'=>User::id()
                         ]);
 
-                });*/
+                });
 
             } catch (\PDOException $ex) {
                 DB::rollBack();
