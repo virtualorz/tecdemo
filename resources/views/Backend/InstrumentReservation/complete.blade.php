@@ -170,7 +170,7 @@
             $(this).parent().parent().remove();
         });
         $("#add_supplies").click(function(){
-            if($("#data-supplies").val() != "" && $("#data-count").val() != "")
+            if($("#data-supplies").val() != "" && $("#data-count").val() != "" && parseInt($("#data-count").val()) >0)
             {
                 $("#supplies_add").find(".dataTables_empty").parent().remove();
                 var html ="<tr><td>"+$("#data-supplies :selected").text()+"<input type='hidden' class='supplies' name='supplies[]' value='"+$("#data-supplies").val()+"'></td>";
@@ -188,7 +188,14 @@
         $(".supplies_change").change(function(){
             if($("#data-supplies").val() != "" && $("#data-count").val() != "")
             {
-                $("#pay_supplies").html($("#data-supplies :selected").attr('data-rate'+member_type)*$("#data-count").val().toString());
+                if(parseInt($("#data-count").val()) <=0)
+                {
+                    $("#pay_supplies").html("{{ trans('message.error.wrong_number') }}");
+                }
+                else
+                {
+                    $("#pay_supplies").html($("#data-supplies :selected").attr('data-rate'+member_type)*$("#data-count").val().toString());
+                }
             }
         });
     });
