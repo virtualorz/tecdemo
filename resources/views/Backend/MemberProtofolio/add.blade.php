@@ -65,7 +65,7 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.email') }}</th>
                                 <td>
-                                    <input type="text" name="email" id="data-email" class="form-control required">
+                                    <input type="email" name="email" id="data-email" class="form-control required">
                                 </td>
                             </tr>
                             <tr>
@@ -83,7 +83,7 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.phone') }}</th>
                                 <td>
-                                    <input type="text" name="phone" id="data-phone" class="form-control required">
+                                    <input type="number" name="phone" id="data-phone" class="form-control required">
                                 </td>
                             </tr>
                             <tr>
@@ -97,7 +97,7 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.lab_phone') }}</th>
                                 <td>
-                                    <input type="text" name="lab_phone" id="data-lab_phone" class="form-control required">
+                                    <input type="number" name="lab_phone" id="data-lab_phone" class="form-control required">
                                 </td>
                             </tr>
                             <tr>
