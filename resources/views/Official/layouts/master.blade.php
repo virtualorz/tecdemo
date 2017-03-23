@@ -21,6 +21,7 @@
     <link href="{{asset('assets/official/css/page.css')}}" rel="stylesheet">
     <link href="{{asset('assets/official/css/qa.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('plugins/btseditor/btseditor_content.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('plugins/jquery_timepicker/jquery.timepicker.css')}}">
     
     <!-- Hexagons CSS -->
 	<link href="{{asset('assets/official/css/hexagons.css')}}" rel="stylesheet" type="text/css">
@@ -113,6 +114,7 @@
     <script src="{{asset('assets/official/js/qa.js')}}"></script>
 
     <script src="{{asset('assets/official/js/jquery.blockUI.js')}}"></script>
+    <script type="text/javascript" src="{{asset('plugins/jquery_timepicker/jquery.timepicker.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('/assets/official/js/global.js')}}"></script>
     {!! ViewHelper::plugin()->renderJs() !!}
     <script type="text/javascript">

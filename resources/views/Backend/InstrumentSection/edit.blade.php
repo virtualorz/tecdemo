@@ -39,13 +39,13 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.start_time') }}</th>
                                 <td>
-                                    <input type="time" name="start_time" id="data-start_time" class="form-control required" value="{{ $dataResult['start_time'] }}">
+                                    <input type="text" name="start_time" id="data-start_time" class="form-control required timepicker" value="{{ $dataResult['start_time'] }}">
                                 </td>
                             </tr>
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.end_time') }}</th>
                                 <td>
-                                    <input type="time" name="end_time" id="data-end_time" class="form-control required" value="{{ $dataResult['end_time'] }}">
+                                    <input type="text" name="end_time" id="data-end_time" class="form-control required timepicker" value="{{ $dataResult['end_time'] }}">
                                 </td>
                             </tr>
                             <tr>
@@ -91,6 +91,10 @@
 
     $(document).ready(function () {
         initValidation();
+        $(".timepicker").timepicker({
+			'timeFormat': 'h:i A',
+			'step': 10
+		});
     });
     
     function initValidation() {

@@ -17,6 +17,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('joli/css/theme-white.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('joli/css/style.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/btseditor/btseditor_content.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('plugins/jquery_timepicker/jquery.timepicker.css')}}">
 
         <script type="text/javascript">
             var urlHome = {!! json_encode(Sitemap::getUrl("backend")) !!};
@@ -117,6 +118,7 @@
         <script type="text/javascript" src="{{asset('/joli/js/settings.js')}}"></script> 
         <script type="text/javascript" src="{{asset('/joli/js/plugins.js')}}"></script> 
         <script type="text/javascript" src="{{asset('/joli/js/actions.js')}}"></script> 
+        <script type="text/javascript" src="{{asset('plugins/jquery_timepicker/jquery.timepicker.min.js')}}"></script>
         @yield('script')
         <script type="text/javascript">
             $(document).ready(function () {
