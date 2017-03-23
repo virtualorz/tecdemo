@@ -153,7 +153,6 @@
 {!! ViewHelper::plugin()->renderJs() !!}
 <script type="text/javascript">
     $(document).ready(function () {
-        
 
         initValidation();
         $(".submit_btn").click(function(e){

@@ -49,7 +49,7 @@
                     var urlUploaderDelete = {!! json_encode(Sitemap::getUrl("Official.upload.delete")) !!};
                     var urlUpload = {!! json_encode(FileUpload::getRootUrl()) !!};
                     var urlUploadABS = {!! json_encode(FileUpload::getRootUrlABS()) !!};
-                    var urlLogin = {!! json_encode(Sitemap::getUrl("Official.login")) !!};
+                    var urlLogin = {!! json_encode(Sitemap::getUrl("official.login")) !!};
                     var urlBase = {!! json_encode($_urlBase) !!};
                     var urlBasePath = {!! json_encode($_urlBasePath) !!};
                     var urlLast = {!! json_encode($_urlLast) !!};
