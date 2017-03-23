@@ -74,10 +74,9 @@ class IndexAnnounceController extends Controller {
     ##
 
     public function ajax_add() {
-        $invalid = [];
+        $invalid = [];log::error(Request::all());
         $validator = Validator::make(Request::all(), [
                     'title' => 'string|required|max:32',
-                    'content' => 'string|required',
                     'enable' => 'integer|required',
         ]);
         if ($validator->fails()) {
@@ -87,6 +86,14 @@ class IndexAnnounceController extends Controller {
             $this->view['result'] = 'no';
             $this->view['msg'] = trans('message.error.validation');
             $this->view['detail'] = $invalid;
+            return $this->view;
+        }
+
+        if(count(json_decode(Request::input('content'))) == 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array(trans('message.error.content_null'));
             return $this->view;
         }
 
@@ -138,6 +145,14 @@ class IndexAnnounceController extends Controller {
             $this->view['msg'] = trans('message.error.validation');
             $this->view['detail'] = $validator->errors();
 
+            return $this->view;
+        }
+
+        if(count(json_decode(Request::input('content'))) == 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array(trans('message.error.content_null'));
             return $this->view;
         }
 
