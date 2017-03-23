@@ -90,6 +90,14 @@ class TCDataController extends Controller {
             return $this->view;
         }
 
+        if(count(json_decode(Request::input('content'))) == 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array(trans('message.error.content_null'));
+            return $this->view;
+        }
+
         $content = FileUpload::moveEditor(Request::input('content'));
         try {
             DB::transaction(function()use($content){
@@ -138,6 +146,14 @@ class TCDataController extends Controller {
             $this->view['msg'] = trans('message.error.validation');
             $this->view['detail'] = $validator->errors();
 
+            return $this->view;
+        }
+
+        if(count(json_decode(Request::input('content'))) == 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array(trans('message.error.content_null'));
             return $this->view;
         }
 

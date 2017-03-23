@@ -27,19 +27,19 @@
                                 <td>{{ $dataResult['created_at'] }}</td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.name') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.name') }}</th>
                                 <td>
                                     <input type="text" name="name" id="data-name" class="form-control required" value="{{ $dataResult['name'] }}">
                                 </td>
                             </tr>   
                             <tr>
-                                <th>{{ trans('validation.attributes.content') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.content') }}</th>
                                 <td>
                                     <div name="content" id="content" class="btseditor" data-name="content" data-value="{{ $dataResult['content'] }}"></div>
                                 </td>
                             </tr> 
                             <tr>
-                                <th>{{ trans('validation.attributes.enable') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.enable') }}</th>
                                 <td>
                                     <label class="check"><input type="radio" name="enable" id="data_enable_1" class="iradio required" value="1" @if($dataResult['enable'] == 1) checked @endif /> {{ trans('enum.enable.1') }}</label>
                                     <label class="check"><input type="radio" name="enable" id="data_enable_0" class="iradio required" value="0" @if($dataResult['enable'] == 0) checked @endif /> {{ trans('enum.enable.0') }}</label> 

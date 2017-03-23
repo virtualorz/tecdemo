@@ -77,6 +77,7 @@ class IndexAnnounceController extends Controller {
         $invalid = [];log::error(Request::all());
         $validator = Validator::make(Request::all(), [
                     'title' => 'string|required|max:32',
+                    'content' => 'string|required',
                     'enable' => 'integer|required',
         ]);
         if ($validator->fails()) {
