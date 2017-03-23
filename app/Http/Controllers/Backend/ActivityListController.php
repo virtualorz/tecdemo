@@ -47,10 +47,8 @@ class ActivityListController extends Controller {
                                             'activity_data.activity_name',
                                             'activity_data.time',
                                             'activity_data.enable',
-                                            DB::raw('count(activity_reservation_data.member_id) as reservation_count'))
-                                    ->leftJoin('activity_reservation_data', function ($join) {
-                                        $join->on('activity_reservation_data.activity_id', '=', 'activity_data.id')->where('activity_reservation_data.reservation_status', '=', 1);
-                                    })
+                                            DB::raw('(select count(activity_reservation_data.member_id) as reservation_count from activity_reservation_data where activity_reservation_data.activity_id = activity_data.id) as reservation_count'))
+                                    
                                     ->leftJoin('activity_instrument','activity_instrument.activity_id','=','activity_data.id')
                                     ->groupBy('activity_data.id')
                                     ->orderBy('id','desc')
