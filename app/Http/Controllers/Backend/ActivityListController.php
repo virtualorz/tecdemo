@@ -174,7 +174,7 @@ class ActivityListController extends Controller {
 
     ##
 
-    public function ajax_add() {
+    public function ajax_add() {log::error(Request::all());
         $invalid = [];
         if(Request::input('end_dt') != "")
         {
@@ -184,6 +184,7 @@ class ActivityListController extends Controller {
                         'activity_name' => 'string|required|max:32',
                         'activity_type_id' => 'integer|required',
                         'relative_plateform' => 'array|required',
+                        'instrument_array' => 'array|required',
                         'level' => 'integer|required',
                         'time' => 'integer|required',
                         'score' => 'integer|required',
@@ -201,6 +202,7 @@ class ActivityListController extends Controller {
                         'activity_name' => 'string|required|max:32',
                         'activity_type_id' => 'integer|required',
                         'relative_plateform' => 'array|required',
+                        'instrument_array' => 'array|required',
                         'level' => 'integer|required',
                         'time' => 'integer|required',
                         'score' => 'integer|required',
@@ -218,6 +220,14 @@ class ActivityListController extends Controller {
             $this->view['result'] = 'no';
             $this->view['msg'] = trans('message.error.validation');
             $this->view['detail'] = $invalid;
+            return $this->view;
+        }
+
+        if(count(json_decode(Request::input('content'))) == 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array(trans('message.error.activity_content_null'));
             return $this->view;
         }
 
@@ -275,8 +285,8 @@ class ActivityListController extends Controller {
                     'data_after' => isset($result_after[0]) ? $result_after[0] : [],
                     'admin_id' => User::id()
                 ]);
-                $instrument = Request::input('instrument');
-                $instrument_permission = Request::input('instrument_permission');
+                $instrument = Request::input('instrument_array');
+                $instrument_permission = Request::input('instrument_permission_array');
                 foreach($instrument as $k=>$v)
                 {
                     $activity_instrument = DB::table('activity_instrument')
@@ -326,6 +336,7 @@ class ActivityListController extends Controller {
                         'activity_name' => 'string|required|max:32',
                         'activity_type_id' => 'integer|required',
                         'relative_plateform' => 'array|required',
+                        'instrument_array' => 'array|required',
                         'level' => 'integer|required',
                         'time' => 'integer|required',
                         'score' => 'integer|required',
@@ -343,6 +354,7 @@ class ActivityListController extends Controller {
                         'activity_name' => 'string|required|max:32',
                         'activity_type_id' => 'integer|required',
                         'relative_plateform' => 'array|required',
+                        'instrument_array' => 'array|required',
                         'level' => 'integer|required',
                         'time' => 'integer|required',
                         'score' => 'integer|required',
@@ -358,6 +370,14 @@ class ActivityListController extends Controller {
             $this->view['msg'] = trans('message.error.validation');
             $this->view['detail'] = $validator->errors();
 
+            return $this->view;
+        }
+
+        if(count(json_decode(Request::input('content'))) == 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array(trans('message.error.activity_content_null'));
             return $this->view;
         }
 
@@ -408,8 +428,8 @@ class ActivityListController extends Controller {
                 DB::table('activity_instrument')
                     ->where('activity_id',Request::input('id'))
                     ->delete();
-                $instrument = Request::input('instrument');
-                $instrument_permission = Request::input('instrument_permission');
+                $instrument = Request::input('instrument_array');
+                $instrument_permission = Request::input('instrument_permission_array');
                 foreach($instrument as $k=>$v)
                 {
                     $activity_instrument = DB::table('activity_instrument')

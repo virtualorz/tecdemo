@@ -74,7 +74,7 @@ class IndexAnnounceController extends Controller {
     ##
 
     public function ajax_add() {
-        $invalid = [];log::error(Request::all());
+        $invalid = [];
         $validator = Validator::make(Request::all(), [
                     'title' => 'string|required|max:32',
                     'content' => 'string|required',

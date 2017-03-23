@@ -169,8 +169,8 @@
                                         <tbody id="instrument_add">
                                             @foreach($activity_instrumentResult as $k=>$v)
                                             <tr class='instrument_{{$v["instrument_id"]}}_{{$v["permission_id"]}}'>
-                                                <td>{{$v["instrument_name"]}}<input type='hidden' class='instrument' name='instrument[]' value='{{$v["instrument_id"]}}' data-plateform='{{$v["instrument_type_id"]}}'></td>
-                                                <td>{{$permission[$v["permission_id"]]}}<input type='hidden' class='instrument_permission' name='instrument_permission[]' value='{{$v["permission_id"]}}'></td>
+                                                <td>{{$v["instrument_name"]}}<input type='hidden' class='instrument' name='instrument_array[]' value='{{$v["instrument_id"]}}' data-plateform='{{$v["instrument_type_id"]}}'></td>
+                                                <td>{{$permission[$v["permission_id"]]}}<input type='hidden' class='instrument_permission' name='instrument_permission_array[]' value='{{$v["permission_id"]}}'></td>
                                                 <td><input type='button' class='btn btn-default del_instrument' value='刪除'></td>
                                             </tr>
                                             @endforeach
@@ -311,7 +311,7 @@
         $("#add_instrument").click(function(){
             if(typeof $("#instrument_add .instrument_"+$("#data-instrument").val()+"_"+$("#data-permission").val()).html() == "undefined" && $("#data-instrument").val()!= "" && $("#data-permission").val()!= "")
             {
-                var html="<tr class='instrument_"+$("#data-instrument").val()+"_"+$("#data-permission").val()+"'><td>"+$("#data-instrument :selected").text()+"<input type='hidden' class='instrument' name='instrument[]' value='"+$("#data-instrument").val()+"' data-plateform='"+$("#data-instrument :selected").attr('data-plateform')+"'></td><td>"+$("#data-permission :selected").text()+"<input type='hidden' class='instrument_permission' name='instrument_permission[]' value='"+$("#data-permission").val()+"'></td><td><input type='button' class='btn btn-default del_instrument' value='刪除'></td></tr>";
+                var html="<tr class='instrument_"+$("#data-instrument").val()+"_"+$("#data-permission").val()+"'><td>"+$("#data-instrument :selected").text()+"<input type='hidden' class='instrument' name='instrument_array[]' value='"+$("#data-instrument").val()+"' data-plateform='"+$("#data-instrument :selected").attr('data-plateform')+"'></td><td>"+$("#data-permission :selected").text()+"<input type='hidden' class='instrument_permission' name='instrument_permission_array[]' value='"+$("#data-permission").val()+"'></td><td><input type='button' class='btn btn-default del_instrument' value='刪除'></td></tr>";
                 $("#instrument_add").find(".dataTables_empty").parent().remove();
                 $("#instrument_add").append(html);
                 $("#data-instrument").val("");

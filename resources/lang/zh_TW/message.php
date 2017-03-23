@@ -46,6 +46,7 @@ return [
         'organize_exist' => '學校/單位資料重複，請重新填寫',
         'department_exist' => '系所/部門資料重複，請重新填寫',
         'content_null' => '內容必須填寫',
+        'activity_content_null' => '活動說明必須填寫',
     ],
     'question' => [
         'logout' => '是否要登出?',

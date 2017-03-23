@@ -446,6 +446,7 @@ return [
         'instrument_type' => '儀器所屬平台',
         'instrument_id' => '儀器編號',
         'instrument_function' => '設施功能簡述',
+        'instrument_array' => '通過後可開通的設備',
         #
         #item
         'item' => '項目',
