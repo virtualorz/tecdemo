@@ -23,7 +23,7 @@ class IndexController extends Controller {
                             ->get();
         $activityResut = DB::table('activity_data')
                             ->select('uid','salt',DB::raw('DATE_FORMAT(start_dt, "%Y/%m/%d") as start_dt'),DB::raw('DATE_FORMAT(end_dt, "%Y/%m/%d") as end_dt'),'activity_name')
-                            ->orderBy('created_at','desc')
+                            ->orderBy('start_dt','desc')
                             ->take(5)
                             ->get();
 

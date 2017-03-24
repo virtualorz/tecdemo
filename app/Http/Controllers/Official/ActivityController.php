@@ -47,7 +47,7 @@ class ActivityController extends Controller {
                             })
                             ->leftJoin('activity_type','activity_data.activity_type_id','=','activity_type.id')
                             ->groupBy('activity_data.id')
-                            ->orderBy('end_dt','desc')
+                            ->orderBy('start_dt','desc')
                             ->get();
         }
         else
@@ -76,7 +76,7 @@ class ActivityController extends Controller {
                             })
                             ->leftJoin('activity_type','activity_data.activity_type_id','=','activity_type.id')
                             ->groupBy('activity_data.id')
-                            ->orderBy('end_dt','desc')
+                            ->orderBy('start_dt','desc')
                             ->get();
             $liest_unaResult = DB::table('activity_data')
                             ->where('activity_data.enable',1)
@@ -103,7 +103,7 @@ class ActivityController extends Controller {
                             ->leftJoin('activity_instrument','activity_instrument.activity_id','=','activity_data.id')
                             ->leftJoin('instrument_data','activity_instrument.instrument_id','=','instrument_data.id')
                             ->groupBy('activity_data.id')
-                            ->orderBy('end_dt','desc')
+                            ->orderBy('start_dt','desc')
                             ->paginate(Config::get('pagination.items'));
             $pagination = $this->getPagination(json_decode($liest_unaResult->toJson(),true)['total']);
         }

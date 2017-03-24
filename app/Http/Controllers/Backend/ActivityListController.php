@@ -51,7 +51,7 @@ class ActivityListController extends Controller {
                                     
                                     ->leftJoin('activity_instrument','activity_instrument.activity_id','=','activity_data.id')
                                     ->groupBy('activity_data.id')
-                                    ->orderBy('id','desc')
+                                    ->orderBy('start_dt','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
         

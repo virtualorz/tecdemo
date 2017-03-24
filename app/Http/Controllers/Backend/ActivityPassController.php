@@ -35,7 +35,7 @@ class ActivityPassController extends Controller {
                                         ->where('activity_reservation_data.attend_status','=',1);
                                     })
                                     ->where('activity_data.pass_type',2)
-                                    ->orderBy('activity_data.id','desc')
+                                    ->orderBy('activity_data.start_dt','desc')
                                     ->groupBy('activity_data.id')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
