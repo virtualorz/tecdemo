@@ -65,7 +65,8 @@ class InstrumentController extends Controller {
                                     ->leftJoin('instrument_rate','instrument_rate.instrument_data_id','=','instrument_data.id')
                                     ->leftJoin('member_admin','instrument_data.create_admin_id','=','member_admin.id')
                                     ->groupBy('instrument_data.id')
-                                    ->orderBy('id','desc')
+                                    ->orderBy('type_name','asc')
+                                    ->orderBy('instrument_id','asc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
         
