@@ -29,14 +29,14 @@
                             <tr>
                                 <td>{{ trans('validation.attributes.month') }}</td>
                                 <td>
-                                    <select name="year" id="data-year" class="form-control required">
+                                    <select name="year" id="data-year" class="form-control required" style="width:30%;display:inline">
                                         <option value="">{{trans('page.text.select_item')}}</option>
                                         @for($i=2010;$i<=date('Y')+5;$i++)
                                         <option value="{{$i}}" @if($i== $year) selected @endif>{{$i}}</option>
                                         @endfor
                                     </select>
                                     年
-                                    <select name="month" id="data-month" class="form-control required">
+                                    <select name="month" id="data-month" class="form-control required" style="width:30%;display:inline">
                                         <option value="">{{trans('page.text.select_item')}}</option>
                                         @for($i=1;$i<=12;$i++)
                                         <option value="{{$i}}" @if($i== $month) selected @endif>{{$i}}</option>
