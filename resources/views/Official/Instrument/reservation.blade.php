@@ -119,7 +119,7 @@
 				</div>
          		
           		<div class="text-center">	
-          	  	<a href="{{ asset('instrument') }}" class="btn btn-sm btn-default">
+          	  	<a href="#" class="btn btn-sm btn-default" id="btn-back">
           	  	<i class="fa fa-angle-left"></i> 
           	  	回上一頁
           	  	</a>
@@ -154,7 +154,7 @@
             }
         });
 
-        $(".reservation").click(function(e){console.log("{{ Sitemap::node()->getChildren('submit')->getUrl() }}");
+        $(".reservation").click(function(e){
             e.preventDefault();
             $.blockUI({ message: null }); 
             var ajaxProp = {
@@ -217,6 +217,11 @@
             }
             $.ajax(ajaxProp);
         });
+
+        $("#btn-back").click(function(e){
+			e.preventDefault();
+			history.back();
+		});
     });
     
 </script>

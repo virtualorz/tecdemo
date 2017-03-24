@@ -135,7 +135,7 @@
 				</div>
           		
           		<div class="text-center">	
-          	  	<a href="{{ asset('activity') }}" class="btn btn-sm btn-default">
+          	  	<a href="#" class="btn btn-sm btn-default" id="btn-back">
           	  	<i class="fa fa-angle-left"></i> 
           	  	回上一頁
           	  	</a>
@@ -159,6 +159,11 @@
             e.preventDefault();
             $("#form1").submit();
         });
+
+		$("#btn-back").click(function(e){
+			e.preventDefault();
+			history.back();
+		});
     });
 
     function initValidation() {
