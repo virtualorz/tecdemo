@@ -126,7 +126,7 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.card_id_number') }}</th>
                                 <td>
-                                    <input type="text" name="card_id_number" id="data-card_id_number" class="form-control required">
+                                    <input type="text" name="card_id_number" id="data-card_id_number" class="form-control required" pattern="^[a-zA-Z0-9\- ]+$">
                                 </td>
                             </tr>
                             <tr>
