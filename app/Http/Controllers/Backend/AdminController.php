@@ -21,8 +21,9 @@ class AdminController extends Controller {
 
     public function index() {
         $listResult = DB::table('member_admin')
-                            ->select('id','name','email',DB::raw('DATE_FORMAT(created_at, "%Y/%m/%d") as created_at'))
-                            ->orderBy('id','desc')
+                            ->select('member_admin.id','member_admin.name','member_admin.email',DB::raw('DATE_FORMAT(member_admin.created_at, "%Y/%m/%d") as created_at'),'member_admin_permission.name as permission_name')
+                            ->leftJoin('member_admin_permission','member_admin.permission_id','=','member_admin_permission.id')
+                            ->orderBy('member_admin.id','desc')
                             ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
         
