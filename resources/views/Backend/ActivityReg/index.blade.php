@@ -13,8 +13,6 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-            {!! ViewHelper::button('add') !!}
-            {!! ViewHelper::button('delete') !!}
             {{trans('page.title.unprocess_list')}}
             </div>
 
@@ -23,9 +21,6 @@
                 <table class="table datatable_simple table_responsive">
                     <thead>
                         <tr>
-                            <th width="5%" nowrap style="color:#fff;">
-                                <label class="check"><input type="checkbox" class="icheckbox ckbItemAll" /> {{ trans('page.btn.select_all') }}</label>
-                            </th>
                             <th width="15%">{{ trans('validation.attributes.apply_date') }}</th>
                             <th width="15%">{{ trans('validation.attributes.activity_date') }}</th>
                             <th width="15%">{{ trans('validation.attributes.activity_name') }}</th>
@@ -38,9 +33,6 @@
                     <tbody>
                         @foreach($listResult1 as $k => $v)
                         <tr>
-                            <td data-headname="{{ trans('page.btn.select') }}">
-                                <label class="check"><input type="checkbox" class="icheckbox ckbItem" value="{{ $v['id'] }}" /></label>
-                            </td>
                             <td>{{ $v['created_at'] }}</td>
                             @if($v['end_dt'] == null)
                                 <td>{{ $v['start_dt'] }} {{trans('message.info.start')}}</td>
@@ -64,8 +56,6 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-            {!! ViewHelper::button('add') !!}
-            {!! ViewHelper::button('delete') !!}
             {{trans('page.title.history_list')}}
             </div>
 
@@ -74,9 +64,6 @@
                 <table class="table datatable_simple table_responsive">
                     <thead>
                         <tr>
-                            <th width="5%" nowrap style="color:#fff;">
-                                <label class="check"><input type="checkbox" class="icheckbox ckbItemAll" /> {{ trans('page.btn.select_all') }}</label>
-                            </th>
                             <th width="15%">{{ trans('validation.attributes.apply_date') }}</th>
                             <th width="15%">{{ trans('validation.attributes.activity_date') }}</th>
                             <th width="15%">{{ trans('validation.attributes.activity_name') }}</th>
@@ -90,9 +77,6 @@
                     <tbody>
                         @foreach($listResult2 as $k => $v)
                         <tr>
-                            <td data-headname="{{ trans('page.btn.select') }}">
-                                <label class="check"><input type="checkbox" class="icheckbox ckbItem" value="{{ $v['id'] }}" /></label>
-                            </td>
                             <td>{{ $v['created_at'] }}</td>
                             @if($v['end_dt'] == null)
                                 <td>{{ $v['start_dt'] }} {{trans('message.info.start')}}</td>
