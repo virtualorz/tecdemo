@@ -54,11 +54,11 @@ class ActivityController extends Controller {
         {
             $liest_aResult = DB::table('activity_data')
                             ->where('activity_data.enable',1)
-                            ->whereNull('end_dt')
-                            ->orWhere(function ($query) {
-                                $query->whereDate('end_dt', '>=', date('Y-m-d')
-                                    );
+                            ->where(function($query){
+                                $query->whereNull('end_dt');
+                                $query->orWhere('end_dt', '>=', date('Y-m-d'));
                             })
+                            
                             ->select('activity_data.uid',
                                                 'activity_data.salt',
                                                 DB::raw('DATE_FORMAT(activity_data.start_dt, "%Y/%m/%d") as start_dt'),
