@@ -83,7 +83,7 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.phone') }}</th>
                                 <td>
-                                    <input type="number" name="phone" id="data-phone" class="form-control required">
+                                    <input type="tel" name="phone" id="data-phone" class="form-control required" pattern="^[0-9#,\(\)\- ]+$">
                                 </td>
                             </tr>
                             <tr>
@@ -97,7 +97,7 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.lab_phone') }}</th>
                                 <td>
-                                    <input type="number" name="lab_phone" id="data-lab_phone" class="form-control required">
+                                    <input type="tel" name="lab_phone" id="data-lab_phone" class="form-control required" pattern="^[0-9#,\(\)\- ]+$">
                                 </td>
                             </tr>
                             <tr>

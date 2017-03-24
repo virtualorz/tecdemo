@@ -87,14 +87,14 @@
                      <div class="form-group">
 						<label class="col-sm-3 control-label">聯絡電話</label>
 						<div class="col-sm-8">
-						  <input type="number" name="phone" id="data-phone" class="form-control required" placeholder="">
+						  <input type="tel" name="phone" id="data-phone" class="form-control required" pattern="^[0-9#,\(\)\- ]+$" placeholder="">
 						</div>
 					  </div>
 
                       <div class="form-group">
 						<label class="col-sm-3 control-label">實驗室電話</label>
 						<div class="col-sm-8">
-						  <input type="number" name="lab_phone" id="data-lab_phone" class="form-control required" placeholder="">
+						  <input type="tel" name="lab_phone" id="data-lab_phone" class="form-control required" pattern="^[0-9#,\(\)\- ]+$" placeholder="">
 						</div>
 					  </div>
 					  	

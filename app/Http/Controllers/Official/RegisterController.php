@@ -46,9 +46,9 @@ class RegisterController extends Controller {
                     'department' => 'integer|required',
                     'email' => 'string|required|max:200',
                     'password' => 'string|required|max:200|same:passwordR',
-                    'phone' => 'string|required|max:24',
+                    'phone' => 'string|required|max:120',
                     'pi' => 'integer|required',
-                    'lab_phone' => 'string|required|max:24',
+                    'lab_phone' => 'string|required|max:120',
                     'member_agree' => 'required',
         ]);
         if ($validator->fails()) {

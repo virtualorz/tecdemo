@@ -186,9 +186,9 @@ class PIListController extends Controller {
                     'department_id' => 'integer|required',
                     'name' => 'string|required|max:16',
                     'email' => 'string|required|max:384',
-                    'phone' => 'string|required|max:12',
+                    'phone' => 'string|required|max:120',
                     'contact_name' => 'string|required|max:24',
-                    'contact_phone' => 'string|required|max:12',
+                    'contact_phone' => 'string|required|max:120',
                     'contact_email' => 'string|required|max:384',
         ]);
         if ($validator->fails()) {
@@ -333,9 +333,9 @@ class PIListController extends Controller {
                     'department_id' => 'integer|required',
                     'name' => 'string|required|max:16',
                     'email' => 'string|required|max:384',
-                    'phone' => 'string|required|max:12',
+                    'phone' => 'string|required|max:120',
                     'contact_name' => 'string|required|max:24',
-                    'contact_phone' => 'string|required|max:12',
+                    'contact_phone' => 'string|required|max:120',
                     'contact_email' => 'string|required|max:384',
         ]);
         if ($validator->fails()) {
