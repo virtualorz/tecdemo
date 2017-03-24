@@ -98,7 +98,9 @@
                             </td>
                             <td>
                                 @if($v['pass_status'] == 0)
-                                {!! ViewHelper::button('pass', ['id' => $v['activity_id'].'_'.$v['member_id']]) !!}
+                                    @if($v['attend_status'] == 1)
+                                    {!! ViewHelper::button('pass', ['id' => $v['activity_id'].'_'.$v['member_id']]) !!}
+                                    @endif
                                 @else
                                 {!! ViewHelper::button('pass_cancel', ['id' => $v['activity_id'].'_'.$v['member_id']]) !!}
                                 @endif
