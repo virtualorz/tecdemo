@@ -53,7 +53,7 @@
                                 <td>{{ $dataResult['contact_phone'] }}</td>
                             </tr>
                             <tr>
-                                <th><{{ trans('validation.attributes.email-contact') }}</th>
+                                <th>{{ trans('validation.attributes.email-contact') }}</th>
                                 <td>{{ $dataResult['contact_email'] }}</td>
                             </tr>
                             <tr>
