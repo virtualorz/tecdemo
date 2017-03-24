@@ -44,7 +44,7 @@
 								<td>{{ $v['time'] }}hr</td>
                                 <td class="text-center">
                                     @if($v['reason'] == null)
-								  	<a href="{{ asset('member/activity/reg/id-'.$v['uid'].'-'.$v['salt']) }}"> 
+								  	<a href="{{ asset('member/activity/reg/id-'.$v['id'].'_'.$v['created_at']) }}"> 
 									<i class="fa fa-pencil" aria-hidden="true"></i> 補登記
 									</a>
                                     @endif

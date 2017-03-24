@@ -40,6 +40,7 @@
           	  		
           	  			<div class="col-sm-12 text-center mt--b">
                           <input type='hidden' name='id' value="{{ $dataResult['id'] }}">
+						  <input type='hidden' name='reservation_id' value="{{ $reservation_id }}">
 						  <a href="{{ asset('member/activity') }}" class="btn btn-default btn-sm">取消</a>
 
 						  <a href="member.html" class="btn btn-sm btn-primary" id="save_btn">送出</a>

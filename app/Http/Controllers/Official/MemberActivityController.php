@@ -37,7 +37,10 @@ class MemberActivityController extends Controller {
                             ->where('activity_reservation_data.member_id','=',User::Id())
                             ->where('activity_reservation_data.reservation_status','=',1)
                             ->where('activity_reservation_data.attend_status','=',0)
-                            ->whereDate('activity_data.end_dt','>',date('Y-m-d'))
+                            ->where(function($query){
+                                $query->whereNull('end_dt');
+                                $query->orWhere('activity_data.end_dt', '>=', date('Y-m-d'));
+                            })
                             ->orderBy('activity_data.start_dt','desc')
                             ->get();
 
@@ -55,11 +58,13 @@ class MemberActivityController extends Controller {
                                         'activity_reservation_data.attend_status',
                                         'activity_reservation_data.pass_status')
                             ->leftJoin('activity_data','activity_reservation_data.activity_id','=','activity_data.id')
-                            ->where('activity_reservation_data.member_id','=',User::Id())
                             ->where(function($query){
-                                $query->whereDate('activity_data.end_dt','>',date('Y-m-d'));
+                                $query->where('activity_reservation_data.member_id','=',User::Id());
                                 $query->where('activity_reservation_data.attend_status','=',1);
-                                $query->OrWhere('activity_data.end_dt','<',date('Y-m-d'));
+                            })
+                            ->orWhere(function($query){
+                                $query->where('activity_reservation_data.member_id','=',User::Id());
+                                $query->where('activity_data.end_dt','<',date('Y-m-d'));
                             })
                             ->orderBy('activity_data.start_dt','desc')
                              ->paginate(Config::get('pagination.items'));
@@ -73,13 +78,12 @@ class MemberActivityController extends Controller {
     }
 
     public function reg() {
-        $id = explode('-',Route::input('id'));
+        $id = explode('_',Route::input('id', '0_0'));
         $dataResult = DB::table('activity_data')
                             ->select('id','activity_name')
-                            ->where('uid',$id[0])
-                            ->where('salt',$id[1])
+                            ->where('id',$id[0])
                             ->get();
-
+        $this->view->with('reservation_id', Route::input('id'));                   
         $this->view->with('dataResult', $dataResult[0]);
         
         return $this->view;
@@ -111,6 +115,21 @@ class MemberActivityController extends Controller {
             $this->view['result'] = 'no';
             $this->view['msg'] = trans('message.error.validation');
             $this->view['detail'] = $validator->errors();
+
+            return $this->view;
+        }
+        $reservation_id = explode('_',Request::input('reservation_id', '0_0'));
+        $check = DB::table('activity_reservation_data')
+                        ->where('activity_id',$reservation_id[0])
+                        ->where('member_id',User::id())
+                        ->where('created_at',$reservation_id[1])
+                        ->where('attend_status',1)
+                        ->count();
+        if($check != 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array("活動已出席無法補登記");
 
             return $this->view;
         }
@@ -149,6 +168,21 @@ class MemberActivityController extends Controller {
             $this->view['result'] = 'no';
             $this->view['msg'] = trans('message.error.validation');
             $this->view['detail'] = $validator->errors();
+
+            return $this->view;
+        }
+        $id = explode('_',Request::input('id', '0_0'));
+        $check = DB::table('activity_reservation_data')
+                        ->where('activity_id',$id[0])
+                        ->where('member_id',User::id())
+                        ->where('created_at',$id[1])
+                        ->where('attend_status',1)
+                        ->count();
+        if($check != 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array("活動已出席無法取消");
 
             return $this->view;
         }
