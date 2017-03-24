@@ -74,7 +74,10 @@ class MemberController extends Controller {
                             ->where('activity_reservation_data.member_id','=',User::Id())
                             ->where('activity_reservation_data.reservation_status','=',1)
                             ->where('activity_reservation_data.attend_status','=',0)
-                            ->whereDate('activity_data.end_dt','>',date('Y-m-d'))
+                            ->where(function($query){
+                                $query->whereNull('end_dt');
+                                $query->orWhere('activity_data.end_dt', '>=', date('Y-m-d'));
+                            })
                             ->orderBy('activity_data.start_dt','asc')
                             ->take(5)
                             ->get();
