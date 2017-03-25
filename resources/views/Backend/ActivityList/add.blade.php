@@ -28,7 +28,7 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.activity_id') }}</th>
                                 <td>
-                                    <input type="text" name="activity_id" id="data-activity_id" class="form-control required">
+                                    <input type="text" name="activity_id" id="data-activity_id" class="form-control required" pattern="^[A-za-z0-9#,\(\)\-_ ]+$">
                                 </td>
                             </tr>
                             <tr>
