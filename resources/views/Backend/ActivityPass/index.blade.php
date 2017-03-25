@@ -22,9 +22,6 @@
                 <table class="table datatable_simple table_responsive">
                     <thead>
                         <tr>
-                            <th width="5%" nowrap style="color:#fff;">
-                                <label class="check"><input type="checkbox" class="icheckbox ckbItemAll" /> {{ trans('page.btn.select_all') }}</label>
-                            </th>
                             <th width="15%">{{ trans('validation.attributes.created_at') }}</th>
                             <th width="15%">{{ trans('validation.attributes.activity_date') }}</th>
                             <th width="15%">{{ trans('validation.attributes.activity_name') }}</th>
@@ -38,9 +35,6 @@
                         @if(count($listResult) > 0 && $listResult[0]['start_dt'] != '')
                         @foreach($listResult as $k => $v)
                         <tr>
-                            <td data-headname="{{ trans('page.btn.select') }}">
-                                <label class="check"><input type="checkbox" class="icheckbox ckbItem" value="{{ $v['id'] }}" /></label>
-                            </td>
                             <td>{{ $v['created_at'] }}</td>
                             <td>{{ $v['start_dt'] }} - {{ $v['end_dt'] }}</td>
                             <td>{{ $v['activity_name'] }}</td>
