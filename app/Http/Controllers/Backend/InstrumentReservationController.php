@@ -166,6 +166,24 @@ class InstrumentReservationController extends Controller {
             return $this->view;
         }
 
+        //先檢查使用者是否已經取消預約
+        $id = explode('_',Request::input('id'));
+        $member_count = DB::table('instrument_reservation_data')
+                    ->select('instrument_reservation_data_id')
+                    ->where('instrument_reservation_data.instrument_reservation_data_id',$id[0])
+                    ->where('instrument_reservation_data.create_date',$id[1])
+                    ->where('instrument_reservation_data.reservation_status','!=',2)
+                    ->whereNotNUll('instrument_reservation_data.reservation_status')
+                    ->count();
+        if($member_count == 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('使用者已取消預約無法完成');
+
+            return $this->view;
+        }
+
         $year = intval(date('Y',strtotime(Request::input('use_dt_start'))));
         $month = intval(date('m',strtotime(Request::input('use_dt_start'))));
         //先檢查當月帳單是否已結算
