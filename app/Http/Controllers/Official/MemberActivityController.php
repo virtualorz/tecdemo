@@ -31,7 +31,8 @@ class MemberActivityController extends Controller {
                                         'activity_reg.reason')
                             ->leftJoin('activity_data','activity_reservation_data.activity_id','=','activity_data.id')
                             ->leftJoin('activity_reg',function($join){
-                                $join->on('activity_data.id','=','activity_reg.activity_id')
+                                $join->on('activity_reg.activity_id','=','activity_data.id')
+                                    ->on('activity_reg.created_at_id','=','activity_reservation_data.created_at')
                                     ->where('activity_reg.member_id','=',User::id());
                             })
                             ->where('activity_reservation_data.member_id','=',User::Id())
