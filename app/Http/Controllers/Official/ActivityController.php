@@ -176,6 +176,7 @@ class ActivityController extends Controller {
                     ->select('instrument_data.name')
                     ->leftJoin('instrument_data','activity_instrument.instrument_id','=','instrument_data.id')
                     ->where('activity_instrument.activity_id',$dataResult[0]['id'])
+                    ->groupBy('activity_instrument.instrument_id')
                     ->get();
             $instrument = array();
             foreach($instrumentResult as $k1=>$v1)
