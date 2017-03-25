@@ -28,8 +28,8 @@ class ActivityListController extends Controller {
         $listResult = DB::table('activity_data');
         if($date != "")
         {
-            $listResult->where('activity_data.start_dt','<=',$date);
-            $listResult->where('activity_data.end_dt','<=',$date);
+            $listResult->where('activity_data.start_dt','>=',$date);
+            //$listResult->where('activity_data.end_dt','<=',$date);
         }
         if($name != "")
         {
