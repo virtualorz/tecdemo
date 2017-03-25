@@ -205,7 +205,7 @@
         });
 
         $(".supplies_pay").each(function(){
-            total += parseFloat($("#pay_"+$(this).attr('data-id')).html())
+            total += parseFloat($(this).html())
         });
 
         $("#pay_total").html(total);
