@@ -241,13 +241,15 @@ class ActivityController extends Controller {
             return $this->view;
         }
         //檢查是否已經預約過
-        $member_count = DB::table('activity_reservation_data')
+        if(Request::input('reservation') == 1)
+        {//點預約
+            $member_count = DB::table('activity_reservation_data')
                         ->where('activity_id',Request::input('activity_id'))
                         ->where('member_id',User::Id())
+                        ->where('reservation_status',1)
+                        ->orderBy('created_at','desc')
                         ->count();
-        if($member_count == 0)
-        {
-            if(Request::input('reservation') == 1)
+            if($member_count == 0)
             {
                 try {
                     DB::transaction(function(){
@@ -274,6 +276,23 @@ class ActivityController extends Controller {
             }
             else
             {
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.validation');
+                $this->view['detail'] = array('已在預約名單內無法再次預約');
+                return $this->view;
+            }
+        }
+        else
+        {//點取消
+            $member_count = DB::table('activity_reservation_data')
+                        ->where('activity_id',Request::input('activity_id'))
+                        ->where('member_id',User::Id())
+                        ->where('reservation_status',1)
+                        ->where('attend_status',0)
+                        ->orderBy('created_at','desc')
+                        ->count();
+            if($member_count != 0)
+            {
                 try {
                     DB::transaction(function(){
                         DB::table('activity_reservation_data')
@@ -296,13 +315,14 @@ class ActivityController extends Controller {
                 }
                 $this->view['msg'] = trans('message.success.cancel');
             }
-        }
-        else
-        {
-            $this->view['result'] = 'no';
-            $this->view['msg'] = trans('message.error.validation');
-            $this->view['detail'] = array('已在預約名單內無法再次預約');
-            return $this->view;
+            else
+            {
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.validation');
+                $this->view['detail'] = array('已出席活動無法取消預約');
+                return $this->view;
+            }
+
         }
         
         return $this->view;
