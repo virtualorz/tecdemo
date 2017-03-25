@@ -185,6 +185,18 @@ class ActivityTypeController extends Controller {
                 $result_before = DB::table('activity_type')
                                     ->where('id',$id)
                                     ->get();
+                //先檢查是否有活動，有活動則無法刪除
+                $pass_count = DB::table('activity_data')
+                    ->where('activity_type_id',$id)
+                    ->count();
+                if($pass_count != 0)
+                {
+                    $this->view['result'] = 'no';
+                    $this->view['msg'] = trans('message.error.validation');
+                    $this->view['detail'] = array($result_before[0]['name']."已有活動舉行無法刪除");
+                    return $this->view;
+                }
+                
                 DB::table('activity_type')
                     ->where('id',$id)
                     ->delete();
