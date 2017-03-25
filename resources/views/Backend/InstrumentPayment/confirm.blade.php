@@ -52,7 +52,7 @@
                                                 <td>{{ date('Y/m/d H:i',strtotime($v['use_dt_start'])) }} <br> - <br> {{ date('Y/m/d H:i',strtotime($v['use_dt_end'])) }}</td>
                                                 <td>{{ $v['member_name'] }}</td>
                                                 <td>{{ $v['instrument_name'] }}</td>
-                                                <td id="pay_{{$k}}">{{ $v['pay'] }}</td>
+                                                <td id="pay_{{$k}}" class="pay">{{ $v['pay'] }}</td>
                                                 <td>
                                                      <select name="discount[]" id="data-discount_{{$k}}" data-id="{{$k}}" class="form-control discount">
                                                         <option value="">{{trans('page.text.select_item')}}</option>
@@ -87,7 +87,7 @@
                                                     <td>{{ $v['create_date_ym'] }}{{ $v['salt'] }}</td>
                                                     <td>{{ $v1['name'] }}</td>
                                                     <td>{{ $v1['count'] }}</td>
-                                                    <td class="supplies_pay">{{ $v1['total'] }}</td>
+                                                    <td class="supplies_pay pay">{{ $v1['total'] }}</td>
                                                 </tr>
                                                 @endforeach
                                             @endforeach
@@ -98,7 +98,7 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.pay_total') }}</th>
                                 <td>
-                                    <span id="pay_total"></span>
+                                    <span id="pay_total">0</span>
                                 </td>
                             </tr>
                             <tr>
@@ -168,6 +168,11 @@
             }
         });
 
+        //計算初步金額
+        $(".pay").each(function(){
+            $("#pay_total").html(parseInt($("#pay_total").html()) + parseInt($(this).html()));
+        });
+
     });
     
     function initValidation() {
@@ -190,13 +195,17 @@
                 total += parseFloat($("#pay_"+$(this).attr('data-id')).html()) * (parseFloat((100 - parseInt($("#data-discount_number_"+$(this).attr('data-id')).val())))/100);
             }
             else if($tmp[1] == "2")
-            {console.log(parseInt($("#pay_"+$(this).attr('data-id')).html()));console.log(parseInt($("#data-discount_number_"+$(this).attr('data-id')).val()));
-                total += parseInt($("#pay_"+$(this).attr('data-id')).html()) - parseInt($("#data-discount_number_"+$(this).attr('data-id')).val());
+            {
+                total += parseFloat($("#pay_"+$(this).attr('data-id')).html()) - parseFloat($("#data-discount_number_"+$(this).attr('data-id')).val());
+            }
+            else
+            {
+                total += parseFloat($("#pay_"+$(this).attr('data-id')).html())
             }
         });
 
         $(".supplies_pay").each(function(){
-            total += parseFloat($(this).html());
+            total += parseFloat($("#pay_"+$(this).attr('data-id')).html())
         });
 
         $("#pay_total").html(total);
