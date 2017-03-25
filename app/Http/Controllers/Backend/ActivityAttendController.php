@@ -42,6 +42,7 @@ class ActivityAttendController extends Controller {
 
         $listResult = $listResult->select('activity_reservation_data.activity_id',
                                             'activity_reservation_data.member_id',
+                                            'activity_reservation_data.created_at',
                                             'activity_reservation_data.attend_status',
                                             DB::raw('DATE_FORMAT(activity_reservation_data.created_at, "%Y/%m/%d") as created_at'),
                                             'member_data.name',
@@ -72,6 +73,23 @@ class ActivityAttendController extends Controller {
         $ids = Request::input('id', "0_0");
         $id = explode('_',$ids);
 
+        //先檢查使用者使否已經取消
+        $member_count = DB::table('activity_reservation_data')
+                    ->select('instrument_reservation_data_id')
+                    ->where('activity_id',$id[0])
+                    ->where('member_id',$id[1])
+                    ->where('created_at',$id[2])
+                    ->where('reservation_status',1)
+                    ->count();
+        if($member_count == 0)
+        {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = array('使用者已取消預約無法報到');
+
+            return $this->view;
+        }
+
         $activity_data = DB::table('activity_data')
             ->select('pass_type')
             ->where('id',$id[0])
@@ -88,6 +106,7 @@ class ActivityAttendController extends Controller {
                 DB::table('activity_reservation_data')
                     ->where('activity_id',$id[0])
                     ->where('member_id',$id[1])
+                    ->where('created_at',$id[2])
                     ->update(['attend_status'=>1,'pass_status'=>$pass_status
                     ]);
         } catch (\PDOException $ex) {
@@ -129,6 +148,7 @@ class ActivityAttendController extends Controller {
                 DB::table('activity_reservation_data')
                     ->where('activity_id',$id[0])
                     ->where('member_id',$id[1])
+                    ->where('created_at',$id[2])
                     ->update(['attend_status'=>0
                     ]);
         } catch (\PDOException $ex) {
