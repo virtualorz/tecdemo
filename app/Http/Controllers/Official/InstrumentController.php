@@ -588,47 +588,68 @@ class InstrumentController extends Controller {
                 }
                 else
                 {//取消預約
-                    DB::table('instrument_reservation_data')
+                    //檢查是否已完成使用
+                    $member_count = DB::table('instrument_reservation_data')
+                        ->select('instrument_reservation_data_id')
                         ->where('instrument_id',$id[3])
                         ->where('reservation_dt',$id[2])
                         ->where('reservation_section_id',$id[1])
                         ->where('member_id',User::Id())
-                        ->update(['reservation_status'=>'2'
-                        ]);
-                    //取得個人資料
-                    $member = DB::table('member_data')
-                        ->select('member_data.name','member_data.email','system_pi_list.name as pi_name')
-                        ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
-                        ->where('member_data.id',User::Id())
-                        ->first();
-                    //取得取消時間區間
-                    $section = DB::table('instrument_section')
-                        ->select(DB::raw('DATE_FORMAT(start_time, "%H:%i") as start_time'),
-                                    DB::raw('DATE_FORMAT(end_time, "%H:%i") as end_time'))
-                        ->where('id',$id[1])
-                        ->first();
-                    //寄信通知管理員
-                    if(count($member) != 0 && count($section) != 0)
+                        ->where('reservation_status','!=',2)
+                        ->whereNotNull('reservation_status')
+                        ->whereNull('attend_status')
+                        ->count();
+                    if($member_count != 0)
                     {
-                        $instrument_admin = DB::table('instrument_data')
-                            ->select('instrument_admin.name','instrument_admin.email','instrument_data.name as instrument_name')
-                            ->leftJoin('instrument_admin','instrument_admin.instrument_data_id','=','instrument_data.id')
-                            ->where('instrument_data.cancel_notice','1')
-                            ->where('instrument_data.id',$id[3])
-                            ->get();
-                        foreach($instrument_admin as $k=>$v)
+                        DB::table('instrument_reservation_data')
+                            ->where('instrument_id',$id[3])
+                            ->where('reservation_dt',$id[2])
+                            ->where('reservation_section_id',$id[1])
+                            ->where('member_id',User::Id())
+                            ->update(['reservation_status'=>'2'
+                            ]);
+                        //取得個人資料
+                        $member = DB::table('member_data')
+                            ->select('member_data.name','member_data.email','system_pi_list.name as pi_name')
+                            ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
+                            ->where('member_data.id',User::Id())
+                            ->first();
+                        //取得取消時間區間
+                        $section = DB::table('instrument_section')
+                            ->select(DB::raw('DATE_FORMAT(start_time, "%H:%i") as start_time'),
+                                        DB::raw('DATE_FORMAT(end_time, "%H:%i") as end_time'))
+                            ->where('id',$id[1])
+                            ->first();
+                        //寄信通知管理員
+                        if(count($member) != 0 && count($section) != 0)
                         {
-                            $dataResult = array('user'=>$v['name'],'instrument'=>$v['instrument_name'],'cancel_member'=>$member,'cancel_date'=>$id[2],'cancel_section'=>$section);
-                            Mail::send('emails.cancel_notice', [
-                                        'dataResult' => $dataResult,
-                                            ], function ($m)use($v) {
-                                        $m->to($v['email'], '');
-                                        $m->subject("預約取消通知訊息");
-                            });
+                            $instrument_admin = DB::table('instrument_data')
+                                ->select('instrument_admin.name','instrument_admin.email','instrument_data.name as instrument_name')
+                                ->leftJoin('instrument_admin','instrument_admin.instrument_data_id','=','instrument_data.id')
+                                ->where('instrument_data.cancel_notice','1')
+                                ->where('instrument_data.id',$id[3])
+                                ->get();
+                            foreach($instrument_admin as $k=>$v)
+                            {
+                                $dataResult = array('user'=>$v['name'],'instrument'=>$v['instrument_name'],'cancel_member'=>$member,'cancel_date'=>$id[2],'cancel_section'=>$section);
+                                Mail::send('emails.cancel_notice', [
+                                            'dataResult' => $dataResult,
+                                                ], function ($m)use($v) {
+                                            $m->to($v['email'], '');
+                                            $m->subject("預約取消通知訊息");
+                                });
+                            }
                         }
-                    }
 
-                    $this->view['msg'] = trans('message.success.cancel');
+                        $this->view['msg'] = trans('message.success.cancel');
+                    }
+                    else
+                    {
+                        $this->view['result'] = 'no';
+                        $this->view['msg'] = trans('message.error.validation');
+                        $this->view['detail'] = array('已完成使用或移除候補無法取消預約');
+                        return $this->view;
+                    }
                 }
             });
 
