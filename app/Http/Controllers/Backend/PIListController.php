@@ -491,9 +491,22 @@ class PIListController extends Controller {
             foreach ($ids as $k => $v) {
                 $id = $v;
 
+                //先檢查是否已經有學生，有學生則無法刪除
+                $student_count = DB::table('member_data')
+                    ->where('pi_list_id',$id)
+                    ->count();
+                
                 $result_before = DB::table('system_pi_list')
                                     ->where('id',$id)
                                     ->get();
+                if($student_count != 0)
+                {
+                    $this->view['result'] = 'no';
+                    $this->view['msg'] = trans('message.error.validation');
+                    $this->view['detail'] = array($result_before[0]['name']."已有學生註冊會員無法刪除");
+                    return $this->view;
+                }
+
                 DB::table('system_pi_list')
                     ->where('id',$id)
                     ->delete();
