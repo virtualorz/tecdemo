@@ -91,9 +91,6 @@
                 <table class="table datatable_simple table_responsive">
                     <thead>
                         <tr>
-                            <th width="5%" nowrap style="color:#fff;">
-                                <label class="check"><input type="checkbox" class="icheckbox ckbItemAll" /> {{ trans('page.btn.select_all') }}</label>
-                            </th>
                             <th width="15%">{{ trans('validation.attributes.month') }}</th>
                             <th width="15%">{{ trans('validation.attributes.department') }}</th>
                             <th width="15%">{{ trans('validation.attributes.pi') }}</th>
@@ -105,9 +102,6 @@
                     <tbody>
                         @foreach($listResult as $k => $v)
                         <tr>
-                            <td data-headname="{{ trans('page.btn.select') }}">
-                                <label class="check"><input type="checkbox" class="icheckbox ckbItem" value="{{ $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month'] }}" /></label>
-                            </td>
                             <td>{{ $v['pay_year'] }}/{{ $v['pay_month'] }}</td>
                             <td>{{ $v['department_name'] }}</td>
                             <td>{{ $v['pi_name'] }}</td>
