@@ -188,7 +188,7 @@ class InstrumentSiteController extends Controller {
                 $result_before = DB::table('instrument_site')
                                     ->where('id',$id)
                                     ->get();
-                //先檢查是否有活動，有活動則無法刪除
+                //先檢查是否有儀器，有活動則無法刪除
                 $pass_count = DB::table('instrument_data')
                     ->where('instrument_site_id',$id)
                     ->count();

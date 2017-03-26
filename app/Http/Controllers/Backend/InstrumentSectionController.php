@@ -201,6 +201,18 @@ class InstrumentSectionController extends Controller {
                 $result_before = DB::table('instrument_section')
                                     ->where('id',$id)
                                     ->get();
+                //先檢查是否有儀器，有活動則無法刪除
+                $pass_count = DB::table('instrument_section_set')
+                    ->where('instrument_section_id',$id)
+                    ->count();
+                if($pass_count != 0)
+                {
+                    $this->view['result'] = 'no';
+                    $this->view['msg'] = trans('message.error.validation');
+                    $this->view['detail'] = array($result_before[0]['start_time'].'~'.$result_before[0]['end_time']."已有儀器設定無法刪除");
+                    return $this->view;
+                }
+                
                 DB::table('instrument_section')
                     ->where('id',$id)
                     ->delete();
