@@ -191,6 +191,18 @@ class InstrumentTypeController extends Controller {
                 $result_before = DB::table('instrument_type')
                                     ->where('id',$id)
                                     ->get();
+                //先檢查是否有儀器，有活動則無法刪除
+                $pass_count = DB::table('instrument_data')
+                    ->where('instrument_type_id',$id)
+                    ->count();
+                if($pass_count != 0)
+                {
+                    $this->view['result'] = 'no';
+                    $this->view['msg'] = trans('message.error.validation');
+                    $this->view['detail'] = array($result_before[0]['name']."已有儀器設定無法刪除");
+                    return $this->view;
+                }
+
                 DB::table('instrument_type')
                     ->where('id',$id)
                     ->delete();
