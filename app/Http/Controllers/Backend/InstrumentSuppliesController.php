@@ -201,6 +201,18 @@ class InstrumentSuppliesController extends Controller {
                 $result_before = DB::table('instrument_supplies')
                                     ->where('id',$id)
                                     ->get();
+                //先檢查是否有儀器使用，有活動則無法刪除
+                $pass_count = DB::table('instrument_reservation_data')
+                    ->where('supplies_JOSN','like','%"id":"'.$id.'",%')
+                    ->count();
+                if($pass_count != 0)
+                {
+                    $this->view['result'] = 'no';
+                    $this->view['msg'] = trans('message.error.validation');
+                    $this->view['detail'] = array($result_before[0]['name']."已有儀器設定使用無法刪除");
+                    return $this->view;
+                }
+
                 DB::table('instrument_supplies')
                     ->where('id',$id)
                     ->delete();
