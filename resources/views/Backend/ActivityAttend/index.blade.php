@@ -88,9 +88,9 @@
                             <td>{{ $v['email'] }}</td>
                             <td>
                                 @if($v['attend_status'] == 0)
-                                {!! ViewHelper::button('attendv2', ['id' => $v['activity_id'].'_'.$v['member_id'].'_'.$v['created_at']]) !!}
+                                {!! ViewHelper::button('attendv2', ['id' => $v['activity_id'].'_'.$v['member_id'].'_'.$v['created_at_org']]) !!}
                                 @else
-                                {!! ViewHelper::button('attend_cancel', ['id' => $v['activity_id'].'_'.$v['member_id'].'_'.$v['created_at']]) !!}
+                                {!! ViewHelper::button('attend_cancel', ['id' => $v['activity_id'].'_'.$v['member_id'].'_'.$v['created_at_org']]) !!}
                                 @endif
                             </td>
                         </tr>
