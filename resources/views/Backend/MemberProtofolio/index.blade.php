@@ -141,10 +141,11 @@
                             <td>
                                 @if($v['enable'] == 0)
                                 {!! ViewHelper::button('active', ['id' => $v['id']]) !!}
-                                @endif
+                                @else
                                 {!! ViewHelper::button('notice', ['id' => $v['id']]) !!}
                                 {!! ViewHelper::button('activitylog', ['id' => $v['id']]) !!}
                                 {!! ViewHelper::button('edit', ['id' => $v['id']]) !!}
+                                @endif
                                 {!! ViewHelper::button('detail', ['id' => $v['id']]) !!}
                             </td>
                         </tr>
