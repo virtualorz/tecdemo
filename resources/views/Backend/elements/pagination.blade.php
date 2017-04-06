@@ -1,5 +1,5 @@
 @if(isset($pagination) && $pagination['last'] > 1)
-@expr( $qs = Request::getQueryString() )
+@expr( $qs = http_build_query(Request::except('page')) )
 <ul class="pagination pull-right" style="width: auto;" >
     <li><a href="{{ route($pagination['routeName'], array_merge(Route::current()->parameters(), ['optional' => Sitemap::formatOptionalParam(Route::input('optional', []))  ])) }}?page={{$pagination['first']}}{{ ($qs ? '&' . $qs : '')}}" title='{{ trans('pagination.first') }}'>{{ trans('pagination.first') }}</a></li>
     <li><a href="{{ route($pagination['routeName'], array_merge(Route::current()->parameters(), ['optional' => Sitemap::formatOptionalParam(Route::input('optional', []))  ])) }}?page={{$pagination['prev']}}{{ ($qs ? '&' . $qs : '')}}" title='{{ trans('pagination.previous') }}'>{{ trans('pagination.previous') }}</a></li>
