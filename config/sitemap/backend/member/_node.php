@@ -212,7 +212,7 @@ return [
                             'route' => [
                                 'method' => 'get',
                                 'attr' => [
-                                    'uses' => 'MemberprotofolioController@ajax_get_pi',
+                                    'uses' => 'MemberProtofolioController@ajax_get_pi',
                                 ],
                             ],
                         ],
