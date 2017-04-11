@@ -32,6 +32,7 @@ class InstrumentPaymentController extends Controller {
                 ->whereNotNull('reservation_status')
                 ->where('attend_status',1)
                 ->whereNotNull('update_admin_id')
+                ->whereNotNull('member_data.pi_list_id')
                 ->whereNull('in_bill')
                 ->whereDate('use_dt_start','<', date('Y-m-d',mktime(0, 0, 0, date('m'), 1, date('Y'))))
                 ->whereDate('use_dt_start','>=', date('Y-m-d',strtotime('-1 month',mktime(0, 0, 0, date('m'), 1, date('Y')))))
