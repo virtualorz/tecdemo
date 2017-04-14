@@ -180,7 +180,7 @@ class ActivityListController extends Controller {
         {
             $validator = Validator::make(Request::all(), [
                         'activity_id' => 'string|required|max:64',
-                        'start_dt' => 'date|required|before:end_dt',
+                        'start_dt' => 'date|required',
                         'activity_name' => 'string|required|max:32',
                         'activity_type_id' => 'integer|required',
                         'relative_plateform' => 'array|required',
@@ -193,6 +193,13 @@ class ActivityListController extends Controller {
                         'content' => 'string|required',
                         'enable' => 'integer|required',
             ]);
+            if(strtotime(Request::input('end_dt')) < strtotime(Request::input('start_dt')))
+            {
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.validation');
+                $this->view['detail'] = array('結束日期不可早於開始日期');
+                return $this->view;
+            }
         }
         else
         {
@@ -332,7 +339,7 @@ class ActivityListController extends Controller {
         {
             $validator = Validator::make(Request::all(), [
                         'activity_id' => 'string|required|max:64',
-                        'start_dt' => 'date|required|before:end_dt',
+                        'start_dt' => 'date|required',
                         'activity_name' => 'string|required|max:32',
                         'activity_type_id' => 'integer|required',
                         'relative_plateform' => 'array|required',
@@ -345,6 +352,13 @@ class ActivityListController extends Controller {
                         'content' => 'string|required',
                         'enable' => 'integer|required',
             ]);
+            if(strtotime(Request::input('end_dt')) < strtotime(Request::input('start_dt')))
+            {
+                $this->view['result'] = 'no';
+                $this->view['msg'] = trans('message.error.validation');
+                $this->view['detail'] = array('結束日期不可早於開始日期');
+                return $this->view;
+            }
         }
         else
         {
