@@ -92,7 +92,7 @@
     $(document).ready(function () {
         initValidation();
         $(".timepicker").timepicker({
-			'timeFormat': 'h:i A',
+			'timeFormat': 'H:i',
 			'step': 10
 		});
     });
