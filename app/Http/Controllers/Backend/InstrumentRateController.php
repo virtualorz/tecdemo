@@ -80,11 +80,11 @@ class InstrumentRateController extends Controller {
         $validator = Validator::make(Request::all(), [
                     'start_dt' => 'string|required|after:today',
                     'rate_type' => 'string|required',
-                    'member_1' => 'numeric|required',
-                    'member_2' => 'numeric|required',
-                    'member_3' => 'numeric|required',
-                    'member_4' => 'numeric|required',
-                    'rate' => 'numeric|required',
+                    'member_1' => 'numeric|required|min:1',
+                    'member_2' => 'numeric|required|min:1',
+                    'member_3' => 'numeric|required|min:1',
+                    'member_4' => 'numeric|required|min:1',
+                    'rate' => 'numeric|required|min:1',
         ]);
         if ($validator->fails()) {
             $this->view['result'] = 'no';
@@ -143,12 +143,12 @@ class InstrumentRateController extends Controller {
     public function ajax_edit() {
         $validator = Validator::make(Request::all(), [
                     'start_dt' => 'string|required|after:today',
-                    'rate_type' => 'string|required',
-                    'member_1' => 'numeric|required',
-                    'member_2' => 'numeric|required',
-                    'member_3' => 'numeric|required',
-                    'member_4' => 'numeric|required',
-                    'rate' => 'numeric|required',
+                    'rate_type' => 'string|required|min:1',
+                    'member_1' => 'numeric|required|min:1',
+                    'member_2' => 'numeric|required|min:1',
+                    'member_3' => 'numeric|required|min:1',
+                    'member_4' => 'numeric|required|min:1',
+                    'rate' => 'numeric|required|min:1',
         ]);
         if ($validator->fails()) {
             $this->view['result'] = 'no';
