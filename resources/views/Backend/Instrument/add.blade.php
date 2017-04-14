@@ -49,7 +49,7 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.instrument_id') }}</th>
                                 <td>
-                                    <input type="text" name="instrument_id" id="data-instrument_id" class="form-control required">
+                                    <input type="text" name="instrument_id" id="data-instrument_id" class="form-control required" pattern="^[0-9A-Z]+$">
                                 </td>
                             </tr>
                             <tr>
