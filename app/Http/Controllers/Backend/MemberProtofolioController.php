@@ -279,7 +279,7 @@ class MemberProtofolioController extends Controller {
                     'lab_phone' => 'string|required|max:120',
                     'type' => 'integer|required',
                     'start_dt' => 'date|required',
-                    'limit_month' => 'integer|required',
+                    'limit_month' => 'integer|required|min:0',
                     'permission' => 'array|required',
                     'enable' => 'integer|required',
         ]);
@@ -401,7 +401,7 @@ class MemberProtofolioController extends Controller {
                     'lab_phone' => 'string|required|max:120',
                     'type' => 'integer|required',
                     'start_dt' => 'date|required',
-                    'limit_month' => 'integer|required',
+                    'limit_month' => 'integer|required|min:0',
                     'permission' => 'array|required',
         ]);
         if ($validator->fails()) {
@@ -527,7 +527,7 @@ class MemberProtofolioController extends Controller {
                     'type' => 'integer|required',
                     'card_id_number' => 'string|required|max:32',
                     'start_dt' => 'date|required',
-                    'limit_month' => 'integer|required',
+                    'limit_month' => 'integer|required|min:0',
                     'permission' => 'array|required',
                     'enable' => 'integer|required',
         ]);

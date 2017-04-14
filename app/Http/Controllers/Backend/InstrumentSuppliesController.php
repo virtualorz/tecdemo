@@ -74,10 +74,10 @@ class InstrumentSuppliesController extends Controller {
         $invalid = [];
         $validator = Validator::make(Request::all(), [
                     'name' => 'string|required|max:32',
-                    'rate1' => 'numeric|required',
-                    'rate2' => 'numeric|required',
-                    'rate3' => 'numeric|required',
-                    'rate4' => 'numeric|required',
+                    'rate1' => 'numeric|required|min:0',
+                    'rate2' => 'numeric|required|min:0',
+                    'rate3' => 'numeric|required|min:0',
+                    'rate4' => 'numeric|required|min:0',
         ]);
         if ($validator->fails()) {
             $invalid[] = $validator->errors();
@@ -130,10 +130,10 @@ class InstrumentSuppliesController extends Controller {
     public function ajax_edit() {
         $validator = Validator::make(Request::all(), [
                     'name' => 'string|required|max:32',
-                    'rate1' => 'numeric|required',
-                    'rate2' => 'numeric|required',
-                    'rate3' => 'numeric|required',
-                    'rate4' => 'numeric|required',
+                    'rate1' => 'numeric|required|min:0',
+                    'rate2' => 'numeric|required|min:0',
+                    'rate3' => 'numeric|required|min:0',
+                    'rate4' => 'numeric|required|min:0',
         ]);
         if ($validator->fails()) {
             $this->view['result'] = 'no';

@@ -34,7 +34,7 @@
                             <tr>
                                 <th><span class="red">*</span>{{ trans('validation.attributes.card_id_number') }}</th>
                                 <td>
-                                    <input type="text" name="card_id_number" id="data-card_id_number" class="form-control required" value="{{ $dataResult['card_id_number'] }}">
+                                    <input type="text" name="card_id_number" id="data-card_id_number" class="form-control required" value="{{ $dataResult['card_id_number'] }}"  pattern="^[A-za-z0-9#,\(\)\-_ ]+$">
                                 </td>
                             </tr>
                             <tr>

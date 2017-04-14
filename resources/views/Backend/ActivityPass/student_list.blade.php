@@ -88,7 +88,7 @@
                             <td>{{ $v['email'] }}</td>
                             <td>{{ trans('enum.attend_status.'.$v['attend_status']) }}</td>
                             <td>
-                                <input type='text' id="score_{{$v['activity_id'].'_'.$v['member_id']}}" value="{{ $v['score'] }}" @if($v['pass_status'] == 1) readOnly @endif>
+                                <input type='number' id="score_{{$v['activity_id'].'_'.$v['member_id']}}" value="{{ $v['score'] }}" @if($v['pass_status'] == 1) readOnly @endif>
                             </td>
                             <td>
                                 @if($v['pass_status'] == 0)
