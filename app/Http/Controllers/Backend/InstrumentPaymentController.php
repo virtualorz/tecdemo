@@ -149,7 +149,7 @@ class InstrumentPaymentController extends Controller {
             foreach($idResulttmp as $k=>$v)
             {
                 array_push($idResult,$v['pi_list_id']);
-            }log::error($idResult);
+            }
         }
         if($card_id_number != "")
         {
@@ -192,7 +192,7 @@ class InstrumentPaymentController extends Controller {
             }
             $idResult = array_merge($idResult,$idResult_i);
         }
-        if(count($idResult) !=0)
+        if($name != "" || $card_id_number != "" || $member_type != "")
         {
             $listResult->whereIn('payment_data.pi_list_id',$idResult);
         }

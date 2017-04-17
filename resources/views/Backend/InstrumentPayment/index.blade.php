@@ -103,7 +103,7 @@
                         @foreach($listResult as $k => $v)
                         <tr>
                             <td>{{ $v['pay_year'] }}/{{ $v['pay_month'] }}</td>
-                            <td>{{ $v['department_name'] }}</td>
+                            <td>{{ $v['organize_name'] }}/{{ $v['department_name'] }}</td>
                             <td>{{ $v['pi_name'] }}</td>
                             <td>{{ $v['total'] }}</td>
                             <td>
