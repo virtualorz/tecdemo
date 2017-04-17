@@ -126,7 +126,7 @@
                                 @if($v['print_member_id'] !== null && $v['pay_count'] == 0)
                                 {!! ViewHelper::button('complete_pay', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
                                 @endif
-                                @if($v['create_admin_id'] === null)
+                                @if($v['create_admin_id'] !== null && $v['print_member_id'] === null)
                                 {!! ViewHelper::button('reminder_pay', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
                                 @endif
                                 {!! ViewHelper::button('detail', ['id' => $v['pi_list_id'].'_'.$v['pay_year'].'_'.$v['pay_month']]) !!}
