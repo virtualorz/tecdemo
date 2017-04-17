@@ -149,7 +149,7 @@ class InstrumentPaymentController extends Controller {
             foreach($idResulttmp as $k=>$v)
             {
                 array_push($idResult,$v['pi_list_id']);
-            }
+            }log::error($idResult);
         }
         if($card_id_number != "")
         {
@@ -223,7 +223,7 @@ class InstrumentPaymentController extends Controller {
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
         
         $departmentResult = DB::table('system_department')
-                                    ->select('system_department.id','system_department.name','system_organize.name as organnize_name')
+                                    ->select('system_department.id','system_department.name','system_organize.name as organize_name')
                                     ->leftJoin('system_organize','system_department.organize_id','=','system_organize.id')
                                     ->orderBy('system_department.id','asc')
                                     ->get();

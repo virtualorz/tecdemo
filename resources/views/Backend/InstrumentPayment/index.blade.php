@@ -44,7 +44,7 @@
                                     <select name="department" id="data-department" class="form-control required">
                                         <option value="">{{trans('page.text.select_item')}}</option>
                                         @foreach($departmentResult as $k=>$v)
-                                        <option value="{{$v['id']}}" @if($v['id'] == Request::input('department', '')) selected @endif>{{$v['name']}}</option>
+                                        <option value="{{$v['id']}}" @if($v['id'] == Request::input('department', '')) selected @endif>{{$v['organize_name']}}/{{$v['name']}}</option>
                                         @endforeach
                                     </select>
                                 </td>
