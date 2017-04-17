@@ -463,11 +463,10 @@ class InstrumentPaymentController extends Controller {
             }
             $idResult = array_merge($idResult,$idResult_i);
         }
-        if(count($idResult) !=0)
+        if($name != "" || $card_id_number != "" || $member_type != "")
         {
             $listResult->whereIn('payment_data.pi_list_id',$idResult);
         }
-
         $listResult = $listResult->select('payment_data.pi_list_id',
                                             'payment_data.pay_year',
                                             'payment_data.pay_month',
@@ -477,17 +476,7 @@ class InstrumentPaymentController extends Controller {
                                             'payment_data.print_member_id',
                                             'payment_data.create_admin_id',
                                             'system_pi_list.name as pi_name',
-                                            DB::raw('count(payment_paylog.payment_paylog_id) as pay_count'),
-                                            'payment_reservation_log.payment_reservation_log_id',
-                                            'payment_reservation_log.pi_list_id',
-                                            'payment_reservation_log.pay_year',
-                                            'payment_reservation_log.pay_month',
-                                            'payment_reservation_log.discount_JSON',
-                                            'instrument_reservation_data.*',
-                                            DB::raw('DATE_FORMAT(instrument_reservation_data.create_date, "%Y%m") as create_date_ym'),
-                                            'instrument_data.name as instrument_name',
-                                            'member_data.name as member_name',
-                                            'member_data.type as member_type')
+                                            DB::raw('count(payment_paylog.payment_paylog_id) as pay_count'))
                                     ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
                                     ->leftJoin('system_organize','system_pi_list.organize_id','=','system_organize.id')
                                     ->leftJoin('system_department','system_pi_list.department_id','=','system_department.id')
@@ -496,82 +485,108 @@ class InstrumentPaymentController extends Controller {
                                         $join->on('payment_paylog.pay_year','=','payment_data.pay_year');
                                         $join->on('payment_paylog.pay_month','=','payment_data.pay_month');
                                     })
-                                    ->leftJoin('payment_reservation_log',function($join){
-                                        $join->on('payment_reservation_log.pi_list_id','=','payment_data.pi_list_id');
-                                        $join->on('payment_reservation_log.pay_year','=','payment_data.pay_year');
-                                        $join->on('payment_reservation_log.pay_month','=','payment_data.pay_month');
-                                    })
-                                    ->leftJoin('instrument_reservation_data', function ($join) {
-                                        $join->on('payment_reservation_log.instrument_reservation_data_id', '=', 'instrument_reservation_data.instrument_reservation_data_id');
-                                        $join->on('payment_reservation_log.create_date', '=', 'instrument_reservation_data.create_date');
-                                    })
-                                    ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
-                                    ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
                                     ->orderBy('payment_data.pay_year','desc')
+                                    ->groupBy('payment_data.pi_list_id')
+                                    ->groupBy('payment_data.pay_year')
+                                    ->groupBy('payment_data.pay_month')
                                     ->get();
         foreach($listResult as $k=>$v)
         {
-            $listResult[$k]['discount_JSON'] = json_decode($v['discount_JSON'],true);
-            $listResult[$k]['supplies_JOSN'] = json_decode($v['supplies_JOSN'],true);
-            if($listResult[$k]['supplies_JOSN'] != '')
+            $reservationlogResult = DB::table('payment_reservation_log')
+                            ->select('payment_reservation_log.payment_reservation_log_id',
+                                    'payment_reservation_log.pi_list_id',
+                                    'payment_reservation_log.pay_year',
+                                    'payment_reservation_log.pay_month',
+                                    'payment_reservation_log.discount_JSON',
+                                    'instrument_reservation_data.*',
+                                    DB::raw('DATE_FORMAT(instrument_reservation_data.create_date, "%Y%m") as create_date_ym'),
+                                    'instrument_data.name as instrument_name',
+                                    'member_data.name as member_name',
+                                    'member_data.type as member_type')
+                            ->leftJoin('instrument_reservation_data', function ($join) {
+                                $join->on('payment_reservation_log.instrument_reservation_data_id', '=', 'instrument_reservation_data.instrument_reservation_data_id');
+                                $join->on('payment_reservation_log.create_date', '=', 'instrument_reservation_data.create_date');
+                            })
+                            ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
+                            ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
+                            ->where('payment_reservation_log.pi_list_id',$v['pi_list_id'])
+                            ->where('payment_reservation_log.pay_year',$v['pay_year'])
+                            ->where('payment_reservation_log.pay_month',$v['pay_month'])
+                            ->orderBy('payment_reservation_log.payment_reservation_log_id','desc')
+                            ->get();
+            foreach($reservationlogResult as $k1=>$v1)
             {
-                foreach($listResult[$k]['supplies_JOSN'] as $k1=>$v1)
+                $reservationlogResult[$k1]['discount_JSON'] = json_decode($v1['discount_JSON'],true);
+                $reservationlogResult[$k1]['supplies_JOSN'] = json_decode($v1['supplies_JOSN'],true);
+                if($reservationlogResult[$k1]['supplies_JOSN'] != '')
                 {
-                    $supplies = DB::table('instrument_supplies')
-                        ->select('name')
-                        ->where('id',$v1['id'])
-                        ->first();
-                    if(isset($supplies['name']))
+                    foreach($reservationlogResult[$k1]['supplies_JOSN'] as $k2=>$v2)
                     {
-                        $listResult[$k]['supplies_JOSN'][$k1]['name'] = $supplies['name'];
+                        $supplies = DB::table('instrument_supplies')
+                            ->select('name')
+                            ->where('id',$v2['id'])
+                            ->first();
+                        if(isset($supplies['name']))
+                        {
+                            $reservationlogResult[$k1]['supplies_JOSN'][$k2]['name'] = $supplies['name'];
+                        }
                     }
                 }
+                else
+                {
+                    $reservationlogResult[$k1]['supplies_JOSN'] = array();
+                }
             }
-            else
-            {
-                $listResult[$k]['supplies_JOSN'] = array();
-            }
+            $listResult[$k]['reservationlogResult'] = $reservationlogResult; 
         }
+
 
         $result = array();
         foreach($listResult as $k=>$v)
         {
-            $tmp = array();
-            $tmp['月份'] = $v['pay_year'].'/'.$v['pay_month'];
-            $tmp['單位'] = $v['organize_name'].'/'.$v['department_name'];
-            $tmp['指導教授'] = $v['pi_name'];
-            $tmp['總金額'] = $v['total']; 
-            $tmp['使用時段'] = $v['use_dt_start'].' - '.$v['use_dt_end']; 
-            $tmp['會員'] = $v['member_name']; 
-            $tmp['儀器'] = $v['instrument_name']; 
-            $tmp['費用'] = $v['pay'];
-            if(is_array($v['discount_JSON']))
+            foreach($v['reservationlogResult'] as $k1=>$v1)
             {
-                if($v['discount_JSON']['type'] == 1)
+                $tmp = array();
+                if($k1 == 0)
                 {
-                    $tmp['折扣'] = $v['discount_JSON']['number'].'%'; 
+                    $tmp['月份'] = $v['pay_year'].'/'.$v['pay_month'];
+                    $tmp['單位'] = $v['organize_name'].'/'.$v['department_name'];
+                    $tmp['指導教授'] = $v['pi_name'];
+                    $tmp['總金額'] = $v['total']; 
                 }
                 else
                 {
-                    $tmp['折扣'] = $v['discount_JSON']['number'].'元'; 
+                    $tmp['月份'] = '';
+                    $tmp['單位'] = '';
+                    $tmp['指導教授'] = '';
+                    $tmp['總金額'] = ''; 
                 }
-            }
-            if(is_array($v['supplies_JOSN']))
-            {
-                $tmp['耗材'] = "";
-                foreach($v['supplies_JOSN'] as $k1=>$v1)
+                $tmp['使用時段'] = $v1['use_dt_start'].' - '.$v1['use_dt_end']; 
+                $tmp['會員'] = $v1['member_name']; 
+                $tmp['儀器'] = $v1['instrument_name']; 
+                $tmp['費用'] = $v1['pay'];
+                if(is_array($v1['discount_JSON']))
                 {
-                    $tmp['耗材'] .= $v1['name'].':'.$v1['count'].'=>'.$v1['total'].';';
+                    if($v1['discount_JSON']['type'] == 1)
+                    {
+                        $tmp['折扣'] = $v1['discount_JSON']['number'].'%'; 
+                    }
+                    else
+                    {
+                        $tmp['折扣'] = $v1['discount_JSON']['number'].'元'; 
+                    }
                 }
+                if(is_array($v1['supplies_JOSN']))
+                {
+                    $tmp['耗材'] = "";
+                    foreach($v1['supplies_JOSN'] as $k2=>$v2)
+                    {
+                        $tmp['耗材'] .= $v2['name'].':'.$v2['count'].'=>'.$v2['total'].';';
+                    }
+                }
+                array_push($result,$tmp);
             }
-            array_push($result,$tmp);
         }
-
-
-
-
-
-
         Excel::create(date('Y-m-d'), function($excel)use($result) {
             $excel->sheet('sheet1', function($sheet)use($result) {
 
@@ -579,7 +594,6 @@ class InstrumentPaymentController extends Controller {
 
             });
         })->download('xls');
-
 
 
         /*$id = explode('_',Route::input('id', '0_0_0'));
