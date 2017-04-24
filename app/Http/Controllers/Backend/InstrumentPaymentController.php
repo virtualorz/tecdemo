@@ -24,7 +24,7 @@ class InstrumentPaymentController extends Controller {
     public function index() {
 
         //處理帳單單據
-        if(intval(date('d')) >= 5)
+        if(intval(date('d')) >= 10)
         {
             $reservation_data = DB::table('instrument_reservation_data')
                 ->select('instrument_reservation_data.*','member_data.pi_list_id')
