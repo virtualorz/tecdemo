@@ -403,6 +403,7 @@ class MemberProtofolioController extends Controller {
                     'start_dt' => 'date|required',
                     'limit_month' => 'integer|required|min:0',
                     'permission' => 'array|required',
+                    'enable' => 'integer|required',
         ]);
         if ($validator->fails()) {
             $this->view['result'] = 'no';
@@ -458,6 +459,7 @@ class MemberProtofolioController extends Controller {
                                     'type'=>Request::input('type'),
                                     'start_dt'=>Request::input('start_dt'),
                                     'limit_month'=>Request::input('limit_month'),
+                                    'enable'=>Request::input('enable'),
                         ]);
                 }
                 else
@@ -477,6 +479,7 @@ class MemberProtofolioController extends Controller {
                                     'type'=>Request::input('type'),
                                     'start_dt'=>Request::input('start_dt'),
                                     'limit_month'=>Request::input('limit_month'),
+                                    'enable'=>Request::input('enable'),
                         ]);
                 }
                 $result_after = DB::table('member_data')

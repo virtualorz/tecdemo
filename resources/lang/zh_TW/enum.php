@@ -72,6 +72,7 @@ return [
     'member-enable' => [
         0 => '未啟用',
         1 => '已啟用',
+        2 => '已停權',
     ],
     'apply_item-pay_way' => [
         1 => '現金',

@@ -142,6 +142,15 @@
                                 <td>{{ $dataResult['created_admin_name'] }}</td>
                             </tr>
                             <tr>
+                                <td><span class="red">*</span>{{ trans('validation.attributes.enable') }}</td>
+                                <td>
+                                    <div>                  
+                                        <label class="check"><input type="radio" name="enable" id="data_enable_1" class="iradio required" value="1" @if( $dataResult['enable'] == 1)checked @endif /> {{ trans('enum.enable.1') }}</label>
+                                        <label class="check"><input type="radio" name="enable" id="data_enable_0" class="iradio required" value="2" @if( $dataResult['enable'] == 2)checked @endif /> {{ trans('enum.enable.0') }}</label> 
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>&nbsp;</th>
                                 <td> 
                                     <input type="hidden" name="id" value="{{ $dataResult['id'] }}" />

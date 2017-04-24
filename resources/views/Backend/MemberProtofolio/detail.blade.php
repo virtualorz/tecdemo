@@ -113,6 +113,10 @@
                                 <td>{{ $dataResult['created_admin_name'] }}</td>
                             </tr>
                             <tr>
+                                <th>{{ trans('validation.attributes.enable') }}</th>
+                                <td>{{ trans('enum.member-enable.'.$dataResult['enable']) }}</td>
+                            </tr>
+                            <tr>
                                 <th>&nbsp;</th>
                                 <td> 
                                     {!! ViewHelper::button('back') !!}

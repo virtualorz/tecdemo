@@ -45,6 +45,14 @@ class LoginController extends Controller {
 
                     return $this->view;
                 }
+                if($dataResult['enable'] == 2)
+                {
+                    $this->view['result'] = 'no';
+                    $this->view['msg'] = trans('message.error.login');
+                    $this->view['detail'][] = trans('message.info.stop');
+
+                    return $this->view;
+                }
                 if(strtotime($dataResult['start_dt']) > strtotime(date('Y-m-d')))
                 {
                     $this->view['result'] = 'no';
