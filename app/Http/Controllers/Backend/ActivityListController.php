@@ -181,7 +181,7 @@ class ActivityListController extends Controller {
             $validator = Validator::make(Request::all(), [
                         'activity_id' => 'string|required|max:64',
                         'start_dt' => 'date|required',
-                        'activity_name' => 'string|required|max:32',
+                        'activity_name' => 'string|required|max:255',
                         'activity_type_id' => 'integer|required',
                         'relative_plateform' => 'array|required',
                         'instrument_array' => 'array|required',
@@ -340,7 +340,7 @@ class ActivityListController extends Controller {
             $validator = Validator::make(Request::all(), [
                         'activity_id' => 'string|required|max:64',
                         'start_dt' => 'date|required',
-                        'activity_name' => 'string|required|max:32',
+                        'activity_name' => 'string|required|max:255',
                         'activity_type_id' => 'integer|required',
                         'relative_plateform' => 'array|required',
                         'instrument_array' => 'array|required',
