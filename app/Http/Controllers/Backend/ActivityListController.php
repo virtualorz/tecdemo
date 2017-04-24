@@ -56,8 +56,8 @@ class ActivityListController extends Controller {
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
         
         $instrumentResult = DB::table('instrument_data')
-                                    ->select('id','name')
-                                    ->orderBy('id','desc')
+                                    ->select('id','instrument_id','name')
+                                    ->orderBy('instrument_id','asc')
                                     ->get();
         
         $this->view->with('listResult', $listResult);

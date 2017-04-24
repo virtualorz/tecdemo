@@ -44,7 +44,7 @@
                                     <select name="instrument" id="data-instrument" class="form-control required">
                                         <option value="">{{trans('page.text.select_item')}}</option>
                                         @foreach($instrumentResult as $k=>$v)
-                                        <option value="{{$v['id']}}" @if($v['id'] == Request::input('instrument', '')) selected @endif>{{$v['name']}}</option>
+                                        <option value="{{$v['id']}}" @if($v['id'] == Request::input('instrument', '')) selected @endif>{{$v['instrument_id']}} - {{$v['name']}}</option>
                                         @endforeach
                                     </select>
                                 </td>
