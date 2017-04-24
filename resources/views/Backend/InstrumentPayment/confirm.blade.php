@@ -61,6 +61,7 @@
                                                         @endforeach
                                                     </select>
                                                     <input type="number" name="discount_number[]" id="data-discount_number_{{$k}}" class="form-control discount_number">
+                                                    <span id="discount_unit"></span>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -158,6 +159,15 @@
             if($("#data-discount_number_"+$(this).attr('data-id')).val() != "" && $(this).val() != "")
             {
                 cal_total();
+            }
+            
+            if($(this).val().split('_')[1] == "1")
+            {
+                $("#discount_unit").html("{{ trans('enum.discount_unit.1') }}");
+            }
+            else
+            {
+                $("#discount_unit").html("{{ trans('enum.discount_unit.2') }}");
             }
         });
 
