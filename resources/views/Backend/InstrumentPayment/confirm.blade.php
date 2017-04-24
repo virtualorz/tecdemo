@@ -12,7 +12,6 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 @if(count($dataResult) > 0)
-                <form id="form1" method="post" action="{{ Sitemap::node()->getChildren('submit')->getUrl() }}">
                     <table class="table datatable_simple nohead">
                         <thead>
                             <tr>
@@ -21,6 +20,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <form id="form1" method="post" action="{{ Sitemap::node()->getChildren('submit')->getUrl() }}">
                             <tr>
                                 <th width="15%">{{ trans('validation.attributes.month') }}</th>
                                 <td>{{ $dataResult['pay_year'] }}/{{ $dataResult['pay_month'] }}</td>
@@ -117,6 +117,7 @@
                                 <th>{{ trans('validation.attributes.create_admin_id') }}</th>
                                 <td>{{ User::get('name', '') }}</td>
                             </tr>
+                            </form>
                             <tr>
                                 <th>&nbsp;</th>
                                 <td> 
@@ -127,7 +128,6 @@
                             </tr>
                         </tbody>
                     </table>
-                </form>
                 @else
                 <div align="center">{{ trans('message.info.norecord') }}</div>
                 @endif
