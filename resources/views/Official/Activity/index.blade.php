@@ -42,7 +42,7 @@
        							<table class="table table-striped"> 
 									<thead> 
 										<tr>
-										<th class="ttw50">平台</th> 
+										<th class="ttw100">平台</th> 
 										<th class="ttw100">日期</th>
 										<th class="ttw100">活動編號</th> 
 										<th>活動名稱</th>
@@ -89,7 +89,7 @@
        							<table class="table table-striped"> 
 									<thead> 
 										<tr>
-										<th class="ttw50">平台</th> 
+										<th class="ttw100">平台</th> 
 										<th class="ttw100">日期</th>
 										<th class="ttw100">活動編號</th> 
 										<th>活動名稱</th>
@@ -133,7 +133,7 @@
        							<table class="table table-striped"> 
 									<thead> 
 										<tr>
-										<th class="ttw50">平台</th> 
+										<th class="ttw100">平台</th> 
 										<th class="ttw100">日期</th>
 										<th class="ttw100">活動編號</th> 
 										<th>活動名稱</th>
