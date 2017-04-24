@@ -27,8 +27,35 @@ class ActivityController extends Controller {
         $pagination = array();
         if($keyword != "")
         {
-            $searchResult = DB::table('activity_data')
-                            ->where('activity_data.activity_name','like','%'.$keyword.'%')
+            //找相關平台名稱
+            $plateform = array();
+            $tmp_plateform = DB::table('instrument_type')
+                        ->select('id')
+                        ->where('name','like','%'.$keyword.'%')
+                        ->get();
+            foreach($tmp_plateform as $k=>$v)
+            {
+                array_push($plateform,$v['id']);
+            }
+            //找相關儀器
+            $instrument = array();
+            $tmp_instrument = DB::table('activity_instrument')
+                            ->select('activity_instrument.activity_id')
+                            ->leftJoin('instrument_data','activity_instrument.instrument_id','=','instrument_data.id')
+                            ->orWhere('instrument_data.name','like','%'.$keyword.'%')
+                            ->orWhere('instrument_data.instrument_id','like','%'.$keyword.'%')
+                            ->get();
+            foreach($tmp_instrument as $k=>$v)
+            {
+                array_push($instrument,$v['activity_id']);
+            }
+            $para[0] = $instrument;
+            $para[1] = $keyword;
+            $searchResult_tmp = DB::table('activity_data')
+                            ->orWhere(function ($query)use($para) {
+                                $query->orWhereIn('activity_data.id',$para[0]);
+                                $query->orWhere('activity_data.activity_name','like','%'.$para[1].'%');
+                            })
                             ->where('activity_data.enable',1)
                             ->select('activity_data.uid',
                                             'activity_data.salt',
@@ -49,6 +76,20 @@ class ActivityController extends Controller {
                             ->groupBy('activity_data.id')
                             ->orderBy('start_dt','desc')
                             ->get();
+            $searchResult = array();
+            
+            foreach($searchResult_tmp as $k=>$v)
+            {
+                $v['relative_plateform'] = json_decode($v['relative_plateform'],true);
+                foreach($v['relative_plateform'] as $k1=>$v1)
+                {
+                    if(in_array($v1,$plateform))
+                    {
+                        array_push($searchResult,$v);
+                        break;
+                    }
+                }
+            }
         }
         else
         {
