@@ -9,16 +9,16 @@
                 我的期刊發表
                 </a>
                 
-                <a href="{{ asset('member/e_portfolio') }}" class="col-xs-6 contentbtn slmenu03">
-                E Portfolio
-                </a>
-                
                 <a href="{{ asset('member/message') }}" class="col-xs-6 contentbtn slmenu04">
                 通知訊息@if($message_count != 0)<span class="badge">{{ $message_count }}</span>@endif
                 </a>
                 
                 <a href="{{ asset('member/activity') }}" class="col-xs-6 contentbtn slmenu05">
                 活動參與紀錄
+                </a>
+
+                <a href="{{ asset('member/e_portfolio') }}" class="col-xs-6 contentbtn slmenu03">
+                活動認證
                 </a>
                 
                 <a href="{{ asset('member/instrument') }}" class="col-xs-6 contentbtn slmenu06">
