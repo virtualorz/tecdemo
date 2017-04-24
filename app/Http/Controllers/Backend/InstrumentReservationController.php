@@ -59,9 +59,9 @@ class InstrumentReservationController extends Controller {
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
         
         $instrumentResult = DB::table('instrument_data')
-                                    ->select('instrument_data.id','instrument_data.name','instrument_type.name as type_name')
+                                    ->select('instrument_data.id','instrument_data.instrument_id','instrument_data.name','instrument_type.name as type_name')
                                     ->leftJoin('instrument_type','instrument_data.instrument_type_id','=','instrument_type.id')
-                                    ->orderBy('instrument_type.id','asc')
+                                    ->orderBy('instrument_data.instrument_id','asc')
                                     ->get();
         
         $this->view->with('listResult', $listResult);
