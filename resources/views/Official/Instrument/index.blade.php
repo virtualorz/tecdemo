@@ -41,11 +41,11 @@
        							<table class="table table-striped"> 
 									<thead> 
 										<tr>
-										<th class="ttw50">平台</th>
+										<th class="ttw100">平台</th>
 										<th class="ttw100">儀器編號</th> 
-										<th class="ttw100">儀器名稱</th>
-										<th>功能簡述</th>
+										<th class="ttw200">儀器名稱</th>
 										<th class="ttw80">管理員</th>
+										<th>功能簡述</th>
 										<th class="ttw80 text-center">地點</th>
 										</tr> 
 									</thead> 
@@ -62,8 +62,8 @@
 												{{ $v['name'] }}
 											@endif
 										  </td> 
-										  <td>{{ $v['function'] }}</td>
 										  <td>{{ $v['admin_name'] }}</td>
+										  <td>{{ $v['function'] }}</td>
 										  <td class="text-center">{{ $v['site_name'] }}</td>
 										</tr>
                                         @endforeach
@@ -81,11 +81,11 @@
        							<table class="table table-striped"> 
 									<thead> 
 										<tr>
-										<th class="ttw50">平台</th>
+										<th class="ttw100">平台</th>
 										<th class="ttw100">儀器編號</th> 
-										<th class="ttw100">儀器名稱</th>
-										<th>功能簡述</th>
+										<th class="ttw200">儀器名稱</th>
 										<th class="ttw80">管理員</th>
+										<th>功能簡述</th>
 										<th class="ttw80 text-center">地點</th>
 										</tr> 
 									</thead> 
@@ -102,8 +102,8 @@
 												{{ $v1['name'] }}
 											@endif
 										  </td> 
-										  <td>{{ $v1['function'] }}</td>
 										  <td>{{ $v1['admin_name'] }}</td>
+										  <td>{{ $v1['function'] }}</td>
 										  <td class="text-center">{{ $v1['site_name'] }}</td>
 										</tr>
                                          @endforeach
