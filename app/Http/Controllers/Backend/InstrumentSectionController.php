@@ -24,7 +24,7 @@ class InstrumentSectionController extends Controller {
         $listResult = DB::table('instrument_section');
 
         $listResult = $listResult->select('id','section_type','start_time','end_time',DB::raw('DATE_FORMAT(created_at, "%Y/%m/%d") as created_at'),'enable')
-                                    ->orderBy('id','desc')
+                                    ->orderBy('start_time','asc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
         

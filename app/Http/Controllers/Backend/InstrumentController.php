@@ -100,7 +100,7 @@ class InstrumentController extends Controller {
         $sectionResultTmp = DB::table('instrument_section')
                                     ->select('id','section_type','start_time','end_time')
                                     ->where('enable',1)
-                                    ->orderBy('section_type','asc')
+                                    ->orderBy('start_time','asc')
                                     ->get();
         $sectionResult = array();
         foreach($sectionResultTmp as $k=>$v)
@@ -178,7 +178,7 @@ class InstrumentController extends Controller {
         $sectionResultTmp = DB::table('instrument_section')
                                     ->select('id','section_type','start_time','end_time')
                                     ->where('enable',1)
-                                    ->orderBy('section_type','asc')
+                                    ->orderBy('start_time','asc')
                                     ->get();
         $sectionResult = array();
         foreach($sectionResultTmp as $k=>$v)
@@ -255,7 +255,7 @@ class InstrumentController extends Controller {
         $sectionResultTmp = DB::table('instrument_section')
                                     ->select('id','section_type','start_time','end_time')
                                     ->where('enable',1)
-                                    ->orderBy('section_type','asc')
+                                    ->orderBy('start_time','asc')
                                     ->get();
         $sectionResult = array();
         foreach($sectionResultTmp as $k=>$v)
