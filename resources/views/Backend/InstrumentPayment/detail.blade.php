@@ -38,7 +38,7 @@
                                             <tr>
                                                 <th>{{ trans('validation.attributes.pay_code') }}</th>
                                                 <th>{{ trans('validation.attributes.section') }}</th>
-                                                <th>{{ trans('validation.attributes.member') }}</th>
+                                                <th>{{ trans('validation.attributes.user') }}</th>
                                                 <th>{{ trans('validation.attributes.instrument') }}</th>
                                                 <th>{{ trans('validation.attributes.apply_item-fee') }}</th>
                                                 <th>{{ trans('validation.attributes.discount') }}</th>

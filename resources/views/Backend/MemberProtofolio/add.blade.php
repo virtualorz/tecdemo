@@ -26,7 +26,7 @@
                                 <td>{{ date('Y/m/d') }}</td>
                             </tr>
                             <tr>
-                                <th><span class="red">*</span>{{ trans('validation.attributes.name') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.user') }}</th>
                                 <td>
                                     <input type="text" name="name" id="data-name" class="form-control required">
                                 </td>

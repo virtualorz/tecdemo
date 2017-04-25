@@ -25,7 +25,7 @@
                                 <label class="check"><input type="checkbox" class="icheckbox ckbItemAll" /> {{ trans('page.btn.select_all') }}</label>
                             </th>
                             <th width="15%">{{ trans('validation.attributes.created_at') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.name') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.admin-name') }}</th>
                             <th width="15%">{{ trans('validation.attributes.permission') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>

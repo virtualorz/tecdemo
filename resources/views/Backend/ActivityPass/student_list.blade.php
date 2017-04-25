@@ -27,7 +27,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{ trans('validation.attributes.admin-name') }}</td>
+                                <td>{{ trans('validation.attributes.user') }}</td>
                                 <td>
                                     <input type="text" name="name" id="data-namedate" class="form-control" value="{{ Request::input('name', '') }}">
                                 </td>
@@ -52,8 +52,8 @@
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>
-                                    <button type="button" class="btn btn-default btnReset">{{ trans('page.btn.reset') }}</button>
                                     <button type="submit" name="submit_search" value="1" class="btn btn-default btnSubmit">{{ trans('page.btn.search') }}</button>
+                                    <button type="button" class="btn btn-default btnReset">{{ trans('page.btn.reset') }}</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -73,7 +73,7 @@
                     <thead>
                         <tr>
                             <th width="15%">{{ trans('validation.attributes.reservation_at') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.name') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.user') }}</th>
                             <th width="15%">{{ trans('validation.attributes.email') }}</th>
                             <th width="15%">{{ trans('validation.attributes.enable') }}</th>
                             <th width="15%">{{ trans('validation.attributes.score_pass') }}</th>

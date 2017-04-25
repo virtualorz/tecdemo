@@ -21,7 +21,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <th>{{ trans('validation.attributes.name') }}</th>
+                                <th>{{ trans('validation.attributes.user') }}</th>
                                 <td>
                                     {{ $dataResult['name'] }}
                                 </td>
