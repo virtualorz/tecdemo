@@ -95,8 +95,8 @@
                             <tr>
                                 <td>&nbsp;</td>
                                 <td>
-                                    <button type="button" class="btn btn-default btnReset">{{ trans('page.btn.reset') }}</button>
                                     <button type="submit" name="submit_search" value="1" class="btn btn-default btnSubmit">{{ trans('page.btn.search') }}</button>
+                                    <button type="button" class="btn btn-default btnReset">{{ trans('page.btn.reset') }}</button>
                                 </td>
                             </tr>
                         </tbody>
