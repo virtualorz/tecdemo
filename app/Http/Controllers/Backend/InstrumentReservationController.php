@@ -48,10 +48,16 @@ class InstrumentReservationController extends Controller {
                                             'instrument_reservation_data.attend_status',
                                             'instrument_data.instrument_id',
                                             'instrument_data.name',
-                                            'member_data.name as member_name')
+                                            'member_data.name as member_name',
+                                            'system_organize.name as organize_name',
+                                            'system_department.name as department_name',
+                                            'system_pi_list.name as pi_name')
                                     ->leftJoin('instrument_section','instrument_reservation_data.reservation_section_id','=','instrument_section.id')
                                     ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
                                     ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
+                                    ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                                    ->leftJoin('system_department','member_data.department_id','=','system_department.id')
+                                    ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
                                     ->orderBy('instrument_reservation_data.reservation_dt','desc')
                                     ->orderBy('instrument_section.start_time','asc')
                                     ->orderBy('instrument_reservation_data.created_at','asc')
@@ -83,10 +89,14 @@ class InstrumentReservationController extends Controller {
                                         'instrument_data.name',
                                         'member_data.name as member_name',
                                         'member_data.type as member_type',
+                                        'system_organize.name as organize_name',
+                                        'system_department.name as department_name',
                                         'system_pi_list.name as pi_name')
                             ->leftJoin('instrument_section','instrument_reservation_data.reservation_section_id','=','instrument_section.id')
                             ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
                             ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
+                            ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                            ->leftJoin('system_department','member_data.department_id','=','system_department.id')
                             ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
                             ->where('instrument_reservation_data.instrument_reservation_data_id',$id[0])
                             ->where('instrument_reservation_data.create_date',$id[1])
@@ -115,11 +125,15 @@ class InstrumentReservationController extends Controller {
                                         'instrument_data.instrument_id',
                                         'instrument_data.name',
                                         'member_data.name as member_name',
+                                        'system_organize.name as organize_name',
+                                        'system_department.name as department_name',
                                         'system_pi_list.name as pi_name',
                                         'member_admin.name as created_admin_name')
                             ->leftJoin('instrument_section','instrument_reservation_data.reservation_section_id','=','instrument_section.id')
                             ->leftJoin('instrument_data','instrument_reservation_data.instrument_id','=','instrument_data.id')
                             ->leftJoin('member_data','instrument_reservation_data.member_id','=','member_data.id')
+                            ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                            ->leftJoin('system_department','member_data.department_id','=','system_department.id')
                             ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
                             ->leftJoin('member_admin','instrument_reservation_data.update_admin_id','=','member_admin.id')
                             ->where('instrument_reservation_data.instrument_reservation_data_id',$id[0])

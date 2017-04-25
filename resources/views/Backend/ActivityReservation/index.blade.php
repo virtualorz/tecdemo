@@ -77,11 +77,10 @@
                             </th>
                             <th width="15%">{{ trans('validation.attributes.reservation_at') }}</th>
                             <th width="15%">{{ trans('validation.attributes.user') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.email') }}</th>
                             <th width="15%">{{ trans('validation.attributes.system-organize') }}</th>
                             <th width="15%">{{ trans('validation.attributes.system-department') }}</th>
                             <th width="15%">{{ trans('validation.attributes.pi') }}</th>
-
+                            <th width="15%">{{ trans('validation.attributes.email') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,10 +91,10 @@
                             </td>
                             <td>{{ $v['created_at'] }}</td>
                             <td>{{ $v['name'] }}</td>
-                            <td>{{ $v['email'] }}</td>
                             <td>{{ $v['organize_name'] }}</td>
                             <td>{{ $v['department_name'] }}</td>
                             <td>{{ $v['pi_name'] }}</td>
+                            <td>{{ $v['email'] }}</td>
                         </tr>
                         @endforeach
                     </tbody>

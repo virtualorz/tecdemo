@@ -25,6 +25,9 @@
                             <th width="15%">{{ trans('validation.attributes.activity_date') }}</th>
                             <th width="15%">{{ trans('validation.attributes.activity_name') }}</th>
                             <th width="15%">{{ trans('validation.attributes.apply_name') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-organize') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-department') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.pi') }}</th>
                             <th width="15%">{{ trans('validation.attributes.email') }}</th>
                             <th width="15%">{{ trans('validation.attributes.apply_reason') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
@@ -41,6 +44,9 @@
                             @endif
                             <td>{{ $v['activity_name'] }}</td>
                             <td>{{ $v['name'] }}</td>
+                            <td>{{ $v['organize_name'] }}</td>
+                            <td>{{ $v['department_name'] }}</td>
+                            <td>{{ $v['pi_name'] }}</td>
                             <td>{{ $v['email'] }}</td>
                             <td>{{ $v['reason'] }}</td>
                             <td>
@@ -68,6 +74,9 @@
                             <th width="15%">{{ trans('validation.attributes.activity_date') }}</th>
                             <th width="15%">{{ trans('validation.attributes.activity_name') }}</th>
                             <th width="15%">{{ trans('validation.attributes.apply_name') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-organize') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-department') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.pi') }}</th>
                             <th width="15%">{{ trans('validation.attributes.email') }}</th>
                             <th width="15%">{{ trans('validation.attributes.apply_reason') }}</th>
                             <th width="25%">{{ trans('validation.attributes.is_pass') }}</th>
@@ -85,6 +94,9 @@
                             @endif
                             <td>{{ $v['activity_name'] }}</td>
                             <td>{{ $v['name'] }}</td>
+                            <td>{{ $v['organize_name'] }}</td>
+                            <td>{{ $v['department_name'] }}</td>
+                            <td>{{ $v['pi_name'] }}</td>
                             <td>{{ $v['email'] }}</td>
                             <td>{{ $v['reason'] }}</td>
                             <td>{{ trans('enum.is_pass.'.$v['is_pass']) }}</td>

@@ -92,7 +92,8 @@
                     <thead>
                         <tr>
                             <th width="15%">{{ trans('validation.attributes.month') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.department') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-organize') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-department') }}</th>
                             <th width="15%">{{ trans('validation.attributes.pi') }}</th>
                             <th width="15%">{{ trans('validation.attributes.total') }}</th>
                             <th width="15%">{{ trans('validation.attributes.pay_status') }}</th>
@@ -103,7 +104,8 @@
                         @foreach($listResult as $k => $v)
                         <tr>
                             <td>{{ $v['pay_year'] }}/{{ $v['pay_month'] }}</td>
-                            <td>{{ $v['organize_name'] }}/{{ $v['department_name'] }}</td>
+                            <td>{{ $v['organize_name'] }}</td>
+                            <td>{{ $v['department_name'] }}</td>
                             <td>{{ $v['pi_name'] }}</td>
                             <td>{{ $v['total'] }}</td>
                             <td>

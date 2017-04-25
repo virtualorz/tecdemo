@@ -74,11 +74,17 @@ class ActivityPassController extends Controller {
                                             'activity_reservation_data.pass_status',
                                             'activity_reservation_data.score',
                                             'member_data.name',
-                                            'member_data.email')
+                                            'member_data.email',
+                                            'system_organize.name as organize_name',
+                                            'system_department.name as department_name',
+                                            'system_pi_list.name as pi_name')
                                     ->leftJoin('member_data','activity_reservation_data.member_id','=','member_data.id')
+                                    ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                                    ->leftJoin('system_department','member_data.department_id','=','system_department.id')
+                                    ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
                                     ->where('reservation_status',1)
                                     ->where('activity_id',$id)
-                                    ->orderBy('id','desc')
+                                    ->orderBy('activity_reservation_data.created_at','desc')
                                     ->get();
         $this->view->with('listResult', $listResult);
         $this->view->with('id_type', Config::get('data.id_type'));

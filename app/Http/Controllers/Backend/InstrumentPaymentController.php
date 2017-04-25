@@ -219,6 +219,8 @@ class InstrumentPaymentController extends Controller {
                                     ->groupBy('payment_data.pi_list_id')
                                     ->groupBy('payment_data.pay_year')
                                     ->groupBy('payment_data.pay_month')
+                                    ->orderBy('payment_data.pay_year','desc')
+                                    ->orderBy('payment_data.pay_month','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);
         
@@ -239,7 +241,7 @@ class InstrumentPaymentController extends Controller {
     public function confirm() {
         $id = explode('_',Route::input('id', '0_0_0'));
         $dataResult = DB::table('payment_data')
-                            ->select('payment_data.*','system_department.name as department_name','system_organize.name as organize_name')
+                            ->select('payment_data.*','system_department.name as department_name','system_organize.name as organize_name','system_pi_list.name as pi_name')
                             ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
                             ->leftJoin('system_department','system_pi_list.department_id','=','system_department.id')
                             ->leftJoin('system_organize','system_department.organize_id','=','system_organize.id')
@@ -301,7 +303,7 @@ class InstrumentPaymentController extends Controller {
     public function detail() {
         $id = explode('_',Route::input('id', '0_0_0'));
         $dataResult = DB::table('payment_data')
-                            ->select('payment_data.*','member_data.name as created_admin_name','system_department.name as department_name','system_organize.name as organize_name')
+                            ->select('payment_data.*','member_data.name as created_admin_name','system_department.name as department_name','system_organize.name as organize_name','system_pi_list.name as pi_name')
                             ->leftJoin('member_data','payment_data.create_admin_id','=','member_data.id')
                             ->leftJoin('system_pi_list','payment_data.pi_list_id','=','system_pi_list.id')
                             ->leftJoin('system_department','system_pi_list.department_id','=','system_department.id')

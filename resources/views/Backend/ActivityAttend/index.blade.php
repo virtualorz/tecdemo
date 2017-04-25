@@ -75,6 +75,9 @@
 
                             <th width="15%">{{ trans('validation.attributes.reservation_at') }}</th>
                             <th width="15%">{{ trans('validation.attributes.name') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-organize') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-department') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.pi') }}</th>
                             <th width="15%">{{ trans('validation.attributes.email') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
@@ -85,6 +88,9 @@
 
                             <td>{{ $v['created_at'] }}</td>
                             <td>{{ $v['name'] }}</td>
+                            <td>{{ $v['organize_name'] }}</td>
+                            <td>{{ $v['department_name'] }}</td>
+                            <td>{{ $v['pi_name'] }}</td>
                             <td>{{ $v['email'] }}</td>
                             <td>
                                 @if($v['attend_status'] == 0)

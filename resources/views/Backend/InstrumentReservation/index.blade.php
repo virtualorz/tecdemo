@@ -82,6 +82,9 @@
                             <th width="15%">{{ trans('validation.attributes.instrument_id') }}</th>
                             <th width="15%">{{ trans('validation.attributes.instrument_name') }}</th>
                             <th width="15%">{{ trans('validation.attributes.user') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-organize') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-department') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.pi') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
@@ -103,6 +106,9 @@
                             <td>{{ $v['instrument_id'] }}</td>
                             <td>{{ $v['name'] }}</td>
                             <td>{{ $v['member_name'] }}</td>
+                            <td>{{ $v['organize_name'] }}</td>
+                            <td>{{ $v['department_name'] }}</td>
+                            <td>{{ $v['pi_name'] }}</td>
                             <td>
                                 @if($v['attend_status'] == null && $v['attend_status'] !== 0 && $v['reservation_status'] !== null && $v['reservation_status'] !== 2 )
                                 {!! ViewHelper::button('complete', ['id' => $v['instrument_reservation_data_id'].'_'.$v['create_date']]) !!}

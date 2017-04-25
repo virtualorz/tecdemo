@@ -109,9 +109,21 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.department') }}</th>
+                                <th>{{ trans('validation.attributes.system-organize') }}</th>
                                 <td>
-                                    {{ $dataResult['organize_name'] }}/{{ $dataResult['department_name'] }}
+                                    {{ $dataResult['organize_name'] }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ trans('validation.attributes.system-department') }}</th>
+                                <td>
+                                    {{ $dataResult['department_name'] }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{{ trans('validation.attributes.pi') }}</th>
+                                <td>
+                                    {{ $dataResult['pi_name'] }}
                                 </td>
                             </tr>
                             <tr>

@@ -44,9 +44,15 @@ class ActivityRegController extends Controller {
                                             'activity_reg.is_pass',
                                             'member_data.name',
                                             'member_data.email',
+                                            'system_organize.name as organize_name',
+                                            'system_department.name as department_name',
+                                            'system_pi_list.name as pi_name',
                                             'activity_reg.reason')
                                     ->leftJoin('activity_data','activity_reg.activity_id','=','activity_data.id')
                                     ->leftJoin('member_data','activity_reg.member_id','=','member_data.id')
+                                    ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                                    ->leftJoin('system_department','member_data.department_id','=','system_department.id')
+                                    ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
                                     ->whereNotNull('activity_reg.is_pass')
                                     ->orderBy('id','desc')
                                     ->paginate(Config::get('pagination.items'));
@@ -73,9 +79,15 @@ class ActivityRegController extends Controller {
                                         'activity_data.time',
                                         'activity_data.score',
                                         'member_data.name',
-                                        'member_data.email')
+                                        'member_data.email',
+                                        'system_organize.name as organize_name',
+                                        'system_department.name as department_name',
+                                        'system_pi_list.name as pi_name')
                             ->leftJoin('activity_data','activity_reg.activity_id','=','activity_data.id')
                             ->leftJoin('member_data','activity_reg.member_id','=','member_data.id')
+                            ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                            ->leftJoin('system_department','member_data.department_id','=','system_department.id')
+                            ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
                             ->where('activity_reg.id',$id)
                             ->get();
 

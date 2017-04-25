@@ -74,6 +74,9 @@
                         <tr>
                             <th width="15%">{{ trans('validation.attributes.reservation_at') }}</th>
                             <th width="15%">{{ trans('validation.attributes.user') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-organize') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.system-department') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.pi') }}</th>
                             <th width="15%">{{ trans('validation.attributes.email') }}</th>
                             <th width="15%">{{ trans('validation.attributes.enable') }}</th>
                             <th width="15%">{{ trans('validation.attributes.score_pass') }}</th>
@@ -85,6 +88,9 @@
                         <tr>
                             <td>{{ $v['created_at'] }}</td>
                             <td>{{ $v['name'] }}</td>
+                            <td>{{ $v['organize_name'] }}</td>
+                            <td>{{ $v['department_name'] }}</td>
+                            <td>{{ $v['pi_name'] }}</td>
                             <td>{{ $v['email'] }}</td>
                             <td>{{ trans('enum.attend_status.'.$v['attend_status']) }}</td>
                             <td>
