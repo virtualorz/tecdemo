@@ -102,6 +102,8 @@
 									{{ $discount_type[$v['discount_JSON']['type']] }} : <br>
                                     {{ $v['discount_JSON']['number'] }}
 									@endif
+									@if($v['discount_JSON']['type'] == 1) % @else 元 @endif
+									@endif
 								</td>
 								<td>{{ $v['pay'] }}</td>
 							</tr> 

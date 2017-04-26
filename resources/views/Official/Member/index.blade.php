@@ -87,7 +87,7 @@
 									@endif
 								</td>
 								<td class="text-center max767none">
-									@if($v['create_admin_id'] != null && $v['payment_count'] == 0)
+									@if($v['create_admin_id'] !== null && $v['payment_count'] == 0)
 									<a href="{{ asset('member/bill/detail/print/id-'.$v['uid'].'-'.$v['salt']) }}"><i class="fa fa-print"></i></a>
 									@endif
 								</td>
