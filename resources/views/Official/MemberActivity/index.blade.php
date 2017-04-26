@@ -43,7 +43,7 @@
 								</td>
 								<td>{{ $v['time'] }}hr</td>
                                 <td class="text-center">
-                                    @if($v['reason'] == null)
+                                    @if($v['reason'] == null && strtotime($v['start_dt']) <= strtotime(date('Y/m/d')))
 								  	<a href="{{ asset('member/activity/reg/id-'.$v['id'].'_'.$v['created_at']) }}"> 
 									<i class="fa fa-pencil" aria-hidden="true"></i> 補登記
 									</a>
