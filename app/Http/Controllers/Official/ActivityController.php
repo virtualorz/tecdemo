@@ -39,12 +39,25 @@ class ActivityController extends Controller {
             }
             //找相關儀器
             $instrument = array();
-            $tmp_instrument = DB::table('activity_instrument')
+             if (mb_strlen($keyword, mb_detect_encoding($keyword)) == strlen($keyword))
+            {//無中文
+                $tmp_instrument = DB::table('activity_instrument')
                             ->select('activity_instrument.activity_id')
                             ->leftJoin('instrument_data','activity_instrument.instrument_id','=','instrument_data.id')
                             ->orWhere('instrument_data.name','like','%'.$keyword.'%')
                             ->orWhere('instrument_data.instrument_id','like','%'.$keyword.'%')
                             ->get();
+            }
+            else
+            {//有中文
+                $tmp_instrument = DB::table('activity_instrument')
+                            ->select('activity_instrument.activity_id')
+                            ->leftJoin('instrument_data','activity_instrument.instrument_id','=','instrument_data.id')
+                            ->where('instrument_data.name','like','%'.$keyword.'%')
+                            ->get();
+            }
+            
+            
             foreach($tmp_instrument as $k=>$v)
             {
                 array_push($instrument,$v['activity_id']);
