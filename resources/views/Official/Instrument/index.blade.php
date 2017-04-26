@@ -62,7 +62,7 @@
 												{{ $v['name'] }}
 											@endif
 										  </td> 
-										  <td>{{ $v['admin_name'] }}</td>
+										  <td><a href="{{ Sitemap::getUrl('official.contact_us') }}" target="_blank">{{ $v['admin_name'] }}</a></td>
 										  <td>{{ $v['function'] }}</td>
 										  <td class="text-center">{{ $v['site_name'] }}</td>
 										</tr>
@@ -102,7 +102,7 @@
 												{{ $v1['name'] }}
 											@endif
 										  </td> 
-										  <td>{{ $v1['admin_name'] }}</td>
+										  <td><a href="{{ Sitemap::getUrl('official.contact_us') }}" target="_blank">{{ $v1['admin_name'] }}</a></td>
 										  <td>{{ $v1['function'] }}</td>
 										  <td class="text-center">{{ $v1['site_name'] }}</td>
 										</tr>
