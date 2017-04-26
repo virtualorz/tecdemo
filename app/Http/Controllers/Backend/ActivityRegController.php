@@ -35,6 +35,9 @@ class ActivityRegController extends Controller {
                                             'activity_reg.reason')
                                     ->leftJoin('activity_data','activity_reg.activity_id','=','activity_data.id')
                                     ->leftJoin('member_data','activity_reg.member_id','=','member_data.id')
+                                    ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                                    ->leftJoin('system_department','member_data.department_id','=','system_department.id')
+                                    ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
                                     ->whereNull('activity_reg.is_pass')
                                     ->orderBy('id','desc')
                                     ->get();
