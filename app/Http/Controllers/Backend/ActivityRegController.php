@@ -29,6 +29,9 @@ class ActivityRegController extends Controller {
                                             'activity_data.activity_name',
                                             'member_data.name',
                                             'member_data.email',
+                                            'system_organize.name as organize_name',
+                                            'system_department.name as department_name',
+                                            'system_pi_list.name as pi_name',
                                             'activity_reg.reason')
                                     ->leftJoin('activity_data','activity_reg.activity_id','=','activity_data.id')
                                     ->leftJoin('member_data','activity_reg.member_id','=','member_data.id')
