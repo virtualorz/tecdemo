@@ -618,7 +618,7 @@ class InstrumentPaymentController extends Controller {
 
     ##
 
-    public function ajax_confirm() {
+    public function ajax_confirm() {log::error(Request::all());
         $validator = Validator::make(Request::all(), [
                     
         ]);
