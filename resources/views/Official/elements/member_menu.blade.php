@@ -18,7 +18,7 @@
                 </a>
 
                 <a href="{{ asset('member/e_portfolio') }}" class="col-xs-6 contentbtn slmenu03">
-                活動認證
+                活動認證紀錄
                 </a>
                 
                 <a href="{{ asset('member/instrument') }}" class="col-xs-6 contentbtn slmenu06">
