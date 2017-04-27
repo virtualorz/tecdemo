@@ -23,7 +23,11 @@ class InstrumentSectionController extends Controller {
 
         $listResult = DB::table('instrument_section');
 
-        $listResult = $listResult->select('id','section_type','start_time','end_time',DB::raw('DATE_FORMAT(created_at, "%Y/%m/%d") as created_at'),'enable')
+        $listResult = $listResult->select('id','section_type',
+                                        DB::raw('DATE_FORMAT(start_time, "%H:%i") as start_time'),
+                                        DB::raw('DATE_FORMAT(end_time, "%H:%i") as end_time'),
+                                        DB::raw('DATE_FORMAT(created_at, "%Y/%m/%d") as created_at'),
+                                        'enable')
                                     ->orderBy('start_time','asc')
                                     ->orderBy('end_time','asc')
                                     ->paginate(Config::get('pagination.items'));
