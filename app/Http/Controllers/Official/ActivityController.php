@@ -28,15 +28,10 @@ class ActivityController extends Controller {
         if($keyword != "")
         {
             //找相關平台名稱
-            $plateform = array();
-            $tmp_plateform = DB::table('instrument_type')
+            $plateform = DB::table('instrument_type')
                         ->select('id')
                         ->where('name','like','%'.$keyword.'%')
                         ->get();
-            foreach($tmp_plateform as $k=>$v)
-            {
-                array_push($plateform,$v['id']);
-            }
             //找相關儀器
             $instrument = array();
              if (mb_strlen($keyword, mb_detect_encoding($keyword)) == strlen($keyword))
@@ -64,10 +59,15 @@ class ActivityController extends Controller {
             }
             $para[0] = $instrument;
             $para[1] = $keyword;
-            $searchResult_tmp = DB::table('activity_data')
+            $para[2] = $plateform;
+            $searchResult = DB::table('activity_data')
                             ->orWhere(function ($query)use($para) {
                                 $query->orWhereIn('activity_data.id',$para[0]);
                                 $query->orWhere('activity_data.activity_name','like','%'.$para[1].'%');
+                                foreach($para[2] as $k=>$v)
+                                {
+                                    $query->orWhere('activity_data.relative_plateform','like','%"'.$v['id'].'"%');
+                                }
                             })
                             ->where('activity_data.enable',1)
                             ->select('activity_data.uid',
@@ -89,20 +89,6 @@ class ActivityController extends Controller {
                             ->groupBy('activity_data.id')
                             ->orderBy('start_dt','desc')
                             ->get();
-            $searchResult = array();
-            
-            foreach($searchResult_tmp as $k=>$v)
-            {
-                $v['relative_plateform'] = json_decode($v['relative_plateform'],true);
-                foreach($v['relative_plateform'] as $k1=>$v1)
-                {
-                    if(in_array($v1,$plateform))
-                    {
-                        array_push($searchResult,$v);
-                        break;
-                    }
-                }
-            }
         }
         else
         {

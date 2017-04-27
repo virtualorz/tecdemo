@@ -120,7 +120,10 @@
                                 <label class="check"><input type="checkbox" class="icheckbox ckbItemAll" /> {{ trans('page.btn.select_all') }}</label>
                             </th>
                             <th width="15%">{{ trans('validation.attributes.created_at') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.user') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.user') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.system-organize') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.system-department') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.pi') }}</th>
                             <th width="15%">{{ trans('validation.attributes.card_id_number') }}</th>
                             <th width="15%">{{ trans('validation.attributes.id_type') }}</th>
                             <th width="15%">{{ trans('validation.attributes.enable') }}</th>
@@ -135,6 +138,9 @@
                             </td>
                             <td>{{ $v['created_at'] }}</td>
                             <td>{{ $v['name'] }}</td>
+                            <td>{{ $v['organize_name'] }}</td>
+                            <td>{{ $v['department_name'] }}</td>
+                            <td>{{ $v['pi_name'] }}</td>
                             <td>{{ $v['card_id_number'] }}</td>
                             <td>{{ trans('enum.member_type.'.$v['type']) }}</td>
                             <td>{{ trans('enum.member-enable.'.$v['enable']) }}</td>

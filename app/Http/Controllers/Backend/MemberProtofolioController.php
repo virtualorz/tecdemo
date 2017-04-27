@@ -75,8 +75,13 @@ class MemberProtofolioController extends Controller {
                                             'member_data.name',
                                             'member_data.card_id_number',
                                             'member_data.type',
-                                            'member_data.enable')
+                                            'member_data.enable',
+                                            'system_organize.name as organize_name',
+                                            'system_department.name as department_name',
+                                            'system_pi_list.name as pi_name')
                                     ->leftJoin('system_pi_list','member_data.pi_list_id','=','system_pi_list.id')
+                                    ->leftJoin('system_organize','member_data.organize_id','=','system_organize.id')
+                                    ->leftJoin('system_department','member_data.department_id','=','system_department.id')
                                     ->orderBy('member_data.id','desc')
                                     ->paginate(Config::get('pagination.items'));
         $pagination = $this->getPagination(json_decode($listResult->toJson(),true)['total']);

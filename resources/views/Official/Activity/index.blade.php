@@ -56,7 +56,7 @@
 									<tbody> 
                                         @foreach($searchResult as $k=>$v) 
 										<tr>
-											<td>{{ $instrument_type[$v['relative_plateform'][0]] }}</td> 
+											<td>{{ $instrument_type[json_decode($v['relative_plateform'],true)[0]] }}</td> 
                                             @if($v['end_dt'] == null)
                                             <td>{{ $v['start_dt'] }} 起</td>
                                             @else
