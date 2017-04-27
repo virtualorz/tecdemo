@@ -355,7 +355,7 @@ class MemberBillController extends Controller {
             'reservationlogResult'=>$reservationlogResult,
             'discount_type'=>Config::get('data.discount_type'),
             ));
-        $pdf->setTemporaryFolder(env('DIR_WEB').'files\\tmp\\');
+        $pdf->setTemporaryFolder(env('DIR_WEB').'files/tmp/');
         return $pdf->download($pdf_name.'.pdf');
     }
 
