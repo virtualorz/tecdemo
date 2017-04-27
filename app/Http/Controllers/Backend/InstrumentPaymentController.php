@@ -564,7 +564,7 @@ class InstrumentPaymentController extends Controller {
                     $tmp['總金額'] = ''; 
                 }
                 $tmp['使用時段'] = $v1['use_dt_start'].' - '.$v1['use_dt_end']; 
-                $tmp['會員'] = $v1['member_name']; 
+                $tmp['使用者'] = $v1['member_name']; 
                 $tmp['儀器'] = $v1['instrument_name']; 
                 $tmp['費用'] = $v1['pay'];
                 if(is_array($v1['discount_JSON']))
