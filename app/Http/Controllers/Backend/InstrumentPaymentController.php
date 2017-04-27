@@ -927,7 +927,7 @@ class InstrumentPaymentController extends Controller {
                                         'created_at'=>date('Y-m-d H:i:s'),
                                         'email'=>$v['email'],
                                         'title'=>'系統催繳通知',
-                                        'content'=>'[{"column":1,"cell":[{"weight":1,"item":[{"type":"text","title":"","content":"您所屬的實驗室'.$id[1].'年'.$id[2].'月'.'帳單已逾期未，請儘速至系統列印帳單並繳交"}]}]}]',
+                                        'content'=>'[{"column":1,"cell":[{"weight":1,"item":[{"type":"text","title":"","content":"您所屬的實驗室'.$id[1].'年'.$id[2].'月'.'帳單已逾期，請儘速至系統列印帳單並繳交"}]}]}]',
                                         'is_read'=>'0',
                                         'create_admin_id'=>User::id()
                                 )
