@@ -104,7 +104,7 @@
                                     @if($v['discount_JSON']['type'] == 1) % @else 元 @endif
                                     @endif
 								</td>
-								<td>{{ $v['pay'] }}</td>
+								<td>{{ $v['pay'] }} 元</td>
 							</tr> 
                             @endforeach
 						</tbody> 
