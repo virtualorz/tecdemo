@@ -81,7 +81,7 @@
 							<th class="ttw80 textcenter">日期<br></th>
 							<th class="ttt100 textcenter">時段</th>
 							<th class="ttt80 textcenter">儀器名稱</th>
-							<th class="ttt50 textcenter">使用人</th>
+							<th class="ttt50 textcenter">使用者</th>
 							<th class="ttt50 textcenter">折扣</th>
 							<th class="ttt50 textcenter">使用費小計</th>
 							</tr>
