@@ -380,6 +380,18 @@ trait ViewButton {
         }
     }
 
+    private function _btn_journal($param) {
+        $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
+                . 'data-url="' . e(Sitemap::node()->getChildren('journal')->getUrl(['id' => $param['id']])) . '"'
+                . 'data-routename="' . str_replace('.', '_', Sitemap::node()->getChildren('journal')->getPath()) . '">' . e(trans('page.btn.journal')) . '</button>';
+        
+        if($param['isCheckPermission'] === false || User::isAccess(Sitemap::node()->getChildren('journal')->getPermissionNode()->getPath())){
+            return $html;
+        } else{
+            return '';
+        }
+    }
+
     private function _btn_notice($param) {
         $html = '<button type="button" class="btn btn-default btnDetail btnLink btnSetUrlBack" '
                 . 'data-url="' . e(Sitemap::node()->getChildren('notice')->getUrl(['id' => $param['id']])) . '"'

@@ -253,6 +253,87 @@ return [
                         ],
                     ],
                 ],
+                'journal' => [
+                    '_prop' => [
+                        'permission' => SitemapAccess::ACCESS_REQUIRED,
+                        'route' => [
+                            'method' => 'get',
+                            'param' => '{id}',
+                            'attr' => [
+                                'uses' => 'MemberProtofolioController@journal',
+                            ],
+                        ],
+                    ],
+                    'add' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::ACCESS_REQUIRED,
+                            'route' => [
+                                'method' => 'get',
+                                'param' => '{id}',
+                                'attr' => [
+                                    'uses' => 'MemberProtofolioController@add_journal',
+                                ],
+                            ],
+                        ],
+                        'submit' => [
+                            '_prop' => [
+                                'permission' => SitemapAccess::INHERIT,
+                                'route' => [
+                                    'method' => 'post',
+                                    'attr' => [
+                                        'uses' => 'MemberProtofolioController@ajax_add_journal',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'edit' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::ACCESS_REQUIRED,
+                            'route' => [
+                                'method' => 'get',
+                                'param' => '{id}',
+                                'attr' => [
+                                    'uses' => 'MemberProtofolioController@edit_journal',
+                                ],
+                            ],
+                        ],
+                        'submit' => [
+                            '_prop' => [
+                                'permission' => SitemapAccess::INHERIT,
+                                'route' => [
+                                    'method' => 'post',
+                                    'attr' => [
+                                        'uses' => 'MemberProtofolioController@ajax_edit_journal',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    'detail' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::ACCESS_REQUIRED,
+                            'route' => [
+                                'method' => 'get',
+                                'param' => '{id}',
+                                'attr' => [
+                                    'uses' => 'MemberProtofolioController@detail_journal',
+                                ],
+                            ],
+                        ],
+                    ],
+                    'delete' => [
+                        '_prop' => [
+                            'permission' => SitemapAccess::INHERIT,
+                            'route' => [
+                                'method' => 'post',
+                                'attr' => [
+                                    'uses' => 'MemberProtofolioController@ajax_delete_journal',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
             'error' => [
                 '_prop' => [

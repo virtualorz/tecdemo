@@ -268,6 +268,58 @@ class MemberProtofolioController extends Controller {
         return $this->view;
     }
 
+    public function journal() {
+        $id = Route::input('id', 0);
+        $listResult = DB::table('member_journal')
+                            ->select('member_journal.member_data_id',
+                                        'member_journal.member_journal_id',
+                                        DB::raw('DATE_FORMAT(member_journal.created_at, "%Y/%m/%d") as created_at'),
+                                        'member_journal.topic')
+                            ->where('member_journal.member_data_id',$id)
+                            ->get();
+        
+        $this->view->with('listResult', $listResult);
+        $this->view->with('id', $id);
+
+        return $this->view;
+    }
+
+    public function add_journal() {
+        $id = Route::input('id', 0);
+        $this->view->with('journal', Config::get('data.journal'));
+        $this->view->with('id', $id);
+
+        return $this->view;
+    }
+
+    public function edit_journal() {
+        $id = explode('_',Route::input('id', '0_0'));
+        $dataResult = DB::table('member_journal')
+                            ->select('member_journal.*')
+                            ->where('member_journal.member_data_id',$id[0])
+                            ->where('member_journal.member_journal_id',$id[1])
+                            ->get();
+
+        $this->view->with('dataResult', $dataResult[0]);
+        $this->view->with('journal', Config::get('data.journal'));
+
+        return $this->view;
+    }
+
+    public function detail_journal() {
+        $id = explode('_',Route::input('id', '0_0'));
+        $dataResult = DB::table('member_journal')
+                            ->select('member_journal.*')
+                            ->where('member_journal.member_data_id',$id[0])
+                            ->where('member_journal.member_journal_id',$id[1])
+                            ->get();
+
+        $this->view->with('dataResult', $dataResult[0]);
+        $this->view->with('journal', Config::get('data.journal'));
+
+        return $this->view;
+    }
+
     ##
 
     public function ajax_add() {
@@ -752,6 +804,192 @@ class MemberProtofolioController extends Controller {
                     ->delete();
                 DBProcedure::writeLog([
                     'table' => 'member_data',
+                    'operator' => DBOperator::OP_DELETE,
+                    'data_before' => isset($result_before[0]) ? $result_before[0] : [],
+                    'admin_id' => User::id()
+                ]);
+            }
+        } catch (\PDOException $ex) {
+            DB::rollBack();
+
+            \Log::error($ex->getMessage());
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.database');
+            return $this->view;
+        } catch (\Exception $ex) {
+            DB::rollBack();
+
+            \Log::error($ex->getMessage());
+            $this->view['result'] = 'no';
+            $this->view['msg'] = $ex->getMessage();
+            return $this->view;
+        }
+
+        
+        $this->view['msg'] = trans('message.success.delete');
+        return $this->view;
+    }
+
+    public function ajax_add_journal() {
+        $invalid = [];
+        $validator = Validator::make(Request::all(), [
+                    'journal_type' => 'integer|required',
+                    'release_dt' => 'date|required',
+                    'topic' => 'string|required|max:256',
+                    'journal' => 'string|required|max:256',
+                    'author' => 'string|required',
+                    'url' => 'string|required|max:1024',
+        ]);
+        if ($validator->fails()) {
+            $invalid[] = $validator->errors();
+        }
+        if (count($invalid) > 0) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = $invalid;
+            return $this->view;
+        }
+
+        try {
+            DB::transaction(function(){
+                $member_journal_id = DB::table('member_journal')
+                        ->select('member_journal_id')
+                        ->where('member_data_id',Request::input('id'))
+                        ->orderBy('member_journal_id','desc')
+                        ->limit(1)
+                        ->get();
+                if(!isset($member_journal_id[0]['member_journal_id']))
+                {
+                    $member_journal_id = 0;
+                }
+                else
+                {
+                    $member_journal_id = $member_journal_id[0]['member_journal_id'];
+                }
+                $member_journal_id = intval($member_journal_id)+1;
+                DB::table('member_journal')
+                        ->insert(array(
+                            'member_data_id'=>Request::input('id'),
+                            'member_journal_id'=>$member_journal_id,
+                            'created_at'=>date('Y-m-d H:i:s'),
+                            'type'=>Request::input('journal_type'),
+                            'release_dt'=>Request::input('release_dt'),
+                            'topic'=>Request::input('topic'),
+                            'journal'=>Request::input('journal'),
+                            'author'=>Request::input('author'),
+                            'url'=>Request::input('url')
+                ));
+                $result_after = DB::table('member_journal')
+                                ->where('member_data_id',Request::input('id'))
+                                ->where('member_journal_id',$member_journal_id)
+                                ->get();
+                DBProcedure::writeLog([
+                    'table' => 'member_journal',
+                    'operator' => DBOperator::OP_INSERT,
+                    'data_after' => isset($result_after[0]) ? $result_after[0] : [],
+                    'admin_id' => User::id()
+                ]);
+            });
+
+        } catch (DBProcedureException $e) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.database');
+            $this->view['detail'][] = $e->getMessage();
+
+            return $this->view;
+        }
+
+        $this->view['msg'] = trans('message.success.add');
+        return $this->view;
+    }
+
+    public function ajax_edit_journal() {
+        $id = explode('_',Request::input('id'));
+        $validator = Validator::make(Request::all(), [
+                    'journal_type' => 'integer|required',
+                    'release_dt' => 'date|required',
+                    'topic' => 'string|required|max:256',
+                    'journal' => 'string|required|max:256',
+                    'author' => 'string|required',
+                    'url' => 'string|required|max:1024',
+        ]);
+        if ($validator->fails()) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = $validator->errors();
+
+            return $this->view;
+        }
+        
+        try {
+            DB::transaction(function()use($id){
+                $result_before = DB::table('member_journal')
+                                    ->where('member_data_id',$id[0])
+                                    ->where('member_journal_id',$id[1])
+                                    ->get();
+                 DB::table('member_journal')
+                        ->where('member_data_id',$id[0])
+                        ->where('member_journal_id',$id[1])
+                        ->update(['type'=>Request::input('journal_type'),
+                                    'release_dt'=>Request::input('release_dt'),
+                                    'topic'=>Request::input('topic'),
+                                    'journal'=>Request::input('journal'),
+                                    'author'=>Request::input('author'),
+                                    'url'=>Request::input('url')
+                        ]);
+                $result_after = DB::table('member_journal')
+                                    ->where('member_data_id',$id[0])
+                                    ->where('member_journal_id',$id[1])
+                                    ->get();
+                DBProcedure::writeLog([
+                    'table' => 'member_journal',
+                    'operator' => DBOperator::OP_UPDATE,
+                    'data_before' => isset($result_before[0]) ? $result_before[0] : [],
+                    'data_after' => isset($result_after[0]) ? $result_after[0] : [],
+                    'admin_id' => User::id()
+                ]);
+
+            });
+
+        } catch (\PDOException $ex) {
+            DB::rollBack();
+
+            \Log::error($ex->getMessage());
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.database');
+            return $this->view;
+        }
+
+        $this->view['msg'] = trans('message.success.edit');
+        return $this->view;
+    }
+
+    public function ajax_delete_journal() {
+        $validator = Validator::make(Request::all(), [
+                    'id' => 'array|required'
+        ]);
+        if ($validator->fails()) {
+            $this->view['result'] = 'no';
+            $this->view['msg'] = trans('message.error.validation');
+            $this->view['detail'] = $validator->errors();
+
+            return $this->view;
+        }
+        $ids = Request::input('id', []);
+        try {
+            foreach ($ids as $k => $v) {
+                $id = explode("_",$v);
+
+                $result_before = DB::table('member_journal')
+                                    ->where('member_data_id',$id[0])
+                                    ->where('member_journal_id',$id[1])
+                                    ->get();
+                DB::table('member_journal')
+                    ->where('member_data_id',$id[0])
+                    ->where('member_journal_id',$id[1])
+                    ->delete();
+                DBProcedure::writeLog([
+                    'table' => 'member_journal',
                     'operator' => DBOperator::OP_DELETE,
                     'data_before' => isset($result_before[0]) ? $result_before[0] : [],
                     'admin_id' => User::id()

@@ -151,6 +151,7 @@
                                 {!! ViewHelper::button('notice', ['id' => $v['id']]) !!}
                                 {!! ViewHelper::button('activitylog', ['id' => $v['id']]) !!}
                                 {!! ViewHelper::button('edit', ['id' => $v['id']]) !!}
+                                {!! ViewHelper::button('journal', ['id' => $v['id']]) !!}
                                 @endif
                                 {!! ViewHelper::button('detail', ['id' => $v['id']]) !!}
                             </td>
