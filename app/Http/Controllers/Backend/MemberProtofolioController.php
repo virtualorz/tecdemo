@@ -877,7 +877,8 @@ class MemberProtofolioController extends Controller {
                             'topic'=>Request::input('topic'),
                             'journal'=>Request::input('journal'),
                             'author'=>Request::input('author'),
-                            'url'=>Request::input('url')
+                            'url'=>Request::input('url'),
+                            'remark'=>Request::input('remark')
                 ));
                 $result_after = DB::table('member_journal')
                                 ->where('member_data_id',Request::input('id'))
@@ -935,7 +936,8 @@ class MemberProtofolioController extends Controller {
                                     'topic'=>Request::input('topic'),
                                     'journal'=>Request::input('journal'),
                                     'author'=>Request::input('author'),
-                                    'url'=>Request::input('url')
+                                    'url'=>Request::input('url'),
+                                    'remark'=>Request::input('remark')
                         ]);
                 $result_after = DB::table('member_journal')
                                     ->where('member_data_id',$id[0])

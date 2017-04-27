@@ -63,6 +63,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.remark') }}</th>
+                                <td>
+                                    <textarea name="remark" id="data-remark" rows="4" cols="50"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>{{ trans('validation.attributes.create_admin_id') }}</th>
                                 <td>{{ User::get('name', '') }}</td>
                             </tr>

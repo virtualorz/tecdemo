@@ -63,6 +63,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.remark') }}</th>
+                                <td>
+                                    <textarea name="remark" id="data-remark" rows="4" cols="50">{{ $dataResult['remark'] }}</textarea>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>&nbsp;</th>
                                 <td> 
                                     <input type="hidden" name="id" value="{{ $dataResult['member_data_id'] }}_{{ $dataResult['member_journal_id'] }}" />

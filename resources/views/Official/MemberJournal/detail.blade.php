@@ -61,7 +61,7 @@
          	  		
          	  		<div class="row mb-xs-20 mb--b">
 						<div class="col-md-2 col-sm-3 mb-xs-10"><h5>發表超連結</h5></div>
-						<div class="col-md-10 col-sm-9 col-xs-8"><a href="{{ $dataResult['url'] }}" target="_blank">{{ $dataResult['url'] }}</a></div>
+						<div class="col-md-10 col-sm-9 col-xs-8"><a href="{{ $dataResult['url'] }}" target="_blank">{{ $dataResult['topic'] }}</a></div>
 						
 					</div>
 				</div>

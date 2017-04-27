@@ -55,6 +55,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th>{{ trans('validation.attributes.remark') }}</th>
+                                <td>
+                                    {{ $dataResult['remark'] }}
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>&nbsp;</th>
                                 <td> 
                                     {!! ViewHelper::button('back') !!}
