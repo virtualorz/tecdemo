@@ -336,7 +336,7 @@ class MemberProtofolioController extends Controller {
                     'lab_phone' => 'string|required|max:120',
                     'type' => 'integer|required',
                     'start_dt' => 'date|required',
-                    'limit_month' => 'integer|required|min:0',
+                    'end_dt' => 'date|required',
                     'permission' => 'array|required',
                     'enable' => 'integer|required',
         ]);
@@ -390,7 +390,7 @@ class MemberProtofolioController extends Controller {
                                     'lab_phone'=>Request::input('lab_phone'),
                                     'type'=>Request::input('type'),
                                     'start_dt'=>Request::input('start_dt'),
-                                    'limit_month'=>Request::input('limit_month'),
+                                    'end_dt'=>Request::input('end_dt'),
                                     'enable'=>Request::input('enable'),
                                     'create_admin_id'=>User::id()
                             )
@@ -458,7 +458,7 @@ class MemberProtofolioController extends Controller {
                     'lab_phone' => 'string|required|max:120',
                     'type' => 'integer|required',
                     'start_dt' => 'date|required',
-                    'limit_month' => 'integer|required|min:0',
+                    'end_dt' => 'date|required',
                     'permission' => 'array|required',
                     'enable' => 'integer|required',
         ]);
@@ -515,7 +515,7 @@ class MemberProtofolioController extends Controller {
                                     'lab_phone'=>Request::input('lab_phone'),
                                     'type'=>Request::input('type'),
                                     'start_dt'=>Request::input('start_dt'),
-                                    'limit_month'=>Request::input('limit_month'),
+                                    'end_dt'=>Request::input('end_dt'),
                                     'enable'=>Request::input('enable'),
                         ]);
                 }
@@ -587,7 +587,7 @@ class MemberProtofolioController extends Controller {
                     'type' => 'integer|required',
                     'card_id_number' => 'string|required|max:32',
                     'start_dt' => 'date|required',
-                    'limit_month' => 'integer|required|min:0',
+                    'end_dt' => 'date|required',
                     'permission' => 'array|required',
                     'enable' => 'integer|required',
         ]);
@@ -625,7 +625,7 @@ class MemberProtofolioController extends Controller {
                                 'type'=>Request::input('type'),
                                 'card_id_number'=>Request::input('card_id_number'),
                                 'start_dt'=>Request::input('start_dt'),
-                                'limit_month'=>Request::input('limit_month'),
+                                'end_dt'=>Request::input('end_dt'),
                                 'enable'=>Request::input('enable'),
                                 'create_admin_id'=>User::id()
                     ]);

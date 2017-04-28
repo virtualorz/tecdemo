@@ -31,7 +31,7 @@ class LoginController extends Controller {
             $password = User::hashPassword(Request::input('password'));
 
             $dataResult = DB::table('member_data')
-                            ->select('id','email','name','title','start_dt','limit_month','enable','pi_list_id')
+                            ->select('id','email','name','title','start_dt','end_dt','enable','pi_list_id')
                             ->where('email',$account)
                             ->where('password',$password)
                             ->first();
@@ -61,7 +61,7 @@ class LoginController extends Controller {
 
                     return $this->view;
                 }
-                if(strtotime("+".$dataResult['limit_month']." month",strtotime($dataResult['start_dt'])) < strtotime(date('Y-m-d')))
+                if(strtotime($dataResult['end_dt']) < strtotime(date('Y-m-d')))
                 {
                     $this->view['result'] = 'no';
                     $this->view['msg'] = trans('message.error.login');
