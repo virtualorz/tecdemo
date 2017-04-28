@@ -87,6 +87,8 @@
                                                                 @if(strtotime('+'.$i.' days',strtotime($start_dt_org)) <= strtotime($dataResult['cancel_limit_dt'])) disabled @endif
                                                             >取消</a>
                                                             @else
+                                                                {{$v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['member_name']}} 已預約
+                                                                <!--
                                                                 @if(!isset($v['can_use']) || in_array(date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org))),$vacationResult) || User::id() == null)
                                                                 {{$v['reservation_log'][date('Y-m-d',strtotime('+'.$i.' days',strtotime($start_dt_org)))]['member_name']}} 已預約
                                                                 @else
@@ -94,6 +96,7 @@
                                                                     @if($reservation_count >= $dataResult['reservation_limit'] || strtotime('+'.$i.' days',strtotime($start_dt_org)) < strtotime(date('Y-m-d'))) disabled @endif
                                                                 >候補</a>
                                                                 @endif
+                                                                -->
                                                             @endif
                                                         @endif
                                                     @else
