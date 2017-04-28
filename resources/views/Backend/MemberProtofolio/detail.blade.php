@@ -95,9 +95,9 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>{{ trans('validation.attributes.limit_month') }}</th>
+                                <th>{{ trans('validation.attributes.end_dt') }}</th>
                                 <td>
-                                    {{ $dataResult['limit_month'] }}
+                                    {{ $dataResult['end_dt'] }}
                                 </td>
                             </tr>
                             <tr>

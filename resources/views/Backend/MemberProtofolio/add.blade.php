@@ -118,9 +118,9 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th><span class="red">*</span>{{ trans('validation.attributes.limit_month') }}</th>
+                                <th><span class="red">*</span>{{ trans('validation.attributes.end_dt') }}</th>
                                 <td>
-                                    <input type="number" name="limit_month" id="data-limit_month" class="form-control required">
+                                    <input type="text" name="end_dt" id="data-end_dt" class="form-control required datepicker">
                                 </td>
                             </tr>
                             <tr>

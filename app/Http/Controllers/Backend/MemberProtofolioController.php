@@ -168,6 +168,7 @@ class MemberProtofolioController extends Controller {
                             ->select('member_data.*',
                                         DB::raw('DATE_FORMAT(member_data.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
                                         DB::raw('DATE_FORMAT(member_data.start_dt, "%Y/%m/%d") as start_dt'),
+                                        DB::raw('DATE_FORMAT(member_data.end_dt, "%Y/%m/%d") as end_dt'),
                                         'system_organize.name as organize_name',
                                         'system_department.name as department_name',
                                         'system_pi_list.name as pi_name',
