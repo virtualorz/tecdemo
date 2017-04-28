@@ -27,7 +27,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{ trans('validation.attributes.user') }}</td>
+                                <td>{{ trans('validation.attributes.admin-name') }}</td>
                                 <td>
                                     <input type="text" name="name" id="data-namedate" class="form-control" value="{{ Request::input('name', '') }}">
                                 </td>
@@ -76,7 +76,7 @@
                                 <label class="check"><input type="checkbox" class="icheckbox ckbItemAll" /> {{ trans('page.btn.select_all') }}</label>
                             </th>
                             <th width="15%">{{ trans('validation.attributes.reservation_at') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.user') }}</th>
+                            <th width="15%">{{ trans('validation.attributes.admin-name') }}</th>
                             <th width="15%">{{ trans('validation.attributes.system-organize') }}</th>
                             <th width="15%">{{ trans('validation.attributes.system-department') }}</th>
                             <th width="15%">{{ trans('validation.attributes.pi') }}</th>

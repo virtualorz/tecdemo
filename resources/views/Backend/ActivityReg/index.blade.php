@@ -21,15 +21,15 @@
                 <table class="table datatable_simple table_responsive">
                     <thead>
                         <tr>
-                            <th width="15%">{{ trans('validation.attributes.apply_date') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.activity_date') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.activity_name') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.apply_name') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.system-organize') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.system-department') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.pi') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.email') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.apply_reason') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.apply_date') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.activity_date') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.activity_name') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.apply_name') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.system-organize') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.system-department') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.pi') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.email') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.apply_reason') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
@@ -70,16 +70,16 @@
                 <table class="table datatable_simple table_responsive">
                     <thead>
                         <tr>
-                            <th width="15%">{{ trans('validation.attributes.apply_date') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.activity_date') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.activity_name') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.apply_name') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.system-organize') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.system-department') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.pi') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.email') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.apply_reason') }}</th>
-                            <th width="25%">{{ trans('validation.attributes.is_pass') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.apply_date') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.activity_date') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.activity_name') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.apply_name') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.system-organize') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.system-department') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.pi') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.email') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.apply_reason') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.is_pass') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
