@@ -79,8 +79,8 @@
                             <th width="15%">{{ trans('validation.attributes.created_at') }}</th>
                             <th width="15%">{{ trans('validation.attributes.activity_date') }}</th>
                             <th width="15%">{{ trans('validation.attributes.activity_name') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.time') }}</th>
-                            <th width="10%">{{ trans('validation.attributes.reservation_count') }}</th>
+                            <th width="6%">{{ trans('validation.attributes.time') }}</th>
+                            <th width="7%">{{ trans('validation.attributes.reservation_count') }}</th>
                             <th width="5%">{{ trans('validation.attributes.status') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>

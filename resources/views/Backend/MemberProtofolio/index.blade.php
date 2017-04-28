@@ -119,14 +119,14 @@
                             <th width="5%" nowrap style="color:#fff;">
                                 <label class="check"><input type="checkbox" class="icheckbox ckbItemAll" /> {{ trans('page.btn.select_all') }}</label>
                             </th>
-                            <th width="15%">{{ trans('validation.attributes.created_at') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.created_at') }}</th>
                             <th width="10%">{{ trans('validation.attributes.user') }}</th>
                             <th width="10%">{{ trans('validation.attributes.system-organize') }}</th>
                             <th width="10%">{{ trans('validation.attributes.system-department') }}</th>
                             <th width="10%">{{ trans('validation.attributes.pi') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.card_id_number') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.id_type') }}</th>
-                            <th width="15%">{{ trans('validation.attributes.enable') }}</th>
+                            <th width="7%">{{ trans('validation.attributes.card_id_number') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.id_type') }}</th>
+                            <th width="10%">{{ trans('validation.attributes.enable') }}</th>
                             <th width="25%">{{ trans('page.text.function') }}</th>
                         </tr>
                     </thead>
