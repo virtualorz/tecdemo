@@ -65,6 +65,8 @@ class InstrumentSectionController extends Controller {
         $id = Route::input('id', 0);
         $dataResult = DB::table('instrument_section')
                             ->select('instrument_section.*',
+                                    DB::raw('DATE_FORMAT(instrument_section.start_time, "%H:%i") as start_time'),
+                                    DB::raw('DATE_FORMAT(instrument_section.end_time, "%H:%i") as end_time'),
                                     DB::raw('DATE_FORMAT(instrument_section.created_at, "%Y/%m/%d %H:%i:%s") as created_at'),
                                     'member_admin.name as created_admin_name')
                             ->leftJoin('member_admin','instrument_section.create_admin_id','=','member_admin.id')
