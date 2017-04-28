@@ -37,7 +37,7 @@
                   <tr> 
                     <!-- Row container for Intro/ Description -->
                     <td align="left" style="font-size: 16px; font-style: normal; font-weight: 100; color: #666; line-height: 1.8; text-align:justify; padding:10px 20px 0px 20px; font-family: sans-serif;"><p>親愛的 {{ $dataResult['user'] }}先生/ 小姐，您好：<br>
-                      您所屬的實驗室{{ $dataResult['pay_month'] }}帳單已逾期未，請儘速至系統列印帳單並繳交</p>
+                      您所屬的實驗室{{ $dataResult['pay_month'] }}帳單已逾期，請儘速至系統列印帳單並繳交</p>
                       @if(isset($dataResult['url']))
                       <p>詳細訊息內容，請點選以下連結查看:</p>
                       <p><a href="{{ $dataResult['url'] }}">{{ $dataResult['url'] }}</a> </p>
